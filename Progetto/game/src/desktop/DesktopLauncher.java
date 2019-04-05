@@ -8,6 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+// Classe che lancia il gioco.
 
 
 public class DesktopLauncher extends BasicGame{
