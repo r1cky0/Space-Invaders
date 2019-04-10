@@ -1,3 +1,5 @@
+package desktop;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
@@ -6,9 +8,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class HelloWorld extends BasicGame
+public class DesktopLauncher extends BasicGame
 {
-    public HelloWorld(String gamename)
+    public DesktopLauncher(String gamename)
     {
         super(gamename);
     }
@@ -22,7 +24,7 @@ public class HelloWorld extends BasicGame
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException
     {
-        g.drawString("\n\n\n\nArrosto!", 10, 10);
+        g.drawString("\n\n\n\nSPACE INVADERS STA ARRIVANDO!", 10, 10);
     }
 
     public static void main(String[] args)
@@ -30,13 +32,13 @@ public class HelloWorld extends BasicGame
         try
         {
             AppGameContainer appgc;
-            appgc = new AppGameContainer(new HelloWorld("Simple Slick Game"));
+            appgc = new AppGameContainer(new DesktopLauncher("Simple Slick Game"));
             appgc.setDisplayMode(640, 480, false);
             appgc.start();
         }
         catch (SlickException ex)
         {
-            Logger.getLogger(HelloWorld.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DesktopLauncher.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
