@@ -2,22 +2,15 @@ package game.environment;
 
 public class Coordinate {
 
-    private double x1, x2, y1, y2;
+    private double x1,x2;
+    private double y1,y2;
 
-    public Coordinate(){ // possiamo usare la classe built in "point"??
-        x1 = 0;
-        x2 = 1;
-        y1 = 0;
-        y2 = 1;
-    }
-
-    public Coordinate(double x1, double x2, double y1, double y2){
+    public Coordinate(double x1, double x2, double y1, double y2) {
         this.x1 = x1;
         this.x2 = x2;
         this.y1 = y1;
         this.y2 = y2;
     }
-
 
     public double getX1() {
         return x1;
@@ -50,4 +43,14 @@ public class Coordinate {
     public void setY2(double y2) {
         this.y2 = y2;
     }
+
+    public boolean equals(Coordinate coordinate){
+
+        if(this.x1 == coordinate.getX1() && this.x2 == coordinate.getX2()
+            && this.y1 == coordinate.getY1() && this.y2 == coordinate.getY2()){
+            return true;
+        }
+        return false;
+    }
+
 }
