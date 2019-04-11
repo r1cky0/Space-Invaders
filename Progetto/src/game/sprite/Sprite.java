@@ -7,4 +7,7 @@ public abstract class Sprite {
     private Coordinate coordinate;
     //image
 
+    public Sprite(Coordinate coordinate){
+        this.coordinate = coordinate;
+    }
 }
