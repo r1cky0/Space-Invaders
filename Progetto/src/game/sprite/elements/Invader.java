@@ -7,7 +7,8 @@ public class Invader extends Sprite {
 
     private int value;
 
-    public Invader(Coordinate coordinate){
+    public Invader(Coordinate coordinate, int value){
         super(coordinate);
+        this.value = value;
     }
 }

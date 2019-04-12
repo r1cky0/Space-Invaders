@@ -24,7 +24,7 @@ public class Bunker {
      *  Itera la lista fino a che non trova un brick con coordinata uguale
      *  a quella passata e lo rimuove.
      *
-     * @param coordinate
+     * @param coordinate: coordinata del brick colpito
      */
     public void deleteBrick(Coordinate coordinate){
 
@@ -36,7 +36,4 @@ public class Bunker {
         }
     }
 
-    public void stampa(){
-        System.out.println(bricks.size());
-    }
 }
