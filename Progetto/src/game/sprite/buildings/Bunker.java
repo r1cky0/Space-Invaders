@@ -10,6 +10,7 @@ public class Bunker {
     private ArrayList<Brick> bricks;
     private ListIterator<Brick> listIterator;   //Serve per iterare la lista di brick
 
+
     public Bunker(){
 
         bricks = new ArrayList<>();
