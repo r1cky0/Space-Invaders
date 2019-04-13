@@ -9,12 +9,12 @@ public class SpaceInvadersGame {
 
         System.out.println("SPACE INVADERS STA ARRIVANDO!!!");
 
-        Coordinate c = new Coordinate(0,1,0,1);
+        Coordinate c = new Coordinate(2,0);
         Bunker b = new Bunker();
         b.deleteBrick(c);
 
-        c.setX1(4);
-        c.setX2(5);
+        c.setX(4);
+        c.setX(5);
         b.deleteBrick(c);
     }
 }

@@ -16,7 +16,7 @@ public class Field {
     public Field(){
 
         for(int i=0; i<32; i++){
-            Coordinate coordinate = new Coordinate(i,i+1,i,i+1);
+            Coordinate coordinate = new Coordinate(i,0);
             Invader invader = new Invader(coordinate, 10);
             invaders.add(invader);
         }
@@ -26,7 +26,7 @@ public class Field {
             bunkers.add(bunker);
         }
 
-        Coordinate start_position = new Coordinate(100,101,100,101);
+        Coordinate start_position = new Coordinate(100,100);
         ship = new Ship("Navicella", start_position);
 
     }

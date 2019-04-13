@@ -15,7 +15,7 @@ public class Bunker {
 
         bricks = new ArrayList<>();
         for(int i=0; i<10;i++){
-            Coordinate coordinate = new Coordinate(i,i+1,0,1);
+            Coordinate coordinate = new Coordinate(i,0);
             Brick b = new Brick(coordinate);
             bricks.add(b);
         }
