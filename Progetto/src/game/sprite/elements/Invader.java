@@ -12,4 +12,15 @@ public class Invader extends Sprite {
         super(coordinate);
         this.value = value;
     }
+
+
+    /**
+     * L'invasore fa fuoco creando un Bullet poco sotto di sé
+     */
+    public void Shoot(){
+        Coordinate coordinate1 = this.getCoordinate();
+        coordinate1.setX(this.getCoordinate().getX());
+        coordinate1.setY(this.getCoordinate().getY()+5);
+        Bullet bullet = new Bullet (coordinate1);
+    }
 }
