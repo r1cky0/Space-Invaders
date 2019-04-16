@@ -9,5 +9,4 @@ public class Brick extends Sprite {
         super(coordinate);
     }
 
-
 }

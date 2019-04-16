@@ -25,6 +25,7 @@ public class Coordinate {
         this.y = y;
     }
 
+
     /**
      * Controlla se 2 coordinate sono uguali.
      *
@@ -37,5 +38,9 @@ public class Coordinate {
             return true;
         }
         return false;
+    }
+
+    public String toString(){
+        return "x: " + x + " y: " + y;
     }
 }

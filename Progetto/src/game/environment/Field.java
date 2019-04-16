@@ -21,9 +21,11 @@ public class Field {
             invaders.add(invader);
         }
 
+        int index = 20;
         for(int i=0; i<4; i++){
-            Bunker bunker = new Bunker();
+            Bunker bunker = new Bunker(index);
             bunkers.add(bunker);
+            index = index + 36;
         }
 
         Coordinate start_position = new Coordinate(100,100);
