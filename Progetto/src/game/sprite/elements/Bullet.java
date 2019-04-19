@@ -9,16 +9,4 @@ public class Bullet extends Sprite {
         super(coordinate);
     }
 
-    /**Controlla se un proiettile ha colpito il punto indicato dall'argomento
-     *
-     * @param coordinate
-     * @return
-     */
-    public boolean isHit(Coordinate coordinate){
-        if (this.getCoordinate().equals(coordinate)){
-            return true;
-        }
-        else return false;
-    }
-
 }

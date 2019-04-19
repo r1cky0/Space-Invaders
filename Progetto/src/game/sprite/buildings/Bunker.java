@@ -22,7 +22,7 @@ public class Bunker {
 
     /**
      * Disegna il bunker da lettura file.
-     * @param index_x: coordinata riferimento bunker
+     * @param index: coordinata riferimento bunker
      */
     private void createBunker(int index) {
 
@@ -62,18 +62,20 @@ public class Bunker {
 
     /**
      *  Itera la lista fino a che non trova un brick con coordinata uguale
-     *  a quella passata e lo rimuove.
+     *  a quella passata e lo rimuove, segnalando il tutto atraverso un booleano
      *
      * @param coordinate: coordinata del brick colpito
      */
-    public void deleteBrick(Coordinate coordinate){
+    public boolean deleteBrick(Coordinate coordinate){
 
         listIterator = bricks.listIterator();
         while (listIterator.hasNext()) {
             if(listIterator.next().getCoordinate().equals(coordinate)){
                 listIterator.remove();
+                return true;
             }
         }
+        return false;
     }
 
 }
