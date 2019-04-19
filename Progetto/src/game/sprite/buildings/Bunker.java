@@ -27,7 +27,7 @@ public class Bunker {
     private void createBunker(int index) {
 
         int index_x = index;
-        int index_y = 30;
+        int index_y = 20;
         try{
             BufferedReader in = new BufferedReader(new FileReader("Progetto/resources/bunker.txt"));
             String riga = in.readLine();
@@ -43,14 +43,14 @@ public class Bunker {
                         index_x++;
                     }
                 }
-                index_y++;
+                index_y--;
                 riga = in.readLine();
                 index_x = index;
             }
             in.close();
         }
         catch (IOException err){
-            System.err.println(err);
+            System.err.println( err);
         }
     }
 

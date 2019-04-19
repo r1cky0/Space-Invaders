@@ -16,20 +16,22 @@ public class Field {
 
     public Field(){
 
-        for(int i=0; i<32; i++){
-            Coordinate coordinate = new Coordinate(i,0);
-            Invader invader = new Invader(coordinate, 10);
-            invaders.add(invader);
+        for(int i=90; i>50; i-=10){
+            for(int j=10;j<90;j+=10) {
+                Coordinate coordinate = new Coordinate(j + 5, i-5);
+                Invader invader = new Invader(coordinate, 10);
+                invaders.add(invader);
+            }
         }
 
-        int index = 20;
+        int index = 4;
         for(int i=0; i<4; i++){
             Bunker bunker = new Bunker(index);
             bunkers.add(bunker);
-            index = index + 36;
+            index = index + 22;
         }
 
-        Coordinate start_position = new Coordinate(100,100);
+        Coordinate start_position = new Coordinate(50,5);
         ship = new Ship("Navicella", start_position);
 
     }
@@ -41,19 +43,29 @@ public class Field {
     public void shot(){
         Coordinate bCoordinates = new Coordinate(ship.getCoordinate().getX(),ship.getCoordinate().getY()+10);
         Bullet b = new Bullet(bCoordinates);
-
         for(Bunker bun : bunkers){
             if(bun.deleteBrick(bCoordinates)){
                 b = null;
                 return;
             }
         }
-
         for(Invader i : invaders){
-            if(bCoordinates.getX() >= i.getCoordinate().getX()-5 || bCoordinates.getX() <+ i.getCoordinate().getX()+5){
+            if(bCoordinates.getX() >= i.getCoordinate().getX()-4 || bCoordinates.getX() <+ i.getCoordinate().getX()+4 ){
                 b = null;
                 invaders.remove(i);
             }
         }
+    }
+
+    public void shipMoveRight(){
+        ship.getCoordinate().setX(ship.getCoordinate().getX()+1);
+    }
+
+    public void shipMoveLeft(){
+        ship.getCoordinate().setX(ship.getCoordinate().getX()-1);
+    }
+
+    public void moveDown(){
+
     }
 }
