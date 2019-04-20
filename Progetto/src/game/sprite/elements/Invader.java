@@ -13,4 +13,7 @@ public class Invader extends Sprite {
         this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
 }

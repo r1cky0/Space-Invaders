@@ -24,11 +24,15 @@ public class Player {
         return highscore;
     }
 
-    public void setCredit(int credit) {
-        this.credit = credit;
+    public void changeCredit(int c) {
+        credit+=c;
     }
 
     public void setHighscore(int highscore) {
         this.highscore = highscore;
+    }
+
+    public String toString(){
+        return this.name + ":\nCrediti totali: "+ this.credit+"\n";
     }
 }
