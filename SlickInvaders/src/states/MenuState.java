@@ -67,9 +67,8 @@ public class MenuState extends BasicGameState implements ComponentListener {
         settingButton=new MouseOverArea(container,settings,660,490,80,80,this);
 
         try{
-            UIFont1 = Font.createFont(Font.TRUETYPE_FONT,ResourceLoader.getResourceAsStream("font/invaders_font.ttf"));
+            UIFont1 = Font.createFont(Font.TRUETYPE_FONT,ResourceLoader.getResourceAsStream("SlickInvaders/font/invaders_font.ttf"));
             UIFont1 = UIFont1.deriveFont(Font.BOLD, 65); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 16.f is the size of your font
-
 
             //Since TrueTypeFont loading has many problems, we can use UnicodeFont to load the .ttf fonts(it's exactly the same thing).
             uniFont = new UnicodeFont(UIFont1);

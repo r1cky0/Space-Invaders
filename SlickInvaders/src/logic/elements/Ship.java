@@ -16,7 +16,7 @@ public class Ship implements CollisionElement {
     private float size;
     private GameContainer container;
     private static final float PROP_SIZE = 0.1f;
-    private static final float PROP_MOVE = 0.05f;
+    private static final float PROP_MOVE = 0.005f;
     private Shape shape;
     private int life;
     //private Player player;

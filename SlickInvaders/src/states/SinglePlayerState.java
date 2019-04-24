@@ -36,27 +36,24 @@ public class SinglePlayerState extends BasicGameState{
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        //bullet.update(gameContainer,i);
-    }
-
-    public void keyPressed(int key, char c){
-        if(key == Input.KEY_LEFT){
+        Input input = gameContainer.getInput();
+        if(input.isKeyDown(Input.KEY_LEFT)){
             ship.move(MovingDirections.LEFT);
         }
-
-        if(key == Input.KEY_RIGHT){
+        if(input.isKeyDown(Input.KEY_RIGHT)){
             ship.move(MovingDirections.RIGHT);
         }
-
-        if(key == Input.KEY_SPACE){
+        if(input.isKeyDown(Input.KEY_SPACE)){
             try {
                 bullet = new Bullet(container, ship.getX() + ship.getSize()/2, ship.getY()- ship.getSize());
             } catch (SlickException e) {
                 e.printStackTrace();
             }
         }
+        //bullet.update(gameContainer,i);
     }
 
+    
     public int getID() {
         return 1;
     }
