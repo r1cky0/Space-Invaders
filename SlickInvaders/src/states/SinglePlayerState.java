@@ -5,6 +5,7 @@ import logic.elements.Bullet;
 import logic.elements.Invader;
 import logic.elements.MovingDirections;
 import logic.elements.Ship;
+import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -18,7 +19,7 @@ public class SinglePlayerState extends BasicGameState{
     private Ship ship;
     private int score;
     private Image background;
-    private ArrayList<Bullet> bullets;
+    private Bullet bullet;
     private ArrayList<Invader> invaders;
     public boolean bulletShot = false;
     //private Player player;
@@ -30,7 +31,7 @@ public class SinglePlayerState extends BasicGameState{
         this.container = container;
         //this.player = player;
         ship = new Ship(container);
-        bullets = new ArrayList<>();
+        bullet = new Bullet(container, ship.getX()+ ship.getSize()/3, ship.getY()-ship.getSize()/2);
         invaders = new ArrayList<>();
         background = new Image("res/space.png");
     }
@@ -39,36 +40,23 @@ public class SinglePlayerState extends BasicGameState{
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
         ship.render(container,graphics);
-        if(!bullets.isEmpty() && !bulletShot){
-            bullets.get(0).render(container,graphics);
-            bulletShot = true;
-        }
+        bullet.render(container,graphics);
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input input = gameContainer.getInput();
+
         if(input.isKeyDown(Input.KEY_LEFT)){
             ship.move(MovingDirections.LEFT);
+            bullet.move(MovingDirections.LEFT);
+
         }
         if(input.isKeyDown(Input.KEY_RIGHT)){
+            bullet.move(MovingDirections.RIGHT);
             ship.move(MovingDirections.RIGHT);
         }
-        if(input.isKeyDown(Input.KEY_SPACE)){
-            try {
-                bullets.add(new Bullet(container, ship.getX() + ship.getSize()/2, ship.getY()- ship.getSize()));
-                for(Invader inv: invaders){
-                    if(bullets.get(0).collides(inv.getShape())){
-                        bullets.remove(0);
-                    }
-                }
-                if(bullets.get(0).getEnd()){
-                    bullets.remove(0);
-                }
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
-        }
+
         //bullet.update(gameContainer,i);
     }
 
@@ -76,12 +64,10 @@ public class SinglePlayerState extends BasicGameState{
         this.bulletShot = bulletShot;
     }
 
-    public void bulletCollision(){
-        bullets.remove(0);
-    }
 
     public int getID() {
         return 1;
     }
+
 
 }

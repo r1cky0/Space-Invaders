@@ -50,25 +50,24 @@ public class MenuState extends BasicGameState implements ComponentListener {
         this. background = new Image("res/space.png");
 
 
-        single = new Image("res/button_single_player2.png").getScaledCopy(250, 70);
-        singleButton = new MouseOverArea(container, single, 300, 130, 250, 70, this);
+        single = new Image("res/button_single_player2.png").getScaledCopy(container.getWidth()/3, container.getHeight()/10);
+        singleButton = new MouseOverArea(container, single, container.getWidth()/3, 2*container.getHeight()/6, container.getWidth()/3, container.getHeight()/10, this);
 
-        multi = new Image("res/button_multiplayer.png").getScaledCopy(250, 70);
-        multiButton = new MouseOverArea(container, multi, 300, 250, 250, 70, this);
+        multi = new Image("res/button_multiplayer.png").getScaledCopy(container.getWidth()/3, container.getHeight()/10);
+        multiButton = new MouseOverArea(container, multi, container.getWidth()/3, 3*container.getHeight()/6, container.getWidth()/3, container.getHeight()/10, this);
 
+        difficolta=new Image("res/button_difficolta.png").getScaledCopy(container.getWidth()/3,container.getHeight()/10);
+        difficoltaButton=new MouseOverArea(container,difficolta,container.getWidth()/3, 4*container.getHeight()/6,container.getWidth()/3,container.getHeight()/10,this);
 
-        difficolta=new Image("res/button_difficolta.png").getScaledCopy(250,70);
-        difficoltaButton=new MouseOverArea(container,difficolta,300,370,250,70,this);
+        exit=new Image("res/button_exit.png").getScaledCopy(container.getWidth()/6,container.getHeight()/10);
+        exitButton=new MouseOverArea(container,exit,4*container.getWidth()/10,5*container.getHeight()/6,container.getWidth()/6,container.getHeight()/10,this);
 
-        exit=new Image("res/button_exit.png").getScaledCopy(100,50);
-        exitButton=new MouseOverArea(container,exit,30,490,100,50,this);
-
-        settings=new Image("res/button_settings2_new.png").getScaledCopy(90,90);
-        settingButton=new MouseOverArea(container,settings,660,490,80,80,this);
+        //settings=new Image("res/button_settings2_new.png").getScaledCopy(90,90);
+        //settingButton=new MouseOverArea(container,settings,660,490,80,80,this);
 
         try{
             UIFont1 = Font.createFont(Font.TRUETYPE_FONT,ResourceLoader.getResourceAsStream("SlickInvaders/font/invaders_font.ttf"));
-            UIFont1 = UIFont1.deriveFont(Font.BOLD, 65); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 16.f is the size of your font
+            UIFont1 = UIFont1.deriveFont(Font.BOLD, container.getWidth()/12f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 16.f is the size of your font
 
             //Since TrueTypeFont loading has many problems, we can use UnicodeFont to load the .ttf fonts(it's exactly the same thing).
             uniFont = new UnicodeFont(UIFont1);
@@ -91,10 +90,9 @@ public class MenuState extends BasicGameState implements ComponentListener {
         multiButton.render(gameContainer, graphics);
         difficoltaButton.render(gameContainer,graphics);
         exitButton.render(gameContainer,graphics);
-        settingButton.render(gameContainer,graphics);
+        //settingButton.render(gameContainer,graphics);
 
-        uniFont.drawString(120, 60, "SPACE INVADERS", Color.white);
-
+        uniFont.drawString(gameContainer.getWidth()/8f, container.getHeight()/8f, "SPACE INVADERS", Color.white);
     }
 
     @Override
@@ -111,9 +109,9 @@ public class MenuState extends BasicGameState implements ComponentListener {
         if (source == difficoltaButton ) {
             stateBasedGame.enterState(0, new FadeOutTransition(), new FadeInTransition());
         }
-        if (source == settingButton ) {
+        /*if (source == settingButton ) {
             stateBasedGame.enterState(0, new FadeOutTransition(), new FadeInTransition());
-        }
+        }*/
         if(source==exitButton){
             System.exit(0);
         }
