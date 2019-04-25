@@ -31,7 +31,7 @@ public class SinglePlayerState extends BasicGameState{
         this.container = container;
         //this.player = player;
         ship = new Ship(container);
-        bullet = new Bullet(container, ship.getX()+ ship.getSize()/3, ship.getY()-ship.getSize()/2);
+        bullet = null;
         invaders = new ArrayList<>();
         background = new Image("res/space.png");
     }
@@ -40,7 +40,7 @@ public class SinglePlayerState extends BasicGameState{
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
         ship.render(container,graphics);
-        bullet.render(container,graphics);
+        if(bullet != null){bullet.render(container,graphics);}
     }
 
     @Override
@@ -49,21 +49,44 @@ public class SinglePlayerState extends BasicGameState{
 
         if(input.isKeyDown(Input.KEY_LEFT)){
             ship.move(MovingDirections.LEFT);
-            bullet.move(MovingDirections.LEFT);
 
         }
         if(input.isKeyDown(Input.KEY_RIGHT)){
-            bullet.move(MovingDirections.RIGHT);
             ship.move(MovingDirections.RIGHT);
         }
 
-        //bullet.update(gameContainer,i);
+        if (bullet != null) {
+            bullet.update(container,i);
+        }
+
+        if(bullet !=null) {
+            if(bullet.endReached()){
+                bullet = null;
+                bulletShot = false;
+            }
+            for(Invader inv: invaders){
+                if(bullet.collides(inv.getShape())){
+                    invaders.remove(inv);
+                    bullet = null;
+                    bulletShot = false;
+                    score += inv.getValue();
+                }
+            }
+        }
+
     }
 
-    public void setBulletShot(boolean bulletShot) {
-        this.bulletShot = bulletShot;
-    }
 
+    public void keyPressed(int key, char c){
+        if(key==Input.KEY_SPACE && !bulletShot){
+            try {
+                bullet = new Bullet(container, ship.getX(), ship.getY()-ship.getSize()/2);
+                this.bulletShot = true;
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public int getID() {
         return 1;

@@ -13,23 +13,21 @@ public class Bullet implements CollisionElement{
     private float size;
 
     private GameContainer container;
-    private static final float PROP_SPEED = 0.002f;
+    private static final float PROP_SPEED = 0.0008f;
     private static final float PROP_SIZE = 0.03f;
-    private static final float PROP_MOVE = 0.005f;
-    private boolean end;
 
     public Bullet(GameContainer container,float x, float y) throws SlickException {
         this.container = container;
         image = new Image("res/Laser.png");
         this.x = x;
         this.y = y;
-        this.end = false;
         size = container.getHeight()*PROP_SIZE;
         this.shape = new Rectangle(x,y,size,size);
     }
 
     @Override
     public void update(GameContainer container, int delta) {
+        y -= container.getHeight()*PROP_SPEED*delta;
     }
 
     @Override
@@ -40,22 +38,15 @@ public class Bullet implements CollisionElement{
         //graphics.fill(shape);
     }
 
-    @Override
     public boolean collides(Shape s) {
         return shape.intersects(s);
     }
 
-    public void move(MovingDirections md){
-        if (md == MovingDirections.RIGHT && x+size+(container.getWidth()*PROP_MOVE) < container.getWidth()){
-            x += container.getWidth()*PROP_MOVE;
+    public boolean endReached(){
+        if(y<=0){
+            return true;
         }
-        else if(md == MovingDirections.LEFT && x-(container.getWidth()*PROP_MOVE) >0){
-            x-= container.getWidth()*PROP_MOVE;
-        }
-    }
-
-    public boolean getEnd() {
-        return end;
+        return false;
     }
 
     public float getY() {

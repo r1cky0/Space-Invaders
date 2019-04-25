@@ -26,7 +26,7 @@ public class Ship implements CollisionElement {
         size = container.getHeight()*PROP_SIZE;
         x = (container.getWidth()/2f)-size/2f;
         y = 9*(container.getHeight()/10f);
-        image = new Image("res/new_4.png");
+        image = new Image("res/Laser_Cannon.jpg");
         shape = new Rectangle(x, y, size, size);
         //this.player = player;
         this.life = 3;
@@ -56,7 +56,7 @@ public class Ship implements CollisionElement {
     }
 
     public float getX() {
-        return x;
+        return x + size/3f;
     }
 
     public float getY() {

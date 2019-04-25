@@ -23,13 +23,11 @@ public class Field {
         initLevel();
     }
 
+
     /**
-     * Genera un bullet poco sopra la ship. Dopo ció controlla se il bullet va in collisione con un bunker(prima) o con
-     * un invader(poi). Se succede, eliminiamo bullet ed elemento colpito
+     * Metodo che inizializza il livello, così da poter essere richiamata dal cotruttore che a livello completato
      */
-
     public void initLevel(){
-
         for(int i=90; i>50; i-=10){
             for(int j=10;j<90;j+=10) {
                 Coordinate coordinate = new Coordinate(j + 5, i-5);
@@ -54,6 +52,11 @@ public class Field {
         initLevel();
         this.score = 0;
     }
+
+    /**
+     * Genera un bullet poco sopra la ship. Dopo ció controlla se il bullet va in collisione con un bunker(prima) o con
+     * un invader(poi). Se succede, eliminiamo bullet ed elemento colpito
+     */
 
     public void shot(){
         Coordinate bCoordinates = new Coordinate(ship.getCoordinate().getX(),ship.getCoordinate().getY()+2);
