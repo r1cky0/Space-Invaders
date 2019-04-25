@@ -28,6 +28,7 @@ public class Bullet implements CollisionElement{
     @Override
     public void update(GameContainer container, int delta) {
         y -= container.getHeight()*PROP_SPEED*delta;
+        shape.setY(y);
     }
 
     @Override

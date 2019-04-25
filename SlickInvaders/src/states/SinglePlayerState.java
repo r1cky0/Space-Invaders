@@ -22,6 +22,11 @@ public class SinglePlayerState extends BasicGameState{
     private Bullet bullet;
     private ArrayList<Invader> invaders;
     public boolean bulletShot = false;
+    private int invX;
+    private int invY;
+    private float size;
+    private static final float PROP_SIZE = 0.06f;
+
     //private Player player;
 
 
@@ -32,7 +37,19 @@ public class SinglePlayerState extends BasicGameState{
         //this.player = player;
         ship = new Ship(container);
         bullet = null;
+        invX = 0;
+        invY = 50;
+        size = container.getWidth()*PROP_SIZE;
         invaders = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            String path = "res/Alien"+(i+1)+".jpg";
+            for(int j = 0; j < 8; j++){
+                invaders.add(new Invader(container, invX, invY, size, 100/(i+1), path));
+                invX += size;
+            }
+            invX=0;
+            invY += size;
+        }
         background = new Image("res/space.png");
     }
 
@@ -40,7 +57,13 @@ public class SinglePlayerState extends BasicGameState{
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
         ship.render(container,graphics);
-        if(bullet != null){bullet.render(container,graphics);}
+        for(Invader inv : invaders){
+            inv.render(container, graphics);
+        }
+
+        if(bullet != null) {
+            bullet.render(container,graphics);
+        }
     }
 
     @Override
@@ -55,26 +78,31 @@ public class SinglePlayerState extends BasicGameState{
             ship.move(MovingDirections.RIGHT);
         }
 
-        if (bullet != null) {
+        if (bulletShot== true) {
             bullet.update(container,i);
         }
 
-        if(bullet !=null) {
-            if(bullet.endReached()){
-                bullet = null;
-                bulletShot = false;
-            }
+        if(bulletShot==true) {
             for(Invader inv: invaders){
                 if(bullet.collides(inv.getShape())){
                     invaders.remove(inv);
                     bullet = null;
                     bulletShot = false;
                     score += inv.getValue();
+                    break;
                 }
             }
         }
 
+        if(bulletShot==true) {
+            if (bullet.endReached()) {
+                System.err.println("PORCOCOACDIOPV SHIOAVASOHID");
+                bullet = null;
+                bulletShot = false;
+            }
+        }
     }
+
 
 
     public void keyPressed(int key, char c){
