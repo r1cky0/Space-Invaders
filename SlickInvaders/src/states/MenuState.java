@@ -41,8 +41,6 @@ public class MenuState extends BasicGameState implements ComponentListener {
     private Font UIFont1;
     private UnicodeFont uniFont;
 
-    public MenuState(){}
-
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.container= gameContainer;

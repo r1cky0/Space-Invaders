@@ -1,5 +1,6 @@
 package states;
 
+import javafx.stage.Screen;
 import logic.Player;
 import logic.elements.*;
 import org.lwjgl.Sys;
@@ -16,7 +17,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SinglePlayerState extends BasicGameState{
+public class SinglePlayerState extends BasicGameState {
     private GameContainer container;
     private Ship ship;
     private Image background;
@@ -161,6 +162,10 @@ public class SinglePlayerState extends BasicGameState{
                 invaderBullet = null;
                 invaderShot = false;
             }
+        }
+
+        if(ship.getLife() == 0){
+            stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition());
         }
     }
 
