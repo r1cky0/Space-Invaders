@@ -1,10 +1,7 @@
 package states;
 
 import logic.Player;
-import logic.elements.Bullet;
-import logic.elements.Invader;
-import logic.elements.MovingDirections;
-import logic.elements.Ship;
+import logic.elements.*;
 import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
@@ -12,18 +9,22 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class SinglePlayerState extends BasicGameState{
     private GameContainer container;
     private Ship ship;
-    private int score;
     private Image background;
     private Bullet bullet;
+    private InvaderBullet invaderBullet;
     private ArrayList<Invader> invaders;
-    public boolean bulletShot = false;
+    private boolean bulletShot = false;
+    private boolean invaderShot = false;
     private int invX;
     private int invY;
     private float size;
@@ -37,11 +38,11 @@ public class SinglePlayerState extends BasicGameState{
 
     @Override
     public void init(GameContainer container, StateBasedGame stateBasedGame) throws SlickException {
-        score = 0;
         this.container = container;
         //this.player = player;
         ship = new Ship(container);
         bullet = null;
+        invaderBullet = null;
         invX = 0;
         invY = 70;
         size = container.getWidth()*PROP_SIZE;
@@ -77,7 +78,10 @@ public class SinglePlayerState extends BasicGameState{
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
+        uniFont.drawString(20,15,"Lives: "+ship.getLife(),Color.white);
+        uniFont.drawString(container.getWidth()-300,15,"Score: "+ship.getScore(),Color.white);
         ship.render(container,graphics);
+
         for(Invader inv : invaders){
             inv.render(container, graphics);
         }
@@ -86,7 +90,9 @@ public class SinglePlayerState extends BasicGameState{
             bullet.render(container,graphics);
         }
 
-        uniFont.drawString(20,15,"Lives: "+ship.getLife(),Color.white);
+        if(invaderBullet != null){
+            invaderBullet.render(container,graphics);
+        }
     }
 
     @Override
@@ -101,32 +107,62 @@ public class SinglePlayerState extends BasicGameState{
             ship.move(MovingDirections.RIGHT);
         }
 
-        if (bulletShot== true) {
+        if (bulletShot) {
             bullet.update(container,i);
         }
 
-        if(bulletShot==true) {
+        if(bulletShot) {
             for(Invader inv: invaders){
                 if(bullet.collides(inv.getShape())){
                     invaders.remove(inv);
                     bullet = null;
                     bulletShot = false;
-                    score += inv.getValue();
+                    ship.increaseScore(inv.getValue());
                     break;
                 }
             }
         }
 
-        if(bulletShot==true) {
+        if(bulletShot) {
             if (bullet.endReached()) {
-                System.err.println("PORCOCOACDIOPV SHIOAVASOHID");
                 bullet = null;
                 bulletShot = false;
             }
         }
+
+        if(invaders.isEmpty()){
+            invaderShot = false;
+            bulletShot = false;
+            this.init(container,stateBasedGame);
+        }
+
+        //Creazione randomica bullet invader
+        if(invaderShot == false){
+            Random rand = new Random();
+            int n = rand.nextInt(invaders.size());
+            invaderBullet = new InvaderBullet(container,invaders.get(n).getX(),invaders.get(n).getY()+ invaders.get(n).getSize()/2f);
+            invaderShot = true;
+        }
+
+        if(invaderShot){
+            invaderBullet.update(container,i);
+        }
+
+        if(invaderShot){
+            if(invaderBullet.collides(ship.getShape())){
+                invaderBullet = null;
+                invaderShot = false;
+            }
+        }
+
+        if(invaderShot) {
+            if (invaderBullet.endReached()) {
+                invaderBullet = null;
+                invaderShot = false;
+            }
+        }
     }
-
-
+    
 
     public void keyPressed(int key, char c){
         if(key==Input.KEY_SPACE && !bulletShot){

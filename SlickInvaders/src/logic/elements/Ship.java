@@ -19,6 +19,7 @@ public class Ship implements CollisionElement {
     private static final float PROP_MOVE = 0.005f;
     private Shape shape;
     private int life;
+    private int score;
     //private Player player;
 
     public Ship(GameContainer container) throws SlickException{
@@ -30,6 +31,7 @@ public class Ship implements CollisionElement {
         shape = new Rectangle(x, y, size, size);
         //this.player = player;
         this.life = 3;
+        score = 0;
     }
 
     @Override
@@ -55,6 +57,7 @@ public class Ship implements CollisionElement {
         return shape;
     }
 
+    //Sommato size/3f per ottenere la x del centro
     public float getX() {
         return x + size/3f;
     }
@@ -78,4 +81,8 @@ public class Ship implements CollisionElement {
     public float getSize() {
         return size;
     }
+
+    public int getScore(){return this.score;}
+
+    public void increaseScore(int points){score += points;}
 }

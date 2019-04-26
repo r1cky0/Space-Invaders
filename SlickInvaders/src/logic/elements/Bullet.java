@@ -34,9 +34,6 @@ public class Bullet implements CollisionElement{
     @Override
     public void render(GameContainer container, Graphics graphics) {
         image.draw(x,y,size,size);
-        //graphics.drawImage(bullet, x, y);
-        //graphics.setColor(Color.green);
-        //graphics.fill(shape);
     }
 
     public boolean collides(Shape s) {

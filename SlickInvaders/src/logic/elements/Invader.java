@@ -45,4 +45,10 @@ public class Invader implements CollisionElement{
         return value;
     }
 
+    public float getX(){return x + size/3f;}
+
+    public float getY(){return this.y;}
+
+    public float getSize(){return this.size;}
+
 }
