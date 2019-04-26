@@ -1,10 +1,7 @@
 package logic.elements;
 
 import logic.Player;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
@@ -41,15 +38,18 @@ public class Ship implements CollisionElement {
 
     @Override
     public void render(GameContainer container, Graphics g) {
+        g.draw(shape);
         image.draw(x,y,size,size);
     }
 
     public void move(MovingDirections md){
         if (md == MovingDirections.RIGHT && x+size+(container.getWidth()*PROP_MOVE) < container.getWidth()){
             x += container.getWidth()*PROP_MOVE;
+            shape.setCenterX(x+size/2f);
         }
         else if(md == MovingDirections.LEFT && x-(container.getWidth()*PROP_MOVE) >0){
             x-= container.getWidth()*PROP_MOVE;
+            shape.setCenterX(x+size/2f);
         }
     }
 

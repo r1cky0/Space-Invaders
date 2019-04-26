@@ -152,6 +152,7 @@ public class SinglePlayerState extends BasicGameState{
             if(invaderBullet.collides(ship.getShape())){
                 invaderBullet = null;
                 invaderShot = false;
+                ship.decreseLife();
             }
         }
 
@@ -162,7 +163,7 @@ public class SinglePlayerState extends BasicGameState{
             }
         }
     }
-    
+
 
     public void keyPressed(int key, char c){
         if(key==Input.KEY_SPACE && !bulletShot){
