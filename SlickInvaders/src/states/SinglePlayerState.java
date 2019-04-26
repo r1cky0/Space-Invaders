@@ -7,10 +7,12 @@ import logic.elements.MovingDirections;
 import logic.elements.Ship;
 import org.lwjgl.Sys;
 import org.newdawn.slick.*;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.ResourceLoader;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,9 @@ public class SinglePlayerState extends BasicGameState{
     private float size;
     private static final float PROP_SIZE = 0.06f;
 
+    private java.awt.Font UIFont1;
+    private UnicodeFont uniFont;
+
     //private Player player;
 
 
@@ -38,7 +43,7 @@ public class SinglePlayerState extends BasicGameState{
         ship = new Ship(container);
         bullet = null;
         invX = 0;
-        invY = 50;
+        invY = 70;
         size = container.getWidth()*PROP_SIZE;
         invaders = new ArrayList<>();
         for(int i = 0; i < 4; i++){
@@ -51,6 +56,22 @@ public class SinglePlayerState extends BasicGameState{
             invY += size;
         }
         background = new Image("res/space.png");
+
+        try{
+            UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("SlickInvaders/font/invaders_font.ttf"));
+            UIFont1 = UIFont1.deriveFont(java.awt.Font.BOLD, container.getWidth()/30f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 16.f is the size of your font
+
+            //Since TrueTypeFont loading has many problems, we can use UnicodeFont to load the .ttf fonts(it's exactly the same thing).
+            uniFont = new UnicodeFont(UIFont1);
+
+            //uniFont.addAsciiGlyphs();
+            uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
+
+            uniFont.addAsciiGlyphs();
+            uniFont.loadGlyphs();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -64,6 +85,8 @@ public class SinglePlayerState extends BasicGameState{
         if(bullet != null) {
             bullet.render(container,graphics);
         }
+
+        uniFont.drawString(20,15,"Lives: "+ship.getLife(),Color.white);
     }
 
     @Override
