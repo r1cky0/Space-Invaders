@@ -38,7 +38,6 @@ public class Ship implements CollisionElement {
 
     @Override
     public void render(GameContainer container, Graphics g) {
-        g.draw(shape);
         image.draw(x,y,size,size);
     }
 

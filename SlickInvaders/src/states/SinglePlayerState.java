@@ -49,7 +49,7 @@ public class SinglePlayerState extends BasicGameState {
         size = container.getWidth()*PROP_SIZE;
         invaders = new ArrayList<>();
         for(int i = 0; i < 4; i++){
-            String path = "res/Alien"+(i+1)+".jpg";
+            String path = "res/Alien"+(i+1)+".png";
             for(int j = 0; j < 8; j++){
                 invaders.add(new Invader(container, invX, invY, size, 100/(i+1), path));
                 invX += size;
