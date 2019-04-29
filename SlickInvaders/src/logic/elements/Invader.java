@@ -47,7 +47,11 @@ public class Invader implements CollisionElement{
 
     public float getX(){return x + size/3f;}
 
+    public void setX(float x){this.x += x;}
+
     public float getY(){return this.y;}
+
+    public void sety(float y){this.y += y;}
 
     public float getSize(){return this.size;}
 

@@ -29,6 +29,7 @@ public class SinglePlayerState extends BasicGameState {
     private int invX;
     private int invY;
     private float size;
+    private MovingDirections md = MovingDirections.RIGHT;
     private static final float PROP_SIZE = 0.06f;
 
     private java.awt.Font UIFont1;
@@ -167,8 +168,42 @@ public class SinglePlayerState extends BasicGameState {
         if(ship.getLife() == 0){
             stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition());
         }
+
+        //Movimento invaders
+        /*if(md == MovingDirections.RIGHT){
+            for(Invader invader : invaders){
+                invader.setX(invader.getX()+invader.getSize());
+            }
+        }
+
+        if(md == MovingDirections.LEFT){
+            for(Invader invader : invaders){
+                invader.setX(invader.getX()-invader.getSize());
+            }
+        }
+
+        for(Invader invader : invaders){
+            if(invader.getX()+invader.getSize() >= container.getWidth()){
+                md = MovingDirections.LEFT;
+                getDownInvaders();
+            }
+        }
+
+        for(Invader invader : invaders){
+            if(invader.getX() <= 0){
+                md = MovingDirections.RIGHT;
+                getDownInvaders();
+            }
+        }
+        */
     }
 
+
+    public void getDownInvaders(){
+        for(Invader invader : invaders){
+            invader.sety(invader.getY()+invader.getSize());
+        }
+    }
 
     public void keyPressed(int key, char c){
         if(key==Input.KEY_SPACE && !bulletShot){
