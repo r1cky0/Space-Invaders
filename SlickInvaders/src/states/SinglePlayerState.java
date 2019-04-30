@@ -183,14 +183,14 @@ public class SinglePlayerState extends BasicGameState {
         }
 
         for(Invader invader : invaders){
-            if(invader.getX()+invader.getSize() >= container.getWidth()){
+            if(invader.getX()+invader.getSize() >= container.getWidth() && md == MovingDirections.RIGHT){
                 md = MovingDirections.LEFT;
                 getDownInvaders();
             }
         }
 
         for(Invader invader : invaders){
-            if(invader.getX() <= 0){
+            if(invader.getX() <= 0 && md == MovingDirections.LEFT){
                 md = MovingDirections.RIGHT;
                 getDownInvaders();
             }
