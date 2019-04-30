@@ -14,6 +14,8 @@ public class Invader implements CollisionElement{
     private float x;
     private float y;
     private float size;
+    private MovingDirections md = MovingDirections.RIGHT;
+    private boolean moveDown = false;
 
     private GameContainer container;
     private static final float PROP_SPEED = 0.0008f;
@@ -35,6 +37,26 @@ public class Invader implements CollisionElement{
 
     @Override
     public void update(GameContainer container, int delta) {
+        LateralMove(delta);
+        MoveDown(delta);
+        shape.setX(x);
+        shape.setY(y);
+    }
+
+    public void LateralMove(int delta){
+        if(md == MovingDirections.RIGHT){
+                x+=size*PROP_SPEED*delta;
+        }
+        if(md == MovingDirections.LEFT){
+                x-=size*PROP_SPEED*delta;
+        }
+    }
+
+    public void MoveDown(int delta){
+        if(moveDown == true){
+            y+=size*100*PROP_SPEED*delta;
+            moveDown = false;
+        }
     }
 
     public Shape getShape() {
@@ -54,5 +76,9 @@ public class Invader implements CollisionElement{
     public void sety(float y){this.y += y;}
 
     public float getSize(){return this.size;}
+
+    public void setMd(MovingDirections md){this.md = md;}
+
+    public void setMoveDown(boolean moveDown){this.moveDown = moveDown;}
 
 }

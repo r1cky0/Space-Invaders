@@ -170,38 +170,35 @@ public class SinglePlayerState extends BasicGameState {
         }
 
         //Movimento invaders
-        /*if(md == MovingDirections.RIGHT){
             for(Invader invader : invaders){
-                invader.setX(invader.getX()+invader.getSize());
+                invader.update(gameContainer,i);
             }
-        }
-
-        if(md == MovingDirections.LEFT){
-            for(Invader invader : invaders){
-                invader.setX(invader.getX()-invader.getSize());
-            }
-        }
 
         for(Invader invader : invaders){
-            if(invader.getX()+invader.getSize() >= container.getWidth() && md == MovingDirections.RIGHT){
+            if(invader.getX()+invader.getSize() >= container.getWidth()){
                 md = MovingDirections.LEFT;
                 getDownInvaders();
+                break;
             }
         }
 
         for(Invader invader : invaders){
-            if(invader.getX() <= 0 && md == MovingDirections.LEFT){
+            if(invader.getX() <= 0){
                 md = MovingDirections.RIGHT;
                 getDownInvaders();
+                break;
             }
         }
-        */
+
+        for(Invader invader : invaders){
+            invader.setMd(md);
+        }
     }
 
 
     public void getDownInvaders(){
         for(Invader invader : invaders){
-            invader.sety(invader.getY()+invader.getSize());
+            invader.setMoveDown(true);
         }
     }
 
