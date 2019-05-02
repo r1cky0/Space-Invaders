@@ -6,11 +6,12 @@ import Logic.Sprite.Sprite;
 
 public class SpaceShip extends Sprite implements Movable {
 
-    private int life;
+    private int life, currentscore;
 
     public SpaceShip(Coordinate coordinate) {
         super(coordinate);
         life = 3;
+        currentscore = 0;
     }
 
     public int getLife() {
@@ -19,6 +20,14 @@ public class SpaceShip extends Sprite implements Movable {
 
     public void setLife(int life) {
         this.life = life;
+    }
+
+    public int getCurrentscore(){
+        return currentscore;
+    }
+
+    public void setCurrentscore(int currentscore){
+        this.currentscore = currentscore;
     }
 
     @Override
@@ -48,13 +57,18 @@ public class SpaceShip extends Sprite implements Movable {
         return super.getCoordinate();
     }
 
-    public int decreaseLife(int l) {
-        life -= l;
+    public int decreaseLife(int value) {
+        life -= value;
         return life;
     }
 
-    public int incrementLife(int l) {
-        life += l;
+    public int incrementLife(int value) {
+        life += value;
         return life;
+    }
+
+    public int incrementCurrentScore(int value){
+        currentscore += value;
+        return currentscore;
     }
 }

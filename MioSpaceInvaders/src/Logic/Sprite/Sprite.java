@@ -2,7 +2,7 @@ package Logic.Sprite;
 
 import Logic.Coordinate;
 
-public abstract  class Sprite {
+public abstract class Sprite {
 
     private Coordinate coordinate;
     // image

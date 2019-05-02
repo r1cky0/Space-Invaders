@@ -28,13 +28,19 @@ public class Bunker {
         return daRestituire;
     }
 
+    /**
+     * Creazione bunker da lettura file in cui è presente la struttura da creare.
+     *
+     * @param index_x: indice di partenza coordinata x
+     * @param index_y: indice di partenza coordinata x
+     */
     public void createBunker(double index_x, double index_y) {
         bricks = new ArrayList<>();
         double ind_x = index_x;
         double ind_y = index_y;
 
         try {
-            BufferedReader in = new BufferedReader(new FileReader("resources/prova.txt"));
+            BufferedReader in = new BufferedReader(new FileReader("res/bunker.txt"));
             String riga = in.readLine();
             while (riga != null) {
                 for (int i = 0; i < riga.length(); i++) {
@@ -62,6 +68,12 @@ public class Bunker {
         bricks.add(brick);
     }
 
+    /**
+     * Eliminazione brick quando viene colpito da un bullet.
+     *
+     * @param coordinate: coordinata del brick che deve essere eliminato
+     * @return
+     */
     public boolean deleteBrick(Coordinate coordinate) {
         ArrayList<Brick> toBeRemoved = new ArrayList<>();
         for (Brick b: bricks) {
