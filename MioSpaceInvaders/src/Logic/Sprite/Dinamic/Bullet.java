@@ -14,11 +14,11 @@ public class Bullet extends AbstractMovable{
         return super.toString();
     }
 
-    public Coordinate moveLeft(double x) {
+    public Coordinate moveLeft() {
         return super.getCoordinate();
     }
 
-    public Coordinate moveRight(double x) {
+    public Coordinate moveRight() {
         return super.getCoordinate();
     }
 

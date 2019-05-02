@@ -15,7 +15,7 @@ public class InvaderBullet implements CollisionElement {
     private float size;
 
     private GameContainer container;
-    private static final float PROP_SPEED = 0.0008f;
+    private static final float PROP_SPEED = 0.00008f;
     private static final float PROP_SIZE = 0.03f;
 
     public InvaderBullet(GameContainer container,float x, float y) throws SlickException {

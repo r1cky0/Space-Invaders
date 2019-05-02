@@ -1,6 +1,6 @@
 package states;
 
-import javafx.stage.Screen;
+
 import logic.Player;
 import logic.elements.*;
 import org.lwjgl.Sys;
