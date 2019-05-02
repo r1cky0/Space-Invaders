@@ -8,16 +8,20 @@ import java.util.ArrayList;
 
 public class Player {
 
-    // mettere password a player e fare metodi log in log out, in field controllare che su un pc ci sia un solo utente attivo
+    // In field controllare che su un pc ci sia un solo utente attivo
     private String name;
+    private String password;
+    private boolean logged;
     private int credit, highscore;
     private SpaceShip spaceShip;
 
-    public Player(String name, SpaceShip spaceShip) {
+    public Player(String name, SpaceShip spaceShip, String password) {
         this.name = name;
         this.spaceShip = spaceShip;
         this.credit = 0;
         this.highscore = 0;
+        this.password = password;
+        logged = false;
     }
 
     public String getName() {
@@ -67,6 +71,14 @@ public class Player {
     public int decrementCredit(int c) {
         credit -= c;
         return credit;
+    }
+
+    private void login(String password){
+        if(this.password == password){logged=true;}
+    }
+
+    private void logout(){
+        logged = false;
     }
 
 }
