@@ -56,9 +56,7 @@ public class Player {
     public String toString() {
         return "Player{" +
                 "name='" + name + '\'' +
-                ", credit=" + credit +
-                ", highscore=" + highscore +
-                    spaceShip;
+                ", highscore=" + highscore;
     }
 
     public int incrementCredit(int c) {

@@ -1,6 +1,5 @@
 package Logic.Environment;
 
-import Logic.Coordinate;
 import Logic.Player.Player;
 import Logic.Sprite.Dinamic.Bullet;
 import Logic.Sprite.Dinamic.Invader;
@@ -16,13 +15,11 @@ public class Field {
     private Player player;
     private ArrayList<Invader> invaders;
     private ArrayList<Bunker> bunkers;
-    private ArrayList<Bullet> bullets;
 
     public Field(Player player){
         this.player = player;
         invaders = new ArrayList<>();
         bunkers = new ArrayList<>();
-        bullets = new ArrayList<>();
         startGame();
     }
 
@@ -38,18 +35,21 @@ public class Field {
         //metodo da richiamare quando finiscono le vite della ship
     }
 
-    public boolean shipShot() {
-        Bullet b = new Bullet(player.getSpaceShip().getCoordinate());
-        return bullets.add(b);
+    public void shipMovement(){
+
     }
 
-    public boolean removeShot(Coordinate coordinate) {
-        ArrayList<Bullet> toBeRemoved = new ArrayList<>();
-        for (Bullet b: bullets) {
-            if (b.getCoordinate().equals(coordinate)) {
-                toBeRemoved.add(b);
-            }
-        }
-        return bullets.removeAll(toBeRemoved);
+    public void shipShot() {
+        Bullet bullet = new Bullet(player.getSpaceShip().getCoordinate());
+
     }
+
+    public void invaderMovement(){
+
+    }
+
+    private void invaderShot(){
+
+    }
+
 }
