@@ -8,8 +8,9 @@ import Logic.Sprite.Static.Bunker;
 import java.util.ArrayList;
 
 public class Field {
+    //LOGICAMENTE: dimensioni da 1 a 100. Nella grafica faremo proporzione con container.Width e .Height
 
-    // fare una map<Player, int score>, controllare che i player siano loggati(fare il controllo qui oppure meglio in "MenuPrincipale")
+    //controllare che i player siano loggati(fare il controllo in "MenuPrincipale")
 
     // metodo "startGame" con il movimento degli alieni
     private Player player;

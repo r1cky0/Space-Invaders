@@ -4,9 +4,10 @@ import Logic.Coordinate;
 import Logic.Sprite.Dinamic.Interface.Movable;
 import Logic.Sprite.Sprite;
 
-public class SpaceShip extends Sprite implements Movable {
+public class SpaceShip extends AbstractMovable {
 
     private int life, currentscore;
+    private final static double MOVE_OFFSET = 1;
 
     public SpaceShip(Coordinate coordinate) {
         super(coordinate);
@@ -30,30 +31,15 @@ public class SpaceShip extends Sprite implements Movable {
         this.currentscore = currentscore;
     }
 
-    @Override
     public String toString() {
         return "{" + "life=" + life + '}' + super.toString();
     }
 
-    @Override
-    public Coordinate moveLeft(double x) {
-        super.setX(super.getX() - x);
+    public Coordinate moveUp() {
         return super.getCoordinate();
     }
 
-    @Override
-    public Coordinate moveRight(double x) {
-        super.setX(super.getX() + x);
-        return super.getCoordinate();
-    }
-
-    @Override
-    public Coordinate moveUp(double y) {
-        return super.getCoordinate();
-    }
-
-    @Override
-    public Coordinate moveDown(double y) {
+    public Coordinate moveDown() {
         return super.getCoordinate();
     }
 
