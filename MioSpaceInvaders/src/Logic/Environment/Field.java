@@ -36,13 +36,13 @@ public class Field {
         //metodo da richiamare quando finiscono le vite della ship
     }
 
-    public void shipMovement(){
-
+    public void shipMovement(MovingDirections md){
+        if(md == MovingDirections.RIGHT){player.getSpaceShip().moveRight();}
+        if(md == MovingDirections.LEFT){player.getSpaceShip().moveLeft();}
     }
 
     public void shipShot() {
         Bullet bullet = new Bullet(player.getSpaceShip().getCoordinate());
-
     }
 
     public void invaderMovement(){
