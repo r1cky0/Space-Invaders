@@ -8,8 +8,8 @@ public class Invader extends AbstractMovable {
 
     private int value;
 
-    public Invader(Coordinate coordinate, int value) {
-        super(coordinate);
+    public Invader(Coordinate coordinate, double size, int value) {
+        super(coordinate, size);
         this.value = value;
     }
 

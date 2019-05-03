@@ -5,8 +5,8 @@ import Logic.Sprite.Sprite;
 
 public class Brick extends Sprite {
 
-    public Brick(Coordinate coordinate) {
-        super(coordinate);
+    public Brick(Coordinate coordinate, double size) {
+        super(coordinate, size);
     }
 
     @Override

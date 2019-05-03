@@ -7,8 +7,8 @@ import Logic.Sprite.Sprite;
 public abstract class AbstractMovable extends Sprite implements Movable{
     private final static double MOVE_OFFSET = 1;
 
-    public AbstractMovable(Coordinate coordinate) {
-        super(coordinate);
+    public AbstractMovable(Coordinate coordinate, double size) {
+        super(coordinate, size);
     }
 
     public Coordinate moveLeft() {

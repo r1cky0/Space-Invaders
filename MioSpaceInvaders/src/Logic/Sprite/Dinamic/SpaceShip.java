@@ -7,10 +7,9 @@ import Logic.Sprite.Sprite;
 public class SpaceShip extends AbstractMovable {
 
     private int life, currentscore;
-    private final static double MOVE_OFFSET = 1;
 
-    public SpaceShip(Coordinate coordinate) {
-        super(coordinate);
+    public SpaceShip(Coordinate coordinate, double size) {
+        super(coordinate, size);
         life = 3;
         currentscore = 0;
     }

@@ -7,10 +7,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class Bunker {
 
+    private final double BRICK_SIZE = 1;
     private ArrayList<Brick> bricks;
+
 
     public Bunker(double index_x, double index_y) {
         createBunker(index_x, index_y);
@@ -46,7 +49,7 @@ public class Bunker {
                 for (int i = 0; i < riga.length(); i++) {
                     if (riga.charAt(i) == '*') {
                         Coordinate coordinate = new Coordinate(ind_x, ind_y);
-                        Brick brick = new Brick(coordinate);
+                        Brick brick = new Brick(coordinate, BRICK_SIZE);
                         bricks.add(brick);
                         ind_x++;
                     }
@@ -63,24 +66,7 @@ public class Bunker {
         }
     }
 
-    public void addBrick(Coordinate coordinate) {
-        Brick brick = new Brick(coordinate);
-        bricks.add(brick);
-    }
-
-    /**
-     * Eliminazione brick quando viene colpito da un bullet.
-     *
-     * @param coordinate: coordinata del brick che deve essere eliminato
-     * @return
-     */
-    public boolean deleteBrick(Coordinate coordinate) {
-        ArrayList<Brick> toBeRemoved = new ArrayList<>();
-        for (Brick b: bricks) {
-            if (b.getCoordinate().equals(coordinate)) {
-                toBeRemoved.add(b);
-            }
-        }
-        return bricks.removeAll(toBeRemoved);
+    public void deleteBrick(int index){
+        bricks.remove(index);
     }
 }

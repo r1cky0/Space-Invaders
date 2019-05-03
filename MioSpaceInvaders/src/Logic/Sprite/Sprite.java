@@ -5,10 +5,12 @@ import Logic.Coordinate;
 public abstract class Sprite {
 
     private Coordinate coordinate;
+    private double size;
     // image
 
-    public Sprite(Coordinate coordinate) {
+    public Sprite(Coordinate coordinate, double size) {
         this.coordinate = coordinate;
+        this.size = size;
     }
 
     public Coordinate getCoordinate() {
@@ -32,6 +34,10 @@ public abstract class Sprite {
         return coordinate.getY();
     }
 
+    public double getSize(){
+        return size;
+    }
+
     public void setX(double x) {
         coordinate.setX(x);
     }
@@ -39,4 +45,19 @@ public abstract class Sprite {
     public void setY(double y) {
         coordinate.setY(y);
     }
+
+    public void setSize(double size){
+        this.size = size;
+    }
+
+    public boolean intersect(Sprite sprite) {
+        if ((sprite.getX() < coordinate.getX() + size/2)
+                && (sprite.getX() > coordinate.getX() - size/2)
+                && sprite.getY() == coordinate.getY()) {
+            return true;
+        }
+        else return false;
+    }
+
+
 }

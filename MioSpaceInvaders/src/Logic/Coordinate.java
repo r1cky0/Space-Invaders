@@ -33,10 +33,4 @@ public class Coordinate {
                 '}';
     }
 
-    public boolean equals(Coordinate coordinate) {
-        if (x == coordinate.getX() && y == coordinate.getY()) {
-            return true;
-        }
-        else return false;
-    }
 }
