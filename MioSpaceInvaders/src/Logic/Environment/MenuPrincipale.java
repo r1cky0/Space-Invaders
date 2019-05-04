@@ -17,7 +17,7 @@ public class MenuPrincipale {
     private HashMap<String, Player> players;
     private SpaceShip defaultShip;
 
-    public MenuPrincipale(Player player,double max_height, double max_width, double shipSize){
+    public MenuPrincipale(double max_height, double max_width, double shipSize){
         classifica = new Classifica();
         personalizzazione = new Personalizzazione();
         this.max_height = max_height;
