@@ -11,17 +11,19 @@ public class Player {
     // In field controllare che su un pc ci sia un solo utente attivo
     private String name;
     private String password;
-    private boolean logged;
+    private boolean loggedIn;
+    private boolean firstLogin;
     private int credit, highscore;
     private SpaceShip spaceShip;
 
-    public Player(String name, SpaceShip spaceShip, String password) {
+    public Player(String name, SpaceShip spaceShip) {
         this.name = name;
         this.spaceShip = spaceShip;
         this.credit = 0;
         this.highscore = 0;
-        this.password = password;
-        logged = false;
+        this.password = "Change me";
+        loggedIn = false;
+        firstLogin = true;
     }
 
     public String getName() {
@@ -73,12 +75,45 @@ public class Player {
         return credit;
     }
 
-    private void login(String password){
-        if(this.password == password){logged=true;}
+    /**
+     * Non controlliamo solamente che la password sia corretta, ma che "l'account" sia stato
+     * attivato, ovvero sia stato fatto un primo login con set della password
+     * @param password
+     * @return
+     */
+    public boolean login(String password){
+        if(this.password == password && firstLogin == false){
+            loggedIn = true;
+            return true;
+        }
+        else{
+            loggedIn = false;
+            return false;
+        }
     }
 
-    private void logout(){
-        logged = false;
+    public void logout(){
+        loggedIn = false;
+    }
+
+    public boolean setPassword(String newpass){
+        if(firstLogin==true && password=="changeme"){
+            this.password = newpass;
+            firstLogin=false;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean isLoggedIn(){
+        if(loggedIn == true){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 }

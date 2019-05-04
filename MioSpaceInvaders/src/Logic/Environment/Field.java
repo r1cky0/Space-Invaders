@@ -25,14 +25,14 @@ public class Field {
     private ArrayList<Invader> invaders;
     private ArrayList<Bunker> bunkers;
 
-    public Field(Player player){
+    /*public Field(Player player){
         this.player = player;
         invaders = new ArrayList<>();
         bunkers = new ArrayList<>();
         max_height = 100;
         max_width = 100;
         startGame();
-    }
+    }*/
 
     public Field(Player player, double max_height, double max_width){
         this.player = player;
