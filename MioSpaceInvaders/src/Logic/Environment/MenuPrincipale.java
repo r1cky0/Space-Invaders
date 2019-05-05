@@ -16,6 +16,7 @@ public class MenuPrincipale {
     private double shipSize;
     private HashMap<String, Player> players;
     private SpaceShip defaultShip;
+    private Player playingPlayer;
 
     public MenuPrincipale(double max_height, double max_width, double shipSize){
         classifica = new Classifica();
@@ -46,12 +47,22 @@ public class MenuPrincipale {
             return false;
         }
         if(player.login(password)){
-            field = new Field(player,max_height,max_width);
+            playingPlayer = player;
             return true;
         }
         else{
             System.err.println("Password errata");
             return false;
+        }
+    }
+
+    //Probabilmente ci sará da fare un' eccezione
+    public void startGame(){
+        if(playingPlayer != null){
+            field = new Field(playingPlayer,max_height,max_width);
+        }
+        else{
+            return;
         }
     }
 

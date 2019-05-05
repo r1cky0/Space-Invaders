@@ -19,11 +19,15 @@ public class Field {
     private double max_width;
 
 
-    //controllare che i player siano loggati(fare il controllo in "MenuPrincipale")
+    //Per ora fatto con single player
 
     private Player player;
     private ArrayList<Invader> invaders;
     private ArrayList<Bunker> bunkers;
+    private Bullet shipBullet;
+    private boolean shipShot;
+    private Bullet invaderBullet;
+    private boolean invaderShot;
 
     /*public Field(Player player){
         this.player = player;
@@ -40,11 +44,18 @@ public class Field {
         bunkers = new ArrayList<>();
         this.max_height = max_height;
         this.max_width = max_width;
+        shipBullet = null;
+        shipShot = false;
+        invaderBullet = null;
+        invaderShot = false;
         startGame();
     }
 
     public void startGame(){
         //inizializzazione di tutti gli elementi all'inizio del gioco
+
+        //DUBBIO DI SIMO: Ma per le dimensioni degli elementi come facciamo?
+        //Facciamo ad esempio proporzionati alla larghezza che abbiamo passato dal costruttore? (ES: invader= 1/15 della larghezza)
     }
 
     public void nextLevel(){
@@ -64,16 +75,18 @@ public class Field {
                 && (md == MovingDirections.LEFT)){
             player.getSpaceShip().moveLeft();
         }
+
     }
 
     public void shipShot() {
-
-
-        Bullet bullet = new Bullet(player.getSpaceShip().getCoordinate(), BULLET_SIZE);
-
-        while(!(checkCollision(bullet)) && bullet.getY()>MIN_HEIGHT){
-            //Qua va il ritardo in secondi
-            bullet.moveUp();
+        if(!shipShot) {
+            shipBullet = new Bullet(player.getSpaceShip().getCoordinate(), BULLET_SIZE);
+            shipShot = true;
+            while (!(checkCollision(shipBullet)) && shipBullet.getY() > MIN_HEIGHT) {
+                //Qua va il ritardo in secondi
+                shipBullet.moveUp();
+            }
+            shipShot = false;
         }
     }
 
@@ -105,17 +118,13 @@ public class Field {
                 max_x = invader.getX();
             }
         }
-
-
-
-
     }
 
     private void invaderShot(){
 
         Random random = new Random();
         random.ints(1,33);
-        Bullet bullet = new Bullet(invaders.get(random.nextInt()).getCoordinate(), BULLET_SIZE);
+        invaderBullet = new Bullet(invaders.get(random.nextInt()).getCoordinate(), BULLET_SIZE);
 
     }
 
