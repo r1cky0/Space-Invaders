@@ -121,11 +121,15 @@ public class Field {
     }
 
     private void invaderShot(){
-
-        Random random = new Random();
-        random.ints(1,33);
-        invaderBullet = new Bullet(invaders.get(random.nextInt()).getCoordinate(), BULLET_SIZE);
-
+        if(invaderShot == false){
+            Random rand = new Random();
+            invaderBullet = new Bullet(invaders.get(rand.nextInt(invaders.size())).getCoordinate(), BULLET_SIZE);
+            invaderShot = true;
+            while (!(checkCollision(invaderBullet)) && invaderBullet.getY() < max_height) {
+                //Qua va il ritardo in secondi
+                shipBullet.moveDown();
+            }
+        }
     }
 
 }
