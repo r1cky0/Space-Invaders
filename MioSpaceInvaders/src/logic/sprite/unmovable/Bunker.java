@@ -21,14 +21,6 @@ public class Bunker {
         return bricks;
     }
 
-    public String toString() {
-        String daRestituire = "";
-        for (Brick b: bricks) {
-            daRestituire += b.toString();
-        }
-        return daRestituire;
-    }
-
     /**
      * Creazione bunker da lettura file in cui è presente la struttura da creare.
      *
@@ -67,4 +59,5 @@ public class Bunker {
     public void deleteBrick(int index){
         bricks.remove(index);
     }
+
 }

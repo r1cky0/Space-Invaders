@@ -6,7 +6,6 @@ public abstract class Sprite extends Facade {
 
     private Coordinate coordinate;
     private double size;
-    // image
 
     public Sprite(Coordinate coordinate, double size) {
         super(coordinate,size);
@@ -20,11 +19,6 @@ public abstract class Sprite extends Facade {
 
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
-    }
-
-    @Override
-    public String toString() {
-        return coordinate.toString();
     }
 
     public double getX() {
@@ -41,14 +35,12 @@ public abstract class Sprite extends Facade {
 
     public void setX(double x) {
         coordinate.setX(x);
+        super.setCoordinate(coordinate);
     }
 
     public void setY(double y) {
         coordinate.setY(y);
-    }
-
-    public void setSize(double size){
-        this.size = size;
+        super.setCoordinate(coordinate);
     }
 
     public boolean collides(Sprite sprite) {

@@ -1,8 +1,12 @@
 package logic.environment;
 
 import logic.player.Player;
+import logic.sprite.Coordinate;
+import logic.sprite.Sprite;
 import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
+import logic.sprite.dinamic.SpaceShip;
+import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 
 import java.util.ArrayList;
@@ -27,15 +31,7 @@ public class Field {
     private boolean shipShot;
     private Bullet invaderBullet;
     private boolean invaderShot;
-
-    /*public Field(player player){
-        this.player = player;
-        invaders = new ArrayList<>();
-        bunkers = new ArrayList<>();
-        max_height = 100;
-        max_width = 100;
-        startGame();
-    }*/
+    private boolean gameover;
 
     public Field(Player player, double max_height, double max_width){
         this.player = player;
@@ -47,6 +43,7 @@ public class Field {
         shipShot = false;
         invaderBullet = null;
         invaderShot = false;
+        gameover = false;
         startGame();
     }
 
@@ -61,60 +58,112 @@ public class Field {
         //metodo da richiamare quando finiscono gli invaders e si passa al livello successivo
     }
 
-    public void gameOver(){
-        //metodo da richiamare quando finiscono le vite della ship
+    public boolean gameOver(){
+        return gameover;
     }
 
-    public void shipMovement(MovingDirections md){
+    public Coordinate shipMovement(MovingDirections md){
         if(((player.getSpaceShip().getX() + player.getSpaceShip().getSize()/2) < max_width)
                 && (md == MovingDirections.RIGHT)){
-            player.getSpaceShip().moveRight();
+            return player.getSpaceShip().moveRight();
         }
         if(((player.getSpaceShip().getX() - player.getSpaceShip().getSize()/2) > MIN_WIDTH)
                 && (md == MovingDirections.LEFT)){
-            player.getSpaceShip().moveLeft();
+            return player.getSpaceShip().moveLeft();
         }
-
+        return player.getSpaceShip().getCoordinate();
     }
 
     public void shipShot() {
         if(!shipShot) {
             shipBullet = new Bullet(player.getSpaceShip().getCoordinate(), BULLET_SIZE);
             shipShot = true;
-            while (!(checkCollision(shipBullet)) && shipBullet.getY() > MIN_HEIGHT) {
-                //Qua va il ritardo in secondi
-                shipBullet.moveUp();
-            }
-            shipShot = false;
+            //DALLA GRAFICA: MOVIMENTO BULLET E CONTROLLO DELLA COLLISIONE
         }
     }
 
-    private boolean checkCollision(Bullet bullet){
+    private boolean checkCollision(Sprite sprite, Bullet bullet){
 
-        /*for(Bunker bunker:bunkers){
-            if(bunker.deleteBrick(bullet.getCoordinate()))
-                return true;
-        }*/
-
-        ListIterator<Invader> listIterator = invaders.listIterator();
-        while (listIterator.hasNext()) {
-            if(listIterator.next().collides(bullet)){
-                listIterator.remove();
-                return true;
+        for(Bunker bunker:bunkers){
+            ListIterator<Brick> listIterator = bunker.getBricks().listIterator();
+            while(listIterator.hasNext()){
+                if(listIterator.next().collides(bullet)){
+                    listIterator.remove();
+                    if(sprite instanceof SpaceShip) {
+                        shipBullet = null;
+                        shipShot = false;
+                    }
+                    else {
+                        invaderBullet = null;
+                        invaderShot = false;
+                    }
+                    return true;
+                }
             }
         }
-        return false;
+
+
+        if(sprite instanceof SpaceShip) {
+            ListIterator<Invader> listIterator = invaders.listIterator();
+            while (listIterator.hasNext()) {
+                Invader invader = listIterator.next();
+                if (invader.collides(bullet)) {
+                    player.getSpaceShip().incrementCurrentScore(invader.getValue());
+                    listIterator.remove();
+                    shipBullet = null;
+                    shipShot = false;
+                    return true;
+                }
+            }
+            return false;
+        }
+        else{
+            if(player.getSpaceShip().collides(bullet)){
+                if(player.getSpaceShip().decreaseLife() == 0){
+                    gameover = true;
+                }
+                else{
+                    invaderBullet = null;
+                    invaderShot = false;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
-    public void invaderMovement(){
+    public void invaderDirection(){
 
-        double max_x = 0;
-        double min_x = 0;
-        double max_y = 0;
+        MovingDirections md = MovingDirections.RIGHT;
 
         for(Invader invader: invaders){
-            if(invader.getX() > max_x){
-                max_x = invader.getX();
+            if((invader.getX() + invader.getSize()/2) >= max_width){
+                invaderMovement(MovingDirections.DOWN);
+                md = MovingDirections.LEFT;
+            }
+            else if((invader.getX() - invader.getSize()/2) <= MIN_WIDTH){
+                invaderMovement(MovingDirections.DOWN);
+                md = MovingDirections.RIGHT;
+            }
+        }
+        invaderMovement(md);
+    }
+
+    private void invaderMovement(MovingDirections md){
+        for(Invader invader:invaders) {
+            switch (md) {
+
+                case RIGHT:
+                    invader.moveRight();
+                    break;
+
+                case LEFT:
+                    invader.moveLeft();
+                    break;
+
+                case DOWN:
+                    invader.moveDown();
+                    break;
             }
         }
     }
@@ -124,11 +173,16 @@ public class Field {
             Random rand = new Random();
             invaderBullet = new Bullet(invaders.get(rand.nextInt(invaders.size())).getCoordinate(), BULLET_SIZE);
             invaderShot = true;
-            while (!(checkCollision(invaderBullet)) && invaderBullet.getY() < max_height) {
-                //Qua va il ritardo in secondi
-                shipBullet.moveDown();
-            }
+
+            //DALLA GRAFICA: MOVIMENTO BULLET E CONTROLLO DELLA COLLISIONE
         }
     }
 
+    public boolean isShipShot() {
+        return shipShot;
+    }
+
+    public boolean isInvaderShot() {
+        return invaderShot;
+    }
 }

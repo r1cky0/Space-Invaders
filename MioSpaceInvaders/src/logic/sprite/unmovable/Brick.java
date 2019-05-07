@@ -25,8 +25,4 @@ public class Brick extends Sprite {
         return life;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }

@@ -24,14 +24,6 @@ public class SpaceShip extends AbstractMovable {
         return currentscore;
     }
 
-    public void setCurrentscore(int currentscore){
-        this.currentscore = currentscore;
-    }
-
-    public String toString() {
-        return "{" + "life=" + life + '}' + super.toString();
-    }
-
     public Coordinate moveUp() {
         return super.getCoordinate();
     }
@@ -40,13 +32,13 @@ public class SpaceShip extends AbstractMovable {
         return super.getCoordinate();
     }
 
-    public int decreaseLife(int value) {
+    public int decreaseLife() {
         life -= 1;
         return life;
     }
 
-    public int incrementLife(int value) {
-        life += value;
+    public int incrementLife() {
+        life += 1;
         return life;
     }
 
