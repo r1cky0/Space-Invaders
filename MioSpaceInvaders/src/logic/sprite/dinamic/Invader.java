@@ -1,8 +1,6 @@
-package Logic.Sprite.Dinamic;
+package logic.sprite.dinamic;
 
-import Logic.Coordinate;
-import Logic.Sprite.Dinamic.Interface.Movable;
-import Logic.Sprite.Sprite;
+import logic.sprite.Coordinate;
 
 public class Invader extends AbstractMovable {
 

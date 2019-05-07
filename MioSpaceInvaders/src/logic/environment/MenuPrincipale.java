@@ -1,8 +1,8 @@
-package Logic.Environment;
+package logic.environment;
 
-import Logic.Coordinate;
-import Logic.Player.Player;
-import Logic.Sprite.Dinamic.SpaceShip;
+import logic.sprite.Coordinate;
+import logic.player.Player;
+import logic.sprite.dinamic.SpaceShip;
 
 import java.util.HashMap;
 
@@ -30,7 +30,7 @@ public class MenuPrincipale {
     public void addPlayer(String name, String password){
         Player newPlayer = null;
         if(!players.containsKey(name)){
-            System.err.println("Player giá esistente");
+            System.err.println("player giá esistente");
             return;
         }
         else{

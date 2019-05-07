@@ -1,10 +1,6 @@
-package Logic.Player;
+package logic.player;
 
-import Logic.Coordinate;
-import Logic.Sprite.Dinamic.Bullet;
-import Logic.Sprite.Dinamic.SpaceShip;
-
-import java.util.ArrayList;
+import logic.sprite.dinamic.SpaceShip;
 
 public class Player {
 
@@ -60,7 +56,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
+        return "player{" +
                 "name='" + name + '\'' +
                 ", highscore=" + highscore;
     }

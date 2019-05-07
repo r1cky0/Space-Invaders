@@ -1,6 +1,6 @@
-package Logic.Sprite.Dinamic.Interface;
+package logic.sprite.dinamic;
 
-import Logic.Coordinate;
+import logic.sprite.Coordinate;
 
 public interface Movable {
 

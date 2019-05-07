@@ -1,6 +1,6 @@
-package Logic.Environment;
+package logic.environment;
 
-import Logic.Player.Player;
+import logic.player.Player;
 
 import java.util.ArrayList;
 

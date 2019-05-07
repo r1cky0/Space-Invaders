@@ -1,6 +1,4 @@
-package Logic.Sprite;
-
-import Logic.Coordinate;
+package logic.sprite;
 
 public abstract class Sprite {
 

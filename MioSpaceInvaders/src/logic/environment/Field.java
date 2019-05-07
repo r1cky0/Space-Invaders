@@ -1,10 +1,9 @@
-package Logic.Environment;
+package logic.environment;
 
-import Logic.Coordinate;
-import Logic.Player.Player;
-import Logic.Sprite.Dinamic.Bullet;
-import Logic.Sprite.Dinamic.Invader;
-import Logic.Sprite.Static.Bunker;
+import logic.player.Player;
+import logic.sprite.dinamic.Bullet;
+import logic.sprite.dinamic.Invader;
+import logic.sprite.unmovable.Bunker;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -29,7 +28,7 @@ public class Field {
     private Bullet invaderBullet;
     private boolean invaderShot;
 
-    /*public Field(Player player){
+    /*public Field(player player){
         this.player = player;
         invaders = new ArrayList<>();
         bunkers = new ArrayList<>();

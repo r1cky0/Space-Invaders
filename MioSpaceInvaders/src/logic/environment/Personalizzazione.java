@@ -1,6 +1,6 @@
-package Logic.Environment;
+package logic.environment;
 
-import Logic.Sprite.Dinamic.SpaceShip;
+import logic.sprite.dinamic.SpaceShip;
 
 import java.util.ArrayList;
 
