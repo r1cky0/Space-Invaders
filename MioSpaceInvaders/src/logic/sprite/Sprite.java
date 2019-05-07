@@ -1,6 +1,8 @@
 package logic.sprite;
 
-public abstract class Sprite {
+import service.facade.Facade;
+
+public abstract class Sprite extends Facade {
 
     private Coordinate coordinate;
     private double size;
@@ -48,14 +50,8 @@ public abstract class Sprite {
         this.size = size;
     }
 
-    public boolean intersect(Sprite sprite) {
-        if ((sprite.getX() < coordinate.getX() + size/2)
-                && (sprite.getX() > coordinate.getX() - size/2)
-                && sprite.getY() == coordinate.getY()) {
-            return true;
-        }
-        else return false;
+    public boolean collides(Sprite sprite) {
+        return super.collides(sprite.getShape());
     }
-
 
 }
