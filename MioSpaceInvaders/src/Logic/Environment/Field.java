@@ -121,7 +121,7 @@ public class Field {
     }
 
     private void invaderShot(){
-        if(invaderShot == false){
+        if(!invaderShot){
             Random rand = new Random();
             invaderBullet = new Bullet(invaders.get(rand.nextInt(invaders.size())).getCoordinate(), BULLET_SIZE);
             invaderShot = true;

@@ -43,7 +43,7 @@ public class SpaceShip extends AbstractMovable {
     }
 
     public int decreaseLife(int value) {
-        life -= value;
+        life -= 1;
         return life;
     }
 
