@@ -98,7 +98,7 @@ public class Field {
 
         ListIterator<Invader> listIterator = invaders.listIterator();
         while (listIterator.hasNext()) {
-            if(listIterator.next().intersect(bullet)){
+            if(listIterator.next().collides(bullet)){
                 listIterator.remove();
                 return true;
             }

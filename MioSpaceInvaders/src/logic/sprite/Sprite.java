@@ -9,6 +9,7 @@ public abstract class Sprite extends Facade {
     // image
 
     public Sprite(Coordinate coordinate, double size) {
+        super(coordinate,size);
         this.coordinate = coordinate;
         this.size = size;
     }
