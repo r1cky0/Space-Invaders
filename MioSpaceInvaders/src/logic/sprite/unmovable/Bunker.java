@@ -9,11 +9,12 @@ import java.util.ArrayList;
 
 public class Bunker {
 
-    private final double BRICK_SIZE = 1;
+    private double brick_size;
     private ArrayList<Brick> bricks;
 
 
-    public Bunker(double index_x, double index_y) {
+    public Bunker(double index_x, double index_y, double brick_size) {
+        this.brick_size = brick_size;
         createBunker(index_x, index_y);
     }
 
@@ -39,7 +40,7 @@ public class Bunker {
                 for (int i = 0; i < riga.length(); i++) {
                     if (riga.charAt(i) == '*') {
                         Coordinate coordinate = new Coordinate(ind_x, ind_y);
-                        Brick brick = new Brick(coordinate, BRICK_SIZE);
+                        Brick brick = new Brick(coordinate, brick_size);
                         bricks.add(brick);
                         ind_x++;
                     }
@@ -54,10 +55,6 @@ public class Bunker {
         }catch (IOException err) {
             System.err.println(err.getMessage());
         }
-    }
-
-    public void deleteBrick(int index){
-        bricks.remove(index);
     }
 
 }

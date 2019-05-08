@@ -15,56 +15,73 @@ import java.util.Random;
 
 public class Field {
 
-    private final double BULLET_SIZE = 1;
-    private final double INVADER_SIZE = 5;
-
+    //DIMENSIONS
     private final double MIN_HEIGHT = 0.0;
     private final double MIN_WIDTH = 0.0;
     private double max_height;
     private double max_width;
-
-    //Per ora fatto con single player
+    private double invader_size;
+    private double bullet_size;
+    private double brick_size;
 
     private Player player;
     private ArrayList<Invader> invaders;
     private ArrayList<Bunker> bunkers;
-    private Bullet shipBullet;
-    private boolean shipShot;
-    private Bullet invaderBullet;
-    private boolean invaderShot;
-    private boolean gameover;
+    private Bullet ship_bullet;
+    private boolean ship_shot;
+    private Bullet invader_bullet;
+    private boolean invader_shot;
+    private boolean game_over;
 
     public Field(Player player, double max_height, double max_width){
         this.player = player;
-        invaders = new ArrayList<>();
-        bunkers = new ArrayList<>();
         this.max_height = max_height;
         this.max_width = max_width;
-        shipBullet = null;
-        shipShot = false;
-        invaderBullet = null;
-        invaderShot = false;
-        gameover = false;
+
+        invaders = new ArrayList<>();
+        bunkers = new ArrayList<>();
+
+        invader_size = max_width/20;
+        bullet_size = max_width / 100;
+        brick_size = max_width/80;
+
+        ship_bullet = null;
+        ship_shot = false;
+        invader_bullet = null;
+        invader_shot = false;
+        game_over = false;
+
         startGame();
     }
 
     public void startGame(){
         //inizializzazione di tutti gli elementi all'inizio del gioco
 
+        double base_x = (max_width - 8*(invader_size))/2;
+        double base_y = max_height/20;
+        double x;
+
         for(int i=0; i<4; i++){
+            x = base_x;
+
             for(int j=0; j<8; j++){
-                Coordinate coordinate = new Coordinate(20+INVADER_SIZE+j,20+INVADER_SIZE+j);
-                Invader invader = new Invader(coordinate,INVADER_SIZE, 10);
+                Coordinate coordinate = new Coordinate(x,base_y);
+                Invader invader = new Invader(coordinate,invader_size, 10);
                 invaders.add(invader);
+                x+=invader_size;
             }
+            base_y+=invader_size;
         }
 
-        for(int i=0; i<4;i++){
-            Bunker bunker = new Bunker(20+i*10,100);
+        base_x = (max_width - 20*(brick_size))/5;
+        base_y = (max_height-max_height/10);
+        x = base_x;
+
+        for(int i=1; i<5;i++){
+            Bunker bunker = new Bunker(x,base_y, brick_size);
             bunkers.add(bunker);
+            x = base_x*i + (5*brick_size);
         }
-
-        //Facciamo ad esempio proporzionati alla larghezza che abbiamo passato dal costruttore (ES: invader= 1/15 della larghezza)
     }
 
     public void nextLevel(){
@@ -72,7 +89,7 @@ public class Field {
     }
 
     public boolean gameOver(){
-        return gameover;
+        return game_over;
     }
 
     public Coordinate shipMovement(MovingDirections md){
@@ -92,17 +109,17 @@ public class Field {
 
     public void shipShot() throws InterruptedException {
 
-        if(!shipShot) {
-            shipBullet = new Bullet(player.getSpaceShip().getCoordinate(), BULLET_SIZE);
-            shipShot = true;
+        if(!ship_shot) {
+            ship_bullet = new Bullet(player.getSpaceShip().getCoordinate(), bullet_size);
+            ship_shot = true;
 
-                while ((!checkCollision(player.getSpaceShip(), shipBullet) && (shipBullet.getY() > MIN_HEIGHT))) {
-                    Runnable runnable = () -> shipBullet.moveUp();
+                while ((!checkCollision(player.getSpaceShip(), ship_bullet) && (ship_bullet.getY() > MIN_HEIGHT))) {
+                    Runnable runnable = () -> ship_bullet.moveUp();
                     Thread thread = new Thread(runnable);
                     thread.start();
                     Thread.sleep(50);
                     //***************
-                    System.out.println(shipBullet.getCoordinate());
+                    System.out.println(ship_bullet.getCoordinate());
                     //***************
                 }
         }
@@ -121,12 +138,12 @@ public class Field {
                     System.out.println("Bunker colpito");
                     //***************
                     if(sprite instanceof SpaceShip) {
-                        shipBullet = null;
-                        shipShot = false;
+                        ship_bullet = null;
+                        ship_shot = false;
                     }
                     else {
-                        invaderBullet = null;
-                        invaderShot = false;
+                        invader_bullet = null;
+                        invader_shot = false;
                     }
                     return true;
                 }
@@ -145,8 +162,8 @@ public class Field {
                     //***************
                     System.out.println("Invader colpito");
                     //***************
-                    shipBullet = null;
-                    shipShot = false;
+                    ship_bullet = null;
+                    ship_shot = false;
                     return true;
                 }
             }
@@ -157,11 +174,11 @@ public class Field {
             if(player.getSpaceShip().collides(bullet)){
 
                 if(player.getSpaceShip().decreaseLife() == 0){
-                    gameover = true;
+                    game_over = true;
                 }
                 else{
-                    invaderBullet = null;
-                    invaderShot = false;
+                    invader_bullet = null;
+                    invader_shot = false;
                     return true;
                 }
             }
@@ -206,32 +223,32 @@ public class Field {
 
     public void invaderShot() throws InterruptedException {
 
-        if(!invaderShot){
+        if(!invader_shot){
             Random rand = new Random();
             int random = rand.nextInt(invaders.size());
             //***************
             System.out.println(random);
             //***************
-            invaderBullet = new Bullet(invaders.get(random).getCoordinate(), BULLET_SIZE);
-            invaderShot = true;
+            invader_bullet = new Bullet(invaders.get(random).getCoordinate(), bullet_size);
+            invader_shot = true;
 
-            while ((!checkCollision(invaders.get(random), invaderBullet) && (invaderBullet.getY() < max_height))) {
-                Runnable runnable = () -> invaderBullet.moveDown();
+            while ((!checkCollision(invaders.get(random), invader_bullet) && (invader_bullet.getY() < max_height))) {
+                Runnable runnable = () -> invader_bullet.moveDown();
                 Thread thread = new Thread(runnable);
                 thread.start();
                 Thread.sleep(50);
                 //***************
-                System.out.println(invaderBullet.getCoordinate());
+                System.out.println(invader_bullet.getCoordinate());
                 //***************
             }
         }
     }
 
     public boolean isShipShot() {
-        return shipShot;
+        return ship_shot;
     }
 
     public boolean isInvaderShot() {
-        return invaderShot;
+        return invader_shot;
     }
 }
