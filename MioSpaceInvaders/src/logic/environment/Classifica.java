@@ -28,11 +28,11 @@ public class Classifica {
         if(players.isEmpty()){
             return "Nessun punteggio in classifica";
         }
-        String classifica = "";
+        StringBuilder classifica = new StringBuilder();
         for(Player player: players){
-            classifica += player.toString();
+            classifica.append(player.toString());
         }
-        return classifica;
+        return classifica.toString();
     }
 
 }

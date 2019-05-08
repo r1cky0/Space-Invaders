@@ -16,11 +16,12 @@ import java.util.Random;
 public class Field {
 
     private final double BULLET_SIZE = 1;
-    private final double MIN_HEIGHT = 0;
-    private final double MIN_WIDTH = 0;
+    private final double INVADER_SIZE = 5;
+
+    private final double MIN_HEIGHT = 0.0;
+    private final double MIN_WIDTH = 0.0;
     private double max_height;
     private double max_width;
-
 
     //Per ora fatto con single player
 
@@ -50,8 +51,20 @@ public class Field {
     public void startGame(){
         //inizializzazione di tutti gli elementi all'inizio del gioco
 
-        //DUBBIO DI SIMO: Ma per le dimensioni degli elementi come facciamo?
-        //Facciamo ad esempio proporzionati alla larghezza che abbiamo passato dal costruttore? (ES: invader= 1/15 della larghezza)
+        for(int i=0; i<4; i++){
+            for(int j=0; j<8; j++){
+                Coordinate coordinate = new Coordinate(20+INVADER_SIZE+j,20+INVADER_SIZE+j);
+                Invader invader = new Invader(coordinate,INVADER_SIZE, 10);
+                invaders.add(invader);
+            }
+        }
+
+        for(int i=0; i<4;i++){
+            Bunker bunker = new Bunker(20+i*10,100);
+            bunkers.add(bunker);
+        }
+
+        //Facciamo ad esempio proporzionati alla larghezza che abbiamo passato dal costruttore (ES: invader= 1/15 della larghezza)
     }
 
     public void nextLevel(){
@@ -63,22 +76,35 @@ public class Field {
     }
 
     public Coordinate shipMovement(MovingDirections md){
+
         if(((player.getSpaceShip().getX() + player.getSpaceShip().getSize()/2) < max_width)
                 && (md == MovingDirections.RIGHT)){
             return player.getSpaceShip().moveRight();
         }
+
         if(((player.getSpaceShip().getX() - player.getSpaceShip().getSize()/2) > MIN_WIDTH)
                 && (md == MovingDirections.LEFT)){
             return player.getSpaceShip().moveLeft();
         }
+
         return player.getSpaceShip().getCoordinate();
     }
 
-    public void shipShot() {
+    public void shipShot() throws InterruptedException {
+
         if(!shipShot) {
             shipBullet = new Bullet(player.getSpaceShip().getCoordinate(), BULLET_SIZE);
             shipShot = true;
-            //DALLA GRAFICA: MOVIMENTO BULLET E CONTROLLO DELLA COLLISIONE
+
+                while ((!checkCollision(player.getSpaceShip(), shipBullet) && (shipBullet.getY() > MIN_HEIGHT))) {
+                    Runnable runnable = () -> shipBullet.moveUp();
+                    Thread thread = new Thread(runnable);
+                    thread.start();
+                    Thread.sleep(50);
+                    //***************
+                    System.out.println(shipBullet.getCoordinate());
+                    //***************
+                }
         }
     }
 
@@ -86,9 +112,14 @@ public class Field {
 
         for(Bunker bunker:bunkers){
             ListIterator<Brick> listIterator = bunker.getBricks().listIterator();
+
             while(listIterator.hasNext()){
+
                 if(listIterator.next().collides(bullet)){
                     listIterator.remove();
+                    //***************
+                    System.out.println("Bunker colpito");
+                    //***************
                     if(sprite instanceof SpaceShip) {
                         shipBullet = null;
                         shipShot = false;
@@ -102,14 +133,18 @@ public class Field {
             }
         }
 
-
         if(sprite instanceof SpaceShip) {
             ListIterator<Invader> listIterator = invaders.listIterator();
+
             while (listIterator.hasNext()) {
                 Invader invader = listIterator.next();
+
                 if (invader.collides(bullet)) {
                     player.getSpaceShip().incrementCurrentScore(invader.getValue());
                     listIterator.remove();
+                    //***************
+                    System.out.println("Invader colpito");
+                    //***************
                     shipBullet = null;
                     shipShot = false;
                     return true;
@@ -118,7 +153,9 @@ public class Field {
             return false;
         }
         else{
+
             if(player.getSpaceShip().collides(bullet)){
+
                 if(player.getSpaceShip().decreaseLife() == 0){
                     gameover = true;
                 }
@@ -133,10 +170,10 @@ public class Field {
     }
 
     public void invaderDirection(){
-
         MovingDirections md = MovingDirections.RIGHT;
 
         for(Invader invader: invaders){
+
             if((invader.getX() + invader.getSize()/2) >= max_width){
                 invaderMovement(MovingDirections.DOWN);
                 md = MovingDirections.LEFT;
@@ -150,17 +187,16 @@ public class Field {
     }
 
     private void invaderMovement(MovingDirections md){
-        for(Invader invader:invaders) {
-            switch (md) {
 
+        for(Invader invader:invaders) {
+
+            switch (md) {
                 case RIGHT:
                     invader.moveRight();
                     break;
-
                 case LEFT:
                     invader.moveLeft();
                     break;
-
                 case DOWN:
                     invader.moveDown();
                     break;
@@ -168,13 +204,26 @@ public class Field {
         }
     }
 
-    private void invaderShot(){
+    public void invaderShot() throws InterruptedException {
+
         if(!invaderShot){
             Random rand = new Random();
-            invaderBullet = new Bullet(invaders.get(rand.nextInt(invaders.size())).getCoordinate(), BULLET_SIZE);
+            int random = rand.nextInt(invaders.size());
+            //***************
+            System.out.println(random);
+            //***************
+            invaderBullet = new Bullet(invaders.get(random).getCoordinate(), BULLET_SIZE);
             invaderShot = true;
 
-            //DALLA GRAFICA: MOVIMENTO BULLET E CONTROLLO DELLA COLLISIONE
+            while ((!checkCollision(invaders.get(random), invaderBullet) && (invaderBullet.getY() < max_height))) {
+                Runnable runnable = () -> invaderBullet.moveDown();
+                Thread thread = new Thread(runnable);
+                thread.start();
+                Thread.sleep(50);
+                //***************
+                System.out.println(invaderBullet.getCoordinate());
+                //***************
+            }
         }
     }
 
