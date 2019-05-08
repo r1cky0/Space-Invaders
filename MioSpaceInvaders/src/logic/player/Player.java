@@ -4,7 +4,6 @@ import logic.sprite.dinamic.SpaceShip;
 
 public class Player {
 
-    // In field controllare che su un pc ci sia un solo utente attivo
     private String name;
     private String password;
     private boolean loggedIn;
@@ -17,7 +16,7 @@ public class Player {
         this.spaceShip = spaceShip;
         this.credit = 0;
         this.highscore = 0;
-        this.password = "Change me";
+        this.password = "changeme";
         loggedIn = false;
         firstLogin = true;
     }
@@ -54,13 +53,6 @@ public class Player {
         this.spaceShip = spaceShip;
     }
 
-    @Override
-    public String toString() {
-        return "player{" +
-                "name='" + name + '\'' +
-                ", highscore=" + highscore;
-    }
-
     public int incrementCredit(int c) {
         credit += c;
         return credit;
@@ -72,13 +64,12 @@ public class Player {
     }
 
     /**
-     * Non controlliamo solamente che la password sia corretta, ma che "l'account" sia stato
-     * attivato, ovvero sia stato fatto un primo login con set della password
-     * @param password
-     * @return
+     * Controllo attivazione account giocatore e credenziali corrette
+     *
+     * @param password: password utente
      */
     public boolean login(String password){
-        if(this.password == password && firstLogin == false){
+        if(this.password.equals(password) && !firstLogin){
             loggedIn = true;
             return true;
         }
@@ -92,24 +83,15 @@ public class Player {
         loggedIn = false;
     }
 
-    public boolean setPassword(String newpass){
-        if(firstLogin==true && password=="changeme"){
+    public void setPassword(String newpass){
+        if(firstLogin && password.equals("changeme")){
             this.password = newpass;
             firstLogin=false;
-            return true;
-        }
-        else{
-            return false;
         }
     }
 
     public boolean isLoggedIn(){
-        if(loggedIn == true){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return loggedIn;
     }
 
 }
