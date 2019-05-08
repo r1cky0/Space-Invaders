@@ -6,32 +6,36 @@ import logic.sprite.dinamic.SpaceShip;
 
 import java.util.HashMap;
 
-public class MenuPrincipale {
+public class Menu {
 
-    private Classifica classifica;
-    private Personalizzazione personalizzazione;
+    private Ranking ranking;
+    private Customization customization;
     private Field field;
-    private double max_height;
-    private double max_width;
+    private double maxHeight;
+    private double maxWidth;
     private double shipSize;
     private HashMap<String, Player> players;
     private SpaceShip defaultShip;
-    private Player playingPlayer;
+    private Player player;
 
-    public MenuPrincipale(double max_height, double max_width, double shipSize){
-        classifica = new Classifica();
-        personalizzazione = new Personalizzazione();
-        this.max_height = max_height;
-        this.max_width = max_width;
+    public Menu(double maxHeight, double maxWidth, double shipSize){
+        ranking = new Ranking();
+        customization = new Customization();
+        players = new HashMap<>();
+
+        this.maxHeight = maxHeight;
+        this.maxWidth = maxWidth;
         this.shipSize = shipSize;
-        defaultShip = new SpaceShip(new Coordinate(max_width/2,9*max_height/10),shipSize);
+
+        Coordinate coordinate = new Coordinate(20,180);
+        SpaceShip spaceShip = new SpaceShip(coordinate,shipSize);
     }
 
     public void addPlayer(String name, String password){
-        Player newPlayer = null;
+        Player newPlayer;
+
         if(!players.containsKey(name)){
-            System.err.println("player giá esistente");
-            return;
+            System.err.println("Player giá esistente");
         }
         else{
             newPlayer = new Player(name,defaultShip);
@@ -47,7 +51,7 @@ public class MenuPrincipale {
             return false;
         }
         if(player.login(password)){
-            playingPlayer = player;
+            this.player = player;
             return true;
         }
         else{
@@ -58,11 +62,8 @@ public class MenuPrincipale {
 
     //Probabilmente ci sará da fare un' eccezione
     public void startGame(){
-        if(playingPlayer != null){
-            field = new Field(playingPlayer,max_height,max_width);
-        }
-        else{
-            return;
+        if(player != null){
+            field = new Field(player, maxHeight, maxWidth);
         }
     }
 

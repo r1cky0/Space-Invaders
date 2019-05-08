@@ -8,14 +8,14 @@ public class Player {
     private String password;
     private boolean loggedIn;
     private boolean firstLogin;
-    private int credit, highscore;
+    private int credit, highScore;
     private SpaceShip spaceShip;
 
     public Player(String name, SpaceShip spaceShip) {
         this.name = name;
         this.spaceShip = spaceShip;
         this.credit = 0;
-        this.highscore = 0;
+        this.highScore = 0;
         this.password = "changeme";
         loggedIn = false;
         firstLogin = true;
@@ -25,24 +25,16 @@ public class Player {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getCredit() {
         return credit;
     }
 
-    public void setCredit(int credit) {
-        this.credit = credit;
+    public int getHighScore() {
+        return highScore;
     }
 
-    public int getHighscore() {
-        return highscore;
-    }
-
-    public void setHighscore(int highscore) {
-        this.highscore = highscore;
+    public void setHighScore(int high_score) {
+        this.highScore = high_score;
     }
 
     public SpaceShip getSpaceShip() {
@@ -53,14 +45,8 @@ public class Player {
         this.spaceShip = spaceShip;
     }
 
-    public int incrementCredit(int c) {
-        credit += c;
-        return credit;
-    }
-
-    public int decrementCredit(int c) {
-        credit -= c;
-        return credit;
+    public void incrementCredit(int credit) {
+        this.credit += credit;
     }
 
     /**
@@ -69,7 +55,8 @@ public class Player {
      * @param password: password utente
      */
     public boolean login(String password){
-        if(this.password.equals(password) && !firstLogin){
+
+        if((this.password.equals(password)) && (!firstLogin)){
             loggedIn = true;
             return true;
         }
@@ -83,9 +70,10 @@ public class Player {
         loggedIn = false;
     }
 
-    public void setPassword(String newpass){
-        if(firstLogin && password.equals("changeme")){
-            this.password = newpass;
+    public void setPassword(String pass){
+
+        if((firstLogin) && (password.equals("changeme"))){
+            this.password = pass;
             firstLogin=false;
         }
     }

@@ -16,13 +16,8 @@ public class Brick extends Sprite {
         return life;
     }
 
-    public void setLife(int life) {
-        this.life = life;
-    }
-
-    public int decreaseLife() {
+    public void decreaseLife() {
         life -= 1;
-        return life;
     }
 
 }

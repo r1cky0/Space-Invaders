@@ -15,12 +15,8 @@ public class Invader extends AbstractMovable {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    public String toString() {
-        return "{" + "value=" + value + '}' + super.toString();
+    public Coordinate moveUp(){
+        return super.getCoordinate();
     }
 
 }

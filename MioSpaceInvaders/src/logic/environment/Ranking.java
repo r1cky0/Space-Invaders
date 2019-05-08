@@ -4,23 +4,20 @@ import logic.player.Player;
 
 import java.util.ArrayList;
 
-public class Classifica {
+public class Ranking {
 
     private ArrayList<Player> players;
 
-    public Classifica(){
+    public Ranking(){
         players = new ArrayList<>();
     }
 
     public void addScore(Player player){
         for(Player p: players){
-            if(p.getHighscore() < player.getHighscore()){
+            if(p.getHighScore() < player.getHighScore()){
                 players.add(players.indexOf(p),player);
-                break;
             }
         }
-        //Questo fatto fuori da for perché altrimenti
-        //avremmo aggiunto piú volte lo stesso punteggio
         players.add(player);
     }
 

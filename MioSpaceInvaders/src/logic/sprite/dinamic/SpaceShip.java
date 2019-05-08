@@ -4,24 +4,20 @@ import logic.sprite.Coordinate;
 
 public class SpaceShip extends AbstractMovable {
 
-    private int life, currentscore;
+    private int life, currentScore;
 
     public SpaceShip(Coordinate coordinate, double size) {
         super(coordinate, size);
         life = 3;
-        currentscore = 0;
+        currentScore = 0;
     }
 
     public int getLife() {
         return life;
     }
 
-    public void setLife(int life) {
-        this.life = life;
-    }
-
-    public int getCurrentscore(){
-        return currentscore;
+    public int getCurrentScore(){
+        return currentScore;
     }
 
     public Coordinate moveUp() {
@@ -32,18 +28,17 @@ public class SpaceShip extends AbstractMovable {
         return super.getCoordinate();
     }
 
-    public int decreaseLife() {
+    public void decreaseLife() {
         life -= 1;
-        return life;
     }
 
-    public int incrementLife() {
-        life += 1;
-        return life;
+    public void incrementLife() {
+        if(life<3) {
+            life += 1;
+        }
     }
 
-    public int incrementCurrentScore(int value){
-        currentscore += value;
-        return currentscore;
+    public void incrementCurrentScore(int value){
+        currentScore += value;
     }
 }

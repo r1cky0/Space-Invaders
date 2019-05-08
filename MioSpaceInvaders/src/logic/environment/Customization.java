@@ -4,11 +4,11 @@ import logic.sprite.dinamic.SpaceShip;
 
 import java.util.ArrayList;
 
-public class Personalizzazione {
+public class Customization {
 
     private ArrayList<SpaceShip> spaceShips;
 
-    public Personalizzazione() {
+    public Customization() {
         spaceShips = new ArrayList<>();
     }
 }

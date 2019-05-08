@@ -9,13 +9,12 @@ import java.util.ArrayList;
 
 public class Bunker {
 
-    private double brick_size;
+    private double brickSize;
     private ArrayList<Brick> bricks;
 
-
-    public Bunker(double index_x, double index_y, double brick_size) {
-        this.brick_size = brick_size;
-        createBunker(index_x, index_y);
+    public Bunker(double indexX, double indexY, double brickSize) {
+        this.brickSize = brickSize;
+        createBunker(indexX, indexY);
     }
 
     public ArrayList<Brick> getBricks() {
@@ -25,13 +24,13 @@ public class Bunker {
     /**
      * Creazione bunker da lettura file in cui è presente la struttura da creare.
      *
-     * @param index_x: indice di partenza coordinata x
-     * @param index_y: indice di partenza coordinata x
+     * @param indexX: indice di partenza coordinata x
+     * @param indexY: indice di partenza coordinata x
      */
-    public void createBunker(double index_x, double index_y) {
+    private void createBunker(double indexX, double indexY) {
         bricks = new ArrayList<>();
-        double ind_x = index_x;
-        double ind_y = index_y;
+        double indX = indexX;
+        double indY = indexY;
 
         try {
             BufferedReader in = new BufferedReader(new FileReader("res/bunker.txt"));
@@ -39,18 +38,18 @@ public class Bunker {
             while (riga != null) {
                 for (int i = 0; i < riga.length(); i++) {
                     if (riga.charAt(i) == '*') {
-                        Coordinate coordinate = new Coordinate(ind_x, ind_y);
-                        Brick brick = new Brick(coordinate, brick_size);
+                        Coordinate coordinate = new Coordinate(indX, indY);
+                        Brick brick = new Brick(coordinate, brickSize);
                         bricks.add(brick);
-                        ind_x++;
+                        indX++;
                     }
                     else {
-                        ind_x++;
+                        indX++;
                     }
                 }
-                ind_y--;
+                indY--;
                 riga = in.readLine();
-                ind_x = index_x;
+                indX = indexX;
             }
         }catch (IOException err) {
             System.err.println(err.getMessage());
