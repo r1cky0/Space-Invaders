@@ -18,14 +18,14 @@ public class Menu {
     private SpaceShip defaultShip;
     private Player player;
 
-    public Menu(double maxHeight, double maxWidth, double shipSize){
+    public Menu(double maxHeight, double maxWidth){
         ranking = new Ranking();
         customization = new Customization();
         players = new HashMap<>();
 
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
-        this.shipSize = shipSize;
+        this.shipSize = maxWidth/20;
 
         Coordinate coordinate = new Coordinate(20,180);
         SpaceShip spaceShip = new SpaceShip(coordinate,shipSize);
