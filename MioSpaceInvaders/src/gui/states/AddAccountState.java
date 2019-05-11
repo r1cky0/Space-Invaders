@@ -7,14 +7,16 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class LoginState extends BasicGameState {
-
+public class AddAccountState extends BasicGameState {
     private Menu menu;
 
-
-
-    public LoginState(Menu menu){
+    public AddAccountState(Menu menu){
         this.menu = menu;
+    }
+
+    @Override
+    public int getID() {
+        return 6;
     }
 
     @Override
@@ -30,10 +32,5 @@ public class LoginState extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
 
-    }
-
-    @Override
-    public int getID() {
-        return 5;
     }
 }

@@ -1,5 +1,6 @@
 package gui.states;
 
+import logic.environment.Menu;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -9,6 +10,13 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class MenuState extends BasicGameState implements ComponentListener {
+
+    private Menu menu;
+
+    public MenuState(Menu menu){
+        this.menu = menu;
+    }
+
     @Override
     public void componentActivated(AbstractComponent abstractComponent) {
 

@@ -1,9 +1,7 @@
 package gui;
 
-import gui.states.GameOverState;
-import gui.states.LoginState;
-import gui.states.MenuState;
-import gui.states.SinglePlayerState;
+import gui.states.*;
+import logic.environment.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -11,24 +9,31 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class SpaceInvaders extends StateBasedGame {
 
-    public SpaceInvaders() {
+    private Menu menu;
+
+    public SpaceInvaders(Menu menu) {
         super("Space Invaders");
+        this.menu = menu;
     }
 
     public void initStatesList(GameContainer gameContainer) {
-        this.addState(new LoginState());
-        this.addState(new MenuState());
-        this.addState(new SinglePlayerState());
-        this.addState(new GameOverState());
+        this.addState(new StartState(menu));
+        this.addState(new MenuState(menu));
+        this.addState(new SinglePlayerState(menu));
+        this.addState(new GameOverState(menu));
+        this.addState(new LoginState(menu));
+        this.addState(new AddAccountState(menu));
         this.enterState(0);
     }
 
     public static void main(String[] args){
         try {
-            AppGameContainer container = new AppGameContainer(new SpaceInvaders());
+            int width = 1000;
+            int height = 800;
+            AppGameContainer container = new AppGameContainer(new SpaceInvaders(new Menu(width,height)));
             container.setTargetFrameRate(100);
             //container.setFullscreen(true);
-            container.setDisplayMode(1000,800,false);
+            container.setDisplayMode(width,height,false);
             container.setShowFPS(false);
             container.start();
         } catch (SlickException e) {
