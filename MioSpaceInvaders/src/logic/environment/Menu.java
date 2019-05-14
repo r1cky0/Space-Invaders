@@ -34,7 +34,7 @@ public class Menu {
     public void addPlayer(String name, String password){
         Player newPlayer;
 
-        if(!players.containsKey(name)){
+        if(players.containsKey(name)){
             System.err.println("Player giá esistente");
         }
         else{

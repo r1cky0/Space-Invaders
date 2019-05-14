@@ -26,7 +26,7 @@ public class InvadersAStati extends StateBasedGame {
             AppGameContainer container = new AppGameContainer(new InvadersAStati());
             container.setTargetFrameRate(100);
             //container.setFullscreen(true);
-            container.setDisplayMode(1000,800,false);
+            container.setDisplayMode(800,600,false);
             container.setShowFPS(false);
             container.start();
         } catch (SlickException e) {
