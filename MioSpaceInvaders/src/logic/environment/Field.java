@@ -23,7 +23,6 @@ public class Field {
     private double invaderSize;
     private double bulletSize;
     private double brickSize;
-
     private Player player;
     private ArrayList<Invader> invaders;
     private ArrayList<Bunker> bunkers;
@@ -316,5 +315,14 @@ public class Field {
 
     public boolean isInvaderShot() {
         return invaderShot;
+    }
+
+
+    public ArrayList<Invader> getInvaders() {
+        return invaders;
+    }
+
+    public ArrayList<Bunker> getBunkers() {
+        return bunkers;
     }
 }

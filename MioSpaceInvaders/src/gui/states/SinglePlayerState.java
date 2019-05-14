@@ -1,9 +1,11 @@
 package gui.states;
 
+import logic.environment.Field;
 import logic.environment.Menu;
 import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
+import logic.sprite.unmovable.Bunker;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -15,16 +17,21 @@ import java.util.ArrayList;
 public class SinglePlayerState extends BasicGameState {
 
     private Menu menu;
+    private Field field;
     private GameContainer gameContainer;
     private Image background;
 
     private java.awt.Font UIFont1;
     private UnicodeFont uniFont;
 
+    private ArrayList<Bunker> bunkers;
+    private ArrayList<Invader> invaders;
     private SpaceShip spaceShip;
     private Bullet bullet;
     private Bullet invaderBullet;
-    private ArrayList<Invader> invaders;
+    private boolean bulletShot = false;
+    private boolean invaderShot = false;
+
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
@@ -50,7 +57,13 @@ public class SinglePlayerState extends BasicGameState {
             e.printStackTrace();
         }
 
-        menu.startGame();
+        field = menu.startGame();
+        field.startGame();
+        spaceShip = menu.getPlayer().getSpaceShip();
+        invaders = field.getInvaders();
+        bunkers = field.getBunkers();
+        bullet = null;
+        invaderBullet = null;
     }
 
     @Override
@@ -59,8 +72,8 @@ public class SinglePlayerState extends BasicGameState {
         uniFont.drawString(20,15,"Lives: ",Color.white);
         uniFont.drawString(gameContainer.getWidth()-300,15,"Score: ",Color.white);
 
-        //uniFont.drawString(20,15,"Lives: "+ship.getLife(),Color.white);
-        //uniFont.drawString(container.getWidth()-300,15,"Score: "+ship.getScore(),Color.white);
+        //uniFont.drawString(20,15,"Lives: "+spaceShip.getLife(),Color.white);
+        //uniFont.drawString(gameContainer.getWidth()-300,15,"Score: "+spaceShip.getScore(),Color.white);
     }
 
     @Override

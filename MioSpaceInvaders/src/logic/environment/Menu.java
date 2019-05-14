@@ -28,7 +28,7 @@ public class Menu {
         this.shipSize = maxWidth/20;
 
         Coordinate coordinate = new Coordinate(20,180);
-        SpaceShip spaceShip = new SpaceShip(coordinate,shipSize);
+        defaultShip = new SpaceShip(coordinate,shipSize);
     }
 
     public void addPlayer(String name, String password){
@@ -61,10 +61,15 @@ public class Menu {
     }
 
     //Probabilmente ci sará da fare un' eccezione
-    public void startGame(){
+    public Field startGame(){
         if(player != null){
-            field = new Field(player, maxHeight, maxWidth);
+            return field = new Field(player, maxHeight, maxWidth);
         }
+        return null;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
 }
