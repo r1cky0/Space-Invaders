@@ -2,6 +2,7 @@ package gui.states;
 
 import logic.environment.Field;
 import logic.environment.Menu;
+import logic.player.Player;
 import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
@@ -57,9 +58,17 @@ public class SinglePlayerState extends BasicGameState {
             e.printStackTrace();
         }
 
-        field = menu.startGame();
-        field.startGame();
-        spaceShip = menu.getPlayer().getSpaceShip();
+        menu.startGame();
+        //I METODI SOTTO VANNO BENE QUANDO AVREMO IL LOGIN. PER ORA BISOGNA INIZIALIZZARE A MANO LE COSE
+        //field = menu.getField();
+        //field.startGame();
+        //spaceShip = menu.getPlayer().getSpaceShip();
+
+        //METODI SEGUENTI FATTI PER PROVARE STATO SENZA AVERE IL LOGIN
+        menu.setPlayer("arrosto");
+        menu.setField();
+        field = menu.getField();
+
         invaders = field.getInvaders();
         bunkers = field.getBunkers();
         bullet = null;
@@ -72,6 +81,7 @@ public class SinglePlayerState extends BasicGameState {
         uniFont.drawString(20,15,"Lives: ",Color.white);
         uniFont.drawString(gameContainer.getWidth()-300,15,"Score: ",Color.white);
 
+        spaceShip.render(gameContainer,graphics,"res/images/space.png",spaceShip.getCoordinate(),(float)spaceShip.getSize());
         //uniFont.drawString(20,15,"Lives: "+spaceShip.getLife(),Color.white);
         //uniFont.drawString(gameContainer.getWidth()-300,15,"Score: "+spaceShip.getScore(),Color.white);
     }
