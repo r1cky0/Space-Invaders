@@ -3,14 +3,19 @@ package gui.states;
 import logic.environment.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.gui.AbstractComponent;
+import org.newdawn.slick.gui.ComponentListener;
+import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.Font;
 
-public class LoginState extends BasicGameState {
+public class LoginState extends BasicGameState implements ComponentListener {
 
     private Menu menu;
 
@@ -29,7 +34,8 @@ public class LoginState extends BasicGameState {
 
     private Image background;
 
-
+    private Image login;
+    private MouseOverArea loginButton;
 
     public LoginState(Menu menu){
         this.menu = menu;
@@ -64,6 +70,8 @@ public class LoginState extends BasicGameState {
         passwordField.setBackgroundColor(Color.white);
         passwordField.setTextColor(Color.black);
 
+        login = new Image("res/images/login.png").getScaledCopy(gameContainer.getWidth()/3, gameContainer.getHeight()/10);
+        loginButton = new MouseOverArea(gameContainer, login, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7, gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
     }
 
     @Override
@@ -73,9 +81,10 @@ public class LoginState extends BasicGameState {
         nameField.render(gameContainer, graphics);
         passwordField.render(gameContainer, graphics);
 
-         uniFont.drawString(150, 50, message);
+        uniFont.drawString(150, 50, message);
         uniFont.drawString(50,200, nameString);
         uniFont.drawString(50,250, passwordString);
+        loginButton.render(gameContainer, graphics);
     }
 
     @Override
@@ -86,5 +95,18 @@ public class LoginState extends BasicGameState {
     @Override
     public int getID() {
         return 5;
+    }
+    public void componentActivated(AbstractComponent source) {
+        if (source == loginButton) {
+            String nickname = nameField.getText();
+            String password = passwordField.getText();
+            if(menu.logIn(nickname,password)){
+                stateBasedGame.enterState(0, new FadeOutTransition(), new FadeInTransition());
+            }
+            else{
+                nameField.setText("Errore");
+                passwordField.setText("");
+            }
+        }
     }
 }
