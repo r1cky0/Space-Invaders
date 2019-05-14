@@ -61,15 +61,29 @@ public class Menu {
     }
 
     //Probabilmente ci sará da fare un' eccezione
-    public Field startGame(){
+    public void startGame(){
         if(player != null){
-            return field = new Field(player, maxHeight, maxWidth);
+            field = new Field(player, maxHeight, maxWidth);
         }
-        return null;
     }
+
+    //A programma sistemato togliere questo getter e fare che startGame restituisce il field
+    public Field getField() {
+        return field;
+    }
+
 
     public Player getPlayer() {
         return player;
+    }
+
+    //TOGLIERE I SEGUENTI DUE METODI QUANDO FATTO LOGIN PERCHÉ INUTILE IN QUEL CASO. ORA FATTO PER PROVARE GIOCO
+    public void setPlayer(String nome) {
+        this.player = new Player(nome,defaultShip);
+    }
+
+    public void setField() {
+        field = new Field(player, maxHeight, maxWidth);
     }
 
 }
