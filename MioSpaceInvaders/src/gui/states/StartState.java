@@ -47,20 +47,24 @@ public class StartState extends BasicGameState implements ComponentListener {
         this.stateBasedGame= stateBasedGame;
         background = new Image("res/images/space.png");
 
-        login = new Image("res/images/login.png").getScaledCopy(gameContainer.getWidth()/3, gameContainer.getHeight()/10);
-        loginButton = new MouseOverArea(gameContainer, login, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7, gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
+        login = new Image("res/images/login.png").getScaledCopy(gameContainer.getWidth()/3,
+                gameContainer.getHeight()/10);
 
-        newAccount = new Image("res/images/account.png").getScaledCopy(gameContainer.getWidth()/3, gameContainer.getHeight()/10);
-        newAccountButton = new MouseOverArea(gameContainer, newAccount, gameContainer.getWidth()/3, 4*gameContainer.getHeight()/7, gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
+        loginButton = new MouseOverArea(gameContainer, login, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7,
+                gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
+
+        newAccount = new Image("res/images/account.png").getScaledCopy(gameContainer.getWidth()/3,
+                gameContainer.getHeight()/10);
+
+        newAccountButton = new MouseOverArea(gameContainer, newAccount, gameContainer.getWidth()/3, 4*gameContainer.getHeight()/7,
+                gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
 
         try{
             UIFont1 = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            UIFont1 = UIFont1.deriveFont(Font.BOLD, gameContainer.getWidth()/12f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 16.f is the size of your font
+            UIFont1 = UIFont1.deriveFont(Font.BOLD, gameContainer.getWidth()/12f);
 
-            //Since TrueTypeFont loading has many problems, we can use UnicodeFont to load the .ttf fonts(it's exactly the same thing).
             uniFont = new UnicodeFont(UIFont1);
 
-            //uniFont.addAsciiGlyphs();
             uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
 
             uniFont.addAsciiGlyphs();
@@ -93,9 +97,7 @@ public class StartState extends BasicGameState implements ComponentListener {
     public void componentActivated(AbstractComponent source) {
         if (source == loginButton) {
             stateBasedGame.enterState(5, new FadeOutTransition(), new FadeInTransition());
-        }
-
-        if(source == newAccountButton){
+        }else if(source == newAccountButton){
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
     }

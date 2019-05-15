@@ -105,6 +105,10 @@ public class AddAccountState extends BasicGameState implements ComponentListener
         if (source == accountButton) {
             String nickname = nameField.getText();
             String password = passwordField.getText();
+            //***************
+            System.out.println(nickname);
+            System.out.println(password);
+            //***************
             if(menu.newAccount(nickname,password)){
                 stateBasedGame.enterState(0, new FadeOutTransition(), new FadeInTransition());
             }

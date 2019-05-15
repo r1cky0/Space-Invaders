@@ -72,7 +72,7 @@ public class LoginState extends BasicGameState implements ComponentListener {
 
         login = new Image("res/images/login.png").getScaledCopy(gameContainer.getWidth()/3,
                 gameContainer.getHeight()/10);
-        
+
         loginButton = new MouseOverArea(gameContainer, login, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7,
                 gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
     }
@@ -104,13 +104,13 @@ public class LoginState extends BasicGameState implements ComponentListener {
         if (source == loginButton) {
             String nickname = nameField.getText();
             String password = passwordField.getText();
-            if(menu.logIn(nickname,password)){
-                stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition());
-            }
-            else{
-                nameField.setText("Errore");
-                passwordField.setText("");
-            }
+            //if(menu.logIn(nickname,password)){
+                stateBasedGame.enterState(0, new FadeOutTransition(), new FadeInTransition());
+            //}
+            //else{
+                //nameField.setText("Errore");
+                //passwordField.setText("");
+            //}
         }
     }
 }
