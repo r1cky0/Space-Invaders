@@ -17,42 +17,36 @@ import org.newdawn.slick.util.ResourceLoader;
 import java.awt.Font;
 
 public class AddAccountState extends BasicGameState implements ComponentListener {
+
     private Menu menu;
 
     private StateBasedGame stateBasedGame;
     private GameContainer gameContainer;
 
-    private TextField newnameField;
-    private TextField newpasswordField;
+    private TextField nameField;
+    private TextField passwordField;
 
     private String message;
-    private String newnameString;
-    private String newpasswordString;
+    private String nameString;
+    private String passwordString;
 
     private Font UIFont1;
     private UnicodeFont uniFont;
 
-    private org.newdawn.slick.Image background;
+    private Image background;
 
-    private org.newdawn.slick.Image newAccount;
-    private MouseOverArea newAccountButton;
-
-    private Input input;
+    private Image account;
+    private MouseOverArea accountButton;
 
     public AddAccountState(Menu menu){
         this.menu = menu;
     }
 
     @Override
-    public int getID() {
-        return 6;
-    }
-
-    @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer= gameContainer;
         this.stateBasedGame= stateBasedGame;
-        background = new org.newdawn.slick.Image("res/images/space.png");
+        background = new Image("res/images/space.png");
         try{
             UIFont1 = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
             UIFont1 = UIFont1.deriveFont(Font.PLAIN, 40);
@@ -64,55 +58,59 @@ public class AddAccountState extends BasicGameState implements ComponentListener
             e.printStackTrace();
         }
 
-        input = new Input(gameContainer.getHeight());
-        input.addKeyListener(this);
+        message = "Inserisci dati";
+        nameString = "nickname:";
+        passwordString = "password:";
 
-        message = "inserisci dati";
-        newnameString = "nickname:";
-        newpasswordString = "password:";
+        nameField = new TextField(gameContainer,uniFont,260,200,300,40);
+        passwordField = new TextField(gameContainer,uniFont,260,250,300,40);
 
-        newnameField = new TextField(gameContainer,uniFont,260,200,300,40);
-        newpasswordField = new TextField(gameContainer,uniFont,260,250,300,40);
+        nameField.setBackgroundColor(Color.white);
+        nameField.setTextColor(Color.black);
 
-        newnameField.setBackgroundColor(org.newdawn.slick.Color.white);
-        newnameField.setTextColor(org.newdawn.slick.Color.black);
+        passwordField.setBackgroundColor(Color.white);
+        passwordField.setTextColor(Color.black);
 
-        newpasswordField.setBackgroundColor(org.newdawn.slick.Color.white);
-        newpasswordField.setTextColor(org.newdawn.slick.Color.black);
+        account = new Image("res/images/account.png").getScaledCopy(gameContainer.getWidth()/3,
+                gameContainer.getHeight()/10);
 
-        newAccount = new org.newdawn.slick.Image("res/images/account.png").getScaledCopy(gameContainer.getWidth()/3, gameContainer.getHeight()/10);
-        newAccountButton = new MouseOverArea(gameContainer, newAccount, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7, gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
+        accountButton = new MouseOverArea(gameContainer, account, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7,
+                gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
 
-        newnameField.render(gameContainer, graphics);
-        newpasswordField.render(gameContainer, graphics);
+        nameField.render(gameContainer, graphics);
+        passwordField.render(gameContainer, graphics);
 
         uniFont.drawString(150, 50, message);
-        uniFont.drawString(50,200, newnameString);
-        uniFont.drawString(50,250, newpasswordString);
-        newAccountButton.render(gameContainer, graphics);
+        uniFont.drawString(50,200, nameString);
+        uniFont.drawString(50,250, passwordString);
+        accountButton.render(gameContainer, graphics);
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+
+    }
+
+    @Override
+    public int getID() {
+        return 6;
     }
 
     public void componentActivated(AbstractComponent source) {
-        if ((source == newAccountButton) || (input.isKeyPressed(28))) {
-            String nickname = newnameField.getText();
-            String password = newpasswordField.getText();
-            if (menu.addPlayer(nickname,password)){
-                newnameField.setText("");
-                newpasswordField.setText("");
+        if (source == accountButton) {
+            String nickname = nameField.getText();
+            String password = passwordField.getText();
+            if(menu.newAccount(nickname,password)){
                 stateBasedGame.enterState(0, new FadeOutTransition(), new FadeInTransition());
             }
             else{
-                newnameField.setText("Nome usato");
-                newpasswordField.setText("");
+                nameField.setText("Nome già usato");
+                passwordField.setText("");
             }
         }
     }

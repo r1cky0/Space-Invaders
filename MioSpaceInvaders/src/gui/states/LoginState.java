@@ -70,8 +70,11 @@ public class LoginState extends BasicGameState implements ComponentListener {
         passwordField.setBackgroundColor(Color.white);
         passwordField.setTextColor(Color.black);
 
-        login = new Image("res/images/login.png").getScaledCopy(gameContainer.getWidth()/3, gameContainer.getHeight()/10);
-        loginButton = new MouseOverArea(gameContainer, login, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7, gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
+        login = new Image("res/images/login.png").getScaledCopy(gameContainer.getWidth()/3,
+                gameContainer.getHeight()/10);
+
+        loginButton = new MouseOverArea(gameContainer, login, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7,
+                gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
     }
 
     @Override
@@ -96,6 +99,7 @@ public class LoginState extends BasicGameState implements ComponentListener {
     public int getID() {
         return 5;
     }
+
     public void componentActivated(AbstractComponent source) {
         if (source == loginButton) {
             String nickname = nameField.getText();

@@ -317,7 +317,6 @@ public class Field {
         return invaderShot;
     }
 
-
     public ArrayList<Invader> getInvaders() {
         return invaders;
     }

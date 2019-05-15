@@ -81,7 +81,7 @@ public class SinglePlayerState extends BasicGameState {
         uniFont.drawString(20,15,"Lives: ",Color.white);
         uniFont.drawString(gameContainer.getWidth()-300,15,"Score: ",Color.white);
 
-        spaceShip.render(gameContainer,graphics,"res/images/space.png",spaceShip.getCoordinate(),(float)spaceShip.getSize());
+        //spaceShip.render(gameContainer,graphics,"res/images/space.png",spaceShip.getCoordinate(),(float)spaceShip.getSize());
         //uniFont.drawString(20,15,"Lives: "+spaceShip.getLife(),Color.white);
         //uniFont.drawString(gameContainer.getWidth()-300,15,"Score: "+spaceShip.getScore(),Color.white);
     }

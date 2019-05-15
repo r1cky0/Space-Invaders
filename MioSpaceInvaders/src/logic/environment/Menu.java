@@ -31,16 +31,20 @@ public class Menu {
         defaultShip = new SpaceShip(coordinate,shipSize);
     }
 
-    public void addPlayer(String name, String password){
+    public boolean newAccount(String name, String password){
         Player newPlayer;
 
         if(players.containsKey(name)){
+            //***************
             System.err.println("Player giá esistente");
+            //***************
+            return false;
         }
         else{
             newPlayer = new Player(name,defaultShip);
             newPlayer.setPassword(password);
             players.put(name,newPlayer);
+            return true;
         }
     }
 
