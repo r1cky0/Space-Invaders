@@ -13,9 +13,11 @@ public class Ranking {
     }
 
     public void addScore(Player player){
-        for(Player p: players){
-            if(p.getHighScore() < player.getHighScore()){
-                players.add(players.indexOf(p),player);
+        if (players != null) {
+            for(Player p: players){ // meglio aggiungere normalmente e poi fare una sort per ordinare
+                if(p.getHighScore() < player.getHighScore()){
+                    players.add(players.indexOf(p),player);
+                }
             }
         }
         players.add(player);
