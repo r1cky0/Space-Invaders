@@ -2,6 +2,7 @@ package gui.states;
 
 import logic.environment.Field;
 import logic.environment.Menu;
+import logic.environment.MovingDirections;
 import logic.player.Player;
 import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
@@ -71,6 +72,7 @@ public class SinglePlayerState extends BasicGameState {
 
         invaders = field.getInvaders();
         bunkers = field.getBunkers();
+        spaceShip = menu.getPlayer().getSpaceShip();
         bullet = null;
         invaderBullet = null;
     }
@@ -81,14 +83,22 @@ public class SinglePlayerState extends BasicGameState {
         uniFont.drawString(20,15,"Lives: ",Color.white);
         uniFont.drawString(gameContainer.getWidth()-300,15,"Score: ",Color.white);
 
-        //spaceShip.render(gameContainer,graphics,"res/images/space.png",spaceShip.getCoordinate(),(float)spaceShip.getSize());
-        //uniFont.drawString(20,15,"Lives: "+spaceShip.getLife(),Color.white);
-        //uniFont.drawString(gameContainer.getWidth()-300,15,"Score: "+spaceShip.getScore(),Color.white);
+        spaceShip.render(gameContainer,graphics,"res/images/ship.png",spaceShip.getCoordinate(),(float)spaceShip.getSize());
+        uniFont.drawString(20,15,"Lives: "+spaceShip.getLife(),Color.white);
+        uniFont.drawString(gameContainer.getWidth()-300,15,"Score: "+spaceShip.getCurrentScore(),Color.white);
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+        Input input = gameContainer.getInput();
 
+        if(input.isKeyDown(Input.KEY_LEFT)){
+            field.shipMovement(MovingDirections.LEFT);
+        }
+
+        if(input.isKeyDown(Input.KEY_RIGHT)){
+            field.shipMovement(MovingDirections.RIGHT);
+        }
     }
 
     @Override

@@ -27,7 +27,9 @@ public class Menu {
         this.maxWidth = maxWidth;
         this.shipSize = maxWidth/20;
 
-        Coordinate coordinate = new Coordinate(20,180);
+        Coordinate coordinate = new Coordinate(shipSize,(7*maxHeight/10));
+        System.err.println("X: "+coordinate.getX());
+        System.err.println("Y :"+coordinate.getY());
         defaultShip = new SpaceShip(coordinate,shipSize);
     }
 

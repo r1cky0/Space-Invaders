@@ -23,8 +23,7 @@ public class SpaceInvaders extends StateBasedGame {
         this.addState(new GameOverState(menu));
         this.addState(new LoginState(menu));
         this.addState(new AddAccountState(menu));
-        this.enterState(0); //per partire dalla schermata con login o add account decommentare questo e commentare sotto
-        //this.enterState(2);  //per passare direttamente al gioco
+        this.enterState(2);
     }
 
     public static void main(String[] args){
