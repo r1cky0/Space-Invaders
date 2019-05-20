@@ -13,7 +13,6 @@ import org.newdawn.slick.geom.Transform;
 public class Facade {
 
     private Shape shape;
-    private Image image;
 
     public Facade(Coordinate coordinate, double size) {
         shape = new Rectangle((float)coordinate.getX(), (float) coordinate.getY(), (float) size, (float) size);
@@ -31,8 +30,9 @@ public class Facade {
         return shape;
     }
 
-    public void render (GameContainer container, Graphics g, String path, Coordinate coordinate, float size) throws SlickException{
-        image = new Image(path);
+    public void render (String path, Coordinate coordinate, float size) throws SlickException{
+        Image image = new Image(path);
         image.draw((float)coordinate.getX(),(float)coordinate.getY(), size, size);
     }
+
 }

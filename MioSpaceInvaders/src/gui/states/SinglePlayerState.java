@@ -80,10 +80,8 @@ public class SinglePlayerState extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
-        uniFont.drawString(20,15,"Lives: ",Color.white);
-        uniFont.drawString(gameContainer.getWidth()-300,15,"Score: ",Color.white);
 
-        spaceShip.render(gameContainer,graphics,"res/images/ship.png",spaceShip.getCoordinate(),(float)spaceShip.getSize());
+        spaceShip.render("res/images/ship.png",spaceShip.getCoordinate(),(float)spaceShip.getSize());
         uniFont.drawString(20,15,"Lives: "+spaceShip.getLife(),Color.white);
         uniFont.drawString(gameContainer.getWidth()-300,15,"Score: "+spaceShip.getCurrentScore(),Color.white);
     }

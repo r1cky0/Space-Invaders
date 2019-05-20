@@ -36,9 +36,9 @@ public class Field {
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
 
-        invaderSize = maxWidth /20;
+        invaderSize = maxWidth / 20;
         bulletSize = maxWidth / 100;
-        brickSize = maxWidth /80;
+        brickSize = maxWidth / 80;
 
         shipBullet = null;
         shipShot = false;
@@ -102,12 +102,12 @@ public class Field {
 
     public Coordinate shipMovement(MovingDirections md){
 
-        if(((player.getSpaceShip().getX() + (player.getSpaceShip().getSize() / 2)) < maxWidth)
+        if(((player.getSpaceShip().getX() + player.getSpaceShip().getSize()) < maxWidth)
                 && (md == MovingDirections.RIGHT)){
             return player.getSpaceShip().moveRight();
         }
 
-        if(((player.getSpaceShip().getX() - (player.getSpaceShip().getSize() / 2)) > MIN_WIDTH)
+        if((player.getSpaceShip().getX() > MIN_WIDTH)
                 && (md == MovingDirections.LEFT)){
             return player.getSpaceShip().moveLeft();
         }
