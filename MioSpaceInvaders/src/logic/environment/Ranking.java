@@ -3,6 +3,7 @@ package logic.environment;
 import logic.player.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Ranking {
 
@@ -14,13 +15,31 @@ public class Ranking {
 
     public void addScore(Player player){
         if (players != null) {
-            for(Player p: players){ // meglio aggiungere normalmente e poi fare una sort per ordinare
-                if(p.getHighScore() < player.getHighScore()){
-                    players.add(players.indexOf(p),player);
+            if (isInRanking(player)) {
+                for (Player p: players) {
+                    if(p.getName().equals(player.getName())) {
+                        p.setHighScore(player.getHighScore());
+                        orderRanking();
+                    }
                 }
             }
+            else {
+                players.add(player);
+                orderRanking();
+            }
         }
-        players.add(player);
+        else {
+            players.add(player);
+        }
+    }
+
+    public boolean isInRanking(Player player) {
+        for (Player p: players) {
+            if(p.getName().equals(player.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String toString(){
@@ -34,4 +53,7 @@ public class Ranking {
         return classifica.toString();
     }
 
+    public void orderRanking() {
+        Collections.sort(players, Player::compareTo);
+    }
 }
