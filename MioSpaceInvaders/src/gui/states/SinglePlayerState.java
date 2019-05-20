@@ -82,7 +82,8 @@ public class SinglePlayerState extends BasicGameState {
         uniFont.drawString(8*gameContainer.getWidth()/10,15,"Lives: "+spaceShip.getLife(),Color.white);
         uniFont.drawString(20,15,"Score: "+spaceShip.getCurrentScore(),Color.white);
 
-        System.err.println(spaceShip.getCoordinate());
+        invaders = field.getInvaders();
+        bunkers = field.getBunkers();
         spaceShip.render("res/images/ship.png");
 
 //        int cont = 0;
