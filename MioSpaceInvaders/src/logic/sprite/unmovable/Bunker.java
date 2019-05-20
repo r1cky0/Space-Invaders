@@ -44,10 +44,10 @@ public class Bunker {
                         indX++;
                     }
                     else {
-                        indX++;
+                        indX+= brickSize;
                     }
                 }
-                indY--;
+                indY-= brickSize;
                 riga = in.readLine();
                 indX = indexX;
             }

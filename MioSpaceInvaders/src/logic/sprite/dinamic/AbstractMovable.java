@@ -5,7 +5,7 @@ import logic.sprite.Sprite;
 
 public abstract class AbstractMovable extends Sprite implements Movable{
 
-    private final static double MOVE_OFFSET = 10;
+    private final static double MOVE_OFFSET = 30;
 
     public AbstractMovable(Coordinate coordinate, double size) {
         super(coordinate, size);

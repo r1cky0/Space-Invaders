@@ -7,6 +7,7 @@ import logic.player.Player;
 import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
+import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
@@ -94,6 +95,12 @@ public class SinglePlayerState extends BasicGameState {
             }
         }
 
+        for(Bunker bunker: bunkers){
+            for(Brick brick:bunker.getBricks()){
+                brick.render("res/images/Brick.png");
+            }
+        }
+
 
     }
 
@@ -102,16 +109,13 @@ public class SinglePlayerState extends BasicGameState {
         Input input = gameContainer.getInput();
 
         if(input.isKeyDown(Input.KEY_LEFT)){
-            //field.shipMovement(MovingDirections.LEFT);
-            field.invaderDirection();
+            field.shipMovement(MovingDirections.LEFT);
         }
 
         if(input.isKeyDown(Input.KEY_RIGHT)){
-            //field.shipMovement(MovingDirections.RIGHT);
-            field.invaderDirection();
+            field.shipMovement(MovingDirections.RIGHT);
         }
 
-        //field.invaderDirection();
     }
 
     @Override

@@ -31,6 +31,7 @@ public class Field {
     private boolean shipShot;
     private Bullet invaderBullet;
     private boolean invaderShot;
+    private MovingDirections md = MovingDirections.RIGHT;
 
     public Field(Player player, double maxHeight, double maxWidth){
         this.player = player;
@@ -83,13 +84,13 @@ public class Field {
     private void initBunkers(){
         bunkers = new ArrayList<>();
         double baseX = (maxWidth - 20*(brickSize))/5;
-        double baseY = (maxHeight - maxHeight /10);
+        double baseY = (8*maxHeight/10);
         double x = baseX;
 
         for(int i=1; i<5;i++){
             Bunker bunker = new Bunker(x,baseY, brickSize);
             bunkers.add(bunker);
-            x = baseX*i + (5* brickSize);
+            x = baseX*i + (20* brickSize);
         }
     }
 
@@ -253,7 +254,6 @@ public class Field {
     }
 
     public void invaderDirection() {
-        MovingDirections md = MovingDirections.RIGHT;
 
         double maxX = 0;
         double minX = 100;
@@ -270,14 +270,11 @@ public class Field {
         if ((maxX + invaderSize) >= maxWidth) {
             invaderMovement(MovingDirections.DOWN);
             md = MovingDirections.LEFT;
-            System.err.println(maxX);
-
         } else if (minX <= MIN_WIDTH) {
             invaderMovement(MovingDirections.DOWN);
             md = MovingDirections.RIGHT;
         }
         invaderMovement(md);
-
     }
 
     private void invaderMovement(MovingDirections md){
