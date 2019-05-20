@@ -83,14 +83,14 @@ public class Field {
 
     private void initBunkers(){
         bunkers = new ArrayList<>();
-        double baseX = (maxWidth - 20*(brickSize))/5;
+        double baseX = (maxWidth - 56*brickSize)/2;
         double baseY = (8*maxHeight/10);
         double x = baseX;
 
         for(int i=1; i<5;i++){
             Bunker bunker = new Bunker(x,baseY, brickSize);
             bunkers.add(bunker);
-            x = baseX*i + (20* brickSize);
+            x = baseX + (16*brickSize)*i;
         }
     }
 

@@ -41,7 +41,7 @@ public class Bunker {
                         Coordinate coordinate = new Coordinate(indX, indY);
                         Brick brick = new Brick(coordinate, brickSize);
                         bricks.add(brick);
-                        indX++;
+                        indX+=brickSize;
                     }
                     else {
                         indX+= brickSize;
