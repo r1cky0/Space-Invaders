@@ -18,7 +18,7 @@ public class Menu {
     private SpaceShip defaultShip;
     private Player player;
 
-    public Menu(double maxHeight, double maxWidth){
+    public Menu(double maxWidth, double maxHeight){
         ranking = new Ranking();
         customization = new Customization();
         players = new HashMap<>();
@@ -27,7 +27,7 @@ public class Menu {
         this.maxWidth = maxWidth;
         this.shipSize = maxWidth/20;
 
-        Coordinate coordinate = new Coordinate((maxWidth/2 - shipSize/2),(9*maxHeight/10));
+        Coordinate coordinate = new Coordinate((maxWidth/2 - shipSize/2),(maxHeight - shipSize));
         System.err.println("X: "+coordinate.getX());
         System.err.println("Y :"+coordinate.getY());
         defaultShip = new SpaceShip(coordinate,shipSize);
@@ -69,7 +69,7 @@ public class Menu {
     //Probabilmente ci sará da fare un' eccezione
     public void startGame(){
         if(player != null){
-            field = new Field(player, maxHeight, maxWidth);
+            field = new Field(player, maxWidth, maxHeight);
         }
     }
 
@@ -89,7 +89,7 @@ public class Menu {
     }
 
     public void setField() {
-        field = new Field(player, maxHeight, maxWidth);
+        field = new Field(player, maxWidth, maxHeight);
     }
 
 }

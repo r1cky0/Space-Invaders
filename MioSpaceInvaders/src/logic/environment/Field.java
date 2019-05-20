@@ -33,7 +33,7 @@ public class Field {
     private boolean invaderShot;
     private MovingDirections md = MovingDirections.RIGHT;
 
-    public Field(Player player, double maxHeight, double maxWidth){
+    public Field(Player player, double maxWidth, double maxHeight){
         this.player = player;
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
@@ -42,9 +42,7 @@ public class Field {
         bulletSize = maxWidth / 100;
         brickSize = maxWidth / 80;
 
-        shipBullet = null;
         shipShot = false;
-        invaderBullet = null;
         invaderShot = false;
 
         startGame();
@@ -84,7 +82,7 @@ public class Field {
     private void initBunkers(){
         bunkers = new ArrayList<>();
         double baseX = (maxWidth - 56*brickSize)/2;
-        double baseY = (8*maxHeight/10);
+        double baseY = (maxHeight - 8*brickSize);
         double x = baseX;
 
         for(int i=1; i<5;i++){
@@ -128,9 +126,6 @@ public class Field {
                     Thread thread = new Thread(runnable);
                     thread.start();
                     Thread.sleep(50);
-                    //***************
-                    System.out.println(shipBullet.getCoordinate());
-                    //***************
                 }
         }
     }
@@ -145,14 +140,9 @@ public class Field {
                     if (brick.getLife() == 0) {
                         bunker.getBricks().remove(brick);
                     }
-                    //***************
-                    System.out.println("Bunker colpito");
-                    //***************
                     if (sprite instanceof SpaceShip) {
-                        shipBullet = null;
                         shipShot = false;
                     }else {
-                        invaderBullet = null;
                         invaderShot = false;
                     }
                     return true;
@@ -164,10 +154,6 @@ public class Field {
                 if(invader.collides(bullet)){
                     player.getSpaceShip().incrementCurrentScore(invader.getValue());
                     invaders.remove(invader);
-                    //***************
-                    System.out.println("Invader colpito");
-                    //***************
-                    shipBullet = null;
                     shipShot = false;
 
                     if (invaders.isEmpty()) {
