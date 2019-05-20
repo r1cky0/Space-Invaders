@@ -2,7 +2,7 @@ package logic.player;
 
 import logic.sprite.dinamic.SpaceShip;
 
-public class Player {
+public class Player implements Comparable{
 
     private String name;
     private String password;
@@ -82,4 +82,15 @@ public class Player {
         return loggedIn;
     }
 
+    /*ordina dal punteggio + grande al + piccolo*/
+    @Override
+    public int compareTo(Object o) {
+        if (this.highScore > ((Player)o).highScore) {
+            return -1;
+        }
+        if (this.highScore < ((Player)o).highScore) {
+            return 1;
+        }
+        else return 0;
+    }
 }
