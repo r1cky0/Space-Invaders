@@ -80,10 +80,21 @@ public class SinglePlayerState extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
-
-        spaceShip.render("res/images/ship.png",spaceShip.getCoordinate(),(float)spaceShip.getSize());
         uniFont.drawString(20,15,"Lives: "+spaceShip.getLife(),Color.white);
         uniFont.drawString(gameContainer.getWidth()-300,15,"Score: "+spaceShip.getCurrentScore(),Color.white);
+
+        spaceShip.render("res/images/ship.png");
+
+        int cont = 0;
+        for(int i=0; i<4; i++){
+            String path = "res/images/Alien" + (i+1) + ".png";
+            for(int j=0; j<8;j++) {
+                invaders.get(cont).render(path);
+                cont++;
+            }
+        }
+
+
     }
 
     @Override
@@ -91,12 +102,16 @@ public class SinglePlayerState extends BasicGameState {
         Input input = gameContainer.getInput();
 
         if(input.isKeyDown(Input.KEY_LEFT)){
-            field.shipMovement(MovingDirections.LEFT);
+            //field.shipMovement(MovingDirections.LEFT);
+            field.invaderDirection();
         }
 
         if(input.isKeyDown(Input.KEY_RIGHT)){
-            field.shipMovement(MovingDirections.RIGHT);
+            //field.shipMovement(MovingDirections.RIGHT);
+            field.invaderDirection();
         }
+
+        //field.invaderDirection();
     }
 
     @Override

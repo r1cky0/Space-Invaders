@@ -30,9 +30,9 @@ public class Facade {
         return shape;
     }
 
-    public void render (String path, Coordinate coordinate, float size) throws SlickException{
+    public void render (String path) throws SlickException{
         Image image = new Image(path);
-        image.draw((float)coordinate.getX(),(float)coordinate.getY(), size, size);
+        image.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
     }
 
 }

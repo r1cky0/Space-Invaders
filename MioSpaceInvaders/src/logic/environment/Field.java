@@ -8,6 +8,7 @@ import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
+import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -62,8 +63,8 @@ public class Field {
 
     private void initInvaders(){
         invaders = new ArrayList<>();
-        double baseX = (maxWidth - 8*(invaderSize))/2;
-        double baseY = maxHeight /20;
+        double baseX = 20;
+        double baseY = maxHeight / 10;
         double x;
 
         for(int i=0; i<4; i++){
@@ -73,9 +74,9 @@ public class Field {
                 Coordinate coordinate = new Coordinate(x,baseY);
                 Invader invader = new Invader(coordinate, invaderSize, 10);
                 invaders.add(invader);
-                x+= invaderSize;
+                x+= invaderSize + 20;
             }
-            baseY+= invaderSize;
+            baseY+= invaderSize + 10;
         }
     }
 
@@ -100,19 +101,19 @@ public class Field {
         player.incrementCredit(player.getSpaceShip().getCurrentScore());
     }
 
-    public Coordinate shipMovement(MovingDirections md){
+    public void shipMovement(MovingDirections md){
 
         if(((player.getSpaceShip().getX() + player.getSpaceShip().getSize()) < maxWidth)
                 && (md == MovingDirections.RIGHT)){
-            return player.getSpaceShip().moveRight();
+            player.getSpaceShip().moveRight();
         }
 
         if((player.getSpaceShip().getX() > MIN_WIDTH)
                 && (md == MovingDirections.LEFT)){
-            return player.getSpaceShip().moveLeft();
+            player.getSpaceShip().moveLeft();
         }
 
-        return player.getSpaceShip().getCoordinate();
+        player.getSpaceShip().getCoordinate();
     }
 
     public void shipShot() throws InterruptedException {
@@ -251,21 +252,32 @@ public class Field {
         }*/
     }
 
-    public void invaderDirection(){
+    public void invaderDirection() {
         MovingDirections md = MovingDirections.RIGHT;
 
-        for(Invader invader: invaders){
+        double maxX = 0;
+        double minX = 100;
 
-            if((invader.getX() + (invader.getSize() / 2)) >= maxWidth){
-                invaderMovement(MovingDirections.DOWN);
-                md = MovingDirections.LEFT;
+        for (Invader invader : invaders) {
+            if (maxX < invader.getX()) {
+                maxX = invader.getX();
             }
-            else if((invader.getX() - (invader.getSize() / 2)) <= MIN_WIDTH){
-                invaderMovement(MovingDirections.DOWN);
-                md = MovingDirections.RIGHT;
+            if (minX > invader.getX()) {
+                minX = invader.getX();
             }
         }
+
+        if ((maxX + invaderSize) >= maxWidth) {
+            invaderMovement(MovingDirections.DOWN);
+            md = MovingDirections.LEFT;
+            System.err.println(maxX);
+
+        } else if (minX <= MIN_WIDTH) {
+            invaderMovement(MovingDirections.DOWN);
+            md = MovingDirections.RIGHT;
+        }
         invaderMovement(md);
+
     }
 
     private void invaderMovement(MovingDirections md){
