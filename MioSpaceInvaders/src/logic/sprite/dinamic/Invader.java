@@ -15,8 +15,7 @@ public class Invader extends AbstractMovable {
         return value;
     }
 
-    public Coordinate moveUp(){
-        return super.getCoordinate();
+    public void moveUp(){
     }
 
 }

@@ -74,7 +74,6 @@ public class SinglePlayerState extends BasicGameState {
         bunkers = field.getBunkers();
         spaceShip = menu.getPlayer().getSpaceShip();
 
-
     }
 
     @Override
@@ -122,7 +121,6 @@ public class SinglePlayerState extends BasicGameState {
         if(input.isKeyPressed(Input.KEY_SPACE)) {
             field.shipShot();
         }
-
 
     }
 

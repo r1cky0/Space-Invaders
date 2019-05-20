@@ -11,23 +11,19 @@ public abstract class AbstractMovable extends Sprite implements Movable{
         super(coordinate, size);
     }
 
-    public Coordinate moveLeft() {
+    public void moveLeft() {
         super.setX(super.getX() - MOVE_OFFSET);
-        return super.getCoordinate();
     }
 
-    public Coordinate moveRight() {
+    public void moveRight() {
         super.setX(super.getX() + MOVE_OFFSET);
-        return super.getCoordinate();
     }
 
-    public Coordinate moveUp() {
+    public void moveUp() {
         super.setY(super.getY() - MOVE_OFFSET);
-        return super.getCoordinate();
     }
 
-    public Coordinate moveDown() {
+    public void moveDown() {
         super.setY(super.getY() + MOVE_OFFSET);
-        return super.getCoordinate();
     }
 }

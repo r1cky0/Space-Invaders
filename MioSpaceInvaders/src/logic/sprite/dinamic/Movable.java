@@ -4,8 +4,8 @@ import logic.sprite.Coordinate;
 
 public interface Movable {
 
-    Coordinate moveLeft();
-    Coordinate moveRight();
-    Coordinate moveUp();
-    Coordinate moveDown();
+    void moveLeft();
+    void moveRight();
+    void moveUp();
+    void moveDown();
 }

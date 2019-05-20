@@ -120,10 +120,11 @@ public class Field {
     public void shipShot(){
 
         if(!shipShot) {
-            shipBullet = new Bullet(player.getSpaceShip().getCoordinate(), bulletSize);
+            Coordinate coordinate = new Coordinate(player.getSpaceShip().getX(), player.getSpaceShip().getY());
+            shipBullet = new Bullet(coordinate, bulletSize);
             shipShot = true;
 
-            while (!checkCollision(player.getSpaceShip(), shipBullet) && (shipBullet.getY() > MIN_HEIGHT)) {
+            while (!checkCollision(player.getSpaceShip(), shipBullet) && (shipBullet.getY() >= MIN_HEIGHT)) {
                 shipBullet.moveUp();
             }
         }
@@ -178,64 +179,6 @@ public class Field {
             return false;
         }
         return false;
-
-        /*for (Bunker bunker : bunkers) {
-            ListIterator<Brick> listIterator = bunker.getBricks().listIterator();
-            while (listIterator.hasNext()) {
-                if (listIterator.next().collides(bullet)) {
-
-                    listIterator.remove();
-                    //***************
-                    System.out.println("Bunker colpito");
-                    //***************
-                    if (sprite instanceof SpaceShip) {
-                        shipBullet = null;
-                        shipShot = false;
-                    } else {
-                        invaderBullet = null;
-                        invaderShot = false;
-                    }
-                    return true;
-                }
-            }
-        }
-        if (sprite instanceof SpaceShip) {
-            ListIterator<Invader> listIterator = invaders.listIterator();
-
-            while (listIterator.hasNext()) {
-                Invader invader = listIterator.next();
-
-                if (invader.collides(bullet)) {
-                    player.getSpaceShip().incrementCurrentScore(invader.getValue());
-                    listIterator.remove();
-                    //***************
-                    System.out.println("Invader colpito");
-                    //***************
-                    shipBullet = null;
-                    shipShot = false;
-
-                    if (invaders.isEmpty()) {
-                        nextLevel();
-                    }
-                    return true;
-                }
-            }
-            return false;
-        } else {
-
-            if (player.getSpaceShip().collides(bullet)) {
-                player.getSpaceShip().decreaseLife();
-
-                if (player.getSpaceShip().getLife() == 0) {
-                    gameOver();
-                } else {
-                    invaderBullet = null;
-                    invaderShot = false;
-                    return true;
-                }
-            }
-            return false;
-        }*/
     }
 
     public void invaderDirection() {

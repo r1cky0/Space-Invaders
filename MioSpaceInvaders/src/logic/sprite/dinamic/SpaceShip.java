@@ -20,13 +20,9 @@ public class SpaceShip extends AbstractMovable {
         return currentScore;
     }
 
-    public Coordinate moveUp() {
-        return super.getCoordinate();
-    }
+    public void moveUp(){}
 
-    public Coordinate moveDown() {
-        return super.getCoordinate();
-    }
+    public void moveDown() {}
 
     public void decreaseLife() {
         life -= 1;
