@@ -9,6 +9,7 @@ import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
+import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -30,10 +31,8 @@ public class SinglePlayerState extends BasicGameState {
     private ArrayList<Bunker> bunkers;
     private ArrayList<Invader> invaders;
     private SpaceShip spaceShip;
-    private Bullet bullet;
+    private Bullet shipBullet;
     private Bullet invaderBullet;
-    private boolean bulletShot = false;
-    private boolean invaderShot = false;
 
 
     public SinglePlayerState(Menu menu){
@@ -74,8 +73,8 @@ public class SinglePlayerState extends BasicGameState {
         invaders = field.getInvaders();
         bunkers = field.getBunkers();
         spaceShip = menu.getPlayer().getSpaceShip();
-        bullet = null;
-        invaderBullet = null;
+
+
     }
 
     @Override
@@ -84,15 +83,20 @@ public class SinglePlayerState extends BasicGameState {
         uniFont.drawString(8*gameContainer.getWidth()/10,15,"Lives: "+spaceShip.getLife(),Color.white);
         uniFont.drawString(20,15,"Score: "+spaceShip.getCurrentScore(),Color.white);
 
+        System.err.println(spaceShip.getCoordinate());
         spaceShip.render("res/images/ship.png");
 
-        int cont = 0;
-        for(int i=0; i<4; i++){
-            String path = "res/images/Alien" + (i+1) + ".png";
-            for(int j=0; j<8;j++) {
-                invaders.get(cont).render(path);
-                cont++;
-            }
+//        int cont = 0;
+//        for(int i=0; i<4; i++){
+//            String path = "res/images/Alien" + (i+1) + ".png";
+//            for(int j=0; j<8;j++) {
+//                invaders.get(cont).render(path);
+//                cont++;
+//            }
+//        }
+
+        for(Invader invader:invaders){
+            invader.render("res/images/Alien1.png");
         }
 
         for(Bunker bunker: bunkers){
@@ -100,6 +104,7 @@ public class SinglePlayerState extends BasicGameState {
                 brick.render("res/images/Brick.png");
             }
         }
+
     }
 
     @Override
@@ -114,20 +119,12 @@ public class SinglePlayerState extends BasicGameState {
             field.shipMovement(MovingDirections.RIGHT);
         }
 
-
-    }
-
-    public void keyPressed(int key, char c){
-        if(key == Input.KEY_SPACE){
-            try{
-                field.shipShot();
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        if(input.isKeyPressed(Input.KEY_SPACE)) {
+            field.shipShot();
         }
-    }
 
+
+    }
 
     @Override
     public int getID() {

@@ -9,6 +9,7 @@ import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import org.lwjgl.Sys;
+import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -42,6 +43,7 @@ public class Field {
         bulletSize = maxWidth / 100;
         brickSize = maxWidth / 80;
 
+        shipBullet = new Bullet(player.getSpaceShip().getCoordinate(), bulletSize);
         shipShot = false;
         invaderShot = false;
 
@@ -115,18 +117,15 @@ public class Field {
         player.getSpaceShip().getCoordinate();
     }
 
-    public void shipShot() throws InterruptedException {
+    public void shipShot(){
 
         if(!shipShot) {
             shipBullet = new Bullet(player.getSpaceShip().getCoordinate(), bulletSize);
             shipShot = true;
 
-                while (!checkCollision(player.getSpaceShip(), shipBullet) && (shipBullet.getY() > MIN_HEIGHT)) {
-                    Runnable runnable = () -> shipBullet.moveUp();
-                    Thread thread = new Thread(runnable);
-                    thread.start();
-                    Thread.sleep(50);
-                }
+            while (!checkCollision(player.getSpaceShip(), shipBullet) && (shipBullet.getY() > MIN_HEIGHT)) {
+                shipBullet.moveUp();
+            }
         }
     }
 
@@ -319,4 +318,9 @@ public class Field {
     public ArrayList<Bunker> getBunkers() {
         return bunkers;
     }
+
+    public Bullet getShipBullet() {
+        return shipBullet;
+    }
+
 }
