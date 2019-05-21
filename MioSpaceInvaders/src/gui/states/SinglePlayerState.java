@@ -156,6 +156,16 @@ public class SinglePlayerState extends BasicGameState {
                 shipBullet = null;
             }
         }
+
+        if(invaderBullet!=null){
+            invaderBullet.moveDown();
+        }
+
+        if(invaderBullet!=null){
+            if(field.checkCollision(invaders.get(0),invaderBullet)){
+                invaderBullet = null;
+            }
+        }
     }
 
     @Override

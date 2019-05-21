@@ -17,7 +17,7 @@ public class InvadersAStati extends StateBasedGame {
         this.addState(new MenuState());
         this.addState(new SinglePlayerState());
         this.addState(new GameOverState());
-        this.enterState(0);
+        this.enterState(1);
     }
 
     public static void main(String[] argv) {

@@ -232,27 +232,18 @@ public class Field {
         }
     }
 
-    public void invaderShot() throws InterruptedException {
-
-        if(!invaderShot){
+    public Bullet invaderShot(){
+        if (!invaderShot) {
             Random rand = new Random();
             int random = rand.nextInt(invaders.size());
-            //***************
-            System.out.println(random);
-            //***************
-            invaderBullet = new Bullet(invaders.get(random).getCoordinate(), bulletSize);
-            invaderShot = true;
+            System.err.println(random);
+            Coordinate coordinate = new Coordinate(invaders.get(random).getX() -
+                    invaderBullet.getShape().getWidth() / 2, invaders.get(random).getY());
 
-            while ((!checkCollision(invaders.get(random), invaderBullet) && (invaderBullet.getY() < maxHeight))) {
-                Runnable runnable = () -> invaderBullet.moveDown();
-                Thread thread = new Thread(runnable);
-                thread.start();
-                Thread.sleep(50);
-                //***************
-                System.out.println(invaderBullet.getCoordinate());
-                //***************
-            }
+            invaderBullet = new Bullet(coordinate, bulletSize);
+            invaderShot = true;
         }
+        return invaderBullet;
     }
 
     public boolean isShipShot() {
