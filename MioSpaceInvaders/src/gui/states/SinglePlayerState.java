@@ -85,7 +85,7 @@ public class SinglePlayerState extends BasicGameState {
         invaders = field.getInvaders();
         bunkers = field.getBunkers();
         spaceShip.render("res/images/ship.png");
-        graphics.draw(spaceShip.getShape());
+
 
 //        int cont = 0;
 //        for(int i=0; i<4; i++){
@@ -135,12 +135,6 @@ public class SinglePlayerState extends BasicGameState {
         if(shipBullet != null){
             shipBullet.moveUp();
             System.err.println(shipBullet.getY());
-        }
-
-        if(shipBullet != null){
-            if(shipBullet.endReached()){
-                shipBullet = null;
-            }
         }
 
         if(shipBullet!=null){

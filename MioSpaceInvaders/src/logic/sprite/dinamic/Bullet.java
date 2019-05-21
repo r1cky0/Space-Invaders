@@ -23,11 +23,5 @@ public class Bullet extends AbstractMovable{
         super.setY(super.getY() - VERTICAL_OFFSET);
     }
 
-    public boolean endReached(){
-        if(super.getY() <= 0){
-            return true;
-        }
-        return false;
-    }
 
 }

@@ -124,7 +124,7 @@ public class Field {
             shipBullet = new Bullet(coordinate, bulletSize);
             shipShot = true;
         }
-            return shipBullet;
+        return shipBullet;
     }
 
     public boolean checkCollision(Sprite sprite, Bullet bullet) {
@@ -159,6 +159,10 @@ public class Field {
                     return true;
                 }
             }
+            if(shipBullet.getY() <= 0){
+                shipShot = false;
+                return true;
+            }
             return false;
         }
         else if(sprite instanceof Invader) {
@@ -172,6 +176,10 @@ public class Field {
                     invaderShot = false;
                     return true;
                 }
+            }
+            if(shipBullet.getY() >= maxHeight){
+                invaderShot = false;
+                return true;
             }
             return false;
         }
