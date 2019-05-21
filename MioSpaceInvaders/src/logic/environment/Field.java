@@ -41,7 +41,7 @@ public class Field {
 
         invaderSize = maxWidth / 20;
         bulletSize = maxWidth / 100;
-        brickSize = maxWidth / 80;
+        brickSize = maxWidth / 40;
 
         shipBullet = new Bullet(player.getSpaceShip().getCoordinate(), bulletSize);
         shipShot = false;
@@ -83,14 +83,14 @@ public class Field {
 
     private void initBunkers(){
         bunkers = new ArrayList<>();
-        double baseX = (maxWidth - 56*brickSize)/2;
-        double baseY = (maxHeight - 8*brickSize);
+        double baseX = (maxWidth - 35*brickSize)/2;
+        double baseY = (maxHeight - 4*brickSize);
         double x = baseX;
 
         for(int i=1; i<5;i++){
             Bunker bunker = new Bunker(x,baseY, brickSize);
             bunkers.add(bunker);
-            x = baseX + (16*brickSize)*i;
+            x = baseX + (10*brickSize)*i;
         }
     }
 

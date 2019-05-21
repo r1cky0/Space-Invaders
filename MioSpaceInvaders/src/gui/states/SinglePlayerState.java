@@ -102,8 +102,22 @@ public class SinglePlayerState extends BasicGameState {
 
         for(Bunker bunker: bunkers){
             for(Brick brick:bunker.getBricks()){
-                brick.render("res/images/Brick.png");
-                //graphics.draw(brick.getShape());
+                switch (brick.getLife()){
+
+                    case 4:
+                        brick.render("res/images/Brick.png");
+                        break;
+                    case 3:
+                        brick.render("res/images/Brick1.png");
+                        break;
+                    case 2:
+                        brick.render("res/images/Brick2.png");
+                        break;
+                    case 1:
+                        brick.render("res/images/Brick3.png");
+                        break;
+                }
+
             }
         }
 
