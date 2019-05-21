@@ -86,6 +86,7 @@ public class SinglePlayerState extends BasicGameState {
 
         invaders = field.getInvaders();
         bunkers = field.getBunkers();
+        spaceShip = menu.getPlayer().getSpaceShip();
         spaceShip.render("res/images/ship.png");
 
 

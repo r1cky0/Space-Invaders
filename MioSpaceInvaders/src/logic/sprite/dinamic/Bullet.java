@@ -16,10 +16,6 @@ public class Bullet extends Sprite{
         return super.toString();
     }
 
-    public void moveLeft() {}
-
-    public void moveRight() {}
-
     public void moveUp() {
         super.setY(super.getY() - VERTICAL_OFFSET);
     }

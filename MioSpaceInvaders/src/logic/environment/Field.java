@@ -175,7 +175,8 @@ public class Field {
 
                 if (player.getSpaceShip().getLife() == 0) {
                     gameOver();
-                } else {
+                    return true;
+                }else {
                     invaderBullet = null;
                     invaderShot = false;
                     return true;
