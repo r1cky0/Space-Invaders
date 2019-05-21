@@ -31,7 +31,7 @@ public class SpaceShip extends Sprite {
     }
 
     public void decreaseLife() {
-        life -= 1;
+        life = life - 1;
     }
 
     public void incrementLife() {

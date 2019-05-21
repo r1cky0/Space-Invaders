@@ -14,6 +14,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.util.ArrayList;
@@ -165,6 +167,9 @@ public class SinglePlayerState extends BasicGameState {
         if(invaderBullet!=null){
             if(field.checkCollision(invaders.get(0),invaderBullet)){
                 invaderBullet = null;
+                if(spaceShip.getLife() == 0){
+                    stateBasedGame.enterState(3,new FadeOutTransition(), new FadeInTransition());
+                }
             }
         }
     }

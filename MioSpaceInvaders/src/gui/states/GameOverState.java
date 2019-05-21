@@ -1,13 +1,23 @@
 package gui.states;
 
 import logic.environment.Menu;
-import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.awt.*;
+import java.awt.Font;
+
 public class GameOverState extends BasicGameState {
+
+    private Image gameOver;
+    private GameContainer container;
+    private StateBasedGame stateBasedGame;
+
+    private Font UIFont1;
+    private UnicodeFont uniFont;
 
     private Menu menu;
 
@@ -15,23 +25,25 @@ public class GameOverState extends BasicGameState {
         this.menu = menu;
     }
 
+    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        this.container= gameContainer;
+        this.stateBasedGame= stateBasedGame;
+
+        gameOver = new Image("res/images/game_over.png");
+    }
+
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+        gameOver.draw(container.getWidth()/7,container.getHeight()/6);
+    }
+
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+
+    }
+
+
     @Override
     public int getID() {
         return 3;
     }
 
-    @Override
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
-    }
-
-    @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-
-    }
-
-    @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
-    }
 }
