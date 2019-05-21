@@ -1,10 +1,12 @@
 package logic.sprite.dinamic;
 
 import logic.sprite.Coordinate;
+import logic.sprite.Sprite;
 
-public class SpaceShip extends AbstractMovable {
+public class SpaceShip extends Sprite {
 
     private int life, currentScore;
+    private final double HORIZONTAL_OFFSET = 7;
 
     public SpaceShip(Coordinate coordinate, double size) {
         super(coordinate, size);
@@ -20,9 +22,13 @@ public class SpaceShip extends AbstractMovable {
         return currentScore;
     }
 
-    public void moveUp(){}
+    public void moveLeft() {
+        super.setX(super.getX() - HORIZONTAL_OFFSET);
+    }
 
-    public void moveDown() {}
+    public void moveRight() {
+        super.setX(super.getX() + HORIZONTAL_OFFSET);
+    }
 
     public void decreaseLife() {
         life -= 1;

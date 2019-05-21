@@ -40,7 +40,7 @@ public class Field {
         this.maxWidth = maxWidth;
 
         invaderSize = maxWidth / 20;
-        bulletSize = maxWidth / 100;
+        bulletSize = maxWidth / 60;
         brickSize = maxWidth / 40;
 
         shipBullet = new Bullet(player.getSpaceShip().getCoordinate(), bulletSize);
@@ -63,9 +63,12 @@ public class Field {
     }
 
     private void initInvaders(){
+        final double HORIZONTAL_OFFSET = maxWidth/32;
+        final double VERTICAL_OFFSET = maxHeight/100;
+
         invaders = new ArrayList<>();
-        double baseX = 20;
-        double baseY = maxHeight / 10;
+        double baseX = HORIZONTAL_OFFSET;
+        double baseY = maxHeight/10;
         double x;
 
         for(int i=0; i<4; i++){
@@ -75,9 +78,9 @@ public class Field {
                 Coordinate coordinate = new Coordinate(x,baseY);
                 Invader invader = new Invader(coordinate, invaderSize, 10);
                 invaders.add(invader);
-                x+= invaderSize + 20;
+                x+= invaderSize + HORIZONTAL_OFFSET;
             }
-            baseY+= invaderSize + 10;
+            baseY+= invaderSize + VERTICAL_OFFSET;
         }
     }
 
@@ -114,13 +117,14 @@ public class Field {
             player.getSpaceShip().moveLeft();
         }
 
-        player.getSpaceShip().getCoordinate();
     }
 
     public Bullet shipShot(){
 
         if(!shipShot) {
-            Coordinate coordinate = new Coordinate(player.getSpaceShip().getShape().getCenterX(), player.getSpaceShip().getY());
+            Coordinate coordinate = new Coordinate(player.getSpaceShip().getShape().getCenterX() -
+                    shipBullet.getShape().getWidth()/2, player.getSpaceShip().getY());
+
             shipBullet = new Bullet(coordinate, bulletSize);
             shipShot = true;
         }
