@@ -181,7 +181,7 @@ public class Field {
                     return true;
                 }
             }
-            if(shipBullet.getY() >= maxHeight){
+            if(invaderBullet.getY() >= maxHeight){
                 invaderShot = false;
                 return true;
             }
