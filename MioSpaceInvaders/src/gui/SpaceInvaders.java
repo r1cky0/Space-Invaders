@@ -21,7 +21,7 @@ public class SpaceInvaders extends StateBasedGame {
         this.addState(new MenuState(menu));
         this.addState(new SinglePlayerState(menu));
         this.addState(new GameOverState(menu));
-        this.enterState(2);
+        this.enterState(0);
     }
 
     public static void main(String[] args){
