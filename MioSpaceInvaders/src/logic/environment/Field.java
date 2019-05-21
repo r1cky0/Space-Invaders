@@ -123,7 +123,7 @@ public class Field {
 
         if(!shipShot) {
             Coordinate coordinate = new Coordinate(player.getSpaceShip().getShape().getCenterX() -
-                    shipBullet.getShape().getWidth()/2, player.getSpaceShip().getY());
+                    bulletSize/2, player.getSpaceShip().getY());
 
             shipBullet = new Bullet(coordinate, bulletSize);
             shipShot = true;
@@ -236,22 +236,13 @@ public class Field {
         if (!invaderShot) {
             Random rand = new Random();
             int random = rand.nextInt(invaders.size());
-            System.err.println(random);
             Coordinate coordinate = new Coordinate(invaders.get(random).getX() -
-                    invaderBullet.getShape().getWidth() / 2, invaders.get(random).getY());
+                    bulletSize / 2, invaders.get(random).getY());
 
             invaderBullet = new Bullet(coordinate, bulletSize);
             invaderShot = true;
         }
         return invaderBullet;
-    }
-
-    public boolean isShipShot() {
-        return shipShot;
-    }
-
-    public boolean isInvaderShot() {
-        return invaderShot;
     }
 
     public ArrayList<Invader> getInvaders() {

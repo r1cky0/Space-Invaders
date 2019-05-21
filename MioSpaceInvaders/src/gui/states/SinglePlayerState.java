@@ -145,6 +145,7 @@ public class SinglePlayerState extends BasicGameState {
 
         if(input.isKeyPressed(Input.KEY_SPACE)) {
             shipBullet = field.shipShot();
+            invaderBullet = field.invaderShot();
         }
 
         if(shipBullet != null){
