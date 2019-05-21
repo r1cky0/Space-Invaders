@@ -117,20 +117,17 @@ public class Field {
         player.getSpaceShip().getCoordinate();
     }
 
-    public void shipShot(){
+    public Bullet shipShot(){
 
         if(!shipShot) {
-            Coordinate coordinate = new Coordinate(player.getSpaceShip().getX(), player.getSpaceShip().getY());
+            Coordinate coordinate = new Coordinate(player.getSpaceShip().getShape().getCenterX(), player.getSpaceShip().getY());
             shipBullet = new Bullet(coordinate, bulletSize);
             shipShot = true;
-
-            while (!checkCollision(player.getSpaceShip(), shipBullet) && (shipBullet.getY() >= MIN_HEIGHT)) {
-                shipBullet.moveUp();
-            }
         }
+            return shipBullet;
     }
 
-    private boolean checkCollision(Sprite sprite, Bullet bullet) {
+    public boolean checkCollision(Sprite sprite, Bullet bullet) {
 
         for (Bunker bunker : bunkers) {
             for (Brick brick : bunker.getBricks()) {

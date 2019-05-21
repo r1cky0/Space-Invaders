@@ -31,8 +31,8 @@ public class SinglePlayerState extends BasicGameState {
     private ArrayList<Bunker> bunkers;
     private ArrayList<Invader> invaders;
     private SpaceShip spaceShip;
-    private Bullet shipBullet;
-    private Bullet invaderBullet;
+    private Bullet shipBullet = null;
+    private Bullet invaderBullet = null;
 
 
     public SinglePlayerState(Menu menu){
@@ -85,6 +85,7 @@ public class SinglePlayerState extends BasicGameState {
         invaders = field.getInvaders();
         bunkers = field.getBunkers();
         spaceShip.render("res/images/ship.png");
+        graphics.draw(spaceShip.getShape());
 
 //        int cont = 0;
 //        for(int i=0; i<4; i++){
@@ -102,9 +103,17 @@ public class SinglePlayerState extends BasicGameState {
         for(Bunker bunker: bunkers){
             for(Brick brick:bunker.getBricks()){
                 brick.render("res/images/Brick.png");
+                //graphics.draw(brick.getShape());
             }
         }
 
+        if(shipBullet != null){
+            shipBullet.render("res/images/Laser.png");
+        }
+
+        if(invaderBullet != null){
+            invaderBullet.render("res/images/Laser.png");
+        }
     }
 
     @Override
@@ -120,9 +129,25 @@ public class SinglePlayerState extends BasicGameState {
         }
 
         if(input.isKeyPressed(Input.KEY_SPACE)) {
-            field.shipShot();
+            shipBullet = field.shipShot();
         }
 
+        if(shipBullet != null){
+            shipBullet.moveUp();
+            System.err.println(shipBullet.getY());
+        }
+
+        if(shipBullet != null){
+            if(shipBullet.endReached()){
+                shipBullet = null;
+            }
+        }
+
+        if(shipBullet!=null){
+            if(field.checkCollision(spaceShip,shipBullet)){
+                shipBullet = null;
+            }
+        }
     }
 
     @Override
