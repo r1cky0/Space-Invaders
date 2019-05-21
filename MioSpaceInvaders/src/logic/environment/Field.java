@@ -254,8 +254,4 @@ public class Field {
         return bunkers;
     }
 
-    public Bullet getShipBullet() {
-        return shipBullet;
-    }
-
 }

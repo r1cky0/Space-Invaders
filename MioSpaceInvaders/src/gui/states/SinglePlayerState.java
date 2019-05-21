@@ -126,7 +126,6 @@ public class SinglePlayerState extends BasicGameState {
 
         if(shipBullet != null){
             shipBullet.render("res/images/Laser.png");
-            //graphics.draw(shipBullet.getShape());
         }
 
         if(invaderBullet != null){
