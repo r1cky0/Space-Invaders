@@ -69,11 +69,7 @@ public class SinglePlayerState extends BasicGameState {
 
         //METODI SEGUENTI FATTI PER PROVARE STATO SENZA AVERE IL LOGIN
         menu.setPlayer("arrosto");
-        logicInit();
 
-    }
-
-    private void logicInit() {
         menu.startGame();
         field = menu.getField();
 
@@ -83,6 +79,7 @@ public class SinglePlayerState extends BasicGameState {
 
         shipBullet = null;
         invaderBullet = null;
+
     }
 
     @Override
@@ -176,7 +173,6 @@ public class SinglePlayerState extends BasicGameState {
                 invaderBullet = null;
                 if(spaceShip.getLife() == 0){
                     menu.startGame();
-                    logicInit();
                     stateBasedGame.enterState(3,new FadeOutTransition(), new FadeInTransition());
                 }
             }

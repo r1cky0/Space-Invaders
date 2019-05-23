@@ -63,7 +63,12 @@ public class GameOverState extends BasicGameState implements ComponentListener {
     @Override
     public void componentActivated(AbstractComponent source) {
         if (source == newGameButton) {
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition()); // prima bisogna inizializzare lo start game di nuovo
+            try {
+                stateBasedGame.getState(2).init(container, stateBasedGame);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+            stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition()); // prima bisogna inizializzare lo start game di nuovo
         }
     }
 }
