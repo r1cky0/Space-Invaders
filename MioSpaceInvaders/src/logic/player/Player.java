@@ -6,8 +6,7 @@ public class Player implements Comparable{
 
     private String name;
     private String password;
-    private boolean loggedIn;
-    private boolean firstLogin;
+    public boolean firstLogin;
     private int credit, highScore;
     private SpaceShip spaceShip;
 
@@ -17,8 +16,7 @@ public class Player implements Comparable{
         this.credit = 0;
         this.highScore = 0;
         this.password = "changeme";
-        loggedIn = false;
-        firstLogin = true;
+        this.firstLogin = true;
     }
 
     public String getName() {
@@ -56,18 +54,12 @@ public class Player implements Comparable{
      */
     public boolean login(String password){
 
-        if((this.password.equals(password)) && (!firstLogin)){
-            loggedIn = true;
+        if((this.password.equals(password))){
             return true;
         }
         else{
-            loggedIn = false;
             return false;
         }
-    }
-
-    public void logout(){
-        loggedIn = false;
     }
 
     public void setPassword(String pass){
@@ -76,10 +68,6 @@ public class Player implements Comparable{
             this.password = pass;
             firstLogin=false;
         }
-    }
-
-    public boolean isLoggedIn(){
-        return loggedIn;
     }
 
     /*ordina dal punteggio + grande al + piccolo*/

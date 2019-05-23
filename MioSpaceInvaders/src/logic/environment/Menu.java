@@ -66,6 +66,10 @@ public class Menu {
         }
     }
 
+    public void logOut(){
+        this.player = null;
+    }
+
     //Probabilmente ci sará da fare un' eccezione
     public void startGame(){
         if(player != null){
