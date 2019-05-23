@@ -46,6 +46,7 @@ public class Menu {
             newPlayer = new Player(name,defaultShip);
             newPlayer.setPassword(password);
             players.put(name,newPlayer);
+            this.player= newPlayer;
             return true;
         }
     }
