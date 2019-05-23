@@ -40,6 +40,10 @@ public class SpaceShip extends Sprite {
         }
     }
 
+    public void setCurrentScore(){currentScore = 0; }
+
+    public void setLife(){life = 3;}
+
     public void incrementCurrentScore(int value){
         currentScore += value;
     }

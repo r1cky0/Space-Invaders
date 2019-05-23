@@ -63,7 +63,7 @@ public class GameOverState extends BasicGameState implements ComponentListener {
     @Override
     public void componentActivated(AbstractComponent source) {
         if (source == newGameButton) {
-            stateBasedGame.enterState(0, new FadeOutTransition(), new FadeInTransition()); // prima bisogna inizializzare lo start game di nuovo
+            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition()); // prima bisogna inizializzare lo start game di nuovo
         }
     }
 }

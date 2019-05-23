@@ -33,8 +33,8 @@ public class SinglePlayerState extends BasicGameState {
     private ArrayList<Bunker> bunkers;
     private ArrayList<Invader> invaders;
     private SpaceShip spaceShip;
-    private Bullet shipBullet = null;
-    private Bullet invaderBullet = null;
+    private Bullet shipBullet;
+    private Bullet invaderBullet;
 
 
     public SinglePlayerState(Menu menu){
@@ -69,13 +69,20 @@ public class SinglePlayerState extends BasicGameState {
 
         //METODI SEGUENTI FATTI PER PROVARE STATO SENZA AVERE IL LOGIN
         menu.setPlayer("arrosto");
-        menu.setField();
+        logicInit();
+
+    }
+
+    private void logicInit() {
+        menu.startGame();
         field = menu.getField();
 
         invaders = field.getInvaders();
         bunkers = field.getBunkers();
         spaceShip = menu.getPlayer().getSpaceShip();
 
+        shipBullet = null;
+        invaderBullet = null;
     }
 
     @Override
@@ -168,6 +175,8 @@ public class SinglePlayerState extends BasicGameState {
             if(field.checkCollision(invaders.get(0),invaderBullet)){
                 invaderBullet = null;
                 if(spaceShip.getLife() == 0){
+                    menu.startGame();
+                    logicInit();
                     stateBasedGame.enterState(3,new FadeOutTransition(), new FadeInTransition());
                 }
             }

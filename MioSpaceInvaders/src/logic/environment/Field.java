@@ -54,6 +54,7 @@ public class Field {
         //inizializzazione di tutti gli elementi all'inizio del gioco
         initInvaders();
         initBunkers();
+        player.getSpaceShip().setLife();
     }
 
     public void nextLevel(){
