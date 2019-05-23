@@ -69,7 +69,6 @@ public class Menu {
     //Probabilmente ci sará da fare un' eccezione
     public void startGame(){
         if(player != null){
-            player.getSpaceShip().setCurrentScore();
             field = new Field(player, maxWidth, maxHeight);
             field.startGame();
         }

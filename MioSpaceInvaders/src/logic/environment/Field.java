@@ -55,6 +55,7 @@ public class Field {
         initInvaders();
         initBunkers();
         player.getSpaceShip().setLife();
+        player.getSpaceShip().setCurrentScore();
     }
 
     public void nextLevel(){

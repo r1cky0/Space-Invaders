@@ -172,7 +172,7 @@ public class SinglePlayerState extends BasicGameState {
             if(field.checkCollision(invaders.get(0),invaderBullet)){
                 invaderBullet = null;
                 if(spaceShip.getLife() == 0){
-                    menu.startGame();
+                    field.startGame();
                     stateBasedGame.enterState(3,new FadeOutTransition(), new FadeInTransition());
                 }
             }
