@@ -1,11 +1,14 @@
 package logic.sprite.unmovable;
 
 import logic.sprite.Coordinate;
+import logic.sprite.Sprite;
+import logic.sprite.dinamic.Bullet;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class Bunker {
 
@@ -41,19 +44,33 @@ public class Bunker {
                         Coordinate coordinate = new Coordinate(indX, indY);
                         Brick brick = new Brick(coordinate, brickSize);
                         bricks.add(brick);
-                        indX+=brickSize;
-                    }
-                    else {
-                        indX+= brickSize;
+                        indX += brickSize;
+                    } else {
+                        indX += brickSize;
                     }
                 }
-                indY-= brickSize;
+                indY -= brickSize;
                 riga = in.readLine();
                 indX = indexX;
             }
-        }catch (IOException err) {
+        } catch (IOException err) {
             System.err.println(err.getMessage());
         }
     }
 
+    public boolean checkBrickCollision(Sprite sprite) {
+        ListIterator<Brick> brickIter = bricks.listIterator();
+
+        while (brickIter.hasNext()) {
+            Brick brick = brickIter.next();
+            if (brick.collides(sprite)) {
+                brick.decreaseLife();
+                if (brick.getLife() == 0) {
+                    brickIter.remove();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 }
