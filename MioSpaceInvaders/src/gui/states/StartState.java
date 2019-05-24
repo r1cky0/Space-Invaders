@@ -51,7 +51,7 @@ public class StartState extends BasicGameState implements ComponentListener {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer= gameContainer;
         this.stateBasedGame= stateBasedGame;
-        background = new Image("res/images/space.png");
+        background = new Image("res/images/BackgroundSpace.png");
 
         try{
             UIFont1 = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
@@ -78,10 +78,10 @@ public class StartState extends BasicGameState implements ComponentListener {
         passwordField.setBackgroundColor(Color.white);
         passwordField.setTextColor(Color.black);
 
-        login = new Image("res/images/login.png").getScaledCopy(gameContainer.getWidth()/3,
+        login = new Image("res/images/ButtonLogin.png").getScaledCopy(gameContainer.getWidth()/3,
                 gameContainer.getHeight()/10);
 
-        addAccount = new Image("res/images/account.png").getScaledCopy(gameContainer.getWidth()/3,
+        addAccount = new Image("res/images/ButtonAccount.png").getScaledCopy(gameContainer.getWidth()/3,
                 gameContainer.getHeight()/10);
 
         loginButton = new MouseOverArea(gameContainer, login, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7,

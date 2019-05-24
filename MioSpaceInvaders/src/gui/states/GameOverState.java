@@ -11,8 +11,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-
-import java.awt.*;
 import java.awt.Font;
 
 public class GameOverState extends BasicGameState implements ComponentListener {
@@ -37,12 +35,12 @@ public class GameOverState extends BasicGameState implements ComponentListener {
         this.container = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
-        newGame = new Image("res/images/newgame.png").getScaledCopy(gameContainer.getWidth() / 3,
+        newGame = new Image("res/images/ButtonNewGame.png").getScaledCopy(gameContainer.getWidth() / 3,
                 gameContainer.getHeight() / 10);
         newGameButton = new MouseOverArea(gameContainer, newGame, gameContainer.getWidth() / 3, 5 * gameContainer.getHeight() / 7,
                 gameContainer.getWidth() / 3, gameContainer.getHeight() / 10, this);
 
-        gameOver = new Image("res/images/game_over.png");
+        gameOver = new Image("res/images/BackgroundGameOver.png");
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {

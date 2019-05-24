@@ -46,22 +46,22 @@ public class MenuState extends BasicGameState implements ComponentListener {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.container= gameContainer;
         this.stateBasedGame= stateBasedGame;
-        this.background = new Image("res/images/space.png");
+        this.background = new Image("res/images/BackgroundSpace.png");
 
 
-        single = new Image("res/images/single.png").getScaledCopy(container.getWidth()/3, container.getHeight()/10);
+        single = new Image("res/images/ButtonSinglePlayer.png").getScaledCopy(container.getWidth()/3, container.getHeight()/10);
         singleButton = new MouseOverArea(container, single, container.getWidth()/3, 2*container.getHeight()/6, container.getWidth()/3, container.getHeight()/10, this);
 
-        multi = new Image("res/images/multi.png").getScaledCopy(container.getWidth()/3, container.getHeight()/10);
+        multi = new Image("res/images/ButtonMultiplayer.png").getScaledCopy(container.getWidth()/3, container.getHeight()/10);
         multiButton = new MouseOverArea(container, multi, container.getWidth()/3, 3*container.getHeight()/6, container.getWidth()/3, container.getHeight()/10, this);
 
-        settings =new Image("res/images/settings.png").getScaledCopy(container.getWidth()/12,container.getHeight()/10);
+        settings =new Image("res/images/Settings.png").getScaledCopy(container.getWidth()/12,container.getHeight()/10);
         settingsButton =new MouseOverArea(container, settings,container.getWidth()/6, 4*container.getHeight()/6,container.getWidth()/3,container.getHeight()/10,this);
 
-        exit=new Image("res/images/exit.png").getScaledCopy(container.getWidth()/6,container.getHeight()/10);
+        exit=new Image("res/images/ButtonExit.png").getScaledCopy(container.getWidth()/6,container.getHeight()/10);
         exitButton=new MouseOverArea(container,exit,4*container.getWidth()/10,5*container.getHeight()/6,container.getWidth()/6,container.getHeight()/10,this);
 
-        ranking =new Image("res/images/cup.png").getScaledCopy(container.getWidth()/8,container.getHeight()/8);
+        ranking =new Image("res/images/Cup.png").getScaledCopy(container.getWidth()/8,container.getHeight()/8);
         rankingButton =new MouseOverArea(container, ranking,container.getWidth()/2, 4*container.getHeight()/6,container.getWidth()/8,container.getHeight()/8,this);
 
         try{

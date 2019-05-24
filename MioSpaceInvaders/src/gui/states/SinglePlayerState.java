@@ -35,7 +35,7 @@ public class SinglePlayerState extends BasicGameState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
-        background = new Image("res/images/space.png");
+        background = new Image("res/images/BackgroundSpace.png");
 
         try{
             UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
@@ -59,7 +59,7 @@ public class SinglePlayerState extends BasicGameState {
         uniFont.drawString(8*gameContainer.getWidth()/10,15,"Lives: "+field.getSpaceShip().getLife(),Color.white);
         uniFont.drawString(20,15,"Score: "+field.getSpaceShip().getCurrentScore(),Color.white);
 
-        field.getSpaceShip().render("res/images/ship.png");
+        field.getSpaceShip().render("res/images/SpaceShip1.png");
 
         for(Invader invader:field.getInvaders()){
             invader.render("res/images/Alien1.png");
@@ -70,27 +70,27 @@ public class SinglePlayerState extends BasicGameState {
                 switch (brick.getLife()){
 
                     case 4:
-                        brick.render("res/images/Brick.png");
-                        break;
-                    case 3:
                         brick.render("res/images/Brick1.png");
                         break;
-                    case 2:
+                    case 3:
                         brick.render("res/images/Brick2.png");
                         break;
-                    case 1:
+                    case 2:
                         brick.render("res/images/Brick3.png");
+                        break;
+                    case 1:
+                        brick.render("res/images/Brick4.png");
                         break;
                 }
             }
         }
 
         if(field.getShipBullet() != null){
-            field.getShipBullet().render("res/images/Laser.png");
+            field.getShipBullet().render("res/images/Shot.png");
         }
 
         for(Bullet bullet:field.getInvaderBullets()){
-            bullet.render("res/images/Laser.png");
+            bullet.render("res/images/Shot.png");
         }
     }
 
