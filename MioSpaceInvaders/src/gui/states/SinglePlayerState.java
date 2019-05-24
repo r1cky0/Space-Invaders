@@ -38,7 +38,8 @@ public class SinglePlayerState extends BasicGameState {
         background = new Image("res/images/BackgroundSpace.png");
 
         try{
-            UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+                    ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
             UIFont1 = UIFont1.deriveFont(java.awt.Font.BOLD, gameContainer.getWidth()/30f);
 
             uniFont = new UnicodeFont(UIFont1);
