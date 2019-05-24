@@ -17,6 +17,10 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
+import java.util.ListIterator;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class SinglePlayerState extends BasicGameState {
 
     private Menu menu;
@@ -90,9 +94,10 @@ public class SinglePlayerState extends BasicGameState {
             field.getShipBullet().render("res/images/Shot.png");
         }
 
-        for(Bullet bullet:field.getInvaderBullets()){
+        for (Bullet bullet : field.getInvaderBullets()) {
             bullet.render("res/images/Shot.png");
         }
+
     }
 
     @Override
@@ -102,7 +107,6 @@ public class SinglePlayerState extends BasicGameState {
         try {
             field.invaderDirection();
         } catch (GameOverException err) {
-            System.err.println(err);
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         }
 
@@ -130,7 +134,6 @@ public class SinglePlayerState extends BasicGameState {
             try {
                 field.checkSpaceShipShotCollision();
             }catch (NextLevelException err){
-                System.err.println(err);
                 stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
             }
         }

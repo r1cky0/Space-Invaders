@@ -120,11 +120,16 @@ public class StartState extends BasicGameState implements ComponentListener {
         if (source == loginButton) {
             String nickname = nameField.getText();
             String password = passwordField.getText();
-            if(menu.logIn(nickname,password)) {
-                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
-            }else {
-                nameField.setText("Errore");
-            }
+
+            //CODICE GIUSTO; PER PROVE LO LASCIAMO COMMENTATO
+//            if(menu.logIn(nickname,password)) {
+//                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+//            }else {
+//                nameField.setText("Errore");
+//            }
+
+            //questo va tolto poi
+            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
         if(source == accountButton){
             String nickname = nameField.getText();
