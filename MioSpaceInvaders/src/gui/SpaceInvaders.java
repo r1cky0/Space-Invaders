@@ -28,7 +28,11 @@ public class SpaceInvaders extends StateBasedGame {
         try {
             int width = 1000;
             int height = 800;
-            AppGameContainer container = new AppGameContainer(new SpaceInvaders(new Menu(width,height)));
+            Menu menu = new Menu(width,height);
+            //METODO FATTO PER PROVARE SENZA AVERE IL LOGIN
+            menu.setPlayer("arrosto");
+
+            AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
             container.setTargetFrameRate(100);
             container.setDisplayMode(width,height,false);
             container.setShowFPS(false);

@@ -1,17 +1,14 @@
 package logic.environment;
 
 import logic.exception.GameOverException;
+import logic.exception.NextLevelException;
 import logic.player.Player;
 import logic.sprite.Coordinate;
-import logic.sprite.Sprite;
 import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
-import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Random;
 
@@ -49,10 +46,10 @@ public class Field {
         shipShot = false;
 
 
-        startGame();
+        initComponents();
     }
 
-    public void startGame(){
+    public void initComponents(){
         //inizializzazione di tutti gli elementi all'inizio del gioco
         initInvaders();
         initBunkers();
@@ -63,7 +60,9 @@ public class Field {
     public void nextLevel(){
         //reinizializzazione degli invaders e incremento life ship al nuovo livello
         initInvaders();
+        md = MovingDirections.RIGHT;
         spaceShip.incrementLife();
+        throw new NextLevelException();
     }
 
     private void initInvaders(){
@@ -178,12 +177,11 @@ public class Field {
             if (invader.collides(shipBullet)) {
                 spaceShip.incrementCurrentScore(invader.getValue());
                 invaderIter.remove();
-
+                shipShot = false;
+                shipBullet = null;
                 if (invaders.isEmpty()) {
                     nextLevel();
                 }
-                shipShot = false;
-                shipBullet = null;
                 return;
             }
         }

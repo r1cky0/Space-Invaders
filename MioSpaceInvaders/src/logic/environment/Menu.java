@@ -28,8 +28,6 @@ public class Menu {
         this.shipSize = maxWidth/20;
 
         Coordinate coordinate = new Coordinate((maxWidth/2 - shipSize/2),(maxHeight - shipSize));
-        System.err.println("X: "+coordinate.getX());
-        System.err.println("Y :"+coordinate.getY());
         defaultShip = new SpaceShip(coordinate,shipSize);
     }
 
@@ -75,7 +73,6 @@ public class Menu {
     public void startGame(){
         if(player != null){
             field = new Field(player, maxWidth, maxHeight);
-            field.startGame();
         }
     }
 

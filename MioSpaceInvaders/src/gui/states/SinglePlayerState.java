@@ -4,13 +4,11 @@ import logic.environment.Field;
 import logic.environment.Menu;
 import logic.environment.MovingDirections;
 import logic.exception.GameOverException;
-import logic.player.Player;
+import logic.exception.NextLevelException;
 import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
-import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
-import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -18,8 +16,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
-
-import java.util.*;
 
 public class SinglePlayerState extends BasicGameState {
 
@@ -33,12 +29,14 @@ public class SinglePlayerState extends BasicGameState {
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
+        this.menu.startGame();
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         background = new Image("res/images/space.png");
+
         try{
             UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
             UIFont1 = UIFont1.deriveFont(java.awt.Font.BOLD, gameContainer.getWidth()/30f);
@@ -52,17 +50,6 @@ public class SinglePlayerState extends BasicGameState {
         }catch(Exception e){
             e.printStackTrace();
         }
-
-        menu.startGame();
-        //I METODI SOTTO VANNO BENE QUANDO AVREMO IL LOGIN. PER ORA BISOGNA INIZIALIZZARE A MANO LE COSE
-        //field = menu.getField();
-        //field.startGame();
-        //spaceShip = menu.getPlayer().getSpaceShip();
-
-        //METODI SEGUENTI FATTI PER PROVARE STATO SENZA AVERE IL LOGIN
-        menu.setPlayer("arrosto");
-
-        menu.startGame();
         field = menu.getField();
     }
 
@@ -139,7 +126,12 @@ public class SinglePlayerState extends BasicGameState {
         }
 
         if (field.getShipBullet() != null) {
-            field.checkSpaceShipShotCollision();
+            try {
+                field.checkSpaceShipShotCollision();
+            }catch (NextLevelException err){
+                System.err.println(err);
+                stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
+            }
         }
 
         for (Bullet bullet : field.getInvaderBullets()) {

@@ -64,6 +64,7 @@ public class GameOverState extends BasicGameState implements ComponentListener {
     public void componentActivated(AbstractComponent source) {
         if (source == newGameButton) {
             try {
+                menu.startGame();
                 stateBasedGame.getState(2).init(container, stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
