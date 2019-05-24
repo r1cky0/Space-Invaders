@@ -37,9 +37,9 @@ public class StartState extends BasicGameState implements ComponentListener {
     private Image background;
 
     private Image login;
-    private Image addAccount;
+    private Image account;
     private MouseOverArea loginButton;
-    private MouseOverArea addAccountButton;
+    private MouseOverArea accountButton;
 
     private Menu menu;
 
@@ -65,8 +65,8 @@ public class StartState extends BasicGameState implements ComponentListener {
         }
         message = "LOGIN AND ADD ACCOUNT";
 
-        nameString = "nickname:";
-        passwordString = "password:";
+        nameString = "NICKNAME:";
+        passwordString = "PASSWORD:";
 
         nameField = new TextField(gameContainer, ttf,gameContainer.getWidth()/3,200,300,40);
 
@@ -81,14 +81,14 @@ public class StartState extends BasicGameState implements ComponentListener {
         login = new Image("res/images/ButtonLogin.png").getScaledCopy(gameContainer.getWidth()/3,
                 gameContainer.getHeight()/10);
 
-        addAccount = new Image("res/images/ButtonAccount.png").getScaledCopy(gameContainer.getWidth()/3,
+        account = new Image("res/images/ButtonAccount.png").getScaledCopy(gameContainer.getWidth()/3,
                 gameContainer.getHeight()/10);
 
-        loginButton = new MouseOverArea(gameContainer, login, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7,
+        loginButton = new MouseOverArea(gameContainer, login,gameContainer.getWidth()/3,3*gameContainer.getHeight()/7,
                 gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
 
-        addAccountButton = new MouseOverArea(gameContainer, addAccount, gameContainer.getWidth()/3, 4*gameContainer.getHeight()/7,
-                gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
+        accountButton = new MouseOverArea(gameContainer, account,gameContainer.getWidth()/3,4*gameContainer.getHeight()/7,
+                gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
 
     }
 
@@ -104,12 +104,11 @@ public class StartState extends BasicGameState implements ComponentListener {
         uniFont.drawString(50,250,passwordString);
 
         loginButton.render(gameContainer, graphics);
-        addAccountButton.render(gameContainer, graphics);
+        accountButton.render(gameContainer, graphics);
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
     }
 
     @Override
@@ -121,16 +120,16 @@ public class StartState extends BasicGameState implements ComponentListener {
         if (source == loginButton) {
             String nickname = nameField.getText();
             String password = passwordField.getText();
-            menu.logIn(nickname,password);
-            //System.err.println(nickname+"\t"+password);
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            if(menu.logIn(nickname,password)) {
+                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            }else {
+                nameField.setText("Errore");
+            }
         }
-        if(source == addAccountButton){
+        if(source == accountButton){
             String nickname = nameField.getText();
             String password = passwordField.getText();
             menu.newAccount(nickname,password);
-            //System.err.println(nickname+"\t"+password);
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
     }
 }

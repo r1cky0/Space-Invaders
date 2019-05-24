@@ -35,9 +35,6 @@ public class Menu {
         Player newPlayer;
 
         if(players.containsKey(name)){
-            //***************
-            System.err.println("Player giá esistente");
-            //***************
             return false;
         }
         else{
@@ -50,9 +47,10 @@ public class Menu {
     }
 
     public boolean logIn(String name, String password){
+
         Player player = players.get(name);
+
         if(player == null){
-            System.err.println("Nome utente errato");
             return false;
         }
         if(player.login(password)){
@@ -60,7 +58,6 @@ public class Menu {
             return true;
         }
         else{
-            System.err.println("Password errata");
             return false;
         }
     }
