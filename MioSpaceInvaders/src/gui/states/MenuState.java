@@ -108,12 +108,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
         }
         if(source==exitButton){
             menu.logOut();
-            try {
-                stateBasedGame.getState(0).init(container,stateBasedGame);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
-            stateBasedGame.enterState(0, new FadeOutTransition(), new FadeInTransition());
+            System.exit(0);
         }
     }
 
