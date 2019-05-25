@@ -48,12 +48,11 @@ public class Menu {
     }
 
     public boolean logIn(String name, String password)throws IOException{
-
-        Player player;
         Login log = new Login();
 
         if(log.login(name,password)){
             this.player = new Player(name,defaultShip);
+            field = new Field(player, maxWidth, maxHeight);
             return true;
         }
         else{
@@ -77,19 +76,10 @@ public class Menu {
         return field;
     }
 
-
     public Player getPlayer() {
         return player;
     }
 
-    //TOGLIERE I SEGUENTI DUE METODI QUANDO FATTO LOGIN PERCHÉ INUTILE IN QUEL CASO. ORA FATTO PER PROVARE GIOCO
-    public void setPlayer(String nome) {
-        this.player = new Player(nome,defaultShip);
-    }
-
-    public void setField() {
-        field = new Field(player, maxWidth, maxHeight);
-    }
 
     public Ranking getRanking() {
         return ranking;

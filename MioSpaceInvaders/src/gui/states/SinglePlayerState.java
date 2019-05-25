@@ -145,6 +145,7 @@ public class SinglePlayerState extends BasicGameState {
         try {
             field.checkInvaderShotCollision();
         } catch (GameOverException err) {
+
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         }
     }
