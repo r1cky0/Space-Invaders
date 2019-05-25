@@ -61,8 +61,8 @@ public class MenuState extends BasicGameState implements ComponentListener {
 
         settings =new Image("res/images/Settings.png").getScaledCopy(container.getWidth()/12,
                 container.getHeight()/10);
-        settingsButton =new MouseOverArea(container, settings,container.getWidth()/6, 4*container.getHeight()/6,
-                container.getWidth()/3,container.getHeight()/10,this);
+        settingsButton =new MouseOverArea(container, settings,7*container.getWidth()/20, 4*container.getHeight()/6,
+                container.getWidth()/12,container.getHeight()/10,this);
 
         exit=new Image("res/images/ButtonExit.png").getScaledCopy(container.getWidth()/6,
                 container.getHeight()/10);
@@ -71,7 +71,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
 
         ranking =new Image("res/images/Cup.png").getScaledCopy(container.getWidth()/8,
                 container.getHeight()/8);
-        rankingButton =new MouseOverArea(container, ranking,container.getWidth()/2, 4*container.getHeight()/6,
+        rankingButton =new MouseOverArea(container, ranking,11*container.getWidth()/20, 4*container.getHeight()/6,
                 container.getWidth()/8,container.getHeight()/8,this);
 
         try{
