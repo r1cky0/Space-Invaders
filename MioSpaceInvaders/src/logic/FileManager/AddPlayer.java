@@ -1,6 +1,10 @@
 package logic.FileManager;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class AddPlayer  {
 
@@ -17,11 +21,9 @@ public class AddPlayer  {
             riga = in.readLine();
         }
         in.close();
-        PrintWriter out= new PrintWriter(new FileWriter(file));
-
-        out.write(name+"\t"+password);
-        out.flush();
-        out.close();
+        String textToAppend = (name+"\t"+password+"\n");
+        Path path = Paths.get("players.txt");
+        Files.write(path,textToAppend.getBytes(), StandardOpenOption.APPEND);
         return true;
     }
 }
