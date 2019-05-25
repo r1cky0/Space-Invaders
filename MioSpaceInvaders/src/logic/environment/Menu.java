@@ -97,4 +97,11 @@ public class Menu {
         field = new Field(player, maxWidth, maxHeight);
     }
 
+    public HashMap<String, Player> getPlayers() {
+        return players;
+    }
+
+    public Ranking getRanking() {
+        return ranking;
+    }
 }

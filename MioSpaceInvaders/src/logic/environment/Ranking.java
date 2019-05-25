@@ -1,6 +1,8 @@
 package logic.environment;
 
 import logic.player.Player;
+import logic.sprite.Coordinate;
+import logic.sprite.dinamic.SpaceShip;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,4 +58,24 @@ public class Ranking {
     public void orderRanking() {
         Collections.sort(players, Player::compareTo);
     }
+
+    /*public ArrayList<Player> topNPlayer(int n){
+        ArrayList<Player> topN = new ArrayList<>();
+        for(int i=0; i<n; i++){
+            if(players.get(i) != null){
+                topN.add(players.get(i));
+            }
+        }
+        if(topN.isEmpty()){
+            topN.add(new Player("Default", new SpaceShip(new Coordinate(0,0),2)));
+            return topN;
+        }
+        return topN;
+    }*/
+
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
 }

@@ -86,7 +86,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
         exitButton.render(gameContainer,graphics);
         rankingButton.render(gameContainer,graphics);
 
-        uniFont.drawString(gameContainer.getWidth()/3f, container.getHeight()/8f, " MENU", Color.white);
+        uniFont.drawString(gameContainer.getWidth()/3f, gameContainer.getHeight()/8f, " MENU", Color.white);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == rankingButton ) {
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(4, new FadeOutTransition(), new FadeInTransition());
         }
         if(source==exitButton){
             menu.logOut();

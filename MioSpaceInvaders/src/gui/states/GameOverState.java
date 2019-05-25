@@ -24,6 +24,9 @@ public class GameOverState extends BasicGameState implements ComponentListener {
     private MouseOverArea newGameButton;
     private Image newGame;
 
+    private MouseOverArea menuButton;
+    private Image menuImage;
+
     private Font UIFont1;
     private UnicodeFont uniFont;
 
@@ -42,12 +45,20 @@ public class GameOverState extends BasicGameState implements ComponentListener {
         newGameButton = new MouseOverArea(gameContainer, newGame, gameContainer.getWidth() / 3, 5 * gameContainer.getHeight() / 7,
                 gameContainer.getWidth() / 3, gameContainer.getHeight() / 10, this);
 
+
+        menuImage = new Image("res/images/menu.png").getScaledCopy(gameContainer.getWidth() / 3,
+                gameContainer.getHeight() / 10);
+        menuButton = new MouseOverArea(gameContainer, newGame, gameContainer.getWidth() / 3, 6 * gameContainer.getHeight() / 7,
+                gameContainer.getWidth() / 3, gameContainer.getHeight() / 10, this);
+
         gameOver = new Image("res/images/game_over.png");
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        gameOver.draw(container.getWidth() / 7, container.getHeight() / 6);
+        gameOver.draw(container.getWidth() / 7f, container.getHeight() / 6f);
+
         newGameButton.render(gameContainer, graphics);
+        menuButton.render(gameContainer,graphics);
     }
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
@@ -68,7 +79,15 @@ public class GameOverState extends BasicGameState implements ComponentListener {
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition()); // prima bisogna inizializzare lo start game di nuovo
+            stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition());
+        }
+        if (source == menuButton) {
+            try {
+                stateBasedGame.getState(2).init(container, stateBasedGame);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
     }
 }

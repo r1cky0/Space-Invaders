@@ -173,6 +173,7 @@ public class SinglePlayerState extends BasicGameState {
                 invaderBullet = null;
                 if(spaceShip.getLife() == 0){
                     field.startGame();
+                    menu.getRanking().addScore(menu.getPlayer());
                     stateBasedGame.enterState(3,new FadeOutTransition(), new FadeInTransition());
                 }
             }
