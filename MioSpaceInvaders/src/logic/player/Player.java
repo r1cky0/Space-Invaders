@@ -5,8 +5,6 @@ import logic.sprite.dinamic.SpaceShip;
 public class Player implements Comparable{
 
     private String name;
-    private String password;
-    public boolean firstLogin;
     private int credit, highScore;
     private SpaceShip spaceShip;
 
@@ -15,8 +13,6 @@ public class Player implements Comparable{
         this.spaceShip = spaceShip;
         this.credit = 0;
         this.highScore = 0;
-        this.password = "changeme";
-        this.firstLogin = true;
     }
 
     public String getName() {
@@ -45,29 +41,6 @@ public class Player implements Comparable{
 
     public void incrementCredit(int credit) {
         this.credit += credit;
-    }
-
-    /**
-     * Controllo attivazione account giocatore e credenziali corrette
-     *
-     * @param password: password utente
-     */
-    public boolean login(String password){
-
-        if((this.password.equals(password))){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public void setPassword(String pass){
-
-        if((firstLogin) && (password.equals("changeme"))){
-            this.password = pass;
-            firstLogin=false;
-        }
     }
 
     /*ordina dal punteggio + grande al + piccolo*/
