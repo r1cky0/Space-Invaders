@@ -10,10 +10,11 @@ public class Login {
         String riga= in.readLine();
         while(riga!=null){
             String [] componenti = riga.split("\\t");
-            if(componenti[0]== name && componenti[1]== password){
+            if(componenti[0].equals(name)  && componenti[1].equals(password)){
                 in.close();
                 return true;
             }
+            riga= in.readLine();
         }
         in.close();
         return false;

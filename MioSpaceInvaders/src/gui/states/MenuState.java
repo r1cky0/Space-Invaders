@@ -118,7 +118,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == rankingButton ) {
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(4, new FadeOutTransition(), new FadeInTransition());
         }
         if(source == exitButton){
             menu.logOut();

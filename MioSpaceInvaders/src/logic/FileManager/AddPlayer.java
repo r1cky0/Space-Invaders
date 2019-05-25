@@ -10,13 +10,17 @@ public class AddPlayer  {
         String riga = in.readLine();
         while (riga!=null){
             String [] componenti = riga.split("\\t");
-            if(componenti[0]== name){
+            if(componenti[0].equals(name)){
                 in.close();
                 return false;
             }
+            riga = in.readLine();
         }
+        in.close();
         PrintWriter out= new PrintWriter(new FileWriter(file));
-        out.println(name+"\t"+password);
+
+        out.write(name+"\t"+password);
+        out.flush();
         out.close();
         return true;
     }
