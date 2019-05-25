@@ -1,6 +1,7 @@
 package logic.environment;
 
 import logic.FileManager.AddPlayer;
+import logic.FileManager.Login;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
@@ -46,15 +47,13 @@ public class Menu {
         }
     }
 
-    public boolean logIn(String name, String password){
+    public boolean logIn(String name, String password)throws IOException{
 
-        Player player = players.get(name);
+        Player player;
+        Login log = new Login();
 
-        if(player == null){
-            return false;
-        }
-        if(player.login(password)){
-            this.player = player;
+        if(log.login(name,password)){
+            this.player = new Player(name,defaultShip);
             return true;
         }
         else{

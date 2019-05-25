@@ -117,21 +117,22 @@ public class StartState extends BasicGameState implements ComponentListener {
         return 0;
     }
 
-    public void componentActivated(AbstractComponent source) {
+    public void componentActivated(AbstractComponent source){
         if (source == loginButton) {
             String nickname = nameField.getText();
             String password = passwordField.getText();
 
-            //CODICE GIUSTO; PER PROVE LO LASCIAMO COMMENTATO
-//            if(menu.logIn(nickname,password)) {
-//                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
-//            }else {
-//                nameField.setText("Errore");
-//            }
-
-            //questo va tolto poi
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            try{
+                if(menu.logIn(nickname,password)){
+                    stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                }else {
+                    nameField.setText("Errore");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         }
+
         if(source == accountButton){
             String nickname = nameField.getText();
             String password = passwordField.getText();
@@ -141,7 +142,6 @@ public class StartState extends BasicGameState implements ComponentListener {
                 e.printStackTrace();
             }
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
-
         }
     }
 }
