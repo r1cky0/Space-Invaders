@@ -1,9 +1,11 @@
 package logic.environment;
 
+import logic.FileManager.AddPlayer;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Menu {
@@ -14,14 +16,13 @@ public class Menu {
     private double maxHeight;
     private double maxWidth;
     private double shipSize;
-    private HashMap<String, Player> players;
     private SpaceShip defaultShip;
     private Player player;
 
     public Menu(double maxWidth, double maxHeight){
         ranking = new Ranking();
         customization = new Customization();
-        players = new HashMap<>();
+
 
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
@@ -31,16 +32,15 @@ public class Menu {
         defaultShip = new SpaceShip(coordinate,shipSize);
     }
 
-    public boolean newAccount(String name, String password){
+    public boolean newAccount(String name, String password) throws IOException {
         Player newPlayer;
+        AddPlayer addPlayer = new AddPlayer();
 
-        if(players.containsKey(name)){
+        if(addPlayer.newPlayer(name,password)){
             return false;
         }
         else{
             newPlayer = new Player(name,defaultShip);
-            newPlayer.setPassword(password);
-            players.put(name,newPlayer);
             this.player= newPlayer;
             return true;
         }

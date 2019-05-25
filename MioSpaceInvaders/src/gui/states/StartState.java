@@ -16,6 +16,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.Font;
+import java.io.IOException;
 
 public class StartState extends BasicGameState implements ComponentListener {
 
@@ -134,7 +135,13 @@ public class StartState extends BasicGameState implements ComponentListener {
         if(source == accountButton){
             String nickname = nameField.getText();
             String password = passwordField.getText();
-            menu.newAccount(nickname,password);
+            try {
+                menu.newAccount(nickname,password);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+
         }
     }
 }
