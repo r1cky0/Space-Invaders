@@ -245,8 +245,8 @@ public class Field {
 
         Random rand = new Random();
         int random = rand.nextInt(invaders.size());
-        Coordinate coordinate = new Coordinate(invaders.get(random).getX() -
-                bulletSize / 2, invaders.get(random).getY());
+        Coordinate coordinate = new Coordinate(invaders.get(random).getX() +
+                invaderSize / 2 - bulletSize /2, invaders.get(random).getY()+invaderSize/2);
 
         invaderBullets.add(new Bullet(coordinate, bulletSize));
 

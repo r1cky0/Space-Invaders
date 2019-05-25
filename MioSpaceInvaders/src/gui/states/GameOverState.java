@@ -72,6 +72,12 @@ public class GameOverState extends BasicGameState implements ComponentListener {
             stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == menuButton) {
+            try {
+                menu.startGame();
+                stateBasedGame.getState(2).init(container, stateBasedGame);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
     }

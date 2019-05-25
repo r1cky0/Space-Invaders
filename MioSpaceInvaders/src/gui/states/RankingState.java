@@ -10,8 +10,11 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
+import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.Font;
@@ -37,6 +40,8 @@ public class RankingState extends BasicGameState implements ComponentListener {
     private Image silverMedal;
     private Image bronzeMedal;
     private Image background;
+    private Image menuImage;
+    private MouseOverArea menuButton;
     private Menu menu;
 
     private ArrayList<Player> topTen;
@@ -48,7 +53,7 @@ public class RankingState extends BasicGameState implements ComponentListener {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        background = new Image("res/images/space.png");
+        background = new Image("res/images/BackgroundSpace.png");
         topTen = new ArrayList<>();
         topTen.addAll(menu.getRanking().getPlayers());
 //        Player p1= new Player("arrosto",new SpaceShip(new Coordinate(0,0),2));
@@ -66,6 +71,10 @@ public class RankingState extends BasicGameState implements ComponentListener {
         goldMedal = new Image("res/images/gold_medal.png");
         silverMedal = new Image("res/images/silver_medal.png");
         bronzeMedal = new Image("res/images/bronze_medal.png");
+
+        menuImage = new Image("res/images/ButtonMenu.png");
+        menuButton = new MouseOverArea(gameContainer, menuImage,gameContainer.getWidth()/3,5*gameContainer.getHeight()/7,
+                gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
 
         title = "TOP 10 RANKING";
         nameString = "nickname";
@@ -99,6 +108,7 @@ public class RankingState extends BasicGameState implements ComponentListener {
         goldMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f,0.15f);
         silverMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f+offset,0.15f);
         bronzeMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f+2*offset,0.15f);
+        menuButton.render(gameContainer,graphics);
 
         for(Player p: topTen){
             uniFont.drawString(gameContainer.getWidth()/8f,300+offset*i,p.getName());
@@ -136,5 +146,8 @@ public class RankingState extends BasicGameState implements ComponentListener {
     }
 
     public void componentActivated(AbstractComponent source) {
+        if (source == menuButton) {
+            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+        }
     }
 }
