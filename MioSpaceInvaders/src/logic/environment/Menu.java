@@ -23,8 +23,6 @@ public class Menu {
     public Menu(double maxWidth, double maxHeight){
         ranking = new Ranking();
         customization = new Customization();
-
-
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
         this.shipSize = maxWidth/20;
@@ -71,7 +69,7 @@ public class Menu {
         }
     }
 
-    //A programma sistemato togliere questo getter e fare che startGame restituisce il field
+    //A programma sistemato togliere questo getter e fare che startGame restituisca il field
     public Field getField() {
         return field;
     }
