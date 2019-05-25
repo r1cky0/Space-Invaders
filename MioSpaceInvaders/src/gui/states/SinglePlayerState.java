@@ -3,13 +3,12 @@ package gui.states;
 import logic.environment.Field;
 import logic.environment.Menu;
 import logic.environment.MovingDirections;
-import logic.player.Player;
+import logic.exception.GameOverException;
+import logic.exception.NextLevelException;
 import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
-import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
-import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -18,7 +17,9 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
-import java.util.ArrayList;
+import java.util.ListIterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SinglePlayerState extends BasicGameState {
 
@@ -30,29 +31,23 @@ public class SinglePlayerState extends BasicGameState {
     private java.awt.Font UIFont1;
     private UnicodeFont uniFont;
 
-    private ArrayList<Bunker> bunkers;
-    private ArrayList<Invader> invaders;
-    private SpaceShip spaceShip;
-    private Bullet shipBullet;
-    private Bullet invaderBullet;
-
-
     public SinglePlayerState(Menu menu){
         this.menu = menu;
+        this.menu.startGame();
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
-        background = new Image("res/images/space.png");
-        try{
-            UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            UIFont1 = UIFont1.deriveFont(java.awt.Font.BOLD, gameContainer.getWidth()/30f); //You can change "PLAIN" to "BOLD" or "ITALIC"... and 16.f is the size of your font
+        background = new Image("res/images/BackgroundSpace.png");
 
-            //Since TrueTypeFont loading has many problems, we can use UnicodeFont to load the .ttf fonts(it's exactly the same thing).
+        try{
+            UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+                    ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            UIFont1 = UIFont1.deriveFont(java.awt.Font.BOLD, gameContainer.getWidth()/30f);
+
             uniFont = new UnicodeFont(UIFont1);
 
-            //uniFont.addAsciiGlyphs();
             uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
 
             uniFont.addAsciiGlyphs();
@@ -60,123 +55,97 @@ public class SinglePlayerState extends BasicGameState {
         }catch(Exception e){
             e.printStackTrace();
         }
-
-        menu.startGame();
-        //I METODI SOTTO VANNO BENE QUANDO AVREMO IL LOGIN. PER ORA BISOGNA INIZIALIZZARE A MANO LE COSE
-        //field = menu.getField();
-        //field.startGame();
-        //spaceShip = menu.getPlayer().getSpaceShip();
-
-        //METODI SEGUENTI FATTI PER PROVARE STATO SENZA AVERE IL LOGIN
-        menu.setPlayer("arrosto");
-
-        menu.startGame();
         field = menu.getField();
-
-        invaders = field.getInvaders();
-        bunkers = field.getBunkers();
-        spaceShip = menu.getPlayer().getSpaceShip();
-
-        shipBullet = null;
-        invaderBullet = null;
-
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
-        uniFont.drawString(8*gameContainer.getWidth()/10,15,"Lives: "+spaceShip.getLife(),Color.white);
-        uniFont.drawString(20,15,"Score: "+spaceShip.getCurrentScore(),Color.white);
+        uniFont.drawString(8*gameContainer.getWidth()/10,15,"Lives: "+field.getSpaceShip().getLife(),Color.white);
+        uniFont.drawString(20,15,"Score: "+field.getSpaceShip().getCurrentScore(),Color.white);
 
-        invaders = field.getInvaders();
-        bunkers = field.getBunkers();
-        spaceShip = menu.getPlayer().getSpaceShip();
-        spaceShip.render("res/images/ship.png");
+        field.getSpaceShip().render("res/images/SpaceShip1.png");
 
-
-//        int cont = 0;
-//        for(int i=0; i<4; i++){
-//            String path = "res/images/Alien" + (i+1) + ".png";
-//            for(int j=0; j<8;j++) {
-//                invaders.get(cont).render(path);
-//                cont++;
-//            }
-//        }
-
-        for(Invader invader:invaders){
+        for(Invader invader:field.getInvaders()){
             invader.render("res/images/Alien1.png");
         }
 
-        for(Bunker bunker: bunkers){
+        for(Bunker bunker: field.getBunkers()){
             for(Brick brick:bunker.getBricks()){
                 switch (brick.getLife()){
 
                     case 4:
-                        brick.render("res/images/Brick.png");
-                        break;
-                    case 3:
                         brick.render("res/images/Brick1.png");
                         break;
-                    case 2:
+                    case 3:
                         brick.render("res/images/Brick2.png");
                         break;
-                    case 1:
+                    case 2:
                         brick.render("res/images/Brick3.png");
                         break;
+                    case 1:
+                        brick.render("res/images/Brick4.png");
+                        break;
                 }
-
             }
         }
 
-        if(shipBullet != null){
-            shipBullet.render("res/images/Laser.png");
+        if(field.getShipBullet() != null){
+            field.getShipBullet().render("res/images/Shot.png");
         }
 
-        if(invaderBullet != null){
-            invaderBullet.render("res/images/Laser.png");
+        for (Bullet bullet : field.getInvaderBullets()) {
+            bullet.render("res/images/Shot.png");
         }
+
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input input = gameContainer.getInput();
 
-        if(input.isKeyDown(Input.KEY_LEFT)){
+        try {
+            field.invaderDirection();
+        } catch (GameOverException err) {
+            stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
+        }
+
+        if (input.isKeyDown(Input.KEY_LEFT)) {
             field.shipMovement(MovingDirections.LEFT);
         }
 
-        if(input.isKeyDown(Input.KEY_RIGHT)){
+        if (input.isKeyDown(Input.KEY_RIGHT)) {
             field.shipMovement(MovingDirections.RIGHT);
         }
 
-        if(input.isKeyPressed(Input.KEY_SPACE)) {
-            shipBullet = field.shipShot();
-            invaderBullet = field.invaderShot();
+        if (input.isKeyPressed(Input.KEY_SPACE)) {
+            field.shipShot();
         }
 
-        if(shipBullet != null){
-            shipBullet.moveUp();
+        if (input.isKeyPressed(Input.KEY_0)) {
+            field.invaderShot();
         }
 
-        if(shipBullet!=null){
-            if(field.checkCollision(spaceShip,shipBullet)){
-                shipBullet = null;
+        if (field.getShipBullet() != null) {
+            field.getShipBullet().moveUp();
+        }
+
+        if (field.getShipBullet() != null) {
+            try {
+                field.checkSpaceShipShotCollision();
+            }catch (NextLevelException err){
+                stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
             }
         }
 
-        if(invaderBullet!=null){
-            invaderBullet.moveDown();
+        for (Bullet bullet : field.getInvaderBullets()) {
+            bullet.moveDown();
         }
 
-        if(invaderBullet!=null){
-            if(field.checkCollision(invaders.get(0),invaderBullet)){
-                invaderBullet = null;
-                if(spaceShip.getLife() == 0){
-                    field.startGame();
-                    menu.getRanking().addScore(menu.getPlayer());
-                    stateBasedGame.enterState(3,new FadeOutTransition(), new FadeInTransition());
-                }
-            }
+        try {
+            field.checkInvaderShotCollision();
+        } catch (GameOverException err) {
+            stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         }
     }
 

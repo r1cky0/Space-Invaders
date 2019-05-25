@@ -16,6 +16,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.Font;
+import java.io.IOException;
 
 public class StartState extends BasicGameState implements ComponentListener {
 
@@ -37,9 +38,9 @@ public class StartState extends BasicGameState implements ComponentListener {
     private Image background;
 
     private Image login;
-    private Image addAccount;
+    private Image account;
     private MouseOverArea loginButton;
-    private MouseOverArea addAccountButton;
+    private MouseOverArea accountButton;
 
     private Menu menu;
 
@@ -51,7 +52,7 @@ public class StartState extends BasicGameState implements ComponentListener {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer= gameContainer;
         this.stateBasedGame= stateBasedGame;
-        background = new Image("res/images/space.png");
+        background = new Image("res/images/BackgroundSpace.png");
 
         try{
             UIFont1 = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
@@ -65,8 +66,8 @@ public class StartState extends BasicGameState implements ComponentListener {
         }
         message = "LOGIN AND ADD ACCOUNT";
 
-        nameString = "nickname:";
-        passwordString = "password:";
+        nameString = "NICKNAME:";
+        passwordString = "PASSWORD:";
 
         nameField = new TextField(gameContainer, ttf,gameContainer.getWidth()/3,200,300,40);
 
@@ -78,17 +79,17 @@ public class StartState extends BasicGameState implements ComponentListener {
         passwordField.setBackgroundColor(Color.white);
         passwordField.setTextColor(Color.black);
 
-        login = new Image("res/images/login.png").getScaledCopy(gameContainer.getWidth()/3,
+        login = new Image("res/images/ButtonLogin.png").getScaledCopy(gameContainer.getWidth()/3,
                 gameContainer.getHeight()/10);
 
-        addAccount = new Image("res/images/account.png").getScaledCopy(gameContainer.getWidth()/3,
+        account = new Image("res/images/ButtonAccount.png").getScaledCopy(gameContainer.getWidth()/3,
                 gameContainer.getHeight()/10);
 
-        loginButton = new MouseOverArea(gameContainer, login, gameContainer.getWidth()/3, 3*gameContainer.getHeight()/7,
+        loginButton = new MouseOverArea(gameContainer, login,gameContainer.getWidth()/3,3*gameContainer.getHeight()/7,
                 gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
 
-        addAccountButton = new MouseOverArea(gameContainer, addAccount, gameContainer.getWidth()/3, 4*gameContainer.getHeight()/7,
-                gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
+        accountButton = new MouseOverArea(gameContainer, account,gameContainer.getWidth()/3,4*gameContainer.getHeight()/7,
+                gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
 
     }
 
@@ -104,12 +105,11 @@ public class StartState extends BasicGameState implements ComponentListener {
         uniFont.drawString(50,250,passwordString);
 
         loginButton.render(gameContainer, graphics);
-        addAccountButton.render(gameContainer, graphics);
+        accountButton.render(gameContainer, graphics);
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
     }
 
     @Override
@@ -117,19 +117,30 @@ public class StartState extends BasicGameState implements ComponentListener {
         return 0;
     }
 
-    public void componentActivated(AbstractComponent source) {
+    public void componentActivated(AbstractComponent source){
         if (source == loginButton) {
             String nickname = nameField.getText();
             String password = passwordField.getText();
-            menu.logIn(nickname,password);
-            //System.err.println(nickname+"\t"+password);
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+
+            try{
+                if(menu.logIn(nickname,password)){
+                    stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                }else {
+                    nameField.setText("Errore");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         }
-        if(source == addAccountButton){
+
+        if(source == accountButton){
             String nickname = nameField.getText();
             String password = passwordField.getText();
-            menu.newAccount(nickname,password);
-            //System.err.println(nickname+"\t"+password);
+            try {
+                menu.newAccount(nickname,password);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
     }

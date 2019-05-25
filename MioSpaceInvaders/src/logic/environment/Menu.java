@@ -1,9 +1,12 @@
 package logic.environment;
 
+import logic.FileManager.AddPlayer;
+import logic.FileManager.Login;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Menu {
@@ -14,54 +17,46 @@ public class Menu {
     private double maxHeight;
     private double maxWidth;
     private double shipSize;
-    private HashMap<String, Player> players;
     private SpaceShip defaultShip;
     private Player player;
 
     public Menu(double maxWidth, double maxHeight){
         ranking = new Ranking();
         customization = new Customization();
-        players = new HashMap<>();
+
 
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
         this.shipSize = maxWidth/20;
 
         Coordinate coordinate = new Coordinate((maxWidth/2 - shipSize/2),(maxHeight - shipSize));
-        System.err.println("X: "+coordinate.getX());
-        System.err.println("Y :"+coordinate.getY());
         defaultShip = new SpaceShip(coordinate,shipSize);
     }
 
-    public boolean newAccount(String name, String password){
+    public boolean newAccount(String name, String password) throws IOException {
         Player newPlayer;
+        AddPlayer addPlayer = new AddPlayer();
 
-        if(players.containsKey(name)){
-            //***************
-            System.err.println("Player giá esistente");
-            //***************
+        if(addPlayer.newPlayer(name,password)){
             return false;
         }
         else{
             newPlayer = new Player(name,defaultShip);
-            newPlayer.setPassword(password);
-            players.put(name,newPlayer);
+            this.player= newPlayer;
             return true;
         }
     }
 
-    public boolean logIn(String name, String password){
-        Player player = players.get(name);
-        if(player == null){
-            System.err.println("Nome utente errato");
-            return false;
-        }
-        if(player.login(password)){
-            this.player = player;
+    public boolean logIn(String name, String password)throws IOException{
+
+        Player player;
+        Login log = new Login();
+
+        if(log.login(name,password)){
+            this.player = new Player(name,defaultShip);
             return true;
         }
         else{
-            System.err.println("Password errata");
             return false;
         }
     }
@@ -74,7 +69,6 @@ public class Menu {
     public void startGame(){
         if(player != null){
             field = new Field(player, maxWidth, maxHeight);
-            field.startGame();
         }
     }
 
