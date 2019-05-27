@@ -34,7 +34,7 @@ public class Menu {
     public boolean newAccount(String name, String password) throws IOException {
         Player newPlayer;
 
-        if(!AddAccount.newAccount(name,password)){
+        if(AddAccount.newAccount(name,password)){
             newPlayer = new Player(name,defaultShip);
             this.player= newPlayer;
             return true;
