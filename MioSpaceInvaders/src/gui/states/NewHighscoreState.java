@@ -18,7 +18,9 @@ import java.awt.Font;
 
 public class NewHighscoreState extends BasicGameState implements ComponentListener {
 
-    private Image gameOver;
+    private Image cupImage;
+    private Image background;
+
     private GameContainer container;
     private StateBasedGame stateBasedGame;
 
@@ -29,6 +31,7 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
     private Font UIFont1;
     private UnicodeFont uniFont;
     private String highscore;
+    private String highscoreValue;
 
     private Menu menu;
 
@@ -39,19 +42,22 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.container = gameContainer;
         this.stateBasedGame = stateBasedGame;
+        this.background = new Image("res/images/BackgroundSpace.png");
 
-        this.highscore = "NEW HIGHSCORE!";
-
+        this.highscore = "NEW HIGHSCORE! ";
+        if(menu.getPlayer() != null) {
+            highscoreValue = "SCORE: " + Integer.toString(menu.getPlayer().getHighScore());
+        }
         newGame = new Image("res/images/ButtonNewGame.png").getScaledCopy(gameContainer.getWidth()/3,
                 gameContainer.getHeight()/10);
-        newGameButton = new MouseOverArea(gameContainer, newGame,gameContainer.getWidth()/3,4*gameContainer.getHeight()/7,
+        newGameButton = new MouseOverArea(gameContainer, newGame,gameContainer.getWidth()/3,5*gameContainer.getHeight()/7,
                 gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
 
         menuImage = new Image("res/images/ButtonMenu.png");
-        menuButton = new MouseOverArea(gameContainer, menuImage,gameContainer.getWidth()/3,5*gameContainer.getHeight()/7,
+        menuButton = new MouseOverArea(gameContainer, menuImage,gameContainer.getWidth()/3,6*gameContainer.getHeight()/7,
                 gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
 
-        gameOver = new Image("res/images/Cup.png").getScaledCopy(0.65f);
+        cupImage = new Image("res/images/Cup.png").getScaledCopy(0.65f);
 
         try {
             UIFont1 = Font.createFont(java.awt.Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
@@ -68,9 +74,11 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        gameOver.draw(5*container.getWidth()/15f, 3*container.getHeight()/25f);
+        graphics.drawImage(background,0,0);
+        cupImage.draw(5*container.getWidth()/15f, 7*container.getHeight()/25f);
         newGameButton.render(gameContainer, graphics);
         menuButton.render(gameContainer,graphics);
+        uniFont.drawString(5*container.getWidth()/20f, 4*container.getHeight()/20f,highscoreValue);
         uniFont.drawString(5*container.getWidth()/20f, container.getHeight()/20f,highscore);
     }
 

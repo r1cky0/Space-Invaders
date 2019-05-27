@@ -109,6 +109,7 @@ public class SinglePlayerState extends BasicGameState {
         } catch (GameOverException err) {
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         } catch (NewHighscoreException err){
+            stateBasedGame.getState(6).init(gameContainer,stateBasedGame);
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
 
@@ -149,6 +150,7 @@ public class SinglePlayerState extends BasicGameState {
         } catch (GameOverException err) {
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         } catch (NewHighscoreException err){
+            stateBasedGame.getState(6).init(gameContainer,stateBasedGame);
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
     }
