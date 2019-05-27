@@ -1,13 +1,13 @@
 package logic.environment;
 
-import logic.FileManager.AddPlayer;
+import logic.FileManager.AddAccount;
 import logic.FileManager.Login;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
+import org.newdawn.slick.util.Log;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class Menu {
 
@@ -33,22 +33,18 @@ public class Menu {
 
     public boolean newAccount(String name, String password) throws IOException {
         Player newPlayer;
-        AddPlayer addPlayer = new AddPlayer();
 
-        if(!addPlayer.newPlayer(name,password)){
-            return false;
-        }
-        else{
+        if(!AddAccount.newAccount(name,password)){
             newPlayer = new Player(name,defaultShip);
             this.player= newPlayer;
             return true;
         }
+        return false;
     }
 
     public boolean logIn(String name, String password)throws IOException{
-        Login log = new Login();
 
-        if(log.login(name,password)){
+        if(Login.login(name,password)){
             this.player = new Player(name,defaultShip);
             field = new Field(player, maxWidth, maxHeight);
             return true;

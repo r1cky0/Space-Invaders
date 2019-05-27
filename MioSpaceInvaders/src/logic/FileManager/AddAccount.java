@@ -6,9 +6,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class AddPlayer {
+public class AddAccount {
 
-    public boolean newPlayer(String name, String password) throws IOException {
+    public static boolean newAccount(String name, String password) throws IOException {
         String file = "res/players.txt";
         BufferedReader in = new BufferedReader(new FileReader(file));
         String riga = in.readLine();
