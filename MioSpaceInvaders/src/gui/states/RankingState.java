@@ -1,9 +1,5 @@
 package gui.states;
 import logic.environment.Menu;
-import logic.environment.Ranking;
-import logic.player.Player;
-import logic.sprite.Coordinate;
-import logic.sprite.dinamic.SpaceShip;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -29,10 +25,10 @@ public class RankingState extends BasicGameState implements ComponentListener {
     private String nameString;
     private String highscoreString;
 
-    private Font UIFont1;
-    private Font UIFont2;
-    private UnicodeFont uniFont;
-    private UnicodeFont uniFont2;
+    private Font fontData;
+    private Font fontTitle;
+    private UnicodeFont uniFontData;
+    private UnicodeFont uniFontTitle;
 
     private Image goldMedal;
     private Image silverMedal;
@@ -53,12 +49,15 @@ public class RankingState extends BasicGameState implements ComponentListener {
         this.stateBasedGame = stateBasedGame;
         background = new Image("res/images/BackgroundSpace.png");
 
-        goldMedal = new Image("res/images/gold_medal.png");
-        silverMedal = new Image("res/images/silver_medal.png");
-        bronzeMedal = new Image("res/images/bronze_medal.png");
+        goldMedal = new Image("res/images/gold_medal.png").getScaledCopy(gameContainer.getWidth()/15,
+                gameContainer.getHeight()/15);
+        silverMedal = new Image("res/images/silver_medal.png").getScaledCopy(gameContainer.getWidth()/15,
+                gameContainer.getHeight()/15);
+        bronzeMedal = new Image("res/images/bronze_medal.png").getScaledCopy(gameContainer.getWidth()/15,
+                gameContainer.getHeight()/15);
 
         menuImage = new Image("res/images/ButtonMenu.png");
-        menuButton = new MouseOverArea(gameContainer, menuImage,gameContainer.getWidth()/3,5*gameContainer.getHeight()/7,
+        menuButton = new MouseOverArea(gameContainer, menuImage,gameContainer.getWidth()/3,88*gameContainer.getHeight()/100,
                 gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
 
         title = "TOP 10 RANKING";
@@ -66,19 +65,19 @@ public class RankingState extends BasicGameState implements ComponentListener {
         highscoreString = "highscore";
 
         try {
-            UIFont1 = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            UIFont1 = UIFont1.deriveFont(Font.BOLD, 40);
-            uniFont = new UnicodeFont(UIFont1);
-            uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFont.addAsciiGlyphs();
-            uniFont.loadGlyphs();
+            fontData = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            fontData = fontData.deriveFont(Font.BOLD, 40);
+            uniFontData = new UnicodeFont(fontData);
+            uniFontData.getEffects().add(new ColorEffect(java.awt.Color.white));
+            uniFontData.addAsciiGlyphs();
+            uniFontData.loadGlyphs();
 
-            UIFont2 = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            UIFont2 = UIFont2.deriveFont(Font.BOLD,gameContainer.getWidth()/11f);
-            uniFont2 = new UnicodeFont(UIFont2);
-            uniFont2.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFont2.addAsciiGlyphs();
-            uniFont2.loadGlyphs();
+            fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            fontTitle = fontTitle.deriveFont(Font.BOLD,60);
+            uniFontTitle = new UnicodeFont(fontTitle);
+            uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
+            uniFontTitle.addAsciiGlyphs();
+            uniFontTitle.loadGlyphs();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,10 +88,6 @@ public class RankingState extends BasicGameState implements ComponentListener {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background, 0, 0);
-        goldMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f,0.15f);
-        silverMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f,0.15f);
-        bronzeMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f,0.15f);
-        menuButton.render(gameContainer,graphics);
 
         int offset = 0;
         int numPlayer = 0;
@@ -100,16 +95,31 @@ public class RankingState extends BasicGameState implements ComponentListener {
         Iterator rankIter = menu.getRanking().getRank().entrySet().iterator();
         while (rankIter.hasNext() && numPlayer<10) {
             Map.Entry pair = (Map.Entry) rankIter.next();
-            uniFont.drawString(100, gameContainer.getHeight()/2 + offset, (String) pair.getKey());
-            uniFont.drawString(600, gameContainer.getHeight()/2 + offset, Integer.toString((int) pair.getValue()));
-            offset += 40;
+            uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(nameString))/4,
+                    28*gameContainer.getHeight()/100 + offset, (String) pair.getKey());
+            uniFontData.drawString(2*gameContainer.getWidth()/3, 28*gameContainer.getHeight()/100 + offset,
+                    Integer.toString((int) pair.getValue()));
+
+            if(numPlayer>2){
+                offset += 45;
+            }else {
+                offset += 63;
+            }
             numPlayer++;
         }
 
+        goldMedal.draw(gameContainer.getWidth()/10,26*gameContainer.getHeight()/100);
+        silverMedal.draw(gameContainer.getWidth()/10,26*gameContainer.getHeight()/100 + 65);
+        bronzeMedal.draw(gameContainer.getWidth()/10,26*gameContainer.getHeight()/100 + 130);
 
-        uniFont2.drawString(gameContainer.getWidth()/10f, gameContainer.getHeight()/12f, title);
-        uniFont.drawString(100, gameContainer.getHeight()/4, nameString,Color.red);
-        uniFont.drawString(600, gameContainer.getHeight()/4, highscoreString,Color.red);
+        menuButton.render(gameContainer,graphics);
+
+        uniFontTitle.drawString((gameContainer.getWidth()-uniFontTitle.getWidth(title))/2,
+                gameContainer.getHeight()/14, title,Color.white);
+        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(nameString))/4,
+                gameContainer.getHeight()/5, nameString, Color.green);
+        uniFontData.drawString(3*(gameContainer.getWidth() - uniFontData.getWidth(highscoreString))/4,
+                gameContainer.getHeight()/5, highscoreString, Color.green);
     }
 
     @Override

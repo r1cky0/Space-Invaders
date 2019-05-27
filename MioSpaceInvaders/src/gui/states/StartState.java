@@ -26,7 +26,7 @@ public class StartState extends BasicGameState implements ComponentListener {
     private TextField nameField;
     private TextField passwordField;
 
-    private String message;
+    private String title;
     private String nameString;
     private String passwordString;
     private String errorMessage;
@@ -77,7 +77,7 @@ public class StartState extends BasicGameState implements ComponentListener {
         }catch(Exception e){
             e.printStackTrace();
         }
-        message = "LOGIN AND ADD ACCOUNT";
+        title = "LOGIN AND ADD ACCOUNT";
 
         nameString = "NICKNAME:";
         passwordString = "PASSWORD:";
@@ -115,7 +115,7 @@ public class StartState extends BasicGameState implements ComponentListener {
         nameField.render(gameContainer, graphics);
         passwordField.render(gameContainer, graphics);
 
-        uniFontTitle.drawString(gameContainer.getWidth()/7,gameContainer.getHeight()/14, message);
+        uniFontTitle.drawString(gameContainer.getWidth()/7,gameContainer.getHeight()/14, title);
         uniFontMessage.drawString(gameContainer.getWidth()/7,gameContainer.getHeight()/4,nameString);
         uniFontMessage.drawString(gameContainer.getWidth()/7,gameContainer.getHeight()/3,passwordString);
 

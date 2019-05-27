@@ -20,7 +20,7 @@ import java.awt.Font;
 public class MenuState extends BasicGameState implements ComponentListener {
     private Menu menu;
 
-    private GameContainer container;
+    private GameContainer gameContainer;
     private Image single;
     private Image multi;
     private Image exit;
@@ -45,38 +45,38 @@ public class MenuState extends BasicGameState implements ComponentListener {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.container= gameContainer;
+        this.gameContainer = gameContainer;
         this.stateBasedGame= stateBasedGame;
         this.background = new Image("res/images/BackgroundSpace.png");
 
-        single = new Image("res/images/ButtonSinglePlayer.png").getScaledCopy(container.getWidth()/3,
-                container.getHeight()/10);
-        singleButton = new MouseOverArea(container, single, container.getWidth()/3, 2*container.getHeight()/6,
-                container.getWidth()/3, container.getHeight()/10, this);
+        single = new Image("res/images/ButtonSinglePlayer.png").getScaledCopy(this.gameContainer.getWidth()/3,
+                this.gameContainer.getHeight()/10);
+        singleButton = new MouseOverArea(this.gameContainer, single, this.gameContainer.getWidth()/3, 2* this.gameContainer.getHeight()/6,
+                this.gameContainer.getWidth()/3, this.gameContainer.getHeight()/10, this);
 
-        multi = new Image("res/images/ButtonMultiplayer.png").getScaledCopy(container.getWidth()/3,
-                container.getHeight()/10);
-        multiButton = new MouseOverArea(container, multi, container.getWidth()/3, 3*container.getHeight()/6,
-                container.getWidth()/3, container.getHeight()/10, this);
+        multi = new Image("res/images/ButtonMultiplayer.png").getScaledCopy(this.gameContainer.getWidth()/3,
+                this.gameContainer.getHeight()/10);
+        multiButton = new MouseOverArea(this.gameContainer, multi, this.gameContainer.getWidth()/3, 3* this.gameContainer.getHeight()/6,
+                this.gameContainer.getWidth()/3, this.gameContainer.getHeight()/10, this);
 
-        settings =new Image("res/images/Settings.png").getScaledCopy(container.getWidth()/12,
-                container.getHeight()/10);
-        settingsButton =new MouseOverArea(container, settings,7*container.getWidth()/20, 4*container.getHeight()/6,
-                container.getWidth()/12,container.getHeight()/10,this);
+        settings =new Image("res/images/Settings.png").getScaledCopy(this.gameContainer.getWidth()/12,
+                this.gameContainer.getHeight()/10);
+        settingsButton =new MouseOverArea(this.gameContainer, settings,7* this.gameContainer.getWidth()/20, 4* this.gameContainer.getHeight()/6,
+                this.gameContainer.getWidth()/12, this.gameContainer.getHeight()/10,this);
 
-        exit=new Image("res/images/ButtonExit.png").getScaledCopy(container.getWidth()/6,
-                container.getHeight()/10);
-        exitButton=new MouseOverArea(container,exit,4*container.getWidth()/10,5*container.getHeight()/6,
-                container.getWidth()/6,container.getHeight()/10,this);
+        exit=new Image("res/images/ButtonExit.png").getScaledCopy(this.gameContainer.getWidth()/6,
+                this.gameContainer.getHeight()/10);
+        exitButton=new MouseOverArea(this.gameContainer,exit,4* this.gameContainer.getWidth()/10,5* this.gameContainer.getHeight()/6,
+                this.gameContainer.getWidth()/6, this.gameContainer.getHeight()/10,this);
 
-        ranking =new Image("res/images/Cup.png").getScaledCopy(container.getWidth()/8,
-                container.getHeight()/8);
-        rankingButton =new MouseOverArea(container, ranking,11*container.getWidth()/20, 4*container.getHeight()/6,
-                container.getWidth()/8,container.getHeight()/8,this);
+        ranking =new Image("res/images/Cup.png").getScaledCopy(this.gameContainer.getWidth()/8,
+                this.gameContainer.getHeight()/8);
+        rankingButton =new MouseOverArea(this.gameContainer, ranking,11* this.gameContainer.getWidth()/20, 4* this.gameContainer.getHeight()/6,
+                this.gameContainer.getWidth()/8, this.gameContainer.getHeight()/8,this);
 
         try{
             UIFont1 = Font.createFont(Font.TRUETYPE_FONT,ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            UIFont1 = UIFont1.deriveFont(Font.BOLD, container.getWidth()/11f);
+            UIFont1 = UIFont1.deriveFont(Font.BOLD, this.gameContainer.getWidth()/11f);
             uniFont = new UnicodeFont(UIFont1);
             uniFont.addAsciiGlyphs();
             uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
@@ -95,7 +95,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
         settingsButton.render(gameContainer,graphics);
         exitButton.render(gameContainer,graphics);
         rankingButton.render(gameContainer,graphics);
-        uniFont.drawString(gameContainer.getWidth()/3f, container.getHeight()/8f, " MENU", Color.white);
+        uniFont.drawString(gameContainer.getWidth()/3f,gameContainer.getHeight()/14, "MENU", Color.white);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
     public void componentActivated(AbstractComponent source) {
         if (source == singleButton ) {
             try {
-                stateBasedGame.getState(2).init(container,stateBasedGame);
+                stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
@@ -118,6 +118,11 @@ public class MenuState extends BasicGameState implements ComponentListener {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == rankingButton ) {
+            try {
+                stateBasedGame.getState(4).init(gameContainer, stateBasedGame);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
             stateBasedGame.enterState(4, new FadeOutTransition(), new FadeInTransition());
         }
         if(source == exitButton){
