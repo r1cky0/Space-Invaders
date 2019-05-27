@@ -1,6 +1,9 @@
 package logic.player;
 
+import logic.FileManager.AddHighScore;
 import logic.sprite.dinamic.SpaceShip;
+
+import java.io.IOException;
 
 public class Player implements Comparable{
 
@@ -27,8 +30,14 @@ public class Player implements Comparable{
         return highScore;
     }
 
-    public void setHighScore(int high_score) {
-        this.highScore = high_score;
+    public void setHighScore(int highscore) {
+        this.highScore = highscore;
+        try {
+            AddHighScore.saveHighscore(name,highscore);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public SpaceShip getSpaceShip() {

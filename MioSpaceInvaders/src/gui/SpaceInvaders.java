@@ -1,11 +1,14 @@
 package gui;
 
 import gui.states.*;
+import logic.FileManager.AddHighScore;
 import logic.environment.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.io.IOException;
 
 public class SpaceInvaders extends StateBasedGame {
 
@@ -25,7 +28,7 @@ public class SpaceInvaders extends StateBasedGame {
         this.enterState(0);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         try {
             int width = 1000;
             int height = 800;
@@ -39,5 +42,7 @@ public class SpaceInvaders extends StateBasedGame {
         } catch (SlickException e) {
             e.printStackTrace();
         }
+
+
     }
 }

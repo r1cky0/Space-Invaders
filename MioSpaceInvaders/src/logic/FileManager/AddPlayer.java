@@ -6,10 +6,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class AddPlayer  {
+public class AddPlayer {
 
-    public boolean newPlayer(String name, String password)throws IOException {
-        String file = "players.txt";
+    public boolean newPlayer(String name, String password) throws IOException {
+        String file = "res/players.txt";
         BufferedReader in = new BufferedReader(new FileReader(file));
         String riga = in.readLine();
         while (riga!=null){
@@ -21,9 +21,10 @@ public class AddPlayer  {
             riga = in.readLine();
         }
         in.close();
-        String textToAppend = (name+"\t"+password+"\n");
-        Path path = Paths.get("players.txt");
+        String textToAppend = (name+"\t"+password+"\t"+0+"\n");
+        Path path = Paths.get("res/players.txt");
         Files.write(path,textToAppend.getBytes(), StandardOpenOption.APPEND);
         return true;
     }
+
 }
