@@ -31,6 +31,14 @@ public class Menu {
         defaultShip = new SpaceShip(coordinate,shipSize);
     }
 
+    public void createRanking(){
+        try {
+            ranking.createRanking();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean newAccount(String name, String password) throws IOException {
 
         if(AddAccount.newAccount(name,password)){

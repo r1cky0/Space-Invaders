@@ -18,9 +18,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.Font;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 public class RankingState extends BasicGameState implements ComponentListener {
 
@@ -84,6 +82,8 @@ public class RankingState extends BasicGameState implements ComponentListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        menu.createRanking();
     }
 
     @Override
@@ -94,11 +94,22 @@ public class RankingState extends BasicGameState implements ComponentListener {
         bronzeMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f,0.15f);
         menuButton.render(gameContainer,graphics);
 
+        int offset = 0;
+        int numPlayer = 0;
+
+        Iterator rankIter = menu.getRanking().getRank().entrySet().iterator();
+        while (rankIter.hasNext() && numPlayer<10) {
+            Map.Entry pair = (Map.Entry) rankIter.next();
+            uniFont.drawString(100, gameContainer.getHeight()/2 - offset, (String) pair.getKey());
+            uniFont.drawString(600, gameContainer.getHeight()/2 - offset, Integer.toString((int) pair.getValue()));
+            offset += 40;
+            numPlayer++;
+        }
 
 
         uniFont2.drawString(gameContainer.getWidth()/10f, gameContainer.getHeight()/12f, title);
-        uniFont.drawString(100, gameContainer.getHeight()/4f, nameString,Color.red);
-        uniFont.drawString(600, gameContainer.getHeight()/4f, highscoreString,Color.red);
+        uniFont.drawString(100, gameContainer.getHeight()/4, nameString,Color.red);
+        uniFont.drawString(600, gameContainer.getHeight()/4, highscoreString,Color.red);
     }
 
     @Override

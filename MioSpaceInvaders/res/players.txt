@@ -2,3 +2,4 @@ a	a	0
 b	b	0
 e	e	40
 f	f	30
+z	z	30

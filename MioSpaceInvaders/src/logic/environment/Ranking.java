@@ -7,28 +7,23 @@ import java.util.*;
 
 public class Ranking {
 
-    private HashMap<String,Integer> ranking;
+    private HashMap<String,Integer> rank;
 
     public Ranking(){
-        ranking = new HashMap<>();
+        rank = new HashMap<>();
     }
 
-    public HashMap getRanking() {
-        try {
-            createRanking();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return ranking;
+    public HashMap getRank() {
+        return rank;
     }
 
-    private void createRanking() throws IOException {
+    public void createRanking() throws IOException {
 
         BufferedReader in = new BufferedReader(new FileReader("res/players.txt"));
         String riga = in.readLine();
         while (riga != null) {
             String[] componenti = riga.split("\\t");
-            ranking.put(componenti[0], Integer.parseInt(componenti[2]));
+            rank.put(componenti[0], Integer.parseInt(componenti[2]));
             riga = in.readLine();
         }
         in.close();
@@ -37,7 +32,7 @@ public class Ranking {
 
     private void sortRanking() {
         List<Map.Entry<String, Integer> > list =
-                new LinkedList<>(ranking.entrySet());
+                new LinkedList<>(rank.entrySet());
 
         list.sort(Comparator.comparing(Map.Entry::getValue));
 
@@ -45,7 +40,7 @@ public class Ranking {
         for (Map.Entry<String, Integer> aa : list) {
             temp.put(aa.getKey(), aa.getValue());
         }
-        ranking = temp;
+        rank = temp;
     }
 
 
