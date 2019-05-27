@@ -34,8 +34,8 @@ public class RankingState extends BasicGameState implements ComponentListener {
     private Image silverMedal;
     private Image bronzeMedal;
     private Image background;
-    private Image menuImage;
-    private MouseOverArea menuButton;
+    private Image homeImage;
+    private MouseOverArea homeButton;
 
     private Menu menu;
 
@@ -49,16 +49,17 @@ public class RankingState extends BasicGameState implements ComponentListener {
         this.stateBasedGame = stateBasedGame;
         background = new Image("res/images/BackgroundSpace.png");
 
-        goldMedal = new Image("res/images/gold_medal.png").getScaledCopy(gameContainer.getWidth()/15,
-                gameContainer.getHeight()/15);
-        silverMedal = new Image("res/images/silver_medal.png").getScaledCopy(gameContainer.getWidth()/15,
-                gameContainer.getHeight()/15);
-        bronzeMedal = new Image("res/images/bronze_medal.png").getScaledCopy(gameContainer.getWidth()/15,
-                gameContainer.getHeight()/15);
+        goldMedal = new Image("res/images/MedalGold.png").getScaledCopy(6*gameContainer.getWidth()/100,
+                6*gameContainer.getWidth()/100);
+        silverMedal = new Image("res/images/MedalSilver.png").getScaledCopy(6*gameContainer.getWidth()/100,
+                6*gameContainer.getWidth()/100);
+        bronzeMedal = new Image("res/images/MedalBronze.png").getScaledCopy(6*gameContainer.getWidth()/100,
+                6*gameContainer.getWidth()/100);
 
-        menuImage = new Image("res/images/ButtonMenu.png");
-        menuButton = new MouseOverArea(gameContainer, menuImage,gameContainer.getWidth()/3,88*gameContainer.getHeight()/100,
-                gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
+        homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
+                6*gameContainer.getWidth()/100);;
+        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
+                6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
 
         title = "TOP 10 RANKING";
         nameString = "nickname";
@@ -97,29 +98,29 @@ public class RankingState extends BasicGameState implements ComponentListener {
             Map.Entry pair = (Map.Entry) rankIter.next();
             uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(nameString))/4,
                     28*gameContainer.getHeight()/100 + offset, (String) pair.getKey());
-            uniFontData.drawString(2*gameContainer.getWidth()/3, 28*gameContainer.getHeight()/100 + offset,
+            uniFontData.drawString(65*gameContainer.getWidth()/100, 28*gameContainer.getHeight()/100 + offset,
                     Integer.toString((int) pair.getValue()));
 
             if(numPlayer>2){
-                offset += 45;
+                offset += 50;
             }else {
                 offset += 63;
             }
             numPlayer++;
         }
 
-        goldMedal.draw(gameContainer.getWidth()/10,26*gameContainer.getHeight()/100);
-        silverMedal.draw(gameContainer.getWidth()/10,26*gameContainer.getHeight()/100 + 65);
-        bronzeMedal.draw(gameContainer.getWidth()/10,26*gameContainer.getHeight()/100 + 130);
+        goldMedal.draw(10*gameContainer.getWidth()/100,26*gameContainer.getHeight()/100);
+        silverMedal.draw(10*gameContainer.getWidth()/100,26*gameContainer.getHeight()/100 + 65);
+        bronzeMedal.draw(10*gameContainer.getWidth()/100,26*gameContainer.getHeight()/100 + 130);
 
-        menuButton.render(gameContainer,graphics);
+        homeButton.render(gameContainer,graphics);
 
-        uniFontTitle.drawString((gameContainer.getWidth()-uniFontTitle.getWidth(title))/2,
-                gameContainer.getHeight()/14, title,Color.white);
+        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2,
+                7*gameContainer.getHeight()/100, title,Color.white);
         uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(nameString))/4,
-                gameContainer.getHeight()/5, nameString, Color.green);
+                20*gameContainer.getHeight()/100, nameString, Color.green);
         uniFontData.drawString(3*(gameContainer.getWidth() - uniFontData.getWidth(highscoreString))/4,
-                gameContainer.getHeight()/5, highscoreString, Color.green);
+                20*gameContainer.getHeight()/100, highscoreString, Color.green);
     }
 
     @Override
@@ -133,7 +134,7 @@ public class RankingState extends BasicGameState implements ComponentListener {
     }
 
     public void componentActivated(AbstractComponent source) {
-        if (source == menuButton) {
+        if (source == homeButton) {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
     }

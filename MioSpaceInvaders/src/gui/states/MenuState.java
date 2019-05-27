@@ -27,7 +27,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
     private Image settings;
     private Image background;
     private Image ranking;
-
+    private String title;
 
     private StateBasedGame stateBasedGame;
     private MouseOverArea singleButton;
@@ -36,8 +36,8 @@ public class MenuState extends BasicGameState implements ComponentListener {
     private MouseOverArea settingsButton;
     private MouseOverArea rankingButton;
 
-    private Font UIFont1;
-    private UnicodeFont uniFont;
+    private Font fontTitle;
+    private UnicodeFont uniFontTitle;
 
     public MenuState(Menu menu){
         this.menu = menu;
@@ -46,42 +46,49 @@ public class MenuState extends BasicGameState implements ComponentListener {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
-        this.stateBasedGame= stateBasedGame;
+        this.stateBasedGame = stateBasedGame;
         this.background = new Image("res/images/BackgroundSpace.png");
 
-        single = new Image("res/images/ButtonSinglePlayer.png").getScaledCopy(this.gameContainer.getWidth()/3,
-                this.gameContainer.getHeight()/10);
-        singleButton = new MouseOverArea(this.gameContainer, single, this.gameContainer.getWidth()/3, 2* this.gameContainer.getHeight()/6,
-                this.gameContainer.getWidth()/3, this.gameContainer.getHeight()/10, this);
+        title = "SPACE INVADERS";
 
-        multi = new Image("res/images/ButtonMultiplayer.png").getScaledCopy(this.gameContainer.getWidth()/3,
-                this.gameContainer.getHeight()/10);
-        multiButton = new MouseOverArea(this.gameContainer, multi, this.gameContainer.getWidth()/3, 3* this.gameContainer.getHeight()/6,
-                this.gameContainer.getWidth()/3, this.gameContainer.getHeight()/10, this);
+        single = new Image("res/images/ButtonSinglePlayer.png").getScaledCopy(30*gameContainer.getWidth()/100,
+                10*gameContainer.getHeight()/100);
+        singleButton = new MouseOverArea(gameContainer, single,(gameContainer.getWidth() - single.getWidth())/2,
+                26*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
+                this);
 
-        settings =new Image("res/images/Settings.png").getScaledCopy(this.gameContainer.getWidth()/12,
-                this.gameContainer.getHeight()/10);
-        settingsButton =new MouseOverArea(this.gameContainer, settings,7* this.gameContainer.getWidth()/20, 4* this.gameContainer.getHeight()/6,
-                this.gameContainer.getWidth()/12, this.gameContainer.getHeight()/10,this);
+        multi = new Image("res/images/ButtonMultiplayer.png").getScaledCopy(30*gameContainer.getWidth()/100,
+                10*gameContainer.getHeight()/100);
+        multiButton = new MouseOverArea(gameContainer, multi,(gameContainer.getWidth() - multi.getWidth())/2,
+                45*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
+                this);
 
-        exit=new Image("res/images/ButtonExit.png").getScaledCopy(this.gameContainer.getWidth()/6,
-                this.gameContainer.getHeight()/10);
-        exitButton=new MouseOverArea(this.gameContainer,exit,4* this.gameContainer.getWidth()/10,5* this.gameContainer.getHeight()/6,
-                this.gameContainer.getWidth()/6, this.gameContainer.getHeight()/10,this);
+        settings = new Image("res/images/Settings.png").getScaledCopy(8*gameContainer.getWidth()/100,
+                10*gameContainer.getHeight()/100);
+        settingsButton = new MouseOverArea(gameContainer, settings,35*gameContainer.getWidth()/100,
+                63*gameContainer.getHeight()/100,8*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
+                this);
 
-        ranking =new Image("res/images/Cup.png").getScaledCopy(this.gameContainer.getWidth()/8,
-                this.gameContainer.getHeight()/8);
-        rankingButton =new MouseOverArea(this.gameContainer, ranking,11* this.gameContainer.getWidth()/20, 4* this.gameContainer.getHeight()/6,
-                this.gameContainer.getWidth()/8, this.gameContainer.getHeight()/8,this);
+        exit = new Image("res/images/ButtonExit.png").getScaledCopy(15*gameContainer.getWidth()/100,
+                10*gameContainer.getHeight()/100);
+        exitButton = new MouseOverArea(gameContainer, exit,(gameContainer.getWidth() - exit.getWidth())/2,
+                80*gameContainer.getHeight()/100,15*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
+                this);
+
+        ranking = new Image("res/images/Cup.png").getScaledCopy(12*gameContainer.getWidth()/100,
+                12*gameContainer.getHeight()/100);
+        rankingButton = new MouseOverArea(gameContainer, ranking,55*gameContainer.getWidth()/100,
+                63*gameContainer.getHeight()/100,12*gameContainer.getWidth()/100,12*gameContainer.getHeight()/100,
+                this);
 
         try{
-            UIFont1 = Font.createFont(Font.TRUETYPE_FONT,ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            UIFont1 = UIFont1.deriveFont(Font.BOLD, this.gameContainer.getWidth()/11f);
-            uniFont = new UnicodeFont(UIFont1);
-            uniFont.addAsciiGlyphs();
-            uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFont.addAsciiGlyphs();
-            uniFont.loadGlyphs();
+            fontTitle = Font.createFont(Font.TRUETYPE_FONT,ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            fontTitle = fontTitle.deriveFont(Font.BOLD,9*gameContainer.getWidth()/100);
+            uniFontTitle = new UnicodeFont(fontTitle);
+            uniFontTitle.addAsciiGlyphs();
+            uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
+            uniFontTitle.addAsciiGlyphs();
+            uniFontTitle.loadGlyphs();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -95,7 +102,8 @@ public class MenuState extends BasicGameState implements ComponentListener {
         settingsButton.render(gameContainer,graphics);
         exitButton.render(gameContainer,graphics);
         rankingButton.render(gameContainer,graphics);
-        uniFont.drawString(gameContainer.getWidth()/3f,gameContainer.getHeight()/14, "MENU", Color.white);
+        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2,7*gameContainer.getHeight()/100,
+                title, Color.white);
     }
 
     @Override
@@ -105,6 +113,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
     public void componentActivated(AbstractComponent source) {
         if (source == singleButton ) {
             try {
+                menu.restartGame();
                 stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();

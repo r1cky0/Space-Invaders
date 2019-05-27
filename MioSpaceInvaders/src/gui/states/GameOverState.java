@@ -14,14 +14,15 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class GameOverState extends BasicGameState implements ComponentListener {
 
-    private Image gameOver;
-    private GameContainer container;
+    private GameContainer gameContainer;
     private StateBasedGame stateBasedGame;
 
-    private MouseOverArea newGameButton;
+    private Image gameOver;
     private Image newGame;
-    private MouseOverArea menuButton;
-    private Image menuImage;
+    private Image homeImage;
+    private MouseOverArea homeButton;
+    private MouseOverArea newGameButton;
+
 
     private Menu menu;
 
@@ -30,25 +31,27 @@ public class GameOverState extends BasicGameState implements ComponentListener {
     }
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.container = gameContainer;
+        this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
-        newGame = new Image("res/images/ButtonNewGame.png").getScaledCopy(gameContainer.getWidth()/3,
-                gameContainer.getHeight()/10);
-        newGameButton = new MouseOverArea(gameContainer, newGame,gameContainer.getWidth()/3,4*gameContainer.getHeight()/7,
-                gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
+        newGame = new Image("res/images/ButtonNewGame.png").getScaledCopy(30*gameContainer.getWidth()/100,
+                10*gameContainer.getHeight()/100);
+        newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
+                80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
+                this);
 
-        menuImage = new Image("res/images/ButtonMenu.png");
-        menuButton = new MouseOverArea(gameContainer, menuImage,gameContainer.getWidth()/3,5*gameContainer.getHeight()/7,
-                gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
+        homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
+                6*gameContainer.getWidth()/100);
+        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
+                6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
 
         gameOver = new Image("res/images/BackgroundGameOver.png");
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        gameOver.draw(container.getWidth()/7, container.getHeight()/20);
+        gameOver.draw((gameContainer.getWidth() - gameOver.getWidth())/2,(gameContainer.getHeight() - gameOver.getHeight())/2);
         newGameButton.render(gameContainer, graphics);
-        menuButton.render(gameContainer,graphics);
+        homeButton.render(gameContainer,graphics);
     }
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
@@ -65,19 +68,13 @@ public class GameOverState extends BasicGameState implements ComponentListener {
         if (source == newGameButton) {
             try {
                 menu.restartGame();
-                stateBasedGame.getState(2).init(container, stateBasedGame);
+                stateBasedGame.getState(2).init(gameContainer, stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
             stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition());
         }
-        if (source == menuButton) {
-            try {
-                menu.restartGame();
-                stateBasedGame.getState(2).init(container, stateBasedGame);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
+        if (source == homeButton) {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
     }

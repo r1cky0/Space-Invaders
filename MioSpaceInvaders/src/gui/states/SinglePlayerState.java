@@ -18,10 +18,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
-import java.util.ListIterator;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class SinglePlayerState extends BasicGameState {
 
     private Menu menu;
@@ -29,8 +25,8 @@ public class SinglePlayerState extends BasicGameState {
     private GameContainer gameContainer;
     private Image background;
 
-    private java.awt.Font UIFont1;
-    private UnicodeFont uniFont;
+    private java.awt.Font fontData;
+    private UnicodeFont uniFontData;
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
@@ -42,16 +38,16 @@ public class SinglePlayerState extends BasicGameState {
         background = new Image("res/images/BackgroundSpace.png");
 
         try{
-            UIFont1 = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
+            fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
                     ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            UIFont1 = UIFont1.deriveFont(java.awt.Font.BOLD, gameContainer.getWidth()/30f);
+            fontData = fontData.deriveFont(java.awt.Font.BOLD,3*gameContainer.getWidth()/100);
 
-            uniFont = new UnicodeFont(UIFont1);
+            uniFontData = new UnicodeFont(fontData);
 
-            uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
+            uniFontData.getEffects().add(new ColorEffect(java.awt.Color.white));
 
-            uniFont.addAsciiGlyphs();
-            uniFont.loadGlyphs();
+            uniFontData.addAsciiGlyphs();
+            uniFontData.loadGlyphs();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -61,8 +57,8 @@ public class SinglePlayerState extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
-        uniFont.drawString(8*gameContainer.getWidth()/10,15,"Lives: "+field.getSpaceShip().getLife(),Color.white);
-        uniFont.drawString(20,15,"Score: "+field.getSpaceShip().getCurrentScore(),Color.white);
+        uniFontData.drawString(80*gameContainer.getWidth()/100,15,"Lives: " + field.getSpaceShip().getLife(), Color.white);
+        uniFontData.drawString(20,15,"Score: " + field.getSpaceShip().getCurrentScore(), Color.white);
 
         field.getSpaceShip().render("res/images/SpaceShip1.png");
 

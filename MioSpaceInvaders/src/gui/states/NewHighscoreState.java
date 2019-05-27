@@ -18,20 +18,20 @@ import java.awt.Font;
 
 public class NewHighscoreState extends BasicGameState implements ComponentListener {
 
-    private Image cupImage;
-    private Image background;
-
-    private GameContainer container;
+    private GameContainer gameContainer;
     private StateBasedGame stateBasedGame;
 
-    private MouseOverArea newGameButton;
+    private Image cupImage;
+    private Image background;
     private Image newGame;
-    private MouseOverArea menuButton;
-    private Image menuImage;
-    private Font UIFont1;
-    private UnicodeFont uniFont;
+    private Image homeImage;
+    private MouseOverArea newGameButton;
+    private MouseOverArea homeButton;
+
+    private Font fontTitle;
+    private UnicodeFont uniFontTitle;
+    private String title;
     private String highscore;
-    private String highscoreValue;
 
     private Menu menu;
 
@@ -40,32 +40,33 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
     }
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.container = gameContainer;
+        this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        this.background = new Image("res/images/BackgroundSpace.png");
+        background = new Image("res/images/BackgroundSpace.png");
 
-        this.highscore = "NEW HIGHSCORE! ";
-        if(menu.getPlayer() != null) {
-            highscoreValue = "SCORE: " + Integer.toString(menu.getPlayer().getHighScore());
-        }
-        newGame = new Image("res/images/ButtonNewGame.png").getScaledCopy(gameContainer.getWidth()/3,
-                gameContainer.getHeight()/10);
-        newGameButton = new MouseOverArea(gameContainer, newGame,gameContainer.getWidth()/3,5*gameContainer.getHeight()/7,
-                gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
+        title = "NEW HIGHSCORE:";
 
-        menuImage = new Image("res/images/ButtonMenu.png");
-        menuButton = new MouseOverArea(gameContainer, menuImage,gameContainer.getWidth()/3,6*gameContainer.getHeight()/7,
-                gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
+        newGame = new Image("res/images/ButtonNewGame.png").getScaledCopy(30*gameContainer.getWidth()/100,
+                10*gameContainer.getHeight()/100);
+        newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
+                80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
+                this);
 
-        cupImage = new Image("res/images/Cup.png").getScaledCopy(0.65f);
+        homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
+                6*gameContainer.getWidth()/100);;
+        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
+                6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
+
+        cupImage = new Image("res/images/Cup.png").getScaledCopy(40*gameContainer.getWidth()/100,
+                40*gameContainer.getHeight()/100);
 
         try {
-            UIFont1 = Font.createFont(java.awt.Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            UIFont1 = UIFont1.deriveFont(java.awt.Font.BOLD, 60);
-            uniFont = new UnicodeFont(UIFont1);
-            uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFont.addAsciiGlyphs();
-            uniFont.loadGlyphs();
+            fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            fontTitle = fontTitle.deriveFont(java.awt.Font.BOLD, 60);
+            uniFontTitle = new UnicodeFont(fontTitle);
+            uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
+            uniFontTitle.addAsciiGlyphs();
+            uniFontTitle.loadGlyphs();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,15 +76,20 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
-        cupImage.draw(5*container.getWidth()/15f, 7*container.getHeight()/25f);
+        highscore = Integer.toString(menu.getPlayer().getHighScore());
+
+        cupImage.draw((this.gameContainer.getWidth() - cupImage.getWidth())/2,(this.gameContainer.getHeight() - cupImage.getHeight())/2);
         newGameButton.render(gameContainer, graphics);
-        menuButton.render(gameContainer,graphics);
-        uniFont.drawString(5*container.getWidth()/20f, 4*container.getHeight()/20f,highscoreValue);
-        uniFont.drawString(5*container.getWidth()/20f, container.getHeight()/20f,highscore);
+        homeButton.render(gameContainer,graphics);
+
+        uniFontTitle.drawString((this.gameContainer.getWidth() - uniFontTitle.getWidth(title))/2,
+                7* this.gameContainer.getHeight()/100, title);
+        uniFontTitle.drawString((this.gameContainer.getWidth() - uniFontTitle.getWidth(highscore))/2,
+                20* this.gameContainer.getHeight()/100, highscore);
+
     }
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
     }
 
     @Override
@@ -96,19 +102,13 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
         if (source == newGameButton) {
             try {
                 menu.restartGame();
-                stateBasedGame.getState(2).init(container, stateBasedGame);
+                stateBasedGame.getState(2).init(gameContainer, stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
             stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition());
         }
-        if (source == menuButton) {
-            try {
-                menu.restartGame();
-                stateBasedGame.getState(2).init(container, stateBasedGame);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
+        if (source == homeButton) {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
     }
