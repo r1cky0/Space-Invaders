@@ -63,12 +63,6 @@ public class Menu {
         if(player != null){
             field = new Field(player, maxWidth, maxHeight);
         }
-
-//        //***************************************//
-//        //DA TOGLIERE ALLA FINE E LASCIARE QUELLO SOPRA
-//        Player player = new Player("arr",defaultShip);
-//        field = new Field(player, maxWidth, maxHeight);
-//        //***************************************//
     }
 
     //A programma sistemato togliere questo getter e fare che startGame restituisca il field

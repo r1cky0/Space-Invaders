@@ -1,6 +1,7 @@
 package logic.environment;
 
 import logic.exception.GameOverException;
+import logic.exception.NewHighscoreException;
 import logic.exception.NextLevelException;
 import logic.player.Player;
 import logic.sprite.Coordinate;
@@ -102,10 +103,11 @@ public class Field {
 
     public void gameOver(){
 
+        player.incrementCredit(spaceShip.getCurrentScore());
         if(player.getHighScore() < spaceShip.getCurrentScore()){
             player.setHighScore(spaceShip.getCurrentScore());
+            throw new NewHighscoreException();
         }
-        player.incrementCredit(spaceShip.getCurrentScore());
 
         throw new GameOverException();
     }

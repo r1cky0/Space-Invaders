@@ -4,6 +4,7 @@ import logic.environment.Field;
 import logic.environment.Menu;
 import logic.environment.MovingDirections;
 import logic.exception.GameOverException;
+import logic.exception.NewHighscoreException;
 import logic.exception.NextLevelException;
 import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
@@ -108,6 +109,8 @@ public class SinglePlayerState extends BasicGameState {
             field.invaderDirection();
         } catch (GameOverException err) {
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
+        } catch (NewHighscoreException err){
+            stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
 
         if (input.isKeyDown(Input.KEY_LEFT)) {
@@ -146,6 +149,8 @@ public class SinglePlayerState extends BasicGameState {
             field.checkInvaderShotCollision();
         } catch (GameOverException err) {
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
+        } catch (NewHighscoreException err){
+            stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
     }
 

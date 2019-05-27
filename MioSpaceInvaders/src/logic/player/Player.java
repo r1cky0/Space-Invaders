@@ -37,7 +37,6 @@ public class Player implements Comparable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public SpaceShip getSpaceShip() {
