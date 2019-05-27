@@ -31,14 +31,20 @@ public class Ranking {
     }
 
     private void sortRanking() {
-        List<Map.Entry<String, Integer> > list =
-                new LinkedList<>(rank.entrySet());
 
-        list.sort(Comparator.comparing(Map.Entry::getValue));
+        Comparator<Map.Entry<String,Integer>> comp = Comparator.comparingInt(Map.Entry::getValue);
+
+        Comparator<Map.Entry<String,Integer>> rev = comp.reversed();
+
+        Set<Map.Entry<String,Integer>> entries = rank.entrySet();
+
+        List<Map.Entry<String,Integer>> entrylist = new ArrayList<>(entries);
+
+        entrylist.sort(rev);
 
         HashMap<String, Integer> temp = new LinkedHashMap<>();
-        for (Map.Entry<String, Integer> aa : list) {
-            temp.put(aa.getKey(), aa.getValue());
+        for (Map.Entry<String, Integer> map : entrylist) {
+            temp.put(map.getKey(), map.getValue());
         }
         rank = temp;
     }

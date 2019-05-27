@@ -100,8 +100,8 @@ public class RankingState extends BasicGameState implements ComponentListener {
         Iterator rankIter = menu.getRanking().getRank().entrySet().iterator();
         while (rankIter.hasNext() && numPlayer<10) {
             Map.Entry pair = (Map.Entry) rankIter.next();
-            uniFont.drawString(100, gameContainer.getHeight()/2 - offset, (String) pair.getKey());
-            uniFont.drawString(600, gameContainer.getHeight()/2 - offset, Integer.toString((int) pair.getValue()));
+            uniFont.drawString(100, gameContainer.getHeight()/2 + offset, (String) pair.getKey());
+            uniFont.drawString(600, gameContainer.getHeight()/2 + offset, Integer.toString((int) pair.getValue()));
             offset += 40;
             numPlayer++;
         }
