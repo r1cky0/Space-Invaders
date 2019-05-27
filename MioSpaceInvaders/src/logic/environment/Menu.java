@@ -35,7 +35,7 @@ public class Menu {
         Player newPlayer;
         AddPlayer addPlayer = new AddPlayer();
 
-        if(addPlayer.newPlayer(name,password)){
+        if(!addPlayer.newPlayer(name,password)){
             return false;
         }
         else{

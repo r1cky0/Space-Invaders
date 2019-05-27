@@ -29,11 +29,15 @@ public class StartState extends BasicGameState implements ComponentListener {
     private String message;
     private String nameString;
     private String passwordString;
+    private String errorMessage;
+    private boolean errorFlag = false;
 
-    private Font UIFont1;
+    private Font titleFont;
+    private Font messageFont;
     private Font font = new Font("Verdana", Font.BOLD, 32);
     private TrueTypeFont ttf = new TrueTypeFont(font, true);
-    private UnicodeFont uniFont;
+    private UnicodeFont uniFontTitle;
+    private UnicodeFont uniFontMessage;
 
     private Image background;
 
@@ -55,12 +59,21 @@ public class StartState extends BasicGameState implements ComponentListener {
         background = new Image("res/images/BackgroundSpace.png");
 
         try{
-            UIFont1 = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            UIFont1 = UIFont1.deriveFont(Font.BOLD, 40);
-            uniFont = new UnicodeFont(UIFont1);
-            uniFont.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFont.addAsciiGlyphs();
-            uniFont.loadGlyphs();
+            titleFont = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            titleFont = titleFont.deriveFont(Font.BOLD, 60);
+            uniFontTitle = new UnicodeFont(titleFont);
+            uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
+
+            messageFont = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            messageFont = messageFont.deriveFont(Font.BOLD, 40);
+            uniFontMessage = new UnicodeFont(messageFont);
+            uniFontMessage.getEffects().add(new ColorEffect(java.awt.Color.white));
+
+
+            uniFontTitle.addAsciiGlyphs();
+            uniFontTitle.loadGlyphs();
+            uniFontMessage.addAsciiGlyphs();
+            uniFontMessage.loadGlyphs();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -69,9 +82,11 @@ public class StartState extends BasicGameState implements ComponentListener {
         nameString = "NICKNAME:";
         passwordString = "PASSWORD:";
 
-        nameField = new TextField(gameContainer, ttf,gameContainer.getWidth()/3,200,300,40);
+        nameField = new TextField(gameContainer, ttf,6*gameContainer.getWidth()/15,gameContainer.getHeight()/4,
+                300,40);
 
-        passwordField = new TextField(gameContainer,ttf,gameContainer.getWidth()/3,250,300,40);
+        passwordField = new TextField(gameContainer,ttf,6*gameContainer.getWidth()/15,gameContainer.getHeight()/3,
+                300,40);
 
         nameField.setBackgroundColor(Color.white);
         nameField.setTextColor(Color.black);
@@ -85,10 +100,10 @@ public class StartState extends BasicGameState implements ComponentListener {
         account = new Image("res/images/ButtonAccount.png").getScaledCopy(gameContainer.getWidth()/3,
                 gameContainer.getHeight()/10);
 
-        loginButton = new MouseOverArea(gameContainer, login,gameContainer.getWidth()/3,3*gameContainer.getHeight()/7,
+        loginButton = new MouseOverArea(gameContainer, login,gameContainer.getWidth()/3,4*gameContainer.getHeight()/7,
                 gameContainer.getWidth()/3, gameContainer.getHeight()/10, this);
 
-        accountButton = new MouseOverArea(gameContainer, account,gameContainer.getWidth()/3,4*gameContainer.getHeight()/7,
+        accountButton = new MouseOverArea(gameContainer, account,gameContainer.getWidth()/3,5*gameContainer.getHeight()/7,
                 gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
 
     }
@@ -100,9 +115,13 @@ public class StartState extends BasicGameState implements ComponentListener {
         nameField.render(gameContainer, graphics);
         passwordField.render(gameContainer, graphics);
 
-        uniFont.drawString(100,50, message);
-        uniFont.drawString(50,200,nameString);
-        uniFont.drawString(50,250,passwordString);
+        uniFontTitle.drawString(gameContainer.getWidth()/7,gameContainer.getHeight()/14, message);
+        uniFontMessage.drawString(gameContainer.getWidth()/7,gameContainer.getHeight()/4,nameString);
+        uniFontMessage.drawString(gameContainer.getWidth()/7,gameContainer.getHeight()/3,passwordString);
+
+        if(errorFlag){
+            uniFontMessage.drawString(gameContainer.getWidth()/4,7*gameContainer.getHeight()/15, errorMessage);
+        }
 
         loginButton.render(gameContainer, graphics);
         accountButton.render(gameContainer, graphics);
@@ -126,7 +145,8 @@ public class StartState extends BasicGameState implements ComponentListener {
                 if(menu.logIn(nickname,password)){
                     stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
                 }else {
-                    nameField.setText("Errore");
+                    errorFlag = true;
+                    errorMessage = "Nome o password errati";
                 }
             }catch (IOException e){
                 e.printStackTrace();
@@ -137,11 +157,15 @@ public class StartState extends BasicGameState implements ComponentListener {
             String nickname = nameField.getText();
             String password = passwordField.getText();
             try {
-                menu.newAccount(nickname,password);
+                if(menu.newAccount(nickname,password)){
+                    stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                }else {
+                    errorFlag = true;
+                    errorMessage = "Account già esistente";
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
     }
 }
