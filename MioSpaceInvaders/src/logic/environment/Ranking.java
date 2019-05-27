@@ -1,81 +1,54 @@
 package logic.environment;
 
-import logic.player.Player;
-import logic.sprite.Coordinate;
-import logic.sprite.dinamic.SpaceShip;
-
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 
 public class Ranking {
 
-    private ArrayList<Player> players;
+    private HashMap<String,Integer> ranking;
 
     public Ranking(){
-        players = new ArrayList<>();
+        ranking = new HashMap<>();
     }
 
-    public void addScore(Player player){
-        if (players != null) {
-            if (isInRanking(player)) {
-                for (Player p: players) {
-                    if(p.getName().equals(player.getName())) {
-                        p.setHighScore(player.getHighScore());
-                        orderRanking();
-                    }
-                }
-            }
-            else {
-                players.add(player);
-                orderRanking();
-            }
+    public HashMap getRanking() {
+        try {
+            createRanking();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        else {
-            players.add(player);
-        }
+        return ranking;
     }
 
-    public boolean isInRanking(Player player) {
-        for (Player p: players) {
-            if(p.getName().equals(player.getName())) {
-                return true;
-            }
+    private void createRanking() throws IOException {
+
+        BufferedReader in = new BufferedReader(new FileReader("res/players.txt"));
+        String riga = in.readLine();
+        while (riga != null) {
+            String[] componenti = riga.split("\\t");
+            ranking.put(componenti[0], Integer.parseInt(componenti[2]));
+            riga = in.readLine();
         }
-        return false;
+        in.close();
+        sortRanking();
     }
 
-    public String toString(){
-        if(players.isEmpty()){
-            return "Nessun punteggio in classifica";
+    private void sortRanking() {
+        List<Map.Entry<String, Integer> > list =
+                new LinkedList<>(ranking.entrySet());
+
+        list.sort(Comparator.comparing(Map.Entry::getValue));
+
+        HashMap<String, Integer> temp = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
         }
-        StringBuilder classifica = new StringBuilder();
-        for(Player player: players){
-            classifica.append(player.toString());
-        }
-        return classifica.toString();
+        ranking = temp;
     }
 
-    public void orderRanking() {
-        Collections.sort(players, Player::compareTo);
-    }
-
-    /*public ArrayList<Player> topNPlayer(int n){
-        ArrayList<Player> topN = new ArrayList<>();
-        for(int i=0; i<n; i++){
-            if(players.get(i) != null){
-                topN.add(players.get(i));
-            }
-        }
-        if(topN.isEmpty()){
-            topN.add(new Player("Default", new SpaceShip(new Coordinate(0,0),2)));
-            return topN;
-        }
-        return topN;
-    }*/
 
 
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
 
 }

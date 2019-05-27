@@ -34,7 +34,6 @@ public class SinglePlayerState extends BasicGameState {
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
-        this.menu.startGame();
     }
 
     @Override

@@ -32,11 +32,10 @@ public class Menu {
     }
 
     public boolean newAccount(String name, String password) throws IOException {
-        Player newPlayer;
 
         if(AddAccount.newAccount(name,password)){
-            newPlayer = new Player(name,defaultShip);
-            this.player= newPlayer;
+            this.player = new Player(name,defaultShip);
+            field = new Field(player, maxWidth, maxHeight);
             return true;
         }
         return false;
@@ -58,11 +57,8 @@ public class Menu {
         this.player = null;
     }
 
-    //Probabilmente ci sará da fare un' eccezione
-    public void startGame(){
-        if(player != null){
-            field = new Field(player, maxWidth, maxHeight);
-        }
+    public void restartGame() {
+        field = new Field(player, maxWidth, maxHeight);
     }
 
     //A programma sistemato togliere questo getter e fare che startGame restituisca il field

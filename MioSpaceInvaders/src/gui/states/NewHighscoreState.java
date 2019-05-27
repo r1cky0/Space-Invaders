@@ -51,7 +51,7 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
         menuButton = new MouseOverArea(gameContainer, menuImage,gameContainer.getWidth()/3,5*gameContainer.getHeight()/7,
                 gameContainer.getWidth()/3,gameContainer.getHeight()/10,this);
 
-        gameOver = new Image("res/images/cup.png").getScaledCopy(0.65f);
+        gameOver = new Image("res/images/Cup.png").getScaledCopy(0.65f);
 
         try {
             UIFont1 = Font.createFont(java.awt.Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
@@ -87,7 +87,7 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
     public void componentActivated(AbstractComponent source) {
         if (source == newGameButton) {
             try {
-                menu.startGame();
+                menu.restartGame();
                 stateBasedGame.getState(2).init(container, stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
@@ -96,7 +96,7 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
         }
         if (source == menuButton) {
             try {
-                menu.startGame();
+                menu.restartGame();
                 stateBasedGame.getState(2).init(container, stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();

@@ -42,9 +42,9 @@ public class RankingState extends BasicGameState implements ComponentListener {
     private Image background;
     private Image menuImage;
     private MouseOverArea menuButton;
+
     private Menu menu;
 
-    private ArrayList<Player> topTen;
     public RankingState(Menu menu) {
         this.menu = menu;
     }
@@ -54,19 +54,6 @@ public class RankingState extends BasicGameState implements ComponentListener {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
         background = new Image("res/images/BackgroundSpace.png");
-        topTen = new ArrayList<>();
-        topTen.addAll(menu.getRanking().getPlayers());
-//        Player p1= new Player("arrosto",new SpaceShip(new Coordinate(0,0),2));
-//        Player p2= new Player("arr",new SpaceShip(new Coordinate(0,0),2));
-//        Player p3= new Player("osto",new SpaceShip(new Coordinate(0,0),2));
-//
-//        p1.setHighScore(1000);
-//        p2.setHighScore(2000);
-//        p3.setHighScore(10);
-//
-//        topTen.add(p1);
-//        topTen.add(p2);
-//        topTen.add(p3);
 
         goldMedal = new Image("res/images/gold_medal.png");
         silverMedal = new Image("res/images/silver_medal.png");
@@ -101,31 +88,12 @@ public class RankingState extends BasicGameState implements ComponentListener {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        int offset = gameContainer.getHeight()/10;
-        int i=1;
-
         graphics.drawImage(background, 0, 0);
         goldMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f,0.15f);
-        silverMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f+offset,0.15f);
-        bronzeMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f+2*offset,0.15f);
+        silverMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f,0.15f);
+        bronzeMedal.draw(gameContainer.getWidth()/10f,3*gameContainer.getWidth()/10f,0.15f);
         menuButton.render(gameContainer,graphics);
 
-        for(Player p: topTen){
-            uniFont.drawString(gameContainer.getWidth()/8f,300+offset*i,p.getName());
-            uniFont.drawString(7*gameContainer.getWidth()/10f,300+offset*i,""+p.getHighScore());
-            i++;
-        }
-
-
-        //uniFont.drawString(150,250+50, playersName.get(0),new Color(209, 160, 27)); //oro
-        //uniFont.drawString(150,250+50, playersName.get(0),new Color(209, 160, 27)); //oro
-
-        //uniFont.drawString(150,250+170, playersName.get(1),new Color(168, 166, 146)); //argento
-        //uniFont.drawString(150,250+270, playersName.get(2),new Color(198, 72, 0)); //bronzo
-
-        /*for (int i = 3; i< playersName.size(); i++){
-            uniFont.drawString(150,420+50*i, playersName.get(i));
-        }*/
 
 
         uniFont2.drawString(gameContainer.getWidth()/10f, gameContainer.getHeight()/12f, title);
@@ -135,10 +103,8 @@ public class RankingState extends BasicGameState implements ComponentListener {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-        //topTen.clear();
-        //topTen.addAll(menu.getRanking().topNPlayer(3));
-    }
 
+    }
 
     @Override
     public int getID() {
