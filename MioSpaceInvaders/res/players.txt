@@ -9,3 +9,7 @@ Noemi	n	0
 Fabio	f	0
 a	a	40
 Arrosto	Dove	60
+ciruzzo	arr	280
+E'	arr	270
+scarso	arr	260
+zanzatroni	arr	300
