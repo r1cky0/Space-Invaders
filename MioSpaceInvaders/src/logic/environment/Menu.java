@@ -17,6 +17,7 @@ public class Menu {
     private double shipSize;
 
     private Ranking ranking;
+
     private Customization customization;
     private Field field;
     private SpaceShip defaultShip;
@@ -96,5 +97,7 @@ public class Menu {
         return ranking;
     }
 
-
+    public Customization getCustomization() {
+        return customization;
+    }
 }
