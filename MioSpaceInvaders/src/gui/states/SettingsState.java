@@ -28,10 +28,13 @@ public class SettingsState extends BasicGameState implements ComponentListener {
     private StateBasedGame stateBasedGame;
     private GameContainer gameContainer;
 
+    private String credit;
     private String title;
 
     private Font fontTitle;
     private UnicodeFont uniFontTitle;
+    private Font fontData;
+    private UnicodeFont uniFontData;
 
     private ArrayList<Image> ships;
 
@@ -69,6 +72,13 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
         try {
 
+            fontData = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            fontData = fontData.deriveFont(Font.BOLD, 40);
+            uniFontData = new UnicodeFont(fontData);
+            uniFontData.getEffects().add(new ColorEffect(java.awt.Color.white));
+            uniFontData.addAsciiGlyphs();
+            uniFontData.loadGlyphs();
+
             fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
             fontTitle = fontTitle.deriveFont(Font.BOLD,60);
             uniFontTitle = new UnicodeFont(fontTitle);
@@ -83,9 +93,12 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+        credit = "Credits: " + menu.getPlayer().getCredit();
         graphics.drawImage(background, 0, 0);
 
         homeButton.render(gameContainer,graphics);
+
+        uniFontData.drawString(5*gameContainer.getWidth()/100f, 20*gameContainer.getHeight()/100f, credit);
 
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
                 7*gameContainer.getHeight()/100f, title, org.newdawn.slick.Color.white);
@@ -96,6 +109,7 @@ public class SettingsState extends BasicGameState implements ComponentListener {
             graphics.drawImage(img, 5*gameContainer.getScreenWidth()/100f + offset*i, 45*gameContainer.getHeight()/100f);
             i++;
         }
+
     }
 
     @Override

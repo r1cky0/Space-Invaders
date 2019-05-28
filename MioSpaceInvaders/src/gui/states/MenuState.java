@@ -129,7 +129,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
         }
         if (source == settingsButton) {
             try {
-                stateBasedGame.getState(4).init(gameContainer, stateBasedGame);
+                stateBasedGame.getState(7).init(gameContainer, stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
