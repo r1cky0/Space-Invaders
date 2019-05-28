@@ -1,14 +1,14 @@
-package gui;
+package gui.states.main;
 
 import gui.states.*;
-import logic.FileManager.AddHighScore;
 import logic.environment.Menu;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-import java.io.IOException;
 
 public class SpaceInvaders extends StateBasedGame {
 
@@ -30,20 +30,21 @@ public class SpaceInvaders extends StateBasedGame {
     }
 
     public static void main(String[] args) {
+
         try {
-            int width = 1000;
-            int height = 800;
-            Menu menu = new Menu(width,height);
+            DisplayMode bestMode = DisplayModeManager.getBiggestWithRatio(4, 3);
+            Menu menu = new Menu(bestMode.getWidth(), bestMode.getHeight());
 
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
-            container.setTargetFrameRate(100);
-            container.setDisplayMode(width,height,false);
+            container.setDisplayMode(bestMode.getWidth(), bestMode.getHeight(), false);
+            container.setSmoothDeltas(false);
+            container.setTargetFrameRate(125);
             container.setShowFPS(false);
+            container.setVSync(false);
             container.start();
-        } catch (SlickException e) {
+
+        } catch (SlickException | LWJGLException e) {
             e.printStackTrace();
         }
-
-
     }
 }

@@ -94,11 +94,10 @@ public class SinglePlayerState extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
-        field.invaderDirection();
-
+        //STATO GIOCO
         if(field.isGameOver()){
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         }
@@ -108,39 +107,43 @@ public class SinglePlayerState extends BasicGameState {
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
 
-        if(field.getShipBullet()!= null) {
-            field.checkSpaceShipShotCollision();
-        }
-
         if(field.isNextLevel()){
             stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
         }
 
-        field.checkInvaderShotCollision();
-
+        //MOVIMENTI E AZIONI SPACE SHIP
         if (input.isKeyDown(Input.KEY_LEFT)) {
-            field.shipMovement(MovingDirections.LEFT);
+            field.shipMovement(MovingDirections.LEFT, delta);
         }
 
         if (input.isKeyDown(Input.KEY_RIGHT)) {
-            field.shipMovement(MovingDirections.RIGHT);
+            field.shipMovement(MovingDirections.RIGHT, delta);
         }
 
         if (input.isKeyPressed(Input.KEY_SPACE)) {
             field.shipShot();
         }
 
+        if (field.getShipBullet() != null) {
+            field.getShipBullet().moveUp(delta);
+        }
+
+        if(field.getShipBullet()!= null) {
+            field.checkSpaceShipShotCollision();
+        }
+
+        //MOVIMENTI E AZIONI INVADERS
+        field.invaderDirection(delta);
+
         if (input.isKeyPressed(Input.KEY_0)) {
             field.invaderShot();
         }
 
-        if (field.getShipBullet() != null) {
-            field.getShipBullet().moveUp();
+        for(Bullet bullet: field.getInvaderBullets()){
+            bullet.moveDown(delta);
         }
 
-        for(Bullet bullet: field.getInvaderBullets()){
-            bullet.moveDown();
-        }
+        field.checkInvaderShotCollision();
     }
 
     @Override

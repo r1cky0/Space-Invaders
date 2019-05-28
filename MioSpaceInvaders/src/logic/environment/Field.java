@@ -20,8 +20,6 @@ public class Field {
     private double invaderSize;
     private double bulletSize;
     private double brickSize;
-    private int delta;
-
     //STATE
     private boolean gameOver;
     private boolean newHighscore;
@@ -37,11 +35,10 @@ public class Field {
     private MovingDirections md = MovingDirections.RIGHT;
 
 
-    public Field(Player player, double maxWidth, double maxHeight, int delta){
+    public Field(Player player, double maxWidth, double maxHeight){
         this.player = player;
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
-        this.delta = delta;
 
         invaderSize = maxWidth / 20;
         bulletSize = maxWidth / 60;
@@ -93,7 +90,7 @@ public class Field {
 
             for(int j=0; j<8; j++){
                 Coordinate coordinate = new Coordinate(x,baseY);
-                Invader invader = new Invader(coordinate, invaderSize, 10, delta);
+                Invader invader = new Invader(coordinate, invaderSize, 10);
                 invaders.add(invader);
                 x+= invaderSize + HORIZONTAL_OFFSET;
             }
@@ -132,14 +129,14 @@ public class Field {
         }
     }
 
-    public void shipMovement(MovingDirections md){
+    public void shipMovement(MovingDirections md, int delta){
 
         if(((spaceShip.getX() + spaceShip.getSize()) < maxWidth) && (md == MovingDirections.RIGHT)){
-            spaceShip.moveRight();
+            spaceShip.moveRight(delta);
         }
 
         if((spaceShip.getX() > MIN_WIDTH) && (md == MovingDirections.LEFT)){
-            spaceShip.moveLeft();
+            spaceShip.moveLeft(delta);
         }
 
     }
@@ -148,7 +145,7 @@ public class Field {
 
         if(!shipShot) {
             Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - bulletSize/2, spaceShip.getY());
-            shipBullet = new Bullet(coordinate, bulletSize, delta);
+            shipBullet = new Bullet(coordinate, bulletSize);
             shipShot = true;
         }
     }
@@ -228,7 +225,7 @@ public class Field {
      * tutti gli invaders shiftano verso il basso e la direzione laterale di movimento viene invertita settando il
      * corrispondendo Enum 'MovingDirections' fondamentale nella funzione successiva
      */
-    public void invaderDirection() {
+    public void invaderDirection(int delta) {
 
         double maxX = 0;
         double minX = 10;
@@ -247,13 +244,13 @@ public class Field {
         }
 
         if ((maxX + invaderSize) >= maxWidth) {
-            invaderMovement(MovingDirections.DOWN);
+            invaderMovement(MovingDirections.DOWN, delta);
             md = MovingDirections.LEFT;
         } else if (minX <= MIN_WIDTH) {
-            invaderMovement(MovingDirections.DOWN);
+            invaderMovement(MovingDirections.DOWN, delta);
             md = MovingDirections.RIGHT;
         }
-        invaderMovement(md);
+        invaderMovement(md, delta);
 
         if((maxY + invaderSize) >= (maxHeight - 7*brickSize)){
             gameOver();
@@ -264,19 +261,19 @@ public class Field {
      * Funzione di movimento degli invaders. La direzione é inidicata dalla MovingDirections passata come parametro
      * @param md
      */
-    private void invaderMovement(MovingDirections md){
+    private void invaderMovement(MovingDirections md, int delta){
 
         for(Invader invader:invaders) {
 
             switch (md) {
                 case RIGHT:
-                    invader.moveRight();
+                    invader.moveRight(delta);
                     break;
                 case LEFT:
-                    invader.moveLeft();
+                    invader.moveLeft(delta);
                     break;
                 case DOWN:
-                    invader.moveDown();
+                    invader.moveDown(delta);
                     break;
             }
         }
@@ -293,7 +290,7 @@ public class Field {
         Coordinate coordinate = new Coordinate(invaders.get(random).getX() +
                 invaderSize / 2 - bulletSize /2, invaders.get(random).getY()+invaderSize/2);
 
-        invaderBullets.add(new Bullet(coordinate, bulletSize, delta));
+        invaderBullets.add(new Bullet(coordinate, bulletSize));
 
     }
 

@@ -6,13 +6,12 @@ import logic.sprite.Sprite;
 public class SpaceShip extends Sprite {
 
     private int life, currentScore;
-    private double horizontalOffset = 7;
+    private double horizontalOffset = 0.5;
 
-    public SpaceShip(Coordinate coordinate, double size, int delta) {
+    public SpaceShip(Coordinate coordinate, double size) {
         super(coordinate, size);
         life = 3;
         currentScore = 0;
-        horizontalOffset = horizontalOffset*delta;
     }
 
     public int getLife() {
@@ -23,12 +22,12 @@ public class SpaceShip extends Sprite {
         return currentScore;
     }
 
-    public void moveLeft() {
-        super.setX(super.getX() - horizontalOffset);
+    public void moveLeft(int delta) {
+        super.setX(super.getX() - horizontalOffset*delta);
     }
 
-    public void moveRight() {
-        super.setX(super.getX() + horizontalOffset);
+    public void moveRight(int delta) {
+        super.setX(super.getX() + horizontalOffset*delta);
     }
 
     public void decreaseLife() {

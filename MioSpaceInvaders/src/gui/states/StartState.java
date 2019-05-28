@@ -117,7 +117,8 @@ public class StartState extends BasicGameState implements ComponentListener {
         nameField.render(gameContainer, graphics);
         passwordField.render(gameContainer, graphics);
 
-        uniFontTitle.drawString(15*gameContainer.getWidth()/100f,7*gameContainer.getHeight()/100f, title);
+        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2,
+                7*gameContainer.getHeight()/100f, title);
         uniFontMessage.drawString(15*gameContainer.getWidth()/100f,25*gameContainer.getHeight()/100f, nameString);
         uniFontMessage.drawString(15*gameContainer.getWidth()/100f,33*gameContainer.getHeight()/100f, passwordString);
 
