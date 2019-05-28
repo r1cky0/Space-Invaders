@@ -6,10 +6,11 @@ import logic.sprite.Sprite;
 
 public class Bullet extends Sprite{
 
-    public double VERTICAL_OFFSET = 10;
+    public double verticalOffset = 10;
 
-    public Bullet(Coordinate coordinate, double size) {
+    public Bullet(Coordinate coordinate, double size, int delta) {
         super(coordinate, size);
+        verticalOffset = verticalOffset*delta;
     }
 
     public String toString() {
@@ -17,11 +18,11 @@ public class Bullet extends Sprite{
     }
 
     public void moveUp() {
-        super.setY(super.getY() - VERTICAL_OFFSET);
+        super.setY(super.getY() - verticalOffset);
     }
 
     public void moveDown() {
-        super.setY(super.getY() + VERTICAL_OFFSET);
+        super.setY(super.getY() + verticalOffset);
     }
 
 

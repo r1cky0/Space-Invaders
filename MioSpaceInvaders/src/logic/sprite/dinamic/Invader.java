@@ -6,12 +6,14 @@ import logic.sprite.Sprite;
 public class Invader extends Sprite {
 
     private int value;
-    private final double VERTICAL_OFFSET = 40;
-    private final double HORIZONTAL_OFFSET = 1;
+    private double verticalOffset = 40;
+    private double horizontalOffset = 1;
 
-    public Invader(Coordinate coordinate, double size, int value) {
+    public Invader(Coordinate coordinate, double size, int value, int delta) {
         super(coordinate, size);
         this.value = value;
+        horizontalOffset = horizontalOffset*delta;
+        verticalOffset = verticalOffset*delta;
     }
 
     public int getValue() {
@@ -19,15 +21,15 @@ public class Invader extends Sprite {
     }
 
     public void moveLeft() {
-        super.setX(super.getX() - HORIZONTAL_OFFSET);
+        super.setX(super.getX() - horizontalOffset);
     }
 
     public void moveRight() {
-        super.setX(super.getX() + HORIZONTAL_OFFSET);
+        super.setX(super.getX() + horizontalOffset);
     }
 
     public void moveDown() {
-        super.setY(super.getY() + VERTICAL_OFFSET);
+        super.setY(super.getY() + verticalOffset);
     }
 
 }

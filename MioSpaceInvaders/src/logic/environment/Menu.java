@@ -11,24 +11,29 @@ import java.io.IOException;
 
 public class Menu {
 
-    private Ranking ranking;
-    private Customization customization;
-    private Field field;
+    //DIMENSION
     private double maxHeight;
     private double maxWidth;
     private double shipSize;
+    private int delta;
+
+    private Ranking ranking;
+    private Customization customization;
+    private Field field;
     private SpaceShip defaultShip;
     private Player player;
 
-    public Menu(double maxWidth, double maxHeight){
-        ranking = new Ranking();
-        customization = new Customization();
+    public Menu(double maxWidth, double maxHeight, int delta){
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
         this.shipSize = maxWidth/20;
+        this.delta = delta;
+
+        ranking = new Ranking();
+        customization = new Customization();
 
         Coordinate coordinate = new Coordinate((maxWidth/2 - shipSize/2),(maxHeight - shipSize));
-        defaultShip = new SpaceShip(coordinate,shipSize);
+        defaultShip = new SpaceShip(coordinate,shipSize, delta);
     }
 
     public void createRanking(){
@@ -51,7 +56,7 @@ public class Menu {
 
         if(AddAccount.newAccount(name,password)){
             this.player = new Player(name,defaultShip);
-            field = new Field(player, maxWidth, maxHeight);
+            field = new Field(player, maxWidth, maxHeight, delta);
             return true;
         }
         return false;
@@ -61,7 +66,7 @@ public class Menu {
 
         if(Login.login(name,password)){
             this.player = new Player(name,defaultShip);
-            field = new Field(player, maxWidth, maxHeight);
+            field = new Field(player, maxWidth, maxHeight, delta);
             return true;
         }
         else{
@@ -77,7 +82,7 @@ public class Menu {
      * Funzione necessaria per reinizializzare il sistema dopo un gameOver
      */
     public void restartGame() {
-        field = new Field(player, maxWidth, maxHeight);
+        field = new Field(player, maxWidth, maxHeight, delta);
     }
 
     //A programma sistemato togliere questo getter e fare che startGame restituisca il field

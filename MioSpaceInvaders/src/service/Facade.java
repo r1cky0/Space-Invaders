@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Transform;
 
-public class Facade {
+public abstract class Facade {
 
     private Shape shape;
 
@@ -45,5 +45,4 @@ public class Facade {
         Image image = new Image(path);
         image.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
     }
-
 }

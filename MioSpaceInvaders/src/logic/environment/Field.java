@@ -1,8 +1,5 @@
 package logic.environment;
 
-import logic.exception.GameOverException;
-import logic.exception.NewHighscoreException;
-import logic.exception.NextLevelException;
 import logic.player.Player;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.Bullet;
@@ -23,6 +20,12 @@ public class Field {
     private double invaderSize;
     private double bulletSize;
     private double brickSize;
+    private int delta;
+
+    //STATE
+    private boolean gameOver;
+    private boolean newHighscore;
+    private boolean nextLevel;
 
     private Player player;
     private SpaceShip spaceShip;
@@ -33,10 +36,12 @@ public class Field {
     private ArrayList<Bullet> invaderBullets;
     private MovingDirections md = MovingDirections.RIGHT;
 
-    public Field(Player player, double maxWidth, double maxHeight){
+
+    public Field(Player player, double maxWidth, double maxHeight, int delta){
         this.player = player;
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
+        this.delta = delta;
 
         invaderSize = maxWidth / 20;
         bulletSize = maxWidth / 60;
@@ -46,6 +51,9 @@ public class Field {
         invaderBullets = new ArrayList<>();
         shipShot = false;
 
+        gameOver = false;
+        newHighscore = false;
+        nextLevel = false;
 
         initComponents();
     }
@@ -65,7 +73,7 @@ public class Field {
         initInvaders();
         md = MovingDirections.RIGHT;
         spaceShip.incrementLife();
-        throw new NextLevelException();
+        nextLevel = true;
     }
 
     /**
@@ -85,7 +93,7 @@ public class Field {
 
             for(int j=0; j<8; j++){
                 Coordinate coordinate = new Coordinate(x,baseY);
-                Invader invader = new Invader(coordinate, invaderSize, 10);
+                Invader invader = new Invader(coordinate, invaderSize, 10, delta);
                 invaders.add(invader);
                 x+= invaderSize + HORIZONTAL_OFFSET;
             }
@@ -118,10 +126,10 @@ public class Field {
         player.incrementCredit(spaceShip.getCurrentScore());
         if(player.getHighScore() < spaceShip.getCurrentScore()){
             player.setHighScore(spaceShip.getCurrentScore());
-            throw new NewHighscoreException();
+            newHighscore = true;
+        }else {
+            gameOver = true;
         }
-
-        throw new GameOverException();
     }
 
     public void shipMovement(MovingDirections md){
@@ -140,7 +148,7 @@ public class Field {
 
         if(!shipShot) {
             Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - bulletSize/2, spaceShip.getY());
-            shipBullet = new Bullet(coordinate, bulletSize);
+            shipBullet = new Bullet(coordinate, bulletSize, delta);
             shipShot = true;
         }
     }
@@ -285,7 +293,7 @@ public class Field {
         Coordinate coordinate = new Coordinate(invaders.get(random).getX() +
                 invaderSize / 2 - bulletSize /2, invaders.get(random).getY()+invaderSize/2);
 
-        invaderBullets.add(new Bullet(coordinate, bulletSize));
+        invaderBullets.add(new Bullet(coordinate, bulletSize, delta));
 
     }
 
@@ -307,6 +315,18 @@ public class Field {
 
     public SpaceShip getSpaceShip(){
         return spaceShip;
+    }
+
+    public boolean isGameOver(){
+        return gameOver;
+    }
+
+    public boolean isNewHighscore(){
+        return newHighscore;
+    }
+
+    public boolean isNextLevel(){
+        return nextLevel;
     }
 
 }
