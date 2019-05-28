@@ -2,17 +2,15 @@ package service;
 
 
 import logic.sprite.Coordinate;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Transform;
 
-public abstract class Facade {
+public class Facade {
 
     private Shape shape;
+    private final int DURATION = 1000;
 
     public Facade(Coordinate coordinate, double size) {
         shape = new Rectangle((float)coordinate.getX(), (float) coordinate.getY(), (float) size, (float) size);
@@ -44,5 +42,14 @@ public abstract class Facade {
     public void render (String path) throws SlickException{
         Image image = new Image(path);
         image.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
+    }
+    /**
+     * Renderizza lo sprite scelto usando l'animazione fornita e settando le dimensioni prelevandole
+     * dalla shape corrispondente
+     * @param animation
+     * @throws SlickException
+     */
+    public void render (Animation animation) throws SlickException{
+        animation.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
     }
 }
