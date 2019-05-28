@@ -83,7 +83,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
 
         try{
             fontTitle = Font.createFont(Font.TRUETYPE_FONT,ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontTitle = fontTitle.deriveFont(Font.BOLD,9*gameContainer.getWidth()/100);
+            fontTitle = fontTitle.deriveFont(Font.BOLD,9*gameContainer.getWidth()/100f);
             uniFontTitle = new UnicodeFont(fontTitle);
             uniFontTitle.addAsciiGlyphs();
             uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
@@ -102,7 +102,7 @@ public class MenuState extends BasicGameState implements ComponentListener {
         settingsButton.render(gameContainer,graphics);
         exitButton.render(gameContainer,graphics);
         rankingButton.render(gameContainer,graphics);
-        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2,7*gameContainer.getHeight()/100,
+        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,7*gameContainer.getHeight()/100f,
                 title, Color.white);
     }
 
@@ -110,6 +110,10 @@ public class MenuState extends BasicGameState implements ComponentListener {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
     }
 
+    /**
+     * Funzione che setta i gestori degli eventi di click sui bottoni
+     * @param source
+     */
     public void componentActivated(AbstractComponent source) {
         if (source == singleButton ) {
             try {

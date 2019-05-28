@@ -49,7 +49,7 @@ public class GameOverState extends BasicGameState implements ComponentListener {
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        gameOver.draw((gameContainer.getWidth() - gameOver.getWidth())/2,(gameContainer.getHeight() - gameOver.getHeight())/2);
+        gameOver.draw((gameContainer.getWidth() - gameOver.getWidth())/2f,(gameContainer.getHeight() - gameOver.getHeight())/2f);
         newGameButton.render(gameContainer, graphics);
         homeButton.render(gameContainer,graphics);
     }
@@ -63,6 +63,10 @@ public class GameOverState extends BasicGameState implements ComponentListener {
         return 3;
     }
 
+    /**
+     * Funzione che setta i gestori degli eventi di click sui bottoni
+     * @param source
+     */
     @Override
     public void componentActivated(AbstractComponent source) {
         if (source == newGameButton) {

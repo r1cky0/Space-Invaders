@@ -96,9 +96,9 @@ public class RankingState extends BasicGameState implements ComponentListener {
         Iterator rankIter = menu.getRanking().getRank().entrySet().iterator();
         while (rankIter.hasNext() && numPlayer<10) {
             Map.Entry pair = (Map.Entry) rankIter.next();
-            uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(nameString))/4,
-                    28*gameContainer.getHeight()/100 + offset, (String) pair.getKey());
-            uniFontData.drawString(65*gameContainer.getWidth()/100, 28*gameContainer.getHeight()/100 + offset,
+            uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(nameString))/4f,
+                    28*gameContainer.getHeight()/100f + offset, (String) pair.getKey());
+            uniFontData.drawString(65*gameContainer.getWidth()/100f, 28*gameContainer.getHeight()/100f + offset,
                     Integer.toString((int) pair.getValue()));
 
             if(numPlayer>2){
@@ -109,18 +109,18 @@ public class RankingState extends BasicGameState implements ComponentListener {
             numPlayer++;
         }
 
-        goldMedal.draw(10*gameContainer.getWidth()/100,26*gameContainer.getHeight()/100);
-        silverMedal.draw(10*gameContainer.getWidth()/100,26*gameContainer.getHeight()/100 + 65);
-        bronzeMedal.draw(10*gameContainer.getWidth()/100,26*gameContainer.getHeight()/100 + 130);
+        goldMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f);
+        silverMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + 65);
+        bronzeMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + 130);
 
         homeButton.render(gameContainer,graphics);
 
-        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2,
-                7*gameContainer.getHeight()/100, title,Color.white);
-        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(nameString))/4,
-                20*gameContainer.getHeight()/100, nameString, Color.green);
-        uniFontData.drawString(3*(gameContainer.getWidth() - uniFontData.getWidth(highscoreString))/4,
-                20*gameContainer.getHeight()/100, highscoreString, Color.green);
+        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
+                7*gameContainer.getHeight()/100f, title,Color.white);
+        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(nameString))/4f,
+                20*gameContainer.getHeight()/100f, nameString, Color.green);
+        uniFontData.drawString(3*(gameContainer.getWidth() - uniFontData.getWidth(highscoreString))/4f,
+                20*gameContainer.getHeight()/100f, highscoreString, Color.green);
     }
 
     @Override
@@ -133,6 +133,10 @@ public class RankingState extends BasicGameState implements ComponentListener {
         return 4;
     }
 
+    /**
+     * Funzione che setta il gestore dell' evento di click sul bottone per ritorno nella home
+     * @param source
+     */
     public void componentActivated(AbstractComponent source) {
         if (source == homeButton) {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());

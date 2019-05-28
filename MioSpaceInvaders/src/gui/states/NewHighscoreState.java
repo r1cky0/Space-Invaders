@@ -53,7 +53,7 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
                 this);
 
         homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
-                6*gameContainer.getWidth()/100);;
+                6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
                 6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
 
@@ -78,14 +78,14 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
         graphics.drawImage(background,0,0);
         highscore = Integer.toString(menu.getPlayer().getHighScore());
 
-        cupImage.draw((this.gameContainer.getWidth() - cupImage.getWidth())/2,(this.gameContainer.getHeight() - cupImage.getHeight())/2);
+        cupImage.draw((this.gameContainer.getWidth() - cupImage.getWidth())/2f,(this.gameContainer.getHeight() - cupImage.getHeight())/2f);
         newGameButton.render(gameContainer, graphics);
         homeButton.render(gameContainer,graphics);
 
-        uniFontTitle.drawString((this.gameContainer.getWidth() - uniFontTitle.getWidth(title))/2,
-                7* this.gameContainer.getHeight()/100, title);
-        uniFontTitle.drawString((this.gameContainer.getWidth() - uniFontTitle.getWidth(highscore))/2,
-                20* this.gameContainer.getHeight()/100, highscore);
+        uniFontTitle.drawString((this.gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
+                7* this.gameContainer.getHeight()/100f, title);
+        uniFontTitle.drawString((this.gameContainer.getWidth() - uniFontTitle.getWidth(highscore))/2f,
+                20* this.gameContainer.getHeight()/100f, highscore);
 
     }
 
@@ -98,6 +98,10 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
     }
 
     @Override
+    /**
+     * Funzione che setta i gestori degli eventi di click sui bottoni
+     * @param source
+     */
     public void componentActivated(AbstractComponent source) {
         if (source == newGameButton) {
             try {

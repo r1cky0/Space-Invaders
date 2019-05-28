@@ -117,13 +117,13 @@ public class StartState extends BasicGameState implements ComponentListener {
         nameField.render(gameContainer, graphics);
         passwordField.render(gameContainer, graphics);
 
-        uniFontTitle.drawString(15*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100, title);
-        uniFontMessage.drawString(15*gameContainer.getWidth()/100,25*gameContainer.getHeight()/100, nameString);
-        uniFontMessage.drawString(15*gameContainer.getWidth()/100,33*gameContainer.getHeight()/100, passwordString);
+        uniFontTitle.drawString(15*gameContainer.getWidth()/100f,7*gameContainer.getHeight()/100f, title);
+        uniFontMessage.drawString(15*gameContainer.getWidth()/100f,25*gameContainer.getHeight()/100f, nameString);
+        uniFontMessage.drawString(15*gameContainer.getWidth()/100f,33*gameContainer.getHeight()/100f, passwordString);
 
         if (errorFlag) {
-            uniFontMessage.drawString((gameContainer.getWidth() - uniFontMessage.getWidth(errorMessage))/2,
-                    45*gameContainer.getHeight()/100, errorMessage, Color.yellow);
+            uniFontMessage.drawString((gameContainer.getWidth() - uniFontMessage.getWidth(errorMessage))/2f,
+                    45*gameContainer.getHeight()/100f, errorMessage, Color.yellow);
         }
 
         loginButton.render(gameContainer, graphics);
@@ -139,6 +139,10 @@ public class StartState extends BasicGameState implements ComponentListener {
         return 0;
     }
 
+    /**
+     * Funzione che setta i gestori degli eventi di click sui bottoni
+     * @param source
+     */
     public void componentActivated(AbstractComponent source) {
         if (source == loginButton) {
             String nickname = nameField.getText();
