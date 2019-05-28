@@ -21,22 +21,23 @@ public class SinglePlayerState extends BasicGameState {
     private Field field;
     private GameContainer gameContainer;
     private Image background;
-    private Animation invaders;
 
     private java.awt.Font fontData;
     private UnicodeFont uniFontData;
 
-    public SinglePlayerState(Menu menu){
+    private Image[] invader1;
+    private Animation invaders;
+
+    public SinglePlayerState(Menu menu) throws SlickException {
         this.menu = menu;
+        invader1 = new Image[]{new Image("res/images/Alien1a.png"), new Image("res/images/Alien1b.png")};
+        invaders = new Animation (invader1, 1000);
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         background = new Image("res/images/BackgroundSpace.png");
-
-        Image[] invader1 = {new Image("res/images/Alien1a.png"), new Image("res/images/Alien1b.png")};
-        invaders = new Animation (invader1, 1000);
 
         try{
             fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
@@ -100,6 +101,8 @@ public class SinglePlayerState extends BasicGameState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
+
+        System.err.println(delta);
 
         //STATO GIOCO
         if(field.isGameOver()){

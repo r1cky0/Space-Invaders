@@ -272,7 +272,7 @@ public class Field {
                     invader.moveLeft(delta);
                     break;
                 case DOWN:
-                    invader.moveDown(delta);
+                    invader.moveDown();
                     break;
             }
         }
