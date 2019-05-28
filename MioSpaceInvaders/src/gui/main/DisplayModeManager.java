@@ -1,4 +1,4 @@
-package gui.states.main;
+package gui.main;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
