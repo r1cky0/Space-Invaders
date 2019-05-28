@@ -1,7 +1,6 @@
 package gui.main;
 
 import gui.states.*;
-import gui.states.states.*;
 import logic.environment.Menu;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.DisplayMode;
@@ -44,7 +43,7 @@ public class SpaceInvaders extends StateBasedGame {
             container.setDisplayMode(bestMode.getWidth(), bestMode.getHeight(), false);
             container.setSmoothDeltas(false);
             container.setTargetFrameRate(60);
-            //container.setShowFPS(false);
+            container.setShowFPS(false);
             container.setVSync(false);
             container.start();
 
