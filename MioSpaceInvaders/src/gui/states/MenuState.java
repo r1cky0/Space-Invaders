@@ -128,7 +128,12 @@ public class MenuState extends BasicGameState implements ComponentListener {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == settingsButton) {
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            try {
+                stateBasedGame.getState(4).init(gameContainer, stateBasedGame);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+            stateBasedGame.enterState(7, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == rankingButton ) {
             try {
