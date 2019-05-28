@@ -100,14 +100,24 @@ public class SinglePlayerState extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input input = gameContainer.getInput();
 
-        try {
-            field.invaderDirection();
-        } catch (GameOverException err) {
+        field.invaderDirection();
+
+        if(field.isGameOver()){
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
-        } catch (NewHighscoreException err){
+        }
+
+        if(field.isNewHighscore()){
             stateBasedGame.getState(6).init(gameContainer,stateBasedGame);
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
+
+        field.checkSpaceShipShotCollision();
+
+        if(field.isNextLevel()){
+            stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
+        }
+
+        field.checkInvaderShotCollision();
 
         if (input.isKeyDown(Input.KEY_LEFT)) {
             field.shipMovement(MovingDirections.LEFT);
@@ -127,27 +137,6 @@ public class SinglePlayerState extends BasicGameState {
 
         if (field.getShipBullet() != null) {
             field.getShipBullet().moveUp();
-        }
-
-        if (field.getShipBullet() != null) {
-            try {
-                field.checkSpaceShipShotCollision();
-            }catch (NextLevelException err){
-                stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
-            }
-        }
-
-        for (Bullet bullet : field.getInvaderBullets()) {
-            bullet.moveDown();
-        }
-
-        try {
-            field.checkInvaderShotCollision();
-        } catch (GameOverException err) {
-            stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
-        } catch (NewHighscoreException err){
-            stateBasedGame.getState(6).init(gameContainer,stateBasedGame);
-            stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
     }
 
