@@ -7,7 +7,7 @@ public class Invader extends Sprite {
 
     private int value;
     private double verticalOffset = 2;
-    private double horizontalOffset = 0.08;
+    private double horizontalOffset = 0.06;
 
     public Invader(Coordinate coordinate, double size, int value) {
         super(coordinate, size);
