@@ -18,6 +18,11 @@ public class Facade {
         shape = new Rectangle((float)coordinate.getX(), (float) coordinate.getY(), (float) size, (float) size);
     }
 
+    /**
+     * Sfrutta la funzione di slick collides per rilevare collisioni tra shape diverse
+     * @param shape
+     * @return
+     */
     public boolean collides(Shape shape){
         return this.shape.intersects(shape);
     }
@@ -30,6 +35,12 @@ public class Facade {
         return shape;
     }
 
+    /**
+     * Renderizza lo sprite scelto andando a ricavare l' immagine dal path fornito e settando le dimensioni prelevandole
+     * dalla shape corrispondente
+     * @param path
+     * @throws SlickException
+     */
     public void render (String path) throws SlickException{
         Image image = new Image(path);
         image.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());

@@ -58,14 +58,19 @@ public class Field {
         spaceShip.setCurrentScore();
     }
 
+    /**
+     * Reinizializzazione degli invaders e incremento life ship al nuovo livello
+     */
     public void nextLevel(){
-        //reinizializzazione degli invaders e incremento life ship al nuovo livello
         initInvaders();
         md = MovingDirections.RIGHT;
         spaceShip.incrementLife();
         throw new NextLevelException();
     }
 
+    /**
+     * Inizializzazione degli invaders, posti in alto a sinistra nella schermata di gioco
+     */
     private void initInvaders(){
         final double HORIZONTAL_OFFSET = maxWidth/32;
         final double VERTICAL_OFFSET = maxHeight/100;
@@ -88,6 +93,10 @@ public class Field {
         }
     }
 
+    /**
+     * Inizializzazione della lista di bunker, con attenzione particolare alla distanza tra ognuno di essi
+     * proporzionale alla dimensione della schermata di gioco
+     */
     private void initBunkers(){
         bunkers = new ArrayList<>();
         double baseX = (maxWidth - 35*brickSize)/2;
@@ -101,6 +110,9 @@ public class Field {
         }
     }
 
+    /**
+     * Check di eventuale nuovo highscore con segnalazione a livello superiore dell'evento attraverso un' eccezione
+     */
     public void gameOver(){
 
         player.incrementCredit(spaceShip.getCurrentScore());
@@ -133,6 +145,11 @@ public class Field {
         }
     }
 
+    /**
+     * Funzione per controllare la collisione dei proittili sparati dagli invaders: prima rispetto ai bunker(e i loro
+     * brick) e poi rispetto alla ship. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
+     * fine schermata(y maggiore)
+     */
     public void checkInvaderShotCollision() {
 
         ListIterator<Bullet> bulletIter = invaderBullets.listIterator();
@@ -161,6 +178,11 @@ public class Field {
         }
     }
 
+    /**
+     * Funzione per controllare la collisione dei proittili sparati dal giocatore: prima rispetto ai bunker(e i loro
+     * brick) e poi rispetto agli invaders. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
+     * fine schermata(y minore)
+     */
     public void checkSpaceShipShotCollision() {
 
         for (Bunker bunker : bunkers) {
@@ -193,6 +215,11 @@ public class Field {
         }
     }
 
+    /**
+     * Gestione del movimento degli invaders. Se viene raggiunto il limite laterale rispetto alla direzione di movimento
+     * tutti gli invaders shiftano verso il basso e la direzione laterale di movimento viene invertita settando il
+     * corrispondendo Enum 'MovingDirections' fondamentale nella funzione successiva
+     */
     public void invaderDirection() {
 
         double maxX = 0;
@@ -225,6 +252,10 @@ public class Field {
         }
     }
 
+    /**
+     * Funzione di movimento degli invaders. La direzione é inidicata dalla MovingDirections passata come parametro
+     * @param md
+     */
     private void invaderMovement(MovingDirections md){
 
         for(Invader invader:invaders) {
@@ -243,6 +274,10 @@ public class Field {
         }
     }
 
+    /**
+     * Funzione di sparo degli invaders. Lo sparo non é ordindato, ma viene scelto randomicamente quale alieno debba
+     * sparare
+     */
     public void invaderShot() {
 
         Random rand = new Random();

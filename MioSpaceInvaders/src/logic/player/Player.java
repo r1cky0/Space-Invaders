@@ -30,6 +30,10 @@ public class Player implements Comparable{
         return highScore;
     }
 
+    /**
+     * Se il player batte il proprio highscore, questo viene aggiornato nel database (PER ORA SALVATO SU FILE DI TESTO)
+     * @param highscore
+     */
     public void setHighScore(int highscore) {
         this.highScore = highscore;
         try {
@@ -51,7 +55,11 @@ public class Player implements Comparable{
         this.credit += credit;
     }
 
-    /*ordina dal punteggio + grande al + piccolo*/
+    /**
+     * Funzione di comparazione per ordinare i player in modo crescente rispetto al proprio highscore
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(Object o) {
         if (this.highScore > ((Player)o).highScore) {

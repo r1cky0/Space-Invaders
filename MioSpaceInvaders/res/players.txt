@@ -8,3 +8,4 @@ Antonio	a	0
 Noemi	n	0
 Fabio	f	0
 a	a	40
+Arrosto	Dove	60

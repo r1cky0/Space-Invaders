@@ -25,8 +25,8 @@ public class Bunker {
     }
 
     /**
-     * Creazione bunker da lettura file in cui è presente la struttura da creare.
-     *
+     * Creazione bunker da lettura file in cui è presente la struttura da creare. Il file, chiamato bunkers.txt e
+     * inserito nella directry res, é costituito da alternanza di asterischi e spazi
      * @param indexX: indice di partenza coordinata x
      * @param indexY: indice di partenza coordinata x
      */
@@ -58,6 +58,12 @@ public class Bunker {
         }
     }
 
+    /**
+     * Iteriamo tutti i brick che costituiscono il bunker per attuare un check di collisioni con lo sprite passsato
+     * come parametro
+     * @param sprite
+     * @return
+     */
     public boolean checkBrickCollision(Sprite sprite) {
         ListIterator<Brick> brickIter = bricks.listIterator();
 

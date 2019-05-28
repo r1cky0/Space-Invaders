@@ -30,6 +30,9 @@ public class Ranking {
         sortRanking();
     }
 
+    /**
+     * Creazione della classifica ordinata dal punteggio piú alto a quello piú basso per i primi 10 classificati
+     */
     private void sortRanking() {
 
         Comparator<Map.Entry<String,Integer>> comp = Comparator.comparingInt(Map.Entry::getValue);

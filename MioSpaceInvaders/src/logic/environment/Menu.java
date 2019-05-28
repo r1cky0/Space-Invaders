@@ -39,6 +39,14 @@ public class Menu {
         }
     }
 
+    /**
+     * Funzione di creazione di un nuovo account attuata la quale viene inizializzato il field e il nuovo utente puó
+     * giocare senza effettuare nuovamente accesso
+     * @param name
+     * @param password
+     * @return
+     * @throws IOException
+     */
     public boolean newAccount(String name, String password) throws IOException {
 
         if(AddAccount.newAccount(name,password)){
@@ -65,6 +73,9 @@ public class Menu {
         this.player = null;
     }
 
+    /**
+     * Funzione necessaria per reinizializzare il sistema dopo un gameOver
+     */
     public void restartGame() {
         field = new Field(player, maxWidth, maxHeight);
     }
