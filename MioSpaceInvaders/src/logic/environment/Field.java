@@ -34,7 +34,6 @@ public class Field {
     private ArrayList<Bullet> invaderBullets;
     private MovingDirections md = MovingDirections.RIGHT;
 
-
     public Field(Player player, double maxWidth, double maxHeight){
         this.player = player;
         this.maxHeight = maxHeight;
@@ -46,6 +45,7 @@ public class Field {
 
         spaceShip = player.getSpaceShip();
         invaderBullets = new ArrayList<>();
+        invaders = new ArrayList<>();
         shipShot = false;
 
         gameOver = false;
@@ -80,7 +80,6 @@ public class Field {
         final double HORIZONTAL_OFFSET = maxWidth/32;
         final double VERTICAL_OFFSET = maxHeight/100;
 
-        invaders = new ArrayList<>();
         double baseX = HORIZONTAL_OFFSET;
         double baseY = maxHeight/10;
         double x;
