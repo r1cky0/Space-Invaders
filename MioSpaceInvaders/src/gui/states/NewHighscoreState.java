@@ -98,10 +98,6 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
     }
 
     @Override
-    /**
-     * Funzione che setta i gestori degli eventi di click sui bottoni
-     * @param source
-     */
     public void componentActivated(AbstractComponent source) {
         if (source == newGameButton) {
             try {

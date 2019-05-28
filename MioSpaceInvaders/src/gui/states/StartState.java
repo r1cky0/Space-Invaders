@@ -117,7 +117,7 @@ public class StartState extends BasicGameState implements ComponentListener {
         nameField.render(gameContainer, graphics);
         passwordField.render(gameContainer, graphics);
 
-        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2,
+        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
                 7*gameContainer.getHeight()/100f, title);
         uniFontMessage.drawString(15*gameContainer.getWidth()/100f,25*gameContainer.getHeight()/100f, nameString);
         uniFontMessage.drawString(15*gameContainer.getWidth()/100f,33*gameContainer.getHeight()/100f, passwordString);
@@ -142,7 +142,7 @@ public class StartState extends BasicGameState implements ComponentListener {
 
     /**
      * Funzione che setta i gestori degli eventi di click sui bottoni
-     * @param source
+     * @param source Il tasto di cui dobbiamo settare il comportamento
      */
     public void componentActivated(AbstractComponent source) {
         if (source == loginButton) {

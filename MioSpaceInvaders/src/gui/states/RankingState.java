@@ -57,7 +57,7 @@ public class RankingState extends BasicGameState implements ComponentListener {
                 6*gameContainer.getWidth()/100);
 
         homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
-                6*gameContainer.getWidth()/100);;
+                6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
                 6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
 
@@ -135,7 +135,7 @@ public class RankingState extends BasicGameState implements ComponentListener {
 
     /**
      * Funzione che setta il gestore dell' evento di click sul bottone per ritorno nella home
-     * @param source
+     * @param source Il tasto di cui dobbiamo settare il comportamento
      */
     public void componentActivated(AbstractComponent source) {
         if (source == homeButton) {

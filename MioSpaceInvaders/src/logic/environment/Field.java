@@ -80,12 +80,11 @@ public class Field {
         final double HORIZONTAL_OFFSET = maxWidth/32;
         final double VERTICAL_OFFSET = maxHeight/100;
 
-        double baseX = HORIZONTAL_OFFSET;
         double baseY = maxHeight/10;
         double x;
 
         for(int i=0; i<4; i++){
-            x = baseX;
+            x = HORIZONTAL_OFFSET;
 
             for(int j=0; j<8; j++){
                 Coordinate coordinate = new Coordinate(x,baseY);
@@ -258,7 +257,7 @@ public class Field {
 
     /**
      * Funzione di movimento degli invaders. La direzione é inidicata dalla MovingDirections passata come parametro
-     * @param md
+     * @param md Enum che indica la direzione di movimento
      */
     private void invaderMovement(MovingDirections md, int delta){
 

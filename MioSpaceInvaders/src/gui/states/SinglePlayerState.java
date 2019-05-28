@@ -42,7 +42,7 @@ public class SinglePlayerState extends BasicGameState {
         try{
             fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
                     ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontData = fontData.deriveFont(java.awt.Font.BOLD,3*gameContainer.getWidth()/100);
+            fontData = fontData.deriveFont(java.awt.Font.BOLD,3*gameContainer.getWidth()/100f);
 
             uniFontData = new UnicodeFont(fontData);
 
@@ -59,7 +59,7 @@ public class SinglePlayerState extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
-        uniFontData.drawString(80*gameContainer.getWidth()/100,15,"Lives: " + field.getSpaceShip().getLife(), Color.white);
+        uniFontData.drawString(80*gameContainer.getWidth()/100f,15,"Lives: " + field.getSpaceShip().getLife(), Color.white);
         uniFontData.drawString(20,15,"Score: " + field.getSpaceShip().getCurrentScore(), Color.white);
 
         field.getSpaceShip().render("res/images/SpaceShip1.png");

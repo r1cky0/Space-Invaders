@@ -14,7 +14,6 @@ public class Menu {
     //DIMENSION
     private double maxHeight;
     private double maxWidth;
-    private double shipSize;
 
     private Ranking ranking;
 
@@ -26,13 +25,13 @@ public class Menu {
     public Menu(double maxWidth, double maxHeight){
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
-        this.shipSize = maxWidth/20;
+        double shipSize = maxWidth / 20;
 
         ranking = new Ranking();
         customization = new Customization();
 
-        Coordinate coordinate = new Coordinate((maxWidth/2 - shipSize/2),(maxHeight - shipSize));
-        defaultShip = new SpaceShip(coordinate,shipSize);
+        Coordinate coordinate = new Coordinate((maxWidth/2 - shipSize /2),(maxHeight - shipSize));
+        defaultShip = new SpaceShip(coordinate, shipSize);
     }
 
     public void createRanking(){
@@ -46,10 +45,10 @@ public class Menu {
     /**
      * Funzione di creazione di un nuovo account attuata la quale viene inizializzato il field e il nuovo utente puó
      * giocare senza effettuare nuovamente accesso
-     * @param name
-     * @param password
-     * @return
-     * @throws IOException
+     * @param name Nickname del giocatore
+     * @param password Password del giocatore
+     * @return Segnala se aggiunta dell' acount é andata a buon fine
+     * @throws IOException Eccezione di sistema per acquisizione input da tastiera
      */
     public boolean newAccount(String name, String password) throws IOException {
 
