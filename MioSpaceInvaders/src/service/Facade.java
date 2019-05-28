@@ -43,7 +43,12 @@ public class Facade {
         Image image = new Image(path);
         image.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
     }
-
+    /**
+     * Renderizza lo sprite scelto usando l'animazione fornita e settando le dimensioni prelevandole
+     * dalla shape corrispondente
+     * @param animation
+     * @throws SlickException
+     */
     public void render (Animation animation) throws SlickException{
         animation.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
     }
