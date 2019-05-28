@@ -108,7 +108,9 @@ public class SinglePlayerState extends BasicGameState {
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
 
-        field.checkSpaceShipShotCollision();
+        if(field.getShipBullet()!= null) {
+            field.checkSpaceShipShotCollision();
+        }
 
         if(field.isNextLevel()){
             stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
@@ -134,6 +136,10 @@ public class SinglePlayerState extends BasicGameState {
 
         if (field.getShipBullet() != null) {
             field.getShipBullet().moveUp();
+        }
+
+        for(Bullet bullet: field.getInvaderBullets()){
+            bullet.moveDown();
         }
     }
 

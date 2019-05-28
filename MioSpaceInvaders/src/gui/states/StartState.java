@@ -131,7 +131,7 @@ public class StartState extends BasicGameState implements ComponentListener {
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
     }
 
     @Override
