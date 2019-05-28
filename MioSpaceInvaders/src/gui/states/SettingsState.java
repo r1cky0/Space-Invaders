@@ -90,10 +90,10 @@ public class SettingsState extends BasicGameState implements ComponentListener {
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
                 7*gameContainer.getHeight()/100f, title, org.newdawn.slick.Color.white);
 
-        int offset = 250;
+        int offset = 17*gameContainer.getWidth()/100;
         int i = 0;
         for (Image img: ships) {
-            graphics.drawImage(img, 100 + offset*i, 45*gameContainer.getHeight()/100f);
+            graphics.drawImage(img, 5*gameContainer.getScreenWidth()/100f + offset*i, 45*gameContainer.getHeight()/100f);
             i++;
         }
     }
