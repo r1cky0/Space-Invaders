@@ -10,6 +10,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.awt.*;
+
 public class SpaceInvaders extends StateBasedGame {
 
     private Menu menu;
@@ -32,7 +34,7 @@ public class SpaceInvaders extends StateBasedGame {
     public static void main(String[] args) {
 
         try {
-            DisplayMode bestMode = DisplayModeManager.getBiggestWithRatio(4, 3);
+            DisplayMode bestMode = DisplayModeManager.getBiggestWithRatio(3, 2);
             Menu menu = new Menu(bestMode.getWidth(), bestMode.getHeight());
 
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
