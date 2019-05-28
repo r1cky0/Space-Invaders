@@ -3,6 +3,9 @@ package gui.states;
 import logic.environment.Field;
 import logic.environment.Menu;
 import logic.environment.MovingDirections;
+import logic.exception.GameOverException;
+import logic.exception.NewHighscoreException;
+import logic.exception.NextLevelException;
 import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.unmovable.Brick;
@@ -15,6 +18,9 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
+import java.util.Iterator;
+import java.util.ListIterator;
+
 public class SinglePlayerState extends BasicGameState {
 
     private Menu menu;
@@ -24,6 +30,7 @@ public class SinglePlayerState extends BasicGameState {
 
     private java.awt.Font fontData;
     private UnicodeFont uniFontData;
+    private Animation invader1, invader2, invader3;
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
@@ -33,6 +40,12 @@ public class SinglePlayerState extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         background = new Image("res/images/BackgroundSpace.png");
+        Image[] invaders1 = {new Image("res/images/InvaderC1.png"), new Image("res/images/InvaderC2.png")};
+        Image[] invaders2 = {new Image("res/images/InvaderB1.png"), new Image("res/images/InvaderB2.png")};
+        Image[] invaders3 = {new Image("res/images/InvaderA1.png"), new Image("res/images/InvaderA2.png")};
+        invader1 = new Animation(invaders1, 1000);
+        invader2 = new Animation(invaders2, 1000);
+        invader3 = new Animation(invaders3, 1000);
 
         try{
             fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
@@ -59,8 +72,14 @@ public class SinglePlayerState extends BasicGameState {
 
         field.getSpaceShip().render("res/images/SpaceShip1.png");
 
-        for(Invader invader:field.getInvaders()){
-            invader.render("res/images/Alien1.png");
+        for(int i = 0; i<8; i++){
+            field.getInvaders().listIterator(i).next().render(invader1);
+        }
+        for(int i = 8; i<24;i++){
+            field.getInvaders().listIterator(i).next().render(invader2);
+        }
+        for(int i = 24; i<32;i++){
+            field.getInvaders().listIterator(i).next().render(invader3);
         }
 
         for(Bunker bunker: field.getBunkers()){
@@ -94,56 +113,60 @@ public class SinglePlayerState extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input input = gameContainer.getInput();
-
-        //STATO GIOCO
-        if(field.isGameOver()){
+        invader1.update(i);
+        invader2.update(i);
+        invader3.update(i);
+        try {
+            field.invaderDirection();
+        } catch (GameOverException err) {
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
-        }
-
-        if(field.isNewHighscore()){
+        } catch (NewHighscoreException err){
             stateBasedGame.getState(6).init(gameContainer,stateBasedGame);
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
 
-        if(field.isNextLevel()){
-            stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
-        }
-
-        //MOVIMENTI E AZIONI SPACE SHIP
         if (input.isKeyDown(Input.KEY_LEFT)) {
-            field.shipMovement(MovingDirections.LEFT, delta);
+            field.shipMovement(MovingDirections.LEFT);
         }
 
         if (input.isKeyDown(Input.KEY_RIGHT)) {
-            field.shipMovement(MovingDirections.RIGHT, delta);
+            field.shipMovement(MovingDirections.RIGHT);
         }
 
         if (input.isKeyPressed(Input.KEY_SPACE)) {
             field.shipShot();
         }
 
-        if (field.getShipBullet() != null) {
-            field.getShipBullet().moveUp(delta);
-        }
-
-        if(field.getShipBullet()!= null) {
-            field.checkSpaceShipShotCollision();
-        }
-
-        //MOVIMENTI E AZIONI INVADERS
-        field.invaderDirection(delta);
-
         if (input.isKeyPressed(Input.KEY_0)) {
             field.invaderShot();
         }
 
-        for(Bullet bullet: field.getInvaderBullets()){
-            bullet.moveDown(delta);
+        if (field.getShipBullet() != null) {
+            field.getShipBullet().moveUp();
         }
 
-        field.checkInvaderShotCollision();
+        if (field.getShipBullet() != null) {
+            try {
+                field.checkSpaceShipShotCollision();
+            }catch (NextLevelException err){
+                stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
+            }
+        }
+
+        for (Bullet bullet : field.getInvaderBullets()) {
+            bullet.moveDown();
+        }
+
+        try {
+            field.checkInvaderShotCollision();
+        } catch (GameOverException err) {
+            stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
+        } catch (NewHighscoreException err){
+            stateBasedGame.getState(6).init(gameContainer,stateBasedGame);
+            stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
+        }
     }
 
     @Override
