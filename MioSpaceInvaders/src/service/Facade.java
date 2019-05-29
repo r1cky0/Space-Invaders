@@ -10,7 +10,6 @@ import org.newdawn.slick.geom.Transform;
 public class Facade {
 
     private Shape shape;
-    private final int DURATION = 1000;
 
     public Facade(Coordinate coordinate, double size) {
         shape = new Rectangle((float)coordinate.getX(), (float) coordinate.getY(), (float) size, (float) size);
@@ -36,11 +35,10 @@ public class Facade {
     /**
      * Renderizza lo sprite scelto andando a ricavare l' immagine dal path fornito e settando le dimensioni prelevandole
      * dalla shape corrispondente
-     * @param path Percorso relativo dell' immagine
+     * @param image Immagine
      * @throws SlickException Eccezione della libreria slick per eventuali errori di render
      */
-    public void render (String path) throws SlickException{
-        Image image = new Image(path);
+    public void render(Image image){
         image.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
     }
     /**

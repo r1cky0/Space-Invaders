@@ -9,32 +9,49 @@ import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
+import java.util.ArrayList;
+
 public class SinglePlayerState extends BasicGameState {
 
     private Menu menu;
     private Field field;
     private GameContainer gameContainer;
-    private Image background;
-    private Animation invadersAnimation;
+
 
     private java.awt.Font fontData;
     private UnicodeFont uniFontData;
 
+    //IMAGES
+//    private Animation invadersAnimation;
+    private Image background;
+    private Image invaderImage;
+    private Image spaceShipImage;
+    private ArrayList<Image> brickImages = new ArrayList<>();
+    private Image bulletImage;
+
     public SinglePlayerState(Menu menu){
         this.menu = menu;
+
         try {
-            Image[] invaderImages = new Image[]{new Image("res/images/Alien1a.png"), new Image("res/images/Alien1b.png")};
-            invadersAnimation = new Animation (invaderImages, 1000);
+//            Image[] invaderImages = new Image[]{new Image("res/images/Alien0a.png"), new Image("res/images/Alien0b.png")};
+//            invadersAnimation = new Animation (invaderImages, 1000);
+
+            invaderImage = new Image("res/images/Alien0a.png");
+            spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
+            bulletImage = new Image("res/images/Shot.png");
+            for(int i=0; i<4; i++){
+                brickImages.add(new Image("res/images/Brick" + i + ".png"));
+            }
         } catch (SlickException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -57,6 +74,7 @@ public class SinglePlayerState extends BasicGameState {
             e.printStackTrace();
         }
         field = menu.getField();
+
     }
 
     @Override
@@ -65,10 +83,10 @@ public class SinglePlayerState extends BasicGameState {
         uniFontData.drawString(80*gameContainer.getWidth()/100,15,"Lives: " + field.getSpaceShip().getLife(), Color.white);
         uniFontData.drawString(20,15,"Score: " + field.getSpaceShip().getCurrentScore(), Color.white);
 
-        field.getSpaceShip().render("res/images/SpaceShip1.png");
+        field.getSpaceShip().render(spaceShipImage);
 
         for (Invader invader: field.getInvaders()) {
-            invader.render(invadersAnimation);
+            invader.render(invaderImage);
         }
 
         for(Bunker bunker: field.getBunkers()){
@@ -76,27 +94,27 @@ public class SinglePlayerState extends BasicGameState {
                 switch (brick.getLife()){
 
                     case 4:
-                        brick.render("res/images/Brick1.png");
+                        brick.render(brickImages.get(0));
                         break;
                     case 3:
-                        brick.render("res/images/Brick2.png");
+                        brick.render(brickImages.get(1));
                         break;
                     case 2:
-                        brick.render("res/images/Brick3.png");
+                        brick.render(brickImages.get(2));
                         break;
                     case 1:
-                        brick.render("res/images/Brick4.png");
+                        brick.render(brickImages.get(3));
                         break;
                 }
             }
         }
 
         if(field.getShipBullet() != null){
-            field.getShipBullet().render("res/images/Shot.png");
+            field.getShipBullet().render(bulletImage);
         }
 
         for (Bullet bullet : field.getInvaderBullets()) {
-            bullet.render("res/images/Shot.png");
+            bullet.render(bulletImage);
         }
 
     }
@@ -113,6 +131,10 @@ public class SinglePlayerState extends BasicGameState {
         if(field.isNewHighscore()){
             stateBasedGame.getState(6).init(gameContainer,stateBasedGame);
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
+        }
+
+        if(input.isKeyDown(Input.KEY_ESCAPE)){
+            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
 
         //MOVIMENTI E AZIONI SPACE SHIP
@@ -138,7 +160,6 @@ public class SinglePlayerState extends BasicGameState {
 
         //MOVIMENTI E AZIONI INVADERS
         field.invaderDirection(delta);
-        invadersAnimation.update(delta);
 
         if (input.isKeyPressed(Input.KEY_0)) {
             field.invaderShot();
