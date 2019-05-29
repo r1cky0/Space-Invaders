@@ -17,6 +17,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class SinglePlayerState extends BasicGameState {
 
@@ -55,6 +56,7 @@ public class SinglePlayerState extends BasicGameState {
         } catch (SlickException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -78,7 +80,7 @@ public class SinglePlayerState extends BasicGameState {
         }
         field = menu.getField();
         spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
-        thread = new ThreadInvaderShot(800, field);
+        thread = new ThreadInvaderShot(500, field);
     }
 
     @Override
@@ -117,7 +119,7 @@ public class SinglePlayerState extends BasicGameState {
             field.getShipBullet().render(bulletImage);
         }
 
-        for (Bullet bullet : field.getInvaderBullets()) {
+        for(Bullet bullet : field.getInvaderBullets()) {
             bullet.render(bulletImage);
         }
 

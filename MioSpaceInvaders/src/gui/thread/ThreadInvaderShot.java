@@ -1,6 +1,8 @@
 package gui.thread;
 
 import logic.environment.Field;
+
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThreadInvaderShot implements Runnable {
@@ -30,13 +32,16 @@ public class ThreadInvaderShot implements Runnable {
 
     public void run() {
         running.set(true);
+        Random rand = new Random();
         while (running.get()) {
             try {
                 Thread.sleep(sleepInterval);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            field.invaderShot();
+            if(rand.nextInt(10) > 4){
+                field.invaderShot();
+            }
         }
     }
 }
