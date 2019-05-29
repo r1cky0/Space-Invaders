@@ -6,7 +6,7 @@ import logic.sprite.Sprite;
 
 public class Bullet extends Sprite{
 
-    public double verticalOffset = 0.8;
+    public double verticalOffset = 0.6;
 
     public Bullet(Coordinate coordinate, double size) {
         super(coordinate, size);

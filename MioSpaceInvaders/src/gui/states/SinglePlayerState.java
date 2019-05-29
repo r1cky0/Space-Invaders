@@ -1,5 +1,6 @@
 package gui.states;
 
+import gui.thread.ThreadInvaderShot;
 import logic.environment.Field;
 import logic.environment.Menu;
 import logic.environment.MovingDirections;
@@ -9,7 +10,6 @@ import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -35,6 +35,9 @@ public class SinglePlayerState extends BasicGameState {
     private Image spaceShipImage;
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
+
+    private ThreadInvaderShot thread;
+    private boolean started = false;
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
@@ -75,6 +78,7 @@ public class SinglePlayerState extends BasicGameState {
         }
         field = menu.getField();
         spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
+        thread = new ThreadInvaderShot(800, field);
     }
 
     @Override
@@ -123,17 +127,24 @@ public class SinglePlayerState extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
+        if(!thread.isRunning()){
+            thread.start();
+            started = true;
+        }
+
         //STATO GIOCO
         if(field.isGameOver()){
+            thread.stop();
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         }
 
         if(field.isNewHighscore()){
-            stateBasedGame.getState(6).init(gameContainer,stateBasedGame);
+            thread.stop();
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
 
         if(input.isKeyDown(Input.KEY_ESCAPE)){
+            thread.stop();
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
 
