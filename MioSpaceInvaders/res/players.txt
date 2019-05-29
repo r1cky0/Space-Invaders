@@ -7,7 +7,7 @@ Federico	f	0
 Antonio	a	0
 Noemi	n	0
 Fabio	f	0
-a	a	30
+a	a	100
 Arrosto	Dove	1610
 ciruzzo	arr	280
 E'	arr	270
