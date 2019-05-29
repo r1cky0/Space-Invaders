@@ -1,4 +1,4 @@
-package gui.states.main;
+package gui.main;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -12,8 +12,8 @@ public class DisplayModeManager {
      * Questa funzione individua fra le possibili risoluzioni dello schermo
      * quella più grande e che abbia frequencyRate di almeno 60Hz
      *
-     * @param widthRatio
-     * @param heightRatio
+     * @param widthRatio Horizontal Ratio
+     * @param heightRatio Vertical Ratio
      * @return bestDisplayMode
      */
     public static DisplayMode getBiggestWithRatio(int widthRatio, int heightRatio) throws LWJGLException {

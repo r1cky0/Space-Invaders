@@ -1,16 +1,13 @@
-package gui.states.main;
+package gui.main;
 
 import gui.states.*;
 import logic.environment.Menu;
 import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-import java.awt.*;
 
 public class SpaceInvaders extends StateBasedGame {
 
@@ -24,7 +21,11 @@ public class SpaceInvaders extends StateBasedGame {
     public void initStatesList(GameContainer gameContainer) {
         this.addState(new StartState(menu));
         this.addState(new MenuState(menu));
-        this.addState(new SinglePlayerState(menu));
+        try {
+            this.addState(new SinglePlayerState(menu));
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
         this.addState(new GameOverState(menu));
         this.addState(new RankingState(menu));
         this.addState(new NewHighscoreState(menu));
@@ -42,7 +43,7 @@ public class SpaceInvaders extends StateBasedGame {
             container.setDisplayMode(bestMode.getWidth(), bestMode.getHeight(), false);
             container.setSmoothDeltas(false);
             container.setTargetFrameRate(60);
-            //container.setShowFPS(false);
+            container.setShowFPS(false);
             container.setVSync(false);
             container.start();
 

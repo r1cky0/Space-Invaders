@@ -6,11 +6,13 @@ import java.util.ArrayList;
 
 public class Customization {
 
+    private String currentShip;
     private ArrayList<String> spaceShips;
 
     public Customization() {
         spaceShips = new ArrayList<>();
         initShips();
+        this.currentShip = spaceShips.get(0);
     }
 
     public ArrayList<String> getSpaceShips() {
@@ -23,5 +25,13 @@ public class Customization {
         spaceShips.add("res/images/SpaceShip3.png");
         spaceShips.add("res/images/SpaceShip4.png");
         spaceShips.add("res/images/SpaceShip5.png");
+    }
+
+    public String getCurrentShip() {
+        return currentShip;
+    }
+
+    public void setCurrentShip(String currentShip) {
+        this.currentShip = currentShip;
     }
 }

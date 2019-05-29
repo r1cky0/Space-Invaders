@@ -37,6 +37,7 @@ public class SettingsState extends BasicGameState implements ComponentListener {
     private UnicodeFont uniFontData;
 
     private ArrayList<Image> ships;
+    private ArrayList<MouseOverArea> shipButtons;
 
     private Image background;
     private Image homeImage;
@@ -56,6 +57,7 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        shipButtons = new ArrayList<>();
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
         background = new Image("res/images/BackgroundSpace.png");
@@ -68,6 +70,15 @@ public class SettingsState extends BasicGameState implements ComponentListener {
         ships = new ArrayList<>();
         for (String s: menu.getCustomization().getSpaceShips()) {
             ships.add(new Image(s).getScaledCopy(10*gameContainer.getWidth()/100, 10*gameContainer.getWidth()/100));
+        }
+
+        int offset = 17*gameContainer.getWidth()/100;
+        int i = 0;
+
+        for (Image img: ships) {
+            shipButtons.add(new MouseOverArea(gameContainer, img, 5*gameContainer.getScreenWidth()/100 + offset*i, 45*gameContainer.getHeight()/100,
+                    6*gameContainer.getWidth()/100, 6*gameContainer.getHeight()/100, this ));
+            i++;
         }
 
         try {
@@ -102,12 +113,9 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
                 7*gameContainer.getHeight()/100f, title, org.newdawn.slick.Color.white);
-
-        int offset = 17*gameContainer.getWidth()/100;
-        int i = 0;
-        for (Image img: ships) {
-            graphics.drawImage(img, 5*gameContainer.getScreenWidth()/100f + offset*i, 45*gameContainer.getHeight()/100f);
-            i++;
+        
+        for (MouseOverArea but: shipButtons) {
+            but.render(gameContainer, graphics);
         }
 
     }
@@ -121,6 +129,22 @@ public class SettingsState extends BasicGameState implements ComponentListener {
     public void componentActivated(AbstractComponent source) {
         if (source == homeButton) {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+        }
+
+        if (source == shipButtons.get(0)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(0));
+        }
+        if (source == shipButtons.get(1)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(1));
+        }
+        if (source == shipButtons.get(2)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(2));
+        }
+        if (source == shipButtons.get(3)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(3));
+        }
+        if (source == shipButtons.get(4)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(4));
         }
     }
 }

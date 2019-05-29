@@ -18,8 +18,8 @@ public class Facade {
 
     /**
      * Sfrutta la funzione di slick collides per rilevare collisioni tra shape diverse
-     * @param shape
-     * @return
+     * @param shape La forma con cui fare il check della collisione
+     * @return Ritorna un booleano settato a true se collisione avvenuta
      */
     public boolean collides(Shape shape){
         return this.shape.intersects(shape);
@@ -36,8 +36,8 @@ public class Facade {
     /**
      * Renderizza lo sprite scelto andando a ricavare l' immagine dal path fornito e settando le dimensioni prelevandole
      * dalla shape corrispondente
-     * @param path
-     * @throws SlickException
+     * @param path Percorso relativo dell' immagine
+     * @throws SlickException Eccezione della libreria slick per eventuali errori di render
      */
     public void render (String path) throws SlickException{
         Image image = new Image(path);
@@ -46,8 +46,8 @@ public class Facade {
     /**
      * Renderizza lo sprite scelto usando l'animazione fornita e settando le dimensioni prelevandole
      * dalla shape corrispondente
-     * @param animation
-     * @throws SlickException
+     * @param animation Array di immagini che si alternano a formare l' animazione voluta
+     * @throws SlickException Eccezione della libreria slick per eventuali errori di render
      */
     public void render (Animation animation) throws SlickException{
         animation.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
