@@ -23,7 +23,6 @@ public class Field {
     //STATE
     private boolean gameOver;
     private boolean newHighscore;
-    private boolean nextLevel;
 
     private Player player;
     private SpaceShip spaceShip;
@@ -50,7 +49,6 @@ public class Field {
 
         gameOver = false;
         newHighscore = false;
-        nextLevel = false;
 
         initComponents();
     }
@@ -70,7 +68,6 @@ public class Field {
         initInvaders();
         md = MovingDirections.RIGHT;
         spaceShip.incrementLife();
-        nextLevel = true;
     }
 
     /**
@@ -319,10 +316,6 @@ public class Field {
 
     public boolean isNewHighscore(){
         return newHighscore;
-    }
-
-    public boolean isNextLevel(){
-        return nextLevel;
     }
 
 }
