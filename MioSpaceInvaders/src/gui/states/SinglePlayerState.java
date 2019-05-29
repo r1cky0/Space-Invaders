@@ -21,22 +21,26 @@ public class SinglePlayerState extends BasicGameState {
     private Field field;
     private GameContainer gameContainer;
     private Image background;
-    private Animation invaders;
+    private Animation invadersAnimation;
 
     private java.awt.Font fontData;
     private UnicodeFont uniFontData;
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
+        try {
+            Image[] invaderImages = new Image[]{new Image("res/images/Alien1a.png"), new Image("res/images/Alien1b.png")};
+            invadersAnimation = new Animation (invaderImages, 1000);
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         background = new Image("res/images/BackgroundSpace.png");
-
-        Image[] invader1 = {new Image("res/images/Alien1a.png"), new Image("res/images/Alien1b.png")};
-        invaders = new Animation (invader1, 1000);
 
         try{
             fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
@@ -64,7 +68,7 @@ public class SinglePlayerState extends BasicGameState {
         field.getSpaceShip().render("res/images/SpaceShip1.png");
 
         for (Invader invader: field.getInvaders()) {
-            invader.render(invaders);
+            invader.render(invadersAnimation);
         }
 
         for(Bunker bunker: field.getBunkers()){
@@ -111,10 +115,6 @@ public class SinglePlayerState extends BasicGameState {
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
 
-        if(field.isNextLevel()){
-            stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
-        }
-
         //MOVIMENTI E AZIONI SPACE SHIP
         if (input.isKeyDown(Input.KEY_LEFT)) {
             field.shipMovement(MovingDirections.LEFT, delta);
@@ -138,7 +138,7 @@ public class SinglePlayerState extends BasicGameState {
 
         //MOVIMENTI E AZIONI INVADERS
         field.invaderDirection(delta);
-        invaders.update(delta);
+        invadersAnimation.update(delta);
 
         if (input.isKeyPressed(Input.KEY_0)) {
             field.invaderShot();

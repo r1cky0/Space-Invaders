@@ -21,11 +21,7 @@ public class SpaceInvaders extends StateBasedGame {
     public void initStatesList(GameContainer gameContainer) {
         this.addState(new StartState(menu));
         this.addState(new MenuState(menu));
-        try {
-            this.addState(new SinglePlayerState(menu));
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+        this.addState(new SinglePlayerState(menu));
         this.addState(new GameOverState(menu));
         this.addState(new RankingState(menu));
         this.addState(new NewHighscoreState(menu));
