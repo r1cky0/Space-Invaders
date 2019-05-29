@@ -74,7 +74,7 @@ public class SinglePlayerState extends BasicGameState {
             e.printStackTrace();
         }
         field = menu.getField();
-
+        spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
     }
 
     @Override
