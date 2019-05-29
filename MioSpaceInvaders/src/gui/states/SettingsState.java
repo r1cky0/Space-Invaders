@@ -130,5 +130,21 @@ public class SettingsState extends BasicGameState implements ComponentListener {
         if (source == homeButton) {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
+
+        if (source == shipButtons.get(0)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(0));
+        }
+        if (source == shipButtons.get(1)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(1));
+        }
+        if (source == shipButtons.get(2)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(2));
+        }
+        if (source == shipButtons.get(3)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(3));
+        }
+        if (source == shipButtons.get(4)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(4));
+        }
     }
 }
