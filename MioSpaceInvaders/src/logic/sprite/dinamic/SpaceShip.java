@@ -5,6 +5,7 @@ import logic.sprite.Sprite;
 
 public class SpaceShip extends Sprite {
 
+    //private String shipType;
     private int life, currentScore;
     private double horizontalOffset = 0.5;
 
@@ -12,6 +13,7 @@ public class SpaceShip extends Sprite {
         super(coordinate, size);
         life = 3;
         currentScore = 0;
+        /*bisogna inizializzare shipType con la lettura da file*/
     }
 
     public int getLife() {
