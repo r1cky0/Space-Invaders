@@ -11,6 +11,11 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
+
+
 import org.newdawn.slick.Image;
 
 import org.newdawn.slick.gui.ComponentListener;
@@ -39,6 +44,8 @@ public class SettingsState extends BasicGameState implements ComponentListener {
     private ArrayList<Image> ships;
     private ArrayList<MouseOverArea> shipButtons;
 
+    private Shape cornice;
+
     private Image background;
     private Image homeImage;
     private MouseOverArea homeButton;
@@ -57,6 +64,10 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+
+        cornice = new Rectangle(3*gameContainer.getScreenWidth()/100f, 41*gameContainer.getHeight()/100f,
+                14*gameContainer.getWidth()/100f, 14*gameContainer.getHeight()/100f);
+
         shipButtons = new ArrayList<>();
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
@@ -118,6 +129,8 @@ public class SettingsState extends BasicGameState implements ComponentListener {
             but.render(gameContainer, graphics);
         }
 
+        graphics.draw(cornice);
+
     }
 
     @Override
@@ -133,18 +146,23 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
         if (source == shipButtons.get(0)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(0));
+            cornice.setX(shipButtons.get(0).getX());
         }
         if (source == shipButtons.get(1)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(1));
+            cornice.setX(shipButtons.get(1).getX());
         }
         if (source == shipButtons.get(2)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(2));
+            cornice.setX(shipButtons.get(2).getX());
         }
         if (source == shipButtons.get(3)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(3));
+            cornice.setX(shipButtons.get(3).getX());
         }
         if (source == shipButtons.get(4)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(4));
+            cornice.setX(shipButtons.get(4).getX());
         }
     }
 }
