@@ -23,6 +23,7 @@ public class Field {
     //STATE
     private boolean gameOver;
     private boolean newHighscore;
+    private boolean newLevel;
 
     private Player player;
     private SpaceShip spaceShip;
@@ -31,7 +32,9 @@ public class Field {
     private Bullet shipBullet;
     private boolean shipShot;
     private ArrayList<Bullet> invaderBullets;
-    private MovingDirections md = MovingDirections.RIGHT;
+    private MovingDirections md;
+    private boolean goDown;
+    private int difficulty;
 
     public Field(Player player, double maxWidth, double maxHeight){
         this.player = player;
@@ -45,10 +48,14 @@ public class Field {
         spaceShip = player.getSpaceShip();
         invaderBullets = new ArrayList<>();
         invaders = new ArrayList<>();
+        md = MovingDirections.RIGHT;
+        goDown = false;
         shipShot = false;
+        difficulty = 900; //millisecondi pausa sparo/movimento alieni
 
         gameOver = false;
         newHighscore = false;
+        newLevel = false;
 
         initComponents();
     }
@@ -68,6 +75,8 @@ public class Field {
         initInvaders();
         md = MovingDirections.RIGHT;
         spaceShip.incrementLife();
+        incrementDifficulty();
+        newLevel = true;
     }
 
     /**
@@ -220,7 +229,7 @@ public class Field {
      * tutti gli invaders shiftano verso il basso e la direzione laterale di movimento viene invertita settando il
      * corrispondendo Enum 'MovingDirections' fondamentale nella funzione successiva
      */
-    public void invaderDirection(int delta) {
+    public MovingDirections checkInvaderDirection() {
 
         double maxX = 0;
         double minX = 10;
@@ -237,35 +246,41 @@ public class Field {
                 maxY = invader.getY();
             }
         }
-
-        if ((maxX + invaderSize) >= maxWidth) {
-            invaderMovement(MovingDirections.DOWN, delta);
-            md = MovingDirections.LEFT;
-        } else if (minX <= MIN_WIDTH) {
-            invaderMovement(MovingDirections.DOWN, delta);
-            md = MovingDirections.RIGHT;
-        }
-        invaderMovement(md, delta);
-
         if((maxY + invaderSize) >= (maxHeight - 7*brickSize)){
             gameOver();
         }
+        if(((maxX + 6*invaderSize/5) > maxWidth) && !goDown){
+            goDown = true;
+            return MovingDirections.DOWN;
+
+        } else if((minX - invaderSize/5 < MIN_WIDTH) && !goDown) {
+            goDown = true;
+            return MovingDirections.DOWN;
+        }
+        if(goDown && md == MovingDirections.RIGHT) {
+            md = MovingDirections.LEFT;
+            goDown = false;
+        }else if(goDown && md == MovingDirections.LEFT) {
+            md = MovingDirections.RIGHT;
+            goDown = false;
+        }
+        return md;
     }
 
     /**
      * Funzione di movimento degli invaders. La direzione é inidicata dalla MovingDirections passata come parametro
      * @param md Enum che indica la direzione di movimento
      */
-    private void invaderMovement(MovingDirections md, int delta){
+     public void invaderMovement(MovingDirections md){
 
         for(Invader invader:invaders) {
 
             switch (md) {
                 case RIGHT:
-                    invader.moveRight(delta);
+                    invader.moveRight();
                     break;
                 case LEFT:
-                    invader.moveLeft(delta);
+                    invader.moveLeft();
                     break;
                 case DOWN:
                     invader.moveDown();
@@ -287,6 +302,12 @@ public class Field {
 
         invaderBullets.add(new Bullet(coordinate, bulletSize));
 
+    }
+
+    private void incrementDifficulty(){
+        if(difficulty >= 200){
+            difficulty -= 100;
+        }
     }
 
     public ArrayList<Invader> getInvaders() {
@@ -317,59 +338,16 @@ public class Field {
         return newHighscore;
     }
 
-
-
-    //******************************************************************************
-    //********************DA TOGLIRE POI O QUESTO O QUELLI SOPRA*********************//
-
-    public void invaderDirection() {
-
-        double maxX = 0;
-        double minX = 10;
-        double maxY = 0;
-
-        for (Invader invader : invaders) {
-            if (maxX < invader.getX()) {
-                maxX = invader.getX();
-            }
-            if (minX > invader.getX()) {
-                minX = invader.getX();
-            }
-            if (maxY < invader.getY()) {
-                maxY = invader.getY();
-            }
-        }
-
-        if ((maxX + invaderSize) >= maxWidth) {
-            invaderMovement(MovingDirections.DOWN);
-            md = MovingDirections.LEFT;
-        } else if (minX <= MIN_WIDTH) {
-            invaderMovement(MovingDirections.DOWN);
-            md = MovingDirections.RIGHT;
-        }
-        invaderMovement(md);
-
-        if((maxY + invaderSize) >= (maxHeight - 7*brickSize)){
-            gameOver();
-        }
+    public boolean isNewLevel(){
+        return newLevel;
     }
 
-    private void invaderMovement(MovingDirections md){
+    public void setNewLevel(boolean value){
+        newLevel = value;
+    }
 
-        for(Invader invader:invaders) {
-
-            switch (md) {
-                case RIGHT:
-                    invader.moveRight();
-                    break;
-                case LEFT:
-                    invader.moveLeft();
-                    break;
-                case DOWN:
-                    invader.moveDown();
-                    break;
-            }
-        }
+    public int getDifficulty(){
+        return difficulty;
     }
 
 }

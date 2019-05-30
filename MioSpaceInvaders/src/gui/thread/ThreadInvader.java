@@ -39,7 +39,7 @@ public class ThreadInvader implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-                field.invaderDirection();
+                field.invaderMovement(field.checkInvaderDirection());
             if(rand.nextInt(10) > 4){
                 field.invaderShot();
             }

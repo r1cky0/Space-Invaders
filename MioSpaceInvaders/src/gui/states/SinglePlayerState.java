@@ -1,7 +1,6 @@
 package gui.states;
 
 import gui.thread.ThreadInvader;
-import gui.thread.ThreadInvaderShot;
 import logic.environment.Field;
 import logic.environment.Menu;
 import logic.environment.MovingDirections;
@@ -37,10 +36,7 @@ public class SinglePlayerState extends BasicGameState {
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
 
-    private ThreadInvaderShot threadInvaderShot;
     private ThreadInvader threadInvader;
-    private boolean threadStarted = false;
-    private boolean threadStarted2 = false;
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
@@ -82,8 +78,7 @@ public class SinglePlayerState extends BasicGameState {
         }
         field = menu.getField();
         spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
-//        threadInvaderShot = new ThreadInvaderShot(500, field);
-        threadInvader = new ThreadInvader(500, field);
+        threadInvader = new ThreadInvader(900, field);
     }
 
     @Override
@@ -122,7 +117,7 @@ public class SinglePlayerState extends BasicGameState {
             field.getShipBullet().render(bulletImage);
         }
 
-        for(Bullet bullet : field.getInvaderBullets()) {
+          for(Bullet bullet : field.getInvaderBullets()) {
             bullet.render(bulletImage);
         }
 
@@ -132,32 +127,29 @@ public class SinglePlayerState extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
-//        if(!threadInvaderShot.isRunning()){
-//            threadInvaderShot.start();
-//            threadStarted = true;
-//        }
-
         if(!threadInvader.isRunning()){
             threadInvader.start();
-            threadStarted2 = true;
         }
 
 
         //STATO GIOCO
         if(field.isGameOver()){
-//            threadInvaderShot.stop();
             threadInvader.stop();
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         }
 
         if(field.isNewHighscore()){
-//            threadInvaderShot.stop();
             threadInvader.stop();
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
 
+        if(field.isNewLevel()){
+            threadInvader.stop();
+            threadInvader = new ThreadInvader(field.getDifficulty(), field);
+            field.setNewLevel(false);
+        }
+
         if(input.isKeyDown(Input.KEY_ESCAPE)){
-//            threadInvaderShot.stop();
             threadInvader.stop();
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
@@ -184,8 +176,6 @@ public class SinglePlayerState extends BasicGameState {
         }
 
         //MOVIMENTI E AZIONI INVADERS
-//        field.invaderDirection(delta);
-
         if (input.isKeyPressed(Input.KEY_0)) {
             field.invaderShot();
         }
