@@ -29,7 +29,7 @@ public class Menu {
         this.maxWidth = maxWidth;
         double shipSize = maxWidth / 20;
 
-        customization = new Customization();
+        customization = new Customization("res/images/SpaceShip0.png");  // solo per non avere nullPointerExc, poi tanto dopo il logIn viene sovrascritta con quella da file
 
         ranking = new Ranking();
 
@@ -61,6 +61,9 @@ public class Menu {
 
         if(AddAccount.newAccount(name,password)){
             this.player = new Player(name,defaultShip);
+
+            customization = new Customization(GetSpaceShipFromPlayer.getSpaceShipFromPlayer(player.getName()));
+
             field = new Field(player, maxWidth, maxHeight);
             return true;
         }
@@ -71,6 +74,9 @@ public class Menu {
 
         if(Login.login(name,password)){
             this.player = new Player(name,defaultShip);
+
+            customization = new Customization(GetSpaceShipFromPlayer.getSpaceShipFromPlayer(player.getName()));
+
             field = new Field(player, maxWidth, maxHeight);
             return true;
         }
