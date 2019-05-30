@@ -4,8 +4,8 @@ import java.io.*;
 
 public class GetSpaceShipFromPlayer {
 
-    public static String getSpaceShipFromPlayer (String name) {  // da chiamare nel menu, dato il player corrente trova la ship corrispondente nel file e la usa per inizializzare la prima volta
-                                                                 // la variabile "currentShip"
+    public static String getSpaceShipFromPlayer (String name) {
+
         String shipFromPlayer = "";
 
         try {
