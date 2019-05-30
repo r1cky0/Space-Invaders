@@ -146,23 +146,23 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
         if (source == shipButtons.get(0)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(0));
-            cornice.setX(shipButtons.get(0).getX());
+            cornice.setX(shipButtons.get(0).getX() - 30*cornice.getWidth()/100);
         }
         if (source == shipButtons.get(1)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(1));
-            cornice.setX(shipButtons.get(1).getX());
+            cornice.setX(shipButtons.get(1).getX() - 30*cornice.getWidth()/100);
         }
         if (source == shipButtons.get(2)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(2));
-            cornice.setX(shipButtons.get(2).getX());
+            cornice.setX(shipButtons.get(2).getX() - 30*cornice.getWidth()/100);
         }
         if (source == shipButtons.get(3)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(3));
-            cornice.setX(shipButtons.get(3).getX());
+            cornice.setX(shipButtons.get(3).getX() - 30*cornice.getWidth()/100);
         }
         if (source == shipButtons.get(4)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(4));
-            cornice.setX(shipButtons.get(4).getX());
+            cornice.setX(shipButtons.get(4).getX() - 30*cornice.getWidth()/100);
         }
     }
 }
