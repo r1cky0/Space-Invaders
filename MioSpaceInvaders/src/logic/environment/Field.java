@@ -72,11 +72,11 @@ public class Field {
      * Reinizializzazione degli invaders e incremento life ship al nuovo livello
      */
     public void nextLevel(){
+        newLevel = true;
+        incrementDifficulty();
         initInvaders();
         md = MovingDirections.RIGHT;
         spaceShip.incrementLife();
-        incrementDifficulty();
-        newLevel = true;
     }
 
     /**
