@@ -1,1 +1,2 @@
-a	a	0	res/images/SpaceShip1.png
+a	a	30	res/images/SpaceShip2.png
+chiara	wizard	0	res/images/SpaceShip0.png
