@@ -36,11 +36,11 @@ public class Facade {
      * Renderizza lo sprite scelto andando a ricavare l' immagine dal path fornito e settando le dimensioni prelevandole
      * dalla shape corrispondente
      * @param image Immagine
-     * @throws SlickException Eccezione della libreria slick per eventuali errori di render
      */
     public void render(Image image){
         image.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
     }
+
     /**
      * Renderizza lo sprite scelto usando l'animazione fornita e settando le dimensioni prelevandole
      * dalla shape corrispondente

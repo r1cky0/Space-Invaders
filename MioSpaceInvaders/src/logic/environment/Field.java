@@ -317,4 +317,59 @@ public class Field {
         return newHighscore;
     }
 
+
+
+    //******************************************************************************
+    //********************DA TOGLIRE POI O QUESTO O QUELLI SOPRA*********************//
+
+    public void invaderDirection() {
+
+        double maxX = 0;
+        double minX = 10;
+        double maxY = 0;
+
+        for (Invader invader : invaders) {
+            if (maxX < invader.getX()) {
+                maxX = invader.getX();
+            }
+            if (minX > invader.getX()) {
+                minX = invader.getX();
+            }
+            if (maxY < invader.getY()) {
+                maxY = invader.getY();
+            }
+        }
+
+        if ((maxX + invaderSize) >= maxWidth) {
+            invaderMovement(MovingDirections.DOWN);
+            md = MovingDirections.LEFT;
+        } else if (minX <= MIN_WIDTH) {
+            invaderMovement(MovingDirections.DOWN);
+            md = MovingDirections.RIGHT;
+        }
+        invaderMovement(md);
+
+        if((maxY + invaderSize) >= (maxHeight - 7*brickSize)){
+            gameOver();
+        }
+    }
+
+    private void invaderMovement(MovingDirections md){
+
+        for(Invader invader:invaders) {
+
+            switch (md) {
+                case RIGHT:
+                    invader.moveRight();
+                    break;
+                case LEFT:
+                    invader.moveLeft();
+                    break;
+                case DOWN:
+                    invader.moveDown();
+                    break;
+            }
+        }
+    }
+
 }

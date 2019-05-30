@@ -30,4 +30,16 @@ public class Invader extends Sprite {
         super.setY(super.getY() + verticalOffset);
     }
 
+
+    //******************************************************************************
+    //********************DA TOGLIRE POI O QUESTO O QUELLI SOPRA*********************//
+
+    public void moveLeft() {
+        super.setX(super.getX() - 15);
+    }
+
+    public void moveRight() {
+        super.setX(super.getX() + 15);
+    }
+
 }
