@@ -21,7 +21,7 @@ public class AddAccount {
             riga = in.readLine();
         }
         in.close();
-        String textToAppend = (name+"\t"+password+"\t"+0+"\n");
+        String textToAppend = (name+"\t"+password+"\t"+0+"\t"+"res/images/SpaceShip0.png"+"\n");
         Path path = Paths.get("res/players.txt");
         Files.write(path,textToAppend.getBytes(), StandardOpenOption.APPEND);
         return true;
