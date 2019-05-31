@@ -32,18 +32,18 @@ public class SpaceInvaders extends StateBasedGame {
     public static void main(String[] args) {
 
         try {
-            DisplayMode bestMode = DisplayModeManager.getBiggestWithRatio(3, 2);
-            Menu menu = new Menu(bestMode.getWidth(), bestMode.getHeight());
+            int width = 1000;
+            int height = 800;
+            Menu menu = new Menu(width, height);
 
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
-            container.setDisplayMode(bestMode.getWidth(), bestMode.getHeight(), false);
+            container.setDisplayMode(width, height, false);
             container.setSmoothDeltas(false);
-            //container.setTargetFrameRate(125);
             container.setShowFPS(false);
             container.setVSync(false);
             container.start();
 
-        } catch (SlickException | LWJGLException e) {
+        } catch (SlickException e) {
             e.printStackTrace();
         }
     }
