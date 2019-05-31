@@ -11,6 +11,11 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
+
+
 import org.newdawn.slick.Image;
 
 import org.newdawn.slick.gui.ComponentListener;
@@ -21,6 +26,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.*;
 import java.awt.event.ComponentEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SettingsState extends BasicGameState implements ComponentListener {
@@ -38,6 +44,8 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
     private ArrayList<Image> ships;
     private ArrayList<MouseOverArea> shipButtons;
+
+    private Shape cornice;
 
     private Image background;
     private Image homeImage;
@@ -57,6 +65,10 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+
+        cornice = new Rectangle(3*gameContainer.getScreenWidth()/100f, 41*gameContainer.getHeight()/100f,
+                14*gameContainer.getWidth()/100f, 14*gameContainer.getHeight()/100f);
+
         shipButtons = new ArrayList<>();
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
@@ -118,6 +130,8 @@ public class SettingsState extends BasicGameState implements ComponentListener {
             but.render(gameContainer, graphics);
         }
 
+        graphics.draw(cornice);
+
     }
 
     @Override
@@ -133,18 +147,28 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
         if (source == shipButtons.get(0)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(0));
+            cornice.setX(shipButtons.get(0).getX() - 30*cornice.getWidth()/100);
+            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
         }
         if (source == shipButtons.get(1)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(1));
+            cornice.setX(shipButtons.get(1).getX() - 30*cornice.getWidth()/100);
+            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
         }
         if (source == shipButtons.get(2)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(2));
+            cornice.setX(shipButtons.get(2).getX() - 30*cornice.getWidth()/100);
+            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
         }
         if (source == shipButtons.get(3)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(3));
+            cornice.setX(shipButtons.get(3).getX() - 30*cornice.getWidth()/100);
+            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
         }
         if (source == shipButtons.get(4)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(4));
+            cornice.setX(shipButtons.get(4).getX() - 30*cornice.getWidth()/100);
+            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
         }
     }
 }

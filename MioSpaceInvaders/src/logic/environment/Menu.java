@@ -1,7 +1,9 @@
 package logic.environment;
 
 import logic.FileManager.AddAccount;
+import logic.FileManager.GetSpaceShipFromPlayer;
 import logic.FileManager.Login;
+import logic.FileManager.SaveCustomization;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
@@ -27,8 +29,9 @@ public class Menu {
         this.maxWidth = maxWidth;
         double shipSize = maxWidth / 20;
 
+        customization = new Customization("res/images/SpaceShip0.png");  // solo per non avere nullPointerExc, poi tanto dopo il logIn viene sovrascritta con quella da file
+
         ranking = new Ranking();
-        customization = new Customization();
 
         Coordinate coordinate = new Coordinate((maxWidth/2 - shipSize /2),(maxHeight - shipSize));
         defaultShip = new SpaceShip(coordinate, shipSize);
@@ -40,6 +43,10 @@ public class Menu {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void saveCustomization(String name, String shipTypePath) {  // salva la current ship nel file
+        SaveCustomization.saveCustomization(name, shipTypePath);
     }
 
     /**
@@ -54,6 +61,9 @@ public class Menu {
 
         if(AddAccount.newAccount(name,password)){
             this.player = new Player(name,defaultShip);
+
+            customization = new Customization(GetSpaceShipFromPlayer.getSpaceShipFromPlayer(player.getName()));
+
             field = new Field(player, maxWidth, maxHeight);
             return true;
         }
@@ -64,6 +74,9 @@ public class Menu {
 
         if(Login.login(name,password)){
             this.player = new Player(name,defaultShip);
+
+            customization = new Customization(GetSpaceShipFromPlayer.getSpaceShipFromPlayer(player.getName()));
+
             field = new Field(player, maxWidth, maxHeight);
             return true;
         }

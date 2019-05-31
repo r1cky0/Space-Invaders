@@ -22,7 +22,7 @@ public class AddHighScore {
         }
         String [] componenti = oldLine.split("\\t");
         componenti[2] = Integer.toString(highscore);
-        String newLine = componenti[0]+"\t"+componenti[1]+"\t"+componenti[2];
+        String newLine = componenti[0]+"\t"+componenti[1]+"\t"+componenti[2]+"\t"+componenti[3];
         String newContent = oldContent.toString().replaceAll(oldLine, newLine);
         FileWriter out = new FileWriter(fileToBeModified);
         out.write(newContent);

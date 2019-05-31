@@ -9,10 +9,10 @@ public class Customization {
     private String currentShip;
     private ArrayList<String> spaceShips;
 
-    public Customization() {
+    public Customization(String currentTypeShip) {
         spaceShips = new ArrayList<>();
         initShips();
-        this.currentShip = spaceShips.get(0);
+        this.currentShip = currentTypeShip;
     }
 
     public ArrayList<String> getSpaceShips() {
