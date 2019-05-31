@@ -1,1 +1,1 @@
-a	a	1170	res/images/SpaceShip0.png
+a	a	1170	res/images/SpaceShip3.png
