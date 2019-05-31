@@ -61,7 +61,7 @@ public class SinglePlayerState extends BasicGameState {
         try{
             fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
                     ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontData = fontData.deriveFont(java.awt.Font.BOLD,3*gameContainer.getWidth()/100f);
+            fontData = fontData.deriveFont(java.awt.Font.BOLD,35);
 
             uniFontData = new UnicodeFont(fontData);
 
@@ -80,8 +80,21 @@ public class SinglePlayerState extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background,0,0);
-        uniFontData.drawString(80*gameContainer.getWidth()/100f,15,"Lives: " + field.getSpaceShip().getLife(), Color.white);
-        uniFontData.drawString(20,15,"Score: " + field.getSpaceShip().getCurrentScore(), Color.white);
+        Color color;
+        int highscore;
+        if(menu.getPlayer().getHighScore() > field.getSpaceShip().getCurrentScore()){
+            color = Color.white;
+            highscore = menu.getPlayer().getHighScore();
+        }else{
+            color = Color.green;
+            highscore = field.getSpaceShip().getCurrentScore();
+        }
+        uniFontData.drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
+                "Lives: " + field.getSpaceShip().getLife(), Color.red);
+        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: "))/2,
+                2*gameContainer.getHeight()/100f,"Score: " + field.getSpaceShip().getCurrentScore(), color);
+        uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
+                "Highscore: " + highscore, Color.green);
 
         field.getSpaceShip().render(spaceShipImage);
 

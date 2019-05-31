@@ -6,7 +6,7 @@ import logic.sprite.Sprite;
 public class Invader extends Sprite {
 
     private int value;
-    private static double VERTICAL_OFFSET = 90;
+    private static double VERTICAL_OFFSET = 80;
     public static double HORIZONTAL_OFFSET = 20;
 
     public Invader(Coordinate coordinate, double size, int value) {
