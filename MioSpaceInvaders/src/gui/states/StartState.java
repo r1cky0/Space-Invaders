@@ -124,7 +124,7 @@ public class StartState extends BasicGameState implements ComponentListener {
 
         if (errorFlag) {
             uniFontMessage.drawString((gameContainer.getWidth() - uniFontMessage.getWidth(errorMessage))/2f,
-                    45*gameContainer.getHeight()/100f, errorMessage, Color.yellow);
+                    45*gameContainer.getHeight()/100f, errorMessage, Color.red);
         }
 
         loginButton.render(gameContainer, graphics);

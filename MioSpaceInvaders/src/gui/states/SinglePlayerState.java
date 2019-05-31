@@ -82,7 +82,7 @@ public class SinglePlayerState extends BasicGameState {
         graphics.drawImage(background,0,0);
         Color color;
         int highscore;
-        if(menu.getPlayer().getHighScore() > field.getSpaceShip().getCurrentScore()){
+        if(menu.getPlayer().getHighScore() >= field.getSpaceShip().getCurrentScore()){
             color = Color.white;
             highscore = menu.getPlayer().getHighScore();
         }else{
