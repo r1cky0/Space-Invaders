@@ -1,13 +1,11 @@
 package logic.environment;
 
 import logic.FileManager.AddAccount;
-import logic.FileManager.GetSpaceShipFromPlayer;
 import logic.FileManager.Login;
 import logic.FileManager.SaveCustomization;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
-import org.newdawn.slick.util.Log;
 
 import java.io.IOException;
 
@@ -57,12 +55,12 @@ public class Menu {
      * @return Segnala se aggiunta dell' acount é andata a buon fine
      * @throws IOException Eccezione di sistema per acquisizione input da tastiera
      */
-    public boolean newAccount(String name, String password) throws IOException {
+    public boolean newAccount(String name, String password){
 
         if(AddAccount.newAccount(name,password)){
             this.player = new Player(name,defaultShip);
 
-            customization = new Customization(GetSpaceShipFromPlayer.getSpaceShipFromPlayer(player.getName()));
+            customization = new Customization("res/images/SpaceShip0.png");
 
             field = new Field(player, maxWidth, maxHeight);
             return true;
@@ -70,12 +68,14 @@ public class Menu {
         return false;
     }
 
-    public boolean logIn(String name, String password)throws IOException{
+    public boolean logIn(String name, String password){
 
-        if(Login.login(name,password)){
-            this.player = new Player(name,defaultShip);
+        String [] components = Login.login(name, password);
 
-            customization = new Customization(GetSpaceShipFromPlayer.getSpaceShipFromPlayer(player.getName()));
+        if(components != null){
+            player = new Player(name, defaultShip);
+            player.setHighScore(Integer.parseInt(components[2]));
+            customization = new Customization(components[3]);
 
             field = new Field(player, maxWidth, maxHeight);
             return true;

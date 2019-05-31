@@ -36,11 +36,7 @@ public class Player implements Comparable{
      */
     public void setHighScore(int highscore) {
         this.highScore = highscore;
-        try {
-            AddHighScore.saveHighscore(name,highscore);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        AddHighScore.saveHighscore(name,highscore);
     }
 
     public SpaceShip getSpaceShip() {

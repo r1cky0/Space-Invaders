@@ -149,15 +149,11 @@ public class StartState extends BasicGameState implements ComponentListener {
             String nickname = nameField.getText();
             String password = passwordField.getText();
 
-            try {
-                if (menu.logIn(nickname, password)) {
-                    stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
-                } else {
-                    errorFlag = true;
-                    errorMessage = "Nickname o password errati";
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (menu.logIn(nickname, password)) {
+                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            } else {
+                errorFlag = true;
+                errorMessage = "Nickname o password errati";
             }
         }
 
@@ -166,15 +162,11 @@ public class StartState extends BasicGameState implements ComponentListener {
             String password = passwordField.getText();
 
             if (!(nickname.isEmpty() || password.isEmpty())) {
-                try {
-                    if (menu.newAccount(nickname, password)) {
-                        stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
-                    } else {
-                        errorFlag = true;
-                        errorMessage = "Account già esistente";
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (menu.newAccount(nickname, password)) {
+                    stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                } else {
+                    errorFlag = true;
+                    errorMessage = "Account già esistente";
                 }
             }
         }
