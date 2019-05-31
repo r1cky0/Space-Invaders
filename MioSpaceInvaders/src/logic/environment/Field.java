@@ -72,11 +72,11 @@ public class Field {
      * Reinizializzazione degli invaders e incremento life ship al nuovo livello
      */
     public void nextLevel(){
-        newLevel = true;
         incrementDifficulty();
-        initInvaders();
         md = MovingDirections.RIGHT;
         spaceShip.incrementLife();
+        initInvaders();
+        newLevel = true;
     }
 
     /**
@@ -90,7 +90,7 @@ public class Field {
         double x;
 
         for(int i=0; i<4; i++){
-            x = HORIZONTAL_OFFSET;
+            x = Invader.HORIZONTAL_OFFSET;
 
             for(int j=0; j<8; j++){
                 Coordinate coordinate = new Coordinate(x,baseY);
@@ -232,7 +232,7 @@ public class Field {
     public MovingDirections checkInvaderDirection() {
 
         double maxX = 0;
-        double minX = 10;
+        double minX = Invader.HORIZONTAL_OFFSET;
         double maxY = 0;
 
         for (Invader invader : invaders) {
@@ -249,11 +249,11 @@ public class Field {
         if((maxY + invaderSize) >= (maxHeight - 7*brickSize)){
             gameOver();
         }
-        if(((maxX + 6*invaderSize/5) > maxWidth) && !goDown){
+        if(((maxX + invaderSize + Invader.HORIZONTAL_OFFSET) > maxWidth) && !goDown){
             goDown = true;
             return MovingDirections.DOWN;
 
-        } else if((minX - invaderSize/5 < MIN_WIDTH) && !goDown) {
+        } else if((minX - Invader.HORIZONTAL_OFFSET < MIN_WIDTH) && !goDown) {
             goDown = true;
             return MovingDirections.DOWN;
         }
@@ -305,7 +305,7 @@ public class Field {
     }
 
     private void incrementDifficulty(){
-        if(difficulty >= 500){
+        if(difficulty >= 400){
             difficulty -= 100;
         }
     }

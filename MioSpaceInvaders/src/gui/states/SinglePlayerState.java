@@ -29,7 +29,6 @@ public class SinglePlayerState extends BasicGameState {
     private UnicodeFont uniFontData;
 
     //IMAGES
-//    private Animation invadersAnimation;
     private Image background;
     private Image invaderImage;
     private Image spaceShipImage;
@@ -37,14 +36,12 @@ public class SinglePlayerState extends BasicGameState {
     private Image bulletImage;
 
     private ThreadInvader threadInvader;
+    public boolean newThread;
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
 
         try {
-//            Image[] invaderImages = new Image[]{new Image("res/images/Alien0a.png"), new Image("res/images/Alien0b.png")};
-//            invadersAnimation = new Animation (invaderImages, 1000);
-
             invaderImage = new Image("res/images/Alien0a.png");
             spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
             bulletImage = new Image("res/images/Shot.png");
@@ -54,7 +51,6 @@ public class SinglePlayerState extends BasicGameState {
         } catch (SlickException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -78,7 +74,7 @@ public class SinglePlayerState extends BasicGameState {
         }
         field = menu.getField();
         spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
-        threadInvader = new ThreadInvader(900, field);
+        newThread = false;
     }
 
     @Override
@@ -88,6 +84,7 @@ public class SinglePlayerState extends BasicGameState {
         uniFontData.drawString(20,15,"Score: " + field.getSpaceShip().getCurrentScore(), Color.white);
 
         field.getSpaceShip().render(spaceShipImage);
+
 
         for (Invader invader: field.getInvaders()) {
             invader.render(invaderImage);
@@ -127,10 +124,11 @@ public class SinglePlayerState extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
-        if(!threadInvader.isRunning()){
+        if(!newThread){
+            threadInvader = new ThreadInvader(field.getDifficulty(), field);
             threadInvader.start();
+            newThread = true;
         }
-
 
         //STATO GIOCO
         if(field.isGameOver()){
@@ -145,8 +143,8 @@ public class SinglePlayerState extends BasicGameState {
 
         if(field.isNewLevel()){
             threadInvader.stop();
-            threadInvader = new ThreadInvader(field.getDifficulty(), field);
             field.setNewLevel(false);
+            newThread = false;
         }
 
         if(input.isKeyDown(Input.KEY_ESCAPE)){

@@ -26,22 +26,18 @@ public class ThreadInvader implements Runnable {
         running.set(false);
     }
 
-    public boolean isRunning() {
-        return running.get();
-    }
-
     public void run() {
         running.set(true);
         Random rand = new Random();
         while (running.get()) {
+            field.invaderMovement(field.checkInvaderDirection());
+            if(rand.nextInt(10) > 4){
+                field.invaderShot();
+            }
             try {
                 Thread.sleep(sleepInterval);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
-                field.invaderMovement(field.checkInvaderDirection());
-            if(rand.nextInt(10) > 4){
-                field.invaderShot();
             }
         }
     }
