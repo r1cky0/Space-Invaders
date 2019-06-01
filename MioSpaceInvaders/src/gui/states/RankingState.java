@@ -49,12 +49,12 @@ public class RankingState extends BasicGameState implements ComponentListener {
         this.stateBasedGame = stateBasedGame;
         background = new Image("res/images/BackgroundSpace.png");
 
-        goldMedal = new Image("res/images/MedalGold.png").getScaledCopy(6*gameContainer.getWidth()/100,
-                6*gameContainer.getWidth()/100);
-        silverMedal = new Image("res/images/MedalSilver.png").getScaledCopy(6*gameContainer.getWidth()/100,
-                6*gameContainer.getWidth()/100);
-        bronzeMedal = new Image("res/images/MedalBronze.png").getScaledCopy(6*gameContainer.getWidth()/100,
-                6*gameContainer.getWidth()/100);
+        goldMedal = new Image("res/images/MedalGold.png").getScaledCopy(5*gameContainer.getWidth()/100,
+                5*gameContainer.getWidth()/100);
+        silverMedal = new Image("res/images/MedalSilver.png").getScaledCopy(5*gameContainer.getWidth()/100,
+                5*gameContainer.getWidth()/100);
+        bronzeMedal = new Image("res/images/MedalBronze.png").getScaledCopy(5*gameContainer.getWidth()/100,
+                5*gameContainer.getWidth()/100);
 
         homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
@@ -102,7 +102,7 @@ public class RankingState extends BasicGameState implements ComponentListener {
                     Integer.toString((int) pair.getValue()));
 
             if(numPlayer>2){
-                offset += 50;
+                offset += gameContainer.getHeight()/14.4;
             }else {
                 offset += 63;
             }

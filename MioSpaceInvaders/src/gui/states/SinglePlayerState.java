@@ -57,7 +57,6 @@ public class SinglePlayerState extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         background = new Image("res/images/BackgroundSpace.png");
-        System.err.println(gameContainer.getWidth()+"\t"+ gameContainer.getHeight());
 
         try{
             fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
