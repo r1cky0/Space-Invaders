@@ -66,7 +66,7 @@ public class SettingsState extends BasicGameState implements ComponentListener {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
-        cornice = new Rectangle(3*gameContainer.getScreenWidth()/100f, 41*gameContainer.getHeight()/100f,
+        cornice = new Rectangle(2*gameContainer.getScreenWidth()/100f, 41*gameContainer.getHeight()/100f,
                 14*gameContainer.getWidth()/100f, 14*gameContainer.getHeight()/100f);
 
         shipButtons = new ArrayList<>();
