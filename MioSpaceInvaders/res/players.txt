@@ -1,2 +1,2 @@
-a	a	2870	res/images/SpaceShip0.png
+a	a	2870	res/images/SpaceShip5.png
 b	b	0	res/images/SpaceShip0.png

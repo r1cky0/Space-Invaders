@@ -66,15 +66,15 @@ public class SettingsState extends BasicGameState implements ComponentListener {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
-        cornice = new Rectangle(2*gameContainer.getScreenWidth()/100f, 41*gameContainer.getHeight()/100f,
-                14*gameContainer.getWidth()/100f, 14*gameContainer.getHeight()/100f);
+        cornice = new Rectangle(2*gameContainer.getWidth()/100f, 38*gameContainer.getHeight()/100f,
+                14*gameContainer.getWidth()/100f, 12*gameContainer.getWidth()/100f);
 
         shipButtons = new ArrayList<>();
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
         background = new Image("res/images/BackgroundSpace.png");
         homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
-                6*gameContainer.getWidth()/100);;
+                6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
                 6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
         title = "SET YOUR SHIP!";
@@ -168,6 +168,11 @@ public class SettingsState extends BasicGameState implements ComponentListener {
         if (source == shipButtons.get(4)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(4));
             cornice.setX(shipButtons.get(4).getX() - 30*cornice.getWidth()/100);
+            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
+        }
+        if (source == shipButtons.get(5)) {
+            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(5));
+            cornice.setX(shipButtons.get(5).getX() - 30*cornice.getWidth()/100);
             menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
         }
     }

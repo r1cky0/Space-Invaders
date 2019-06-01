@@ -60,12 +60,12 @@ public class StartState extends BasicGameState implements ComponentListener {
 
         try {
             fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontTitle = fontTitle.deriveFont(Font.BOLD, 60);
+            fontTitle = fontTitle.deriveFont(Font.BOLD, gameContainer.getWidth()/20);
             uniFontTitle = new UnicodeFont(fontTitle);
             uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
 
             fontMessage = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontMessage = fontMessage.deriveFont(Font.BOLD, 40);
+            fontMessage = fontMessage.deriveFont(Font.BOLD, gameContainer.getWidth()/30);
             uniFontMessage = new UnicodeFont(fontMessage);
             uniFontMessage.getEffects().add(new ColorEffect(java.awt.Color.white));
 
@@ -83,10 +83,10 @@ public class StartState extends BasicGameState implements ComponentListener {
         passwordString = "PASSWORD:";
 
         nameField = new TextField(gameContainer, ttf,40*gameContainer.getWidth()/100,25*gameContainer.getHeight()/100,
-                300,40);
+                gameContainer.getWidth()/3,gameContainer.getHeight()/20);
 
         passwordField = new TextField(gameContainer, ttf,40*gameContainer.getWidth()/100,33*gameContainer.getHeight()/100,
-                300,40);
+                gameContainer.getWidth()/3,gameContainer.getHeight()/20);
 
         nameField.setBackgroundColor(Color.white);
         nameField.setTextColor(Color.black);
@@ -94,18 +94,18 @@ public class StartState extends BasicGameState implements ComponentListener {
         passwordField.setBackgroundColor(Color.white);
         passwordField.setTextColor(Color.black);
 
-        login = new Image("res/images/ButtonLogin.png").getScaledCopy(30*gameContainer.getWidth()/100,
+        login = new Image("res/images/ButtonLogin.png").getScaledCopy(25*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
 
-        account = new Image("res/images/ButtonAccount.png").getScaledCopy(30*gameContainer.getWidth()/100,
+        account = new Image("res/images/ButtonAccount.png").getScaledCopy(25*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
 
         loginButton = new MouseOverArea(gameContainer, login,(gameContainer.getWidth() - login.getWidth())/2,
-                55*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
+                55*gameContainer.getHeight()/100,25*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
         accountButton = new MouseOverArea(gameContainer, account,(gameContainer.getWidth() - account.getWidth())/2,
-                70*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
+                70*gameContainer.getHeight()/100,25*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
     }

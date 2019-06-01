@@ -57,11 +57,12 @@ public class SinglePlayerState extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         background = new Image("res/images/BackgroundSpace.png");
+        System.err.println(gameContainer.getWidth()+"\t"+ gameContainer.getHeight());
 
         try{
             fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
                     ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontData = fontData.deriveFont(java.awt.Font.BOLD,35);
+            fontData = fontData.deriveFont(java.awt.Font.BOLD,gameContainer.getWidth()/30);
 
             uniFontData = new UnicodeFont(fontData);
 

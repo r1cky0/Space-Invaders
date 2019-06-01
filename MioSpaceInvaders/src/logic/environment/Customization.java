@@ -25,6 +25,7 @@ public class Customization {
         spaceShips.add("res/images/SpaceShip2.png");
         spaceShips.add("res/images/SpaceShip3.png");
         spaceShips.add("res/images/SpaceShip4.png");
+        spaceShips.add("res/images/SpaceShip5.png");
     }
 
     public String getCurrentShip() {
