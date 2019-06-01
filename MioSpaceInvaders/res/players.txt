@@ -1,4 +1,4 @@
-a	a	2870	res/images/SpaceShip5.png
+a	a	2870	res/images/SpaceShip3.png
 b	b	0	res/images/SpaceShip0.png
 cc	cc	0	res/images/SpaceShip0.png
 c	c	0	res/images/SpaceShip0.png
@@ -9,3 +9,4 @@ x	x	0	res/images/SpaceShip0.png
 y	y	0	res/images/SpaceShip0.png
 j	j	0	res/images/SpaceShip0.png
 h	h	0	res/images/SpaceShip5.png
+PorcoZioDove	QuantoSeiArrosto	310	res/images/SpaceShip0.png

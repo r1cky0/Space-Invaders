@@ -104,14 +104,14 @@ public class RankingState extends BasicGameState implements ComponentListener {
             if(numPlayer>2){
                 offset += gameContainer.getHeight()/14.4;
             }else {
-                offset += 63;
+                offset += gameContainer.getHeight()/11.49;
             }
             numPlayer++;
         }
 
         goldMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f);
-        silverMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + 65);
-        bronzeMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + 130);
+        silverMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + gameContainer.getHeight()/11.49f);
+        bronzeMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + gameContainer.getHeight()/5.54f);
 
         homeButton.render(gameContainer,graphics);
 

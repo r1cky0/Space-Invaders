@@ -83,10 +83,12 @@ public class StartState extends BasicGameState implements ComponentListener {
         passwordString = "PASSWORD:";
 
         nameField = new TextField(gameContainer, ttf,40*gameContainer.getWidth()/100,25*gameContainer.getHeight()/100,
-                gameContainer.getWidth()/3,gameContainer.getHeight()/20);
+                gameContainer.getWidth()/3,gameContainer.getHeight()/18);
+
+        nameField.setFocus(true);
 
         passwordField = new TextField(gameContainer, ttf,40*gameContainer.getWidth()/100,33*gameContainer.getHeight()/100,
-                gameContainer.getWidth()/3,gameContainer.getHeight()/20);
+                gameContainer.getWidth()/3,gameContainer.getHeight()/18);
 
         nameField.setBackgroundColor(Color.white);
         nameField.setTextColor(Color.black);
