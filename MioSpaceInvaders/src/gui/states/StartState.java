@@ -1,5 +1,6 @@
 package gui.states;
 import logic.environment.Menu;
+import logic.environment.MovingDirections;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -135,6 +136,11 @@ public class StartState extends BasicGameState implements ComponentListener {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+        Input input = gameContainer.getInput();
+
+        if (input.isKeyDown(Input.KEY_TAB)) {
+            passwordField.setFocus(true);
+        }
     }
 
     @Override

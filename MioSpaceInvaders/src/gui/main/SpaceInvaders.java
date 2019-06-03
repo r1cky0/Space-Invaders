@@ -35,7 +35,7 @@ public class SpaceInvaders extends StateBasedGame {
     public static void main(String[] args) {
 
         try {
-            int width = 1280;
+            int width = 1000;
             int height = 730;
             Menu menu = new Menu(width, height);
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));

@@ -6,9 +6,8 @@ import logic.sprite.dinamic.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.unmovable.Bunker;
-import java.util.ArrayList;
-import java.util.ListIterator;
-import java.util.Random;
+
+import java.util.*;
 
 public class Field {
 
@@ -27,11 +26,11 @@ public class Field {
 
     private Player player;
     private SpaceShip spaceShip;
-    private ArrayList<Invader> invaders;
+    private List<Invader> invaders;
     private ArrayList<Bunker> bunkers;
     private Bullet shipBullet;
     private boolean shipShot;
-    private ArrayList<Bullet> invaderBullets;
+    private List<Bullet> invaderBullets;
     private MovingDirections md;
     private boolean goDown;
     private int difficulty;
@@ -46,8 +45,9 @@ public class Field {
         brickSize = maxWidth / 40;
 
         spaceShip = player.getSpaceShip();
-        invaderBullets = new ArrayList<>();
-        invaders = new ArrayList<>();
+        bunkers = new ArrayList<>();
+        invaderBullets = Collections.synchronizedList(new ArrayList<>());
+        invaders = Collections.synchronizedList(new ArrayList<>());
         md = MovingDirections.RIGHT;
         goDown = false;
         shipShot = false;
@@ -107,7 +107,6 @@ public class Field {
      * proporzionale alla dimensione della schermata di gioco
      */
     private void initBunkers(){
-        bunkers = new ArrayList<>();
         double baseX = (maxWidth - 35*brickSize)/2;
         double baseY = (maxHeight - 4*brickSize);
         double x = baseX;
@@ -173,7 +172,7 @@ public class Field {
             }
 
             if (spaceShip.collides(bullet)) {
-                spaceShip.decreaseLife();
+                //spaceShip.decreaseLife();
                 if (spaceShip.getLife() == 0) {
                     gameOver();
                 }
@@ -305,12 +304,12 @@ public class Field {
     }
 
     private void incrementDifficulty(){
-        if(difficulty >= 400){
+        if(difficulty >= 600){
             difficulty -= 100;
         }
     }
 
-    public ArrayList<Invader> getInvaders() {
+    public List<Invader> getInvaders() {
         return invaders;
     }
 
@@ -318,7 +317,7 @@ public class Field {
         return bunkers;
     }
 
-    public ArrayList<Bullet> getInvaderBullets(){
+    public List<Bullet> getInvaderBullets(){
         return invaderBullets;
     }
 

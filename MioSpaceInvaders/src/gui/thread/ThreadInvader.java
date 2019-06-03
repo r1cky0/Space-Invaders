@@ -30,7 +30,7 @@ public class ThreadInvader implements Runnable {
         running.set(true);
         Random rand = new Random();
         while (running.get()) {
-            field.invaderMovement(field.checkInvaderDirection());
+             field.invaderMovement(field.checkInvaderDirection());
             if(rand.nextInt(10) > 4){
                 field.invaderShot();
             }
