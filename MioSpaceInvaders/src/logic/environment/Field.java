@@ -8,6 +8,7 @@ import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.unmovable.Bunker;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Field {
 
@@ -46,8 +47,8 @@ public class Field {
 
         spaceShip = player.getSpaceShip();
         bunkers = new ArrayList<>();
-        invaderBullets = Collections.synchronizedList(new ArrayList<>());
-        invaders = Collections.synchronizedList(new ArrayList<>());
+        invaderBullets = new CopyOnWriteArrayList<>();
+        invaders = new CopyOnWriteArrayList<>(  );
         md = MovingDirections.RIGHT;
         goDown = false;
         shipShot = false;
@@ -159,28 +160,24 @@ public class Field {
      * fine schermata(y maggiore)
      */
     public void checkInvaderShotCollision() {
-
-        ListIterator<Bullet> bulletIter = invaderBullets.listIterator();
-
-        while (bulletIter.hasNext()) {
-            Bullet bullet = bulletIter.next();
+            for(Bullet bullet : invaderBullets){
             for (Bunker bunker : bunkers) {
                 if (bunker.checkBrickCollision(bullet)) {
-                    bulletIter.remove();
+                    invaderBullets.remove(bullet);
                     return;
                 }
             }
 
             if (spaceShip.collides(bullet)) {
-                //spaceShip.decreaseLife();
+                spaceShip.decreaseLife();
                 if (spaceShip.getLife() == 0) {
                     gameOver();
                 }
-                bulletIter.remove();
+                invaderBullets.remove(bullet);
                 return;
             }
             if (bullet.getY() >= maxHeight) {
-                bulletIter.remove();
+                invaderBullets.remove(bullet);
                 return;
             }
         }
@@ -201,14 +198,10 @@ public class Field {
             }
         }
 
-        ListIterator<Invader> invaderIter = invaders.listIterator();
-
-        while (invaderIter.hasNext()){
-            Invader invader = invaderIter.next();
-
+        for(Invader invader : invaders){
             if (invader.collides(shipBullet)) {
                 spaceShip.incrementCurrentScore(invader.getValue());
-                invaderIter.remove();
+                invaders.remove(invader);
                 shipShot = false;
                 shipBullet = null;
                 if (invaders.isEmpty()) {
