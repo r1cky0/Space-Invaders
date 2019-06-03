@@ -297,7 +297,7 @@ public class Field {
     }
 
     private void incrementDifficulty(){
-        if(difficulty >= 600){
+        if(difficulty >= 300){
             difficulty -= 100;
         }
     }

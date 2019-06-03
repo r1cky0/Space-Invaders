@@ -1,4 +1,4 @@
-package gui.thread;
+package logic.thread;
 
 import logic.environment.Field;
 

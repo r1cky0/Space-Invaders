@@ -1,6 +1,6 @@
 package gui.states;
 
-import gui.thread.ThreadInvader;
+import logic.thread.ThreadInvader;
 import logic.environment.Field;
 import logic.environment.Menu;
 import logic.environment.MovingDirections;
