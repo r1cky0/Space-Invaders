@@ -49,12 +49,12 @@ public class RankingState extends BasicGameState implements ComponentListener {
         this.stateBasedGame = stateBasedGame;
         background = new Image("res/images/BackgroundSpace.png");
 
-        goldMedal = new Image("res/images/MedalGold.png").getScaledCopy(5*gameContainer.getWidth()/100,
-                5*gameContainer.getWidth()/100);
-        silverMedal = new Image("res/images/MedalSilver.png").getScaledCopy(5*gameContainer.getWidth()/100,
-                5*gameContainer.getWidth()/100);
-        bronzeMedal = new Image("res/images/MedalBronze.png").getScaledCopy(5*gameContainer.getWidth()/100,
-                5*gameContainer.getWidth()/100);
+        goldMedal = new Image("res/images/MedalGold.png").getScaledCopy(6*gameContainer.getWidth()/100,
+                6*gameContainer.getWidth()/100);
+        silverMedal = new Image("res/images/MedalSilver.png").getScaledCopy(6*gameContainer.getWidth()/100,
+                6*gameContainer.getWidth()/100);
+        bronzeMedal = new Image("res/images/MedalBronze.png").getScaledCopy(6*gameContainer.getWidth()/100,
+                6*gameContainer.getWidth()/100);
 
         homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
@@ -102,16 +102,16 @@ public class RankingState extends BasicGameState implements ComponentListener {
                     Integer.toString((int) pair.getValue()));
 
             if(numPlayer>2){
-                offset += gameContainer.getHeight()/14.4;
+                offset += gameContainer.getHeight()/15;
             }else {
-                offset += gameContainer.getHeight()/11.49;
+                offset += gameContainer.getHeight()/12;
             }
             numPlayer++;
         }
 
         goldMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f);
-        silverMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + gameContainer.getHeight()/11.49f);
-        bronzeMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + gameContainer.getHeight()/5.54f);
+        silverMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + gameContainer.getHeight()/12f);
+        bronzeMedal.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + gameContainer.getHeight()/6f);
 
         homeButton.render(gameContainer,graphics);
 

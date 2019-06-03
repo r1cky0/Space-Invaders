@@ -36,7 +36,7 @@ public class SpaceInvaders extends StateBasedGame {
 
         try {
             int width = 1000;
-            int height = 730;
+            int height = 800;
             Menu menu = new Menu(width, height);
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
             container.setDisplayMode(width, height, false);
@@ -47,8 +47,6 @@ public class SpaceInvaders extends StateBasedGame {
 
         } catch (SlickException e) {
             e.printStackTrace();
-        /*} catch (LWJGLException e) {
-            e.printStackTrace();*/
         }
     }
 }
