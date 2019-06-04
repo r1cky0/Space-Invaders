@@ -40,7 +40,7 @@ public class Field {
     private List<Bullet> invaderBullets;
     private MovingDirections md;
     private boolean goDown;
-    private int difficulty;
+    private Difficulty difficulty;
 
     public Field(Player player, double maxWidth, double maxHeight){
         this.player = player;
@@ -62,7 +62,7 @@ public class Field {
         md = MovingDirections.RIGHT;
         goDown = false;
         shipShot = false;
-        difficulty = 900; //millisecondi pausa sparo/movimento alieni
+        difficulty = new Difficulty(); //millisecondi pausa sparo/movimento alieni
 
         gameOver = false;
         newHighscore = false;
@@ -83,7 +83,7 @@ public class Field {
      * Reinizializzazione degli invaders e incremento life ship al nuovo livello
      */
     public void nextLevel(){
-        incrementDifficulty();
+        difficulty.incrementDifficulty();
         md = MovingDirections.RIGHT;
         spaceShip.incrementLife();
         invaders = invadersCreator.create();
@@ -266,12 +266,6 @@ public class Field {
 
     }
 
-    private void incrementDifficulty(){
-        if(difficulty >= 300){
-            difficulty -= 100;
-        }
-    }
-
     public List<Invader> getInvaders() {
         return invaders;
     }
@@ -309,7 +303,7 @@ public class Field {
     }
 
     public int getDifficulty(){
-        return difficulty;
+        return difficulty.getDifficulty();
     }
 
 }
