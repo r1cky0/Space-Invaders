@@ -124,7 +124,6 @@ public class Field {
      */
     public void gameOver(){
 
-        player.incrementCredit(spaceShip.getCurrentScore());
         if(player.getHighScore() < spaceShip.getCurrentScore()){
             player.setHighScore(spaceShip.getCurrentScore());
             newHighscore = true;

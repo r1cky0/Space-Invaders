@@ -34,7 +34,6 @@ public class SettingsState extends BasicGameState implements ComponentListener {
     private StateBasedGame stateBasedGame;
     private GameContainer gameContainer;
 
-    private String credit;
     private String title;
 
     private Font fontTitle;
@@ -116,12 +115,9 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        credit = "Credits: " + menu.getPlayer().getCredit();
         graphics.drawImage(background, 0, 0);
 
         homeButton.render(gameContainer,graphics);
-
-        uniFontData.drawString(5*gameContainer.getWidth()/100f, 20*gameContainer.getHeight()/100f, credit);
 
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
                 7*gameContainer.getHeight()/100f, title, org.newdawn.slick.Color.white);
