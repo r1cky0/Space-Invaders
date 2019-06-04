@@ -1,5 +1,7 @@
 package logic.environment;
 
+import logic.environment.creators.BunkersCreator;
+import logic.environment.creators.InvadersCreator;
 import logic.player.Player;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.Bullet;
@@ -13,13 +15,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Field {
 
     //DIMENSIONS
-    private final double MIN_HEIGHT = 0.0;
     private final double MIN_WIDTH = 0.0;
     private double maxHeight;
     private double maxWidth;
-    private double invaderSize;
     private double bulletSize;
     private double brickSize;
+    private double invaderSize;
+
+    private InvadersCreator invadersCreator;
+    private BunkersCreator bunkersCreator;
     //STATE
     private boolean gameOver;
     private boolean newHighscore;
@@ -41,9 +45,13 @@ public class Field {
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
 
-        invaderSize = maxWidth / 20;
         bulletSize = maxWidth / 60;
         brickSize = maxWidth / 40;
+
+        invaderSize = maxWidth / 20;
+
+        invadersCreator = new InvadersCreator(maxHeight,maxWidth,invaderSize);
+        bunkersCreator = new BunkersCreator(maxHeight,maxWidth,brickSize);
 
         spaceShip = player.getSpaceShip();
         bunkers = new ArrayList<>();
@@ -63,8 +71,8 @@ public class Field {
 
     public void initComponents(){
         //inizializzazione di tutti gli elementi all'inizio del gioco
-        initInvaders();
-        initBunkers();
+        invaders = invadersCreator.create();
+        bunkers = bunkersCreator.create();
         spaceShip.setLife();
         spaceShip.setCurrentScore();
     }
@@ -76,47 +84,8 @@ public class Field {
         incrementDifficulty();
         md = MovingDirections.RIGHT;
         spaceShip.incrementLife();
-        initInvaders();
+        invaders = invadersCreator.create();
         newLevel = true;
-    }
-
-    /**
-     * Inizializzazione degli invaders, posti in alto a sinistra nella schermata di gioco
-     */
-    private void initInvaders(){
-        final double HORIZONTAL_OFFSET = maxWidth/32;
-        final double VERTICAL_OFFSET = maxHeight/100;
-
-        double baseY = maxHeight/10;
-        double x;
-
-        for(int i=0; i<4; i++){
-            x = Invader.HORIZONTAL_OFFSET;
-
-            for(int j=0; j<8; j++){
-                Coordinate coordinate = new Coordinate(x,baseY);
-                Invader invader = new Invader(coordinate, invaderSize, 10);
-                invaders.add(invader);
-                x+= invaderSize + HORIZONTAL_OFFSET;
-            }
-            baseY+= invaderSize + VERTICAL_OFFSET;
-        }
-    }
-
-    /**
-     * Inizializzazione della lista di bunker, con attenzione particolare alla distanza tra ognuno di essi
-     * proporzionale alla dimensione della schermata di gioco
-     */
-    private void initBunkers(){
-        double baseX = (maxWidth - 35*brickSize)/2;
-        double baseY = (maxHeight - 4*brickSize);
-        double x = baseX;
-
-        for(int i=1; i<5;i++){
-            Bunker bunker = new Bunker(x,baseY, brickSize);
-            bunkers.add(bunker);
-            x = baseX + (10*brickSize)*i;
-        }
     }
 
     /**
