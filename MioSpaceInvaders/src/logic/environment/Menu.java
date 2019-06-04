@@ -27,7 +27,8 @@ public class Menu {
         this.maxWidth = maxWidth;
         double shipSize = maxWidth / 20;
 
-        customization = new Customization("res/images/SpaceShip0.png");  // solo per non avere nullPointerExc, poi tanto dopo il logIn viene sovrascritta con quella da file
+        // solo per non avere nullPointerExc, poi tanto dopo il logIn viene sovrascritta con quella da file
+        customization = new Customization("res/images/SpaceShip0.png");
 
         ranking = new Ranking();
 
@@ -53,7 +54,6 @@ public class Menu {
      * @param name Nickname del giocatore
      * @param password Password del giocatore
      * @return Segnala se aggiunta dell' acount é andata a buon fine
-     * @throws IOException Eccezione di sistema per acquisizione input da tastiera
      */
     public boolean newAccount(String name, String password){
 
