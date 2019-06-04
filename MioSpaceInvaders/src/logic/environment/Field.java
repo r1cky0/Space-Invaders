@@ -4,9 +4,11 @@ import logic.environment.creators.BunkersCreator;
 import logic.environment.creators.InvadersCreator;
 import logic.player.Player;
 import logic.sprite.Coordinate;
-import logic.sprite.dinamic.Bullet;
+import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
+import logic.sprite.dinamic.bullets.InvaderBullet;
+import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Bunker;
 
 import java.util.*;
@@ -117,7 +119,7 @@ public class Field {
 
         if(!shipShot) {
             Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - bulletSize/2, spaceShip.getY());
-            shipBullet = new Bullet(coordinate, bulletSize);
+            shipBullet = new SpaceShipBullet(coordinate, bulletSize);
             shipShot = true;
         }
     }
@@ -260,7 +262,7 @@ public class Field {
         Coordinate coordinate = new Coordinate(invaders.get(random).getX() +
                 invaderSize / 2 - bulletSize /2, invaders.get(random).getY()+invaderSize/2);
 
-        invaderBullets.add(new Bullet(coordinate, bulletSize));
+        invaderBullets.add(new InvaderBullet(coordinate, bulletSize));
 
     }
 

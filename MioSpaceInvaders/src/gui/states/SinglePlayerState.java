@@ -4,17 +4,15 @@ import logic.thread.ThreadInvader;
 import logic.environment.Field;
 import logic.environment.Menu;
 import logic.environment.MovingDirections;
-import logic.sprite.dinamic.Bullet;
+import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import org.newdawn.slick.*;
-import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-import org.newdawn.slick.util.ResourceLoader;
 
 import java.util.ArrayList;
 
@@ -181,7 +179,7 @@ public class SinglePlayerState extends BasicGameState {
         }
 
         if (field.getShipBullet() != null) {
-            field.getShipBullet().moveUp(delta);
+            field.getShipBullet().move(delta);
         }
 
         if(field.getShipBullet()!= null) {
@@ -194,7 +192,7 @@ public class SinglePlayerState extends BasicGameState {
         }
 
         for(Bullet bullet: field.getInvaderBullets()){
-            bullet.moveDown(delta);
+            bullet.move(delta);
         }
 
         field.checkInvaderShotCollision();

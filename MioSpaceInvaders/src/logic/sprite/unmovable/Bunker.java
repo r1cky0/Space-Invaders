@@ -2,7 +2,6 @@ package logic.sprite.unmovable;
 
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
-import logic.sprite.dinamic.Bullet;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,7 +35,7 @@ public class Bunker {
         double indY = indexY;
 
         try {
-            BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\dario\\IdeaProjects\\Progetto 2\\Progetto-C19\\MioSpaceInvaders\\res\\bunker.txt"));
+            BufferedReader in = new BufferedReader(new FileReader("res/bunker.txt"));
             String riga = in.readLine();
             while (riga != null) {
                 for (int i = 0; i < riga.length(); i++) {
