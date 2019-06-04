@@ -17,7 +17,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.Font;
 
-public class MenuState extends BasicGameState implements ComponentListener {
+public class MenuState extends BasicInvaderState implements ComponentListener {
     private Menu menu;
 
     private GameContainer gameContainer;
@@ -80,8 +80,8 @@ public class MenuState extends BasicGameState implements ComponentListener {
         rankingButton = new MouseOverArea(gameContainer, ranking,55*gameContainer.getWidth()/100,
                 63*gameContainer.getHeight()/100,12*gameContainer.getWidth()/100,12*gameContainer.getHeight()/100,
                 this);
-        FontBuilder fontBuilder = new FontBuilder();
-        uniFontTitle = fontBuilder.Build(9*gameContainer.getWidth()/100f);
+
+        uniFontTitle = Build(9*gameContainer.getWidth()/100f);
 
         /*try{
             fontTitle = Font.createFont(Font.TRUETYPE_FONT,ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));

@@ -29,7 +29,7 @@ import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SettingsState extends BasicGameState implements ComponentListener {
+public class SettingsState extends BasicInvaderState implements ComponentListener {
 
     private StateBasedGame stateBasedGame;
     private GameContainer gameContainer;
@@ -89,9 +89,8 @@ public class SettingsState extends BasicGameState implements ComponentListener {
             i++;
         }
 
-        FontBuilder fontBuilder = new FontBuilder();
-        uniFontTitle = fontBuilder.Build(9*gameContainer.getWidth()/100f);
-        uniFontData = fontBuilder.Build(9*gameContainer.getWidth()/100f);
+        uniFontTitle = Build(9*gameContainer.getWidth()/100f);
+        uniFontData = Build(9*gameContainer.getWidth()/100f);
         /*try {
 
             fontData = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));

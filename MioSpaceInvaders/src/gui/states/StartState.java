@@ -19,7 +19,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import java.awt.Font;
 import java.io.IOException;
 
-public class StartState extends BasicGameState implements ComponentListener {
+public class StartState extends BasicInvaderState implements ComponentListener {
 
     private StateBasedGame stateBasedGame;
     private GameContainer gameContainer;
@@ -33,10 +33,8 @@ public class StartState extends BasicGameState implements ComponentListener {
     private String errorMessage;
     private boolean errorFlag = false;
 
-    private Font fontTitle;
-    private Font fontMessage;
-    private Font font = new Font("Verdana", Font.BOLD, 32);
-    private TrueTypeFont ttf = new TrueTypeFont(font, true);
+   // private Font fontTitle;
+   // private Font fontMessage;
     private UnicodeFont uniFontTitle;
     private UnicodeFont uniFontMessage;
 
@@ -58,12 +56,11 @@ public class StartState extends BasicGameState implements ComponentListener {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
         background = new Image("res/images/BackgroundSpace.png");
-        FontBuilder fontBuilder = new FontBuilder();
 
-        try {
-            uniFontTitle = fontBuilder.Build(gameContainer.getWidth()/20);
-            uniFontMessage = fontBuilder.Build(gameContainer.getWidth()/30);
-            fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+        //try {
+            uniFontTitle = Build(5*gameContainer.getWidth()/100);
+            uniFontMessage = Build(3*gameContainer.getWidth()/100);
+            /*fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
             fontTitle = fontTitle.deriveFont(Font.BOLD, gameContainer.getWidth()/20);
             uniFontTitle = new UnicodeFont(fontTitle);
             uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
@@ -80,12 +77,13 @@ public class StartState extends BasicGameState implements ComponentListener {
             uniFontMessage.loadGlyphs();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
         title = "LOGIN AND ADD ACCOUNT";
 
         nameString = "NICKNAME:";
         passwordString = "PASSWORD:";
-
+        Font font = new Font("Verdana", Font.BOLD, 5*gameContainer.getWidth()/100);
+        TrueTypeFont ttf = new TrueTypeFont(font, true);
         nameField = new TextField(gameContainer, ttf,40*gameContainer.getWidth()/100,25*gameContainer.getHeight()/100,
                 gameContainer.getWidth()/3,gameContainer.getHeight()/18);
 

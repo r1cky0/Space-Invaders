@@ -16,7 +16,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import java.awt.Font;
 import java.util.*;
 
-public class RankingState extends BasicGameState implements ComponentListener {
+public class RankingState extends BasicInvaderState implements ComponentListener {
 
     private StateBasedGame stateBasedGame;
     private GameContainer gameContainer;
@@ -64,9 +64,8 @@ public class RankingState extends BasicGameState implements ComponentListener {
         title = "TOP 10 RANKING";
         nameString = "nickname";
         highscoreString = "highscore";
-        FontBuilder fontBuilder = new FontBuilder();
-        uniFontTitle = fontBuilder.Build(9*gameContainer.getWidth()/100f);
-        uniFontData = fontBuilder.Build(4*gameContainer.getWidth()/100f);
+        uniFontTitle = Build(9*gameContainer.getWidth()/100f);
+        uniFontData = Build(4*gameContainer.getWidth()/100f);
 
         /*try {
             fontData = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));

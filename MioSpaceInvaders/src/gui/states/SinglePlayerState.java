@@ -16,7 +16,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.ArrayList;
 
-public class SinglePlayerState extends BasicGameState {
+public class SinglePlayerState extends BasicInvaderState {
 
     private Menu menu;
     private Field field;
@@ -56,8 +56,7 @@ public class SinglePlayerState extends BasicGameState {
         this.gameContainer = gameContainer;
         background = new Image("res/images/BackgroundSpace.png");
 
-        FontBuilder fontBuilder = new FontBuilder();
-        uniFontData = fontBuilder.Build(3*gameContainer.getWidth()/100);
+        uniFontData = Build(3*gameContainer.getWidth()/100);
         /*try{
             fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
                     ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
