@@ -66,9 +66,6 @@ public class SettingsState extends BasicGameState implements ComponentListener {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
-        cornice = new Rectangle(2*gameContainer.getWidth()/100f, 38*gameContainer.getHeight()/100f,
-                14*gameContainer.getWidth()/100f, 12*gameContainer.getWidth()/100f);
-
         shipButtons = new ArrayList<>();
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
@@ -111,6 +108,9 @@ public class SettingsState extends BasicGameState implements ComponentListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        cornice = new Rectangle(shipButtons.get(0).getX() - 42*gameContainer.getWidth()/1000f, 40*gameContainer.getHeight()/100f,
+                14*gameContainer.getWidth()/100f, 12*gameContainer.getWidth()/100f);
 
     }
 
@@ -168,11 +168,6 @@ public class SettingsState extends BasicGameState implements ComponentListener {
         if (source == shipButtons.get(4)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(4));
             cornice.setX(shipButtons.get(4).getX() - 30*cornice.getWidth()/100);
-            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
-        }
-        if (source == shipButtons.get(5)) {
-            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(5));
-            cornice.setX(shipButtons.get(5).getX() - 30*cornice.getWidth()/100);
             menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
         }
     }
