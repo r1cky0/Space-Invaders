@@ -22,10 +22,9 @@ public class Customization {
     private void initShips() {
         spaceShips.add("res/images/SpaceShip0.png");
         spaceShips.add("res/images/SpaceShip1.png");
-        spaceShips.add("res/images/SpaceShip2.png");
+        spaceShips.add("res/images/SpaceShip5.png");
         spaceShips.add("res/images/SpaceShip3.png");
         spaceShips.add("res/images/SpaceShip4.png");
-        spaceShips.add("res/images/SpaceShip5.png");
     }
 
     public String getCurrentShip() {

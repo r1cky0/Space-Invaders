@@ -8,22 +8,17 @@ import java.io.IOException;
 public class Player implements Comparable{
 
     private String name;
-    private int credit, highScore;
+    private int highScore;
     private SpaceShip spaceShip;
 
     public Player(String name, SpaceShip spaceShip) {
         this.name = name;
         this.spaceShip = spaceShip;
-        this.credit = 0;
         this.highScore = 0;
     }
 
     public String getName() {
         return name;
-    }
-
-    public int getCredit() {
-        return credit;
     }
 
     public int getHighScore() {
@@ -45,10 +40,6 @@ public class Player implements Comparable{
 
     public void setSpaceShip(SpaceShip spaceShip) {
         this.spaceShip = spaceShip;
-    }
-
-    public void incrementCredit(int credit) {
-        this.credit += credit;
     }
 
     /**

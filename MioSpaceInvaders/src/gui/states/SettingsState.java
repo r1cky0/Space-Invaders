@@ -34,7 +34,6 @@ public class SettingsState extends BasicGameState implements ComponentListener {
     private StateBasedGame stateBasedGame;
     private GameContainer gameContainer;
 
-    private String credit;
     private String title;
 
     private Font fontTitle;
@@ -66,9 +65,6 @@ public class SettingsState extends BasicGameState implements ComponentListener {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
-        cornice = new Rectangle(2*gameContainer.getWidth()/100f, 38*gameContainer.getHeight()/100f,
-                14*gameContainer.getWidth()/100f, 12*gameContainer.getWidth()/100f);
-
         shipButtons = new ArrayList<>();
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
@@ -92,7 +88,6 @@ public class SettingsState extends BasicGameState implements ComponentListener {
                     6*gameContainer.getWidth()/100, 6*gameContainer.getHeight()/100, this ));
             i++;
         }
-
         try {
 
             fontData = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
@@ -112,16 +107,17 @@ public class SettingsState extends BasicGameState implements ComponentListener {
             e.printStackTrace();
         }
 
+        cornice = new Rectangle(shipButtons.get(menu.getCustomization().getSpaceShips().indexOf(menu.getCustomization().getCurrentShip())).getX()
+                - 42*gameContainer.getWidth()/1000f, 40*gameContainer.getHeight()/100f,
+                14*gameContainer.getWidth()/100f, 12*gameContainer.getWidth()/100f);
+
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        credit = "Credits: " + menu.getPlayer().getCredit();
         graphics.drawImage(background, 0, 0);
 
         homeButton.render(gameContainer,graphics);
-
-        uniFontData.drawString(5*gameContainer.getWidth()/100f, 20*gameContainer.getHeight()/100f, credit);
 
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
                 7*gameContainer.getHeight()/100f, title, org.newdawn.slick.Color.white);
@@ -136,7 +132,6 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
     }
 
     @Override
@@ -168,11 +163,6 @@ public class SettingsState extends BasicGameState implements ComponentListener {
         if (source == shipButtons.get(4)) {
             menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(4));
             cornice.setX(shipButtons.get(4).getX() - 30*cornice.getWidth()/100);
-            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
-        }
-        if (source == shipButtons.get(5)) {
-            menu.getCustomization().setCurrentShip(menu.getCustomization().getSpaceShips().get(5));
-            cornice.setX(shipButtons.get(5).getX() - 30*cornice.getWidth()/100);
             menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());  // salva la current ship nel file
         }
     }
