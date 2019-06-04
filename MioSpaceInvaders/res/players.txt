@@ -1,4 +1,4 @@
-a	a	4350	res/images/SpaceShip1.png
+a	a	4350	res/images/SpaceShip5.png
 b	b	0	res/images/SpaceShip0.png
 cc	cc	0	res/images/SpaceShip0.png
 c	c	0	res/images/SpaceShip0.png

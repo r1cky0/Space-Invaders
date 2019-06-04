@@ -2,7 +2,6 @@ package logic.sprite.unmovable;
 
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
-import logic.sprite.dinamic.Bullet;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -15,7 +15,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 import java.awt.Font;
 
-public class GameOverState extends BasicGameState implements ComponentListener {
+public class GameOverState extends BasicInvaderState implements ComponentListener {
 
     private GameContainer gameContainer;
     private StateBasedGame stateBasedGame;

@@ -16,7 +16,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import java.awt.Font;
 
 
-public class NewHighscoreState extends BasicGameState implements ComponentListener {
+public class NewHighscoreState extends BasicInvaderState implements ComponentListener {
 
     private GameContainer gameContainer;
     private StateBasedGame stateBasedGame;
@@ -28,7 +28,6 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
     private MouseOverArea newGameButton;
     private MouseOverArea homeButton;
 
-    private Font fontTitle;
     private UnicodeFont uniFontTitle;
     private String title;
     private String highscore;
@@ -60,7 +59,9 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
         cupImage = new Image("res/images/Cup.png").getScaledCopy(40*gameContainer.getWidth()/100,
                 40*gameContainer.getHeight()/100);
 
-        try {
+
+        uniFontTitle = Build(9*gameContainer.getWidth()/100f);
+        /*try {
             fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
             fontTitle = fontTitle.deriveFont(java.awt.Font.BOLD, 60);
             uniFontTitle = new UnicodeFont(fontTitle);
@@ -70,12 +71,14 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
+
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        highscore = Integer.toString(menu.getPlayer().getHighScore());
         graphics.drawImage(background,0,0);
+        highscore = Integer.toString(menu.getPlayer().getHighScore());
+
         cupImage.draw((this.gameContainer.getWidth() - cupImage.getWidth())/2f,(this.gameContainer.getHeight() - cupImage.getHeight())/2f);
         newGameButton.render(gameContainer, graphics);
         homeButton.render(gameContainer,graphics);

@@ -16,7 +16,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import java.awt.Font;
 import java.util.*;
 
-public class RankingState extends BasicGameState implements ComponentListener {
+public class RankingState extends BasicInvaderState implements ComponentListener {
 
     private StateBasedGame stateBasedGame;
     private GameContainer gameContainer;
@@ -25,8 +25,8 @@ public class RankingState extends BasicGameState implements ComponentListener {
     private String nameString;
     private String highscoreString;
 
-    private Font fontData;
-    private Font fontTitle;
+   // private Font fontData;
+   // private Font fontTitle;
     private UnicodeFont uniFontData;
     private UnicodeFont uniFontTitle;
 
@@ -64,24 +64,26 @@ public class RankingState extends BasicGameState implements ComponentListener {
         title = "TOP 10 RANKING";
         nameString = "nickname";
         highscoreString = "highscore";
+        uniFontTitle = Build(9*gameContainer.getWidth()/100f);
+        uniFontData = Build(4*gameContainer.getWidth()/100f);
 
-        try {
+        /*try {
             fontData = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontData = fontData.deriveFont(Font.BOLD, 40);
+            fontData = fontData.deriveFont(Font.BOLD, 9*gameContainer.getWidth()/100f);
             uniFontData = new UnicodeFont(fontData);
             uniFontData.getEffects().add(new ColorEffect(java.awt.Color.white));
             uniFontData.addAsciiGlyphs();
             uniFontData.loadGlyphs();
 
             fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontTitle = fontTitle.deriveFont(Font.BOLD,60);
+            fontTitle = fontTitle.deriveFont(Font.BOLD,9*gameContainer.getWidth()/100f);
             uniFontTitle = new UnicodeFont(fontTitle);
             uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
             uniFontTitle.addAsciiGlyphs();
             uniFontTitle.loadGlyphs();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         menu.createRanking();
     }

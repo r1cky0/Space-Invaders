@@ -4,21 +4,19 @@ import logic.thread.ThreadInvader;
 import logic.environment.Field;
 import logic.environment.Menu;
 import logic.environment.MovingDirections;
-import logic.sprite.dinamic.Bullet;
+import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import org.newdawn.slick.*;
-import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-import org.newdawn.slick.util.ResourceLoader;
 
 import java.util.ArrayList;
 
-public class SinglePlayerState extends BasicGameState {
+public class SinglePlayerState extends BasicInvaderState {
 
     private Menu menu;
     private Field field;
@@ -58,7 +56,8 @@ public class SinglePlayerState extends BasicGameState {
         this.gameContainer = gameContainer;
         background = new Image("res/images/BackgroundSpace.png");
 
-        try{
+        uniFontData = Build(3*gameContainer.getWidth()/100);
+        /*try{
             fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
                     ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
             fontData = fontData.deriveFont(java.awt.Font.BOLD,gameContainer.getWidth()/30);
@@ -71,7 +70,7 @@ public class SinglePlayerState extends BasicGameState {
             uniFontData.loadGlyphs();
         }catch(Exception e){
             e.printStackTrace();
-        }
+        }*/
         field = menu.getField();
         spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
         newThread = false;
@@ -179,7 +178,7 @@ public class SinglePlayerState extends BasicGameState {
         }
 
         if (field.getShipBullet() != null) {
-            field.getShipBullet().moveUp(delta);
+            field.getShipBullet().move(delta);
         }
 
         if(field.getShipBullet()!= null) {
@@ -192,7 +191,7 @@ public class SinglePlayerState extends BasicGameState {
         }
 
         for(Bullet bullet: field.getInvaderBullets()){
-            bullet.moveDown(delta);
+            bullet.move(delta);
         }
 
         field.checkInvaderShotCollision();
