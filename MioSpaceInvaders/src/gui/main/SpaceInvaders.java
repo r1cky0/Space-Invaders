@@ -22,6 +22,7 @@ public class SpaceInvaders extends StateBasedGame {
     }
 
     public void initStatesList(GameContainer gameContainer) {
+        FontBuilder fontBuilder = new FontBuilder();
         this.addState(new StartState(menu));
         this.addState(new MenuState(menu));
         this.addState(new SinglePlayerState(menu));

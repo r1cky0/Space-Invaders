@@ -36,9 +36,9 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
     private String title;
 
-    private Font fontTitle;
+   // private Font fontTitle;
     private UnicodeFont uniFontTitle;
-    private Font fontData;
+   // private Font fontData;
     private UnicodeFont uniFontData;
 
     private ArrayList<Image> ships;
@@ -88,7 +88,11 @@ public class SettingsState extends BasicGameState implements ComponentListener {
                     6*gameContainer.getWidth()/100, 6*gameContainer.getHeight()/100, this ));
             i++;
         }
-        try {
+
+        FontBuilder fontBuilder = new FontBuilder();
+        uniFontTitle = fontBuilder.Build(9*gameContainer.getWidth()/100f);
+        uniFontData = fontBuilder.Build(9*gameContainer.getWidth()/100f);
+        /*try {
 
             fontData = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
             fontData = fontData.deriveFont(Font.BOLD, 40);
@@ -105,7 +109,7 @@ public class SettingsState extends BasicGameState implements ComponentListener {
             uniFontTitle.loadGlyphs();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         cornice = new Rectangle(shipButtons.get(menu.getCustomization().getSpaceShips().indexOf(menu.getCustomization().getCurrentShip())).getX()
                 - 42*gameContainer.getWidth()/1000f, 40*gameContainer.getHeight()/100f,

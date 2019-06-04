@@ -58,7 +58,9 @@ public class SinglePlayerState extends BasicGameState {
         this.gameContainer = gameContainer;
         background = new Image("res/images/BackgroundSpace.png");
 
-        try{
+        FontBuilder fontBuilder = new FontBuilder();
+        uniFontData = fontBuilder.Build(3*gameContainer.getWidth()/100);
+        /*try{
             fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
                     ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
             fontData = fontData.deriveFont(java.awt.Font.BOLD,gameContainer.getWidth()/30);
@@ -71,7 +73,7 @@ public class SinglePlayerState extends BasicGameState {
             uniFontData.loadGlyphs();
         }catch(Exception e){
             e.printStackTrace();
-        }
+        }*/
         field = menu.getField();
         spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
         newThread = false;
