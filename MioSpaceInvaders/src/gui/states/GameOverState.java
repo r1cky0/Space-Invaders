@@ -4,6 +4,7 @@ import logic.environment.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.MouseOverArea;
@@ -11,6 +12,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.util.ResourceLoader;
+import java.awt.Font;
 
 public class GameOverState extends BasicGameState implements ComponentListener {
 
@@ -23,6 +26,10 @@ public class GameOverState extends BasicGameState implements ComponentListener {
     private MouseOverArea homeButton;
     private MouseOverArea newGameButton;
 
+    private Font fontScore;
+    private UnicodeFont uniFontScore;
+
+    private String score;
 
     private Menu menu;
 
@@ -46,12 +53,28 @@ public class GameOverState extends BasicGameState implements ComponentListener {
                 6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
 
         gameOver = new Image("res/images/BackgroundGameOver.png");
+
+        try {
+            fontScore = Font.createFont(java.awt.Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            fontScore = fontScore.deriveFont(java.awt.Font.BOLD, 60);
+            uniFontScore = new UnicodeFont(fontScore);
+            uniFontScore.getEffects().add(new ColorEffect(java.awt.Color.white));
+            uniFontScore.addAsciiGlyphs();
+            uniFontScore.loadGlyphs();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+        score = "SCORE: " + menu.getField().getSpaceShip().getCurrentScore();
         gameOver.draw((gameContainer.getWidth() - gameOver.getWidth())/2f,(gameContainer.getHeight() - gameOver.getHeight())/2f);
         newGameButton.render(gameContainer, graphics);
         homeButton.render(gameContainer,graphics);
+
+        uniFontScore.drawString((this.gameContainer.getWidth() - uniFontScore.getWidth(score))/2f,
+                7* this.gameContainer.getHeight()/100f, score);
     }
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {

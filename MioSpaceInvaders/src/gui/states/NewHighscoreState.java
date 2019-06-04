@@ -71,13 +71,11 @@ public class NewHighscoreState extends BasicGameState implements ComponentListen
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        graphics.drawImage(background,0,0);
         highscore = Integer.toString(menu.getPlayer().getHighScore());
-
+        graphics.drawImage(background,0,0);
         cupImage.draw((this.gameContainer.getWidth() - cupImage.getWidth())/2f,(this.gameContainer.getHeight() - cupImage.getHeight())/2f);
         newGameButton.render(gameContainer, graphics);
         homeButton.render(gameContainer,graphics);
