@@ -89,7 +89,6 @@ public class SettingsState extends BasicGameState implements ComponentListener {
                     6*gameContainer.getWidth()/100, 6*gameContainer.getHeight()/100, this ));
             i++;
         }
-
         try {
 
             fontData = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
@@ -109,7 +108,8 @@ public class SettingsState extends BasicGameState implements ComponentListener {
             e.printStackTrace();
         }
 
-        cornice = new Rectangle(shipButtons.get(0).getX() - 42*gameContainer.getWidth()/1000f, 40*gameContainer.getHeight()/100f,
+        cornice = new Rectangle(shipButtons.get(menu.getCustomization().getSpaceShips().indexOf(menu.getCustomization().getCurrentShip())).getX()
+                - 42*gameContainer.getWidth()/1000f, 40*gameContainer.getHeight()/100f,
                 14*gameContainer.getWidth()/100f, 12*gameContainer.getWidth()/100f);
 
     }
@@ -136,7 +136,6 @@ public class SettingsState extends BasicGameState implements ComponentListener {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
     }
 
     @Override
