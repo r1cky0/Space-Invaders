@@ -26,7 +26,6 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
     private MouseOverArea homeButton;
     private MouseOverArea newGameButton;
 
-    private Font fontScore;
     private UnicodeFont uniFontScore;
 
     private String score;
@@ -54,17 +53,7 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
 
         gameOver = new Image("res/images/BackgroundGameOver.png");
 
-        try {
-            fontScore = Font.createFont(java.awt.Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontScore = fontScore.deriveFont(java.awt.Font.BOLD, 60);
-            uniFontScore = new UnicodeFont(fontScore);
-            uniFontScore.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFontScore.addAsciiGlyphs();
-            uniFontScore.loadGlyphs();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        uniFontScore = Build(9*gameContainer.getWidth()/100f);
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {

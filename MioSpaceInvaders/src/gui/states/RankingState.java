@@ -64,26 +64,9 @@ public class RankingState extends BasicInvaderState implements ComponentListener
         title = "TOP 10 RANKING";
         nameString = "nickname";
         highscoreString = "highscore";
+
         uniFontTitle = Build(9*gameContainer.getWidth()/100f);
         uniFontData = Build(4*gameContainer.getWidth()/100f);
-
-        /*try {
-            fontData = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontData = fontData.deriveFont(Font.BOLD, 9*gameContainer.getWidth()/100f);
-            uniFontData = new UnicodeFont(fontData);
-            uniFontData.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFontData.addAsciiGlyphs();
-            uniFontData.loadGlyphs();
-
-            fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontTitle = fontTitle.deriveFont(Font.BOLD,9*gameContainer.getWidth()/100f);
-            uniFontTitle = new UnicodeFont(fontTitle);
-            uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFontTitle.addAsciiGlyphs();
-            uniFontTitle.loadGlyphs();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
 
         menu.createRanking();
     }

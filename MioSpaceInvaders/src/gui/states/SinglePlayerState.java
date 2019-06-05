@@ -57,20 +57,7 @@ public class SinglePlayerState extends BasicInvaderState {
         background = new Image("res/images/BackgroundSpace.png");
 
         uniFontData = Build(3*gameContainer.getWidth()/100);
-        /*try{
-            fontData = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT,
-                    ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontData = fontData.deriveFont(java.awt.Font.BOLD,gameContainer.getWidth()/30);
 
-            uniFontData = new UnicodeFont(fontData);
-
-            uniFontData.getEffects().add(new ColorEffect(java.awt.Color.white));
-
-            uniFontData.addAsciiGlyphs();
-            uniFontData.loadGlyphs();
-        }catch(Exception e){
-            e.printStackTrace();
-        }*/
         field = menu.getField();
         spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
         newThread = false;

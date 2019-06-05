@@ -61,17 +61,6 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
 
 
         uniFontTitle = Build(9*gameContainer.getWidth()/100f);
-        /*try {
-            fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontTitle = fontTitle.deriveFont(java.awt.Font.BOLD, 60);
-            uniFontTitle = new UnicodeFont(fontTitle);
-            uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFontTitle.addAsciiGlyphs();
-            uniFontTitle.loadGlyphs();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
 
     }
 

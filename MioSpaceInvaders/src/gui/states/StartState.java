@@ -33,8 +33,8 @@ public class StartState extends BasicInvaderState implements ComponentListener {
     private String errorMessage;
     private boolean errorFlag = false;
 
-   // private Font fontTitle;
-   // private Font fontMessage;
+    // private Font fontTitle;
+    // private Font fontMessage;
     private UnicodeFont uniFontTitle;
     private UnicodeFont uniFontMessage;
 
@@ -57,40 +57,22 @@ public class StartState extends BasicInvaderState implements ComponentListener {
         this.stateBasedGame = stateBasedGame;
         background = new Image("res/images/BackgroundSpace.png");
 
-        //try {
-            uniFontTitle = Build(5*gameContainer.getWidth()/100);
-            uniFontMessage = Build(3*gameContainer.getWidth()/100);
-            /*fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontTitle = fontTitle.deriveFont(Font.BOLD, gameContainer.getWidth()/20);
-            uniFontTitle = new UnicodeFont(fontTitle);
-            uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
+        uniFontTitle = Build(5 * gameContainer.getWidth() / 100);
+        uniFontMessage = Build(3 * gameContainer.getWidth() / 100);
 
-            fontMessage = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontMessage = fontMessage.deriveFont(Font.BOLD, gameContainer.getWidth()/30);
-            uniFontMessage = new UnicodeFont(fontMessage);
-            uniFontMessage.getEffects().add(new ColorEffect(java.awt.Color.white));
-
-
-            uniFontTitle.addAsciiGlyphs();
-            uniFontTitle.loadGlyphs();
-            uniFontMessage.addAsciiGlyphs();
-            uniFontMessage.loadGlyphs();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
         title = "LOGIN AND ADD ACCOUNT";
 
         nameString = "NICKNAME:";
         passwordString = "PASSWORD:";
         Font font = new Font("Verdana", Font.BOLD, 32);
         TrueTypeFont ttf = new TrueTypeFont(font, true);
-        nameField = new TextField(gameContainer, ttf,40*gameContainer.getWidth()/100,25*gameContainer.getHeight()/100,
-                gameContainer.getWidth()/3,gameContainer.getHeight()/18);
+        nameField = new TextField(gameContainer, ttf, 40 * gameContainer.getWidth() / 100, 25 * gameContainer.getHeight() / 100,
+                gameContainer.getWidth() / 3, gameContainer.getHeight() / 18);
 
         nameField.setFocus(true);
 
-        passwordField = new TextField(gameContainer, ttf,40*gameContainer.getWidth()/100,33*gameContainer.getHeight()/100,
-                gameContainer.getWidth()/3,gameContainer.getHeight()/18);
+        passwordField = new TextField(gameContainer, ttf, 40 * gameContainer.getWidth() / 100, 33 * gameContainer.getHeight() / 100,
+                gameContainer.getWidth() / 3, gameContainer.getHeight() / 18);
 
         nameField.setBackgroundColor(Color.white);
         nameField.setTextColor(Color.black);
@@ -98,18 +80,18 @@ public class StartState extends BasicInvaderState implements ComponentListener {
         passwordField.setBackgroundColor(Color.white);
         passwordField.setTextColor(Color.black);
 
-        login = new Image("res/images/ButtonLogin.png").getScaledCopy(25*gameContainer.getWidth()/100,
-                10*gameContainer.getHeight()/100);
+        login = new Image("res/images/ButtonLogin.png").getScaledCopy(25 * gameContainer.getWidth() / 100,
+                10 * gameContainer.getHeight() / 100);
 
-        account = new Image("res/images/ButtonAccount.png").getScaledCopy(25*gameContainer.getWidth()/100,
-                10*gameContainer.getHeight()/100);
+        account = new Image("res/images/ButtonAccount.png").getScaledCopy(25 * gameContainer.getWidth() / 100,
+                10 * gameContainer.getHeight() / 100);
 
-        loginButton = new MouseOverArea(gameContainer, login,(gameContainer.getWidth() - login.getWidth())/2,
-                55*gameContainer.getHeight()/100,25*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
+        loginButton = new MouseOverArea(gameContainer, login, (gameContainer.getWidth() - login.getWidth()) / 2,
+                55 * gameContainer.getHeight() / 100, 25 * gameContainer.getWidth() / 100, 10 * gameContainer.getHeight() / 100,
                 this);
 
-        accountButton = new MouseOverArea(gameContainer, account,(gameContainer.getWidth() - account.getWidth())/2,
-                70*gameContainer.getHeight()/100,25*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
+        accountButton = new MouseOverArea(gameContainer, account, (gameContainer.getWidth() - account.getWidth()) / 2,
+                70 * gameContainer.getHeight() / 100, 25 * gameContainer.getWidth() / 100, 10 * gameContainer.getHeight() / 100,
                 this);
 
     }
@@ -121,14 +103,14 @@ public class StartState extends BasicInvaderState implements ComponentListener {
         nameField.render(gameContainer, graphics);
         passwordField.render(gameContainer, graphics);
 
-        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
-                7*gameContainer.getHeight()/100f, title);
-        uniFontMessage.drawString(15*gameContainer.getWidth()/100f,25*gameContainer.getHeight()/100f, nameString);
-        uniFontMessage.drawString(15*gameContainer.getWidth()/100f,33*gameContainer.getHeight()/100f, passwordString);
+        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title)) / 2f,
+                7 * gameContainer.getHeight() / 100f, title);
+        uniFontMessage.drawString(15 * gameContainer.getWidth() / 100f, 25 * gameContainer.getHeight() / 100f, nameString);
+        uniFontMessage.drawString(15 * gameContainer.getWidth() / 100f, 33 * gameContainer.getHeight() / 100f, passwordString);
 
         if (errorFlag) {
-            uniFontMessage.drawString((gameContainer.getWidth() - uniFontMessage.getWidth(errorMessage))/2f,
-                    45*gameContainer.getHeight()/100f, errorMessage, Color.red);
+            uniFontMessage.drawString((gameContainer.getWidth() - uniFontMessage.getWidth(errorMessage)) / 2f,
+                    45 * gameContainer.getHeight() / 100f, errorMessage, Color.red);
         }
 
         loginButton.render(gameContainer, graphics);
@@ -151,6 +133,7 @@ public class StartState extends BasicInvaderState implements ComponentListener {
 
     /**
      * Funzione che setta i gestori degli eventi di click sui bottoni
+     *
      * @param source Il tasto di cui dobbiamo settare il comportamento
      */
     public void componentActivated(AbstractComponent source) {

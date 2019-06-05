@@ -91,24 +91,6 @@ public class SettingsState extends BasicInvaderState implements ComponentListene
 
         uniFontTitle = Build(9*gameContainer.getWidth()/100f);
         uniFontData = Build(9*gameContainer.getWidth()/100f);
-        /*try {
-
-            fontData = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontData = fontData.deriveFont(Font.BOLD, 40);
-            uniFontData = new UnicodeFont(fontData);
-            uniFontData.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFontData.addAsciiGlyphs();
-            uniFontData.loadGlyphs();
-
-            fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
-            fontTitle = fontTitle.deriveFont(Font.BOLD,60);
-            uniFontTitle = new UnicodeFont(fontTitle);
-            uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));
-            uniFontTitle.addAsciiGlyphs();
-            uniFontTitle.loadGlyphs();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
 
         cornice = new Rectangle(shipButtons.get(menu.getCustomization().getSpaceShips().indexOf(menu.getCustomization().getCurrentShip())).getX()
                 - 42*gameContainer.getWidth()/1000f, 40*gameContainer.getHeight()/100f,
