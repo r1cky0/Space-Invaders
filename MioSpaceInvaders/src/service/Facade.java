@@ -40,14 +40,5 @@ public class Facade {
     public void render(Image image){
         image.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
     }
-
-    /**
-     * Renderizza lo sprite scelto usando l'animazione fornita e settando le dimensioni prelevandole
-     * dalla shape corrispondente
-     * @param animation Array di immagini che si alternano a formare l' animazione voluta
-     * @throws SlickException Eccezione della libreria slick per eventuali errori di render
-     */
-    public void render (Animation animation) throws SlickException{
-        animation.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
-    }
+    
 }

@@ -33,8 +33,6 @@ public class StartState extends BasicInvaderState implements ComponentListener {
     private String errorMessage;
     private boolean errorFlag = false;
 
-    // private Font fontTitle;
-    // private Font fontMessage;
     private UnicodeFont uniFontTitle;
     private UnicodeFont uniFontMessage;
 
