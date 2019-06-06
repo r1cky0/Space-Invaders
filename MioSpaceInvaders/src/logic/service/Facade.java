@@ -1,11 +1,10 @@
-package service;
+package logic.service;
 
 
 import logic.sprite.Coordinate;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
-import org.newdawn.slick.geom.Transform;
 
 public class Facade {
 
@@ -40,5 +39,5 @@ public class Facade {
     public void render(Image image){
         image.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
     }
-    
+
 }

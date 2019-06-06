@@ -1,6 +1,6 @@
 package logic.sprite;
 
-import service.Facade;
+import logic.service.Facade;
 
 public abstract class Sprite extends Facade {
 
