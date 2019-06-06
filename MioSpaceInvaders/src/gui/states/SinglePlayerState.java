@@ -1,15 +1,14 @@
 package gui.states;
 
 import logic.thread.ThreadInvader;
-import logic.environment.Field;
-import logic.environment.Menu;
-import logic.environment.MovingDirections;
+import logic.environment.manager.game.OfflineGameManager;
+import logic.environment.manager.menu.Menu;
+import logic.environment.manager.game.MovingDirections;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import org.newdawn.slick.*;
-import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 public class SinglePlayerState extends BasicInvaderState {
 
     private Menu menu;
-    private Field field;
+    private OfflineGameManager offlineGameManager;
     private GameContainer gameContainer;
 
 
@@ -58,7 +57,7 @@ public class SinglePlayerState extends BasicInvaderState {
 
         uniFontData = Build(3*gameContainer.getWidth()/100);
 
-        field = menu.getField();
+        offlineGameManager = menu.getOfflineGameManager();
         spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
         newThread = false;
     }
@@ -68,28 +67,28 @@ public class SinglePlayerState extends BasicInvaderState {
         graphics.drawImage(background,0,0);
         Color color;
         int highscore;
-        if(menu.getPlayer().getHighScore() >= field.getSpaceShip().getCurrentScore()){
+        if(menu.getPlayer().getHighScore() >= offlineGameManager.getSpaceShip().getCurrentScore()){
             color = Color.white;
             highscore = menu.getPlayer().getHighScore();
         }else{
             color = Color.green;
-            highscore = field.getSpaceShip().getCurrentScore();
+            highscore = offlineGameManager.getSpaceShip().getCurrentScore();
         }
         uniFontData.drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
-                "Lives: " + field.getSpaceShip().getLife(), Color.red);
+                "Lives: " + offlineGameManager.getSpaceShip().getLife(), Color.red);
         uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: "))/2,
-                2*gameContainer.getHeight()/100f,"Score: " + field.getSpaceShip().getCurrentScore(), color);
+                2*gameContainer.getHeight()/100f,"Score: " + offlineGameManager.getSpaceShip().getCurrentScore(), color);
         uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Highscore: " + highscore, Color.green);
 
-        field.getSpaceShip().render(spaceShipImage);
+        offlineGameManager.getSpaceShip().render(spaceShipImage);
 
 
-        for (Invader invader: field.getInvaders()) {
+        for (Invader invader: offlineGameManager.getInvaders()) {
             invader.render(invaderImage);
         }
 
-        for(Bunker bunker: field.getBunkers()){
+        for(Bunker bunker: offlineGameManager.getBunkers()){
             for(Brick brick:bunker.getBricks()){
                 switch (brick.getLife()){
 
@@ -109,11 +108,11 @@ public class SinglePlayerState extends BasicInvaderState {
             }
         }
 
-        if(field.getShipBullet() != null){
-            field.getShipBullet().render(bulletImage);
+        if(offlineGameManager.getShipBullet() != null){
+            offlineGameManager.getShipBullet().render(bulletImage);
         }
 
-          for(Bullet bullet : field.getInvaderBullets()) {
+          for(Bullet bullet : offlineGameManager.getInvaderBullets()) {
             bullet.render(bulletImage);
         }
 
@@ -124,25 +123,25 @@ public class SinglePlayerState extends BasicInvaderState {
         Input input = gameContainer.getInput();
 
         if(!newThread){
-            threadInvader = new ThreadInvader(field.getDifficulty(), field);
+            threadInvader = new ThreadInvader(offlineGameManager.getDifficulty(), offlineGameManager);
             threadInvader.start();
             newThread = true;
         }
 
         //STATO GIOCO
-        if(field.isGameOver()){
+        if(offlineGameManager.isGameOver()){
             threadInvader.stop();
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         }
 
-        if(field.isNewHighscore()){
+        if(offlineGameManager.isNewHighscore()){
             threadInvader.stop();
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
 
-        if(field.isNewLevel()){
+        if(offlineGameManager.isNewLevel()){
             threadInvader.stop();
-            field.setNewLevel(false);
+            offlineGameManager.setNewLevel(false);
             newThread = false;
         }
 
@@ -153,35 +152,35 @@ public class SinglePlayerState extends BasicInvaderState {
 
         //MOVIMENTI E AZIONI SPACE SHIP
         if (input.isKeyDown(Input.KEY_LEFT)) {
-            field.shipMovement(MovingDirections.LEFT, delta);
+            offlineGameManager.shipMovement(MovingDirections.LEFT, delta);
         }
 
         if (input.isKeyDown(Input.KEY_RIGHT)) {
-            field.shipMovement(MovingDirections.RIGHT, delta);
+            offlineGameManager.shipMovement(MovingDirections.RIGHT, delta);
         }
 
         if (input.isKeyPressed(Input.KEY_SPACE)) {
-            field.shipShot();
+            offlineGameManager.shipShot();
         }
 
-        if (field.getShipBullet() != null) {
-            field.getShipBullet().move(delta);
+        if (offlineGameManager.getShipBullet() != null) {
+            offlineGameManager.getShipBullet().move(delta);
         }
 
-        if(field.getShipBullet()!= null) {
-            field.checkSpaceShipShotCollision();
+        if(offlineGameManager.getShipBullet()!= null) {
+            offlineGameManager.checkSpaceShipShotCollision();
         }
 
         //MOVIMENTI E AZIONI INVADERS
         if (input.isKeyPressed(Input.KEY_0)) {
-            field.invaderShot();
+            offlineGameManager.invaderShot();
         }
 
-        for(Bullet bullet: field.getInvaderBullets()){
+        for(Bullet bullet: offlineGameManager.getInvaderBullets()){
             bullet.move(delta);
         }
 
-        field.checkInvaderShotCollision();
+        offlineGameManager.checkInvaderShotCollision();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package logic.environment;
+package logic.environment.manager.game;
 
 import logic.environment.creators.BunkersCreator;
 import logic.environment.creators.InvadersCreator;
@@ -14,7 +14,7 @@ import logic.sprite.unmovable.Bunker;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Field {
+public class OnlineGameManager{
 
     //DIMENSIONS
     private final double MIN_WIDTH = 0.0;
@@ -26,24 +26,24 @@ public class Field {
 
     private InvadersCreator invadersCreator;
     private BunkersCreator bunkersCreator;
+
     //STATE
     private boolean gameOver;
     private boolean newHighscore;
     private boolean newLevel;
 
-    private Player player;
-    private SpaceShip spaceShip;
+    private Team team;
     private List<Invader> invaders;
     private ArrayList<Bunker> bunkers;
-    private Bullet shipBullet;
+    private SpaceShipBullet shipBullet;
     private boolean shipShot;
-    private List<Bullet> invaderBullets;
+    private List<InvaderBullet> invaderBullets;
     private MovingDirections md;
     private boolean goDown;
     private Difficulty difficulty;
 
-    public Field(Player player, double maxWidth, double maxHeight){
-        this.player = player;
+    public OnlineGameManager(Team team, double maxWidth, double maxHeight){
+        this.team = team;
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
 
@@ -55,10 +55,9 @@ public class Field {
         invadersCreator = new InvadersCreator(maxHeight,maxWidth,invaderSize);
         bunkersCreator = new BunkersCreator(maxHeight,maxWidth,brickSize);
 
-        spaceShip = player.getSpaceShip();
         bunkers = new ArrayList<>();
         invaderBullets = new CopyOnWriteArrayList<>();
-        invaders = new CopyOnWriteArrayList<>(  );
+        invaders = new CopyOnWriteArrayList<>();
         md = MovingDirections.RIGHT;
         goDown = false;
         shipShot = false;
@@ -75,8 +74,7 @@ public class Field {
         //inizializzazione di tutti gli elementi all'inizio del gioco
         invaders = invadersCreator.create();
         bunkers = bunkersCreator.create();
-        spaceShip.setLife();
-        spaceShip.setCurrentScore();
+        team.initPlayers();
     }
 
     /**
@@ -85,7 +83,7 @@ public class Field {
     public void nextLevel(){
         difficulty.incrementDifficulty();
         md = MovingDirections.RIGHT;
-        spaceShip.incrementLife();
+        team.incrementLife();
         invaders = invadersCreator.create();
         newLevel = true;
     }
@@ -95,15 +93,15 @@ public class Field {
      */
     public void gameOver(){
 
-        if(player.getHighScore() < spaceShip.getCurrentScore()){
-            player.setHighScore(spaceShip.getCurrentScore());
+        if(team.getTeamHighScore() < team.getTeamCurrentScore()){
+            team.setTeamHighScore(team.getTeamCurrentScore());
             newHighscore = true;
         }else {
             gameOver = true;
         }
     }
 
-    public void shipMovement(MovingDirections md, int delta){
+    public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
 
         if(((spaceShip.getX() + spaceShip.getSize()) < maxWidth) && (md == MovingDirections.RIGHT)){
             spaceShip.moveRight(delta);
@@ -115,7 +113,7 @@ public class Field {
 
     }
 
-    public void shipShot(){
+    public void shipShot(SpaceShip spaceShip){
 
         if(!shipShot) {
             Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - bulletSize/2, spaceShip.getY());
@@ -130,7 +128,7 @@ public class Field {
      * fine schermata(y maggiore)
      */
     public void checkInvaderShotCollision() {
-            for(Bullet bullet : invaderBullets){
+        for(Bullet bullet : invaderBullets){
             for (Bunker bunker : bunkers) {
                 if (bunker.checkBrickCollision(bullet)) {
                     invaderBullets.remove(bullet);
@@ -138,13 +136,15 @@ public class Field {
                 }
             }
 
-            if (spaceShip.collides(bullet)) {
-                spaceShip.decreaseLife();
-                if (spaceShip.getLife() == 0) {
-                    gameOver();
+            for(Player player : team.getPlayers()) {
+                if (player.getSpaceShip().collides(bullet)) {
+                    player.getSpaceShip().decreaseLife();
+                    if (player.getSpaceShip().getLife() == 0) {
+                        //Delete this player from arraylist
+                    }
+                    invaderBullets.remove(bullet);
+                    return;
                 }
-                invaderBullets.remove(bullet);
-                return;
             }
             if (bullet.getY() >= maxHeight) {
                 invaderBullets.remove(bullet);
@@ -158,7 +158,7 @@ public class Field {
      * brick) e poi rispetto agli invaders. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
      * fine schermata(y minore)
      */
-    public void checkSpaceShipShotCollision() {
+    public void checkSpaceShipShotCollision(SpaceShip spaceShip) {
 
         for (Bunker bunker : bunkers) {
             if (bunker.checkBrickCollision(shipBullet)) {
@@ -171,6 +171,7 @@ public class Field {
         for(Invader invader : invaders){
             if (invader.collides(shipBullet)) {
                 spaceShip.incrementCurrentScore(invader.getValue());
+                team.calculateTeamCurrentScore();
                 invaders.remove(invader);
                 shipShot = false;
                 shipBullet = null;
@@ -233,7 +234,7 @@ public class Field {
      * Funzione di movimento degli invaders. La direzione é inidicata dalla MovingDirections passata come parametro
      * @param md Enum che indica la direzione di movimento
      */
-     public void invaderMovement(MovingDirections md){
+    public void invaderMovement(MovingDirections md){
 
         for(Invader invader:invaders) {
 
@@ -274,16 +275,12 @@ public class Field {
         return bunkers;
     }
 
-    public List<Bullet> getInvaderBullets(){
+    public List<InvaderBullet> getInvaderBullets(){
         return invaderBullets;
     }
 
     public Bullet getShipBullet(){
         return shipBullet;
-    }
-
-    public SpaceShip getSpaceShip(){
-        return spaceShip;
     }
 
     public boolean isGameOver(){

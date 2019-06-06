@@ -1,20 +1,20 @@
 package logic.thread;
 
-import logic.environment.Field;
+import logic.environment.manager.game.OfflineGameManager;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThreadInvader implements Runnable {
 
-    private Field field;
+    private OfflineGameManager offlineGameManager;
     private Thread thread;
     private final AtomicBoolean running = new AtomicBoolean(false);
     private int sleepInterval;
 
-    public ThreadInvader(int sleepInterval, Field field) {
+    public ThreadInvader(int sleepInterval, OfflineGameManager offlineGameManager) {
         this.sleepInterval = sleepInterval;
-        this.field = field;
+        this.offlineGameManager = offlineGameManager;
     }
 
     public void start() {
@@ -30,9 +30,9 @@ public class ThreadInvader implements Runnable {
         running.set(true);
         Random rand = new Random();
         while (running.get()) {
-             field.invaderMovement(field.checkInvaderDirection());
+             offlineGameManager.invaderMovement(offlineGameManager.checkInvaderDirection());
             if(rand.nextInt(10) > 4){
-                field.invaderShot();
+                offlineGameManager.invaderShot();
             }
             try {
                 Thread.sleep(sleepInterval);

@@ -1,4 +1,4 @@
-package logic.environment;
+package logic.environment.manager.menu;
 
 import logic.sprite.dinamic.SpaceShip;
 

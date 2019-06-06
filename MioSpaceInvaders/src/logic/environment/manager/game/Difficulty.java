@@ -1,4 +1,4 @@
-package logic.environment;
+package logic.environment.manager.game;
 
 public class Difficulty {
 

@@ -1,16 +1,11 @@
 package gui.main;
 
 import gui.states.*;
-import logic.environment.Menu;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
+import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-import java.awt.*;
 
 public class SpaceInvaders extends StateBasedGame {
 

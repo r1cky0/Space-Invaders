@@ -1,8 +1,9 @@
-package logic.environment;
+package logic.environment.manager.menu;
 
-import logic.FileManager.AddAccount;
-import logic.FileManager.Login;
-import logic.FileManager.SaveCustomization;
+import logic.environment.manager.file.AddAccount;
+import logic.environment.manager.file.Login;
+import logic.environment.manager.file.SaveCustomization;
+import logic.environment.manager.game.OfflineGameManager;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
@@ -18,7 +19,7 @@ public class Menu {
     private Ranking ranking;
 
     private Customization customization;
-    private Field field;
+    private OfflineGameManager offlineGameManager;
     private SpaceShip defaultShip;
     private Player player;
 
@@ -49,7 +50,7 @@ public class Menu {
     }
 
     /**
-     * Funzione di creazione di un nuovo account attuata la quale viene inizializzato il field e il nuovo utente puó
+     * Funzione di creazione di un nuovo account attuata la quale viene inizializzato il offlineGameManager e il nuovo utente puó
      * giocare senza effettuare nuovamente accesso
      * @param name Nickname del giocatore
      * @param password Password del giocatore
@@ -62,7 +63,7 @@ public class Menu {
 
             customization = new Customization("res/images/SpaceShip0.png");
 
-            field = new Field(player, maxWidth, maxHeight);
+            offlineGameManager = new OfflineGameManager(player, maxWidth, maxHeight);
             return true;
         }
         return false;
@@ -77,7 +78,7 @@ public class Menu {
             player.setHighScore(Integer.parseInt(components[2]));
             customization = new Customization(components[3]);
 
-            field = new Field(player, maxWidth, maxHeight);
+            offlineGameManager = new OfflineGameManager(player, maxWidth, maxHeight);
             return true;
         }
         else{
@@ -93,12 +94,12 @@ public class Menu {
      * Funzione necessaria per reinizializzare il sistema dopo un gameOver
      */
     public void restartGame() {
-        field = new Field(player, maxWidth, maxHeight);
+        offlineGameManager = new OfflineGameManager(player, maxWidth, maxHeight);
     }
 
-    //A programma sistemato togliere questo getter e fare che startGame restituisca il field
-    public Field getField() {
-        return field;
+    //A programma sistemato togliere questo getter e fare che startGame restituisca il offlineGameManager
+    public OfflineGameManager getOfflineGameManager() {
+        return offlineGameManager;
     }
 
     public Player getPlayer() {

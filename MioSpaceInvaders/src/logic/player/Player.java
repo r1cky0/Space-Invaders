@@ -1,9 +1,7 @@
 package logic.player;
 
-import logic.FileManager.AddHighScore;
+import logic.environment.manager.file.AddHighScore;
 import logic.sprite.dinamic.SpaceShip;
-
-import java.io.IOException;
 
 public class Player implements Comparable{
 
