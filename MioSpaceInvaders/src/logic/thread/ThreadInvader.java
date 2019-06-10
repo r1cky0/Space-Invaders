@@ -9,12 +9,13 @@ public class ThreadInvader implements Runnable {
 
     private OfflineGameManager offlineGameManager;
     private Thread thread;
-    private final AtomicBoolean running = new AtomicBoolean(false);
+    private AtomicBoolean running;
     private int sleepInterval;
 
     public ThreadInvader(int sleepInterval, OfflineGameManager offlineGameManager) {
         this.sleepInterval = sleepInterval;
         this.offlineGameManager = offlineGameManager;
+        running = new AtomicBoolean(false);
     }
 
     public void start() {

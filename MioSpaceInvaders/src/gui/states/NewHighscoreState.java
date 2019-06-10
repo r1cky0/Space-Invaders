@@ -56,7 +56,7 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
                 40*gameContainer.getHeight()/100);
 
 
-        uniFontTitle = Build(9*gameContainer.getWidth()/100f);
+        uniFontTitle = Build(8*gameContainer.getWidth()/100f);
 
     }
 
