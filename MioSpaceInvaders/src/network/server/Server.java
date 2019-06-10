@@ -5,10 +5,7 @@ import network.data.Connection;
 import network.data.PacketHandler;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -48,6 +45,11 @@ public class Server implements Runnable {
 
     public void init() throws SocketException {
         this.socket = new DatagramSocket(this.port);
+        try {
+            socket.bind(new InetSocketAddress(InetAddress.getByName("10.65.30.146"), port));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         server = new Thread(this);
         server.start();
     }

@@ -8,7 +8,7 @@ public class ClientLauncher {
 
     public static void main(String[] args){
 
-        Client client = new Client("localhost", 9999);
+        Client client = new Client("10.65.30.146", 9999);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
