@@ -36,4 +36,40 @@
         <BackgroundName>Background GameOver</BackgroundName>
         <ImgUrl>res/images/BackgroundGameOver.png</ImgUrl>
     </background>
+    <button id="10001">
+        <ButtonName>Button Account</ButtonName>
+        <ImgUrl>res/images/ButtonAccount.png</ImgUrl>
+    </button>
+    <button id="11001">
+        <ButtonName>Button Exit</ButtonName>
+        <ImgUrl>res/images/ButtonExit.png</ImgUrl>
+    </button>
+    <button id="12001">
+        <ButtonName>Button Login</ButtonName>
+        <ImgUrl>res/images/ButtonLogin.png</ImgUrl>
+    </button>
+    <button id="13001">
+        <ButtonName>Button Menu</ButtonName>
+        <ImgUrl>res/images/ButtonMenu.png</ImgUrl>
+    </button>
+    <button id="14001">
+        <ButtonName>Button MultiPlayer</ButtonName>
+        <ImgUrl>res/images/ButtonMultiPlayer.png</ImgUrl>
+    </button>
+    <button id="15001">
+        <ButtonName>Button NewGame</ButtonName>
+        <ImgUrl>res/images/ButtonNewGame.png</ImgUrl>
+    </button>
+    <button id="16001">
+        <ButtonName>Button SinglePlayer</ButtonName>
+        <ImgUrl>res/images/ButtonSinglePlayer.png</ImgUrl>
+    </button>
+    <button id="17001">
+        <ButtonName>Button Home</ButtonName>
+        <ImgUrl>res/images/Home.png</ImgUrl>
+    </button>
+    <button id="18001">
+        <ButtonName>Button Settings</ButtonName>
+        <ImgUrl>res/images/Settings.png</ImgUrl>
+    </button>
 </company>

@@ -74,10 +74,10 @@ public class StartState extends BasicInvaderState implements ComponentListener {
         passwordField.setBackgroundColor(Color.white);
         passwordField.setTextColor(Color.black);
 
-        login = new Image("res/images/ButtonLogin.png").getScaledCopy(25 * gameContainer.getWidth() / 100,
+        login = new Image(ReadXmlFile.readXmlFile(2, "button")).getScaledCopy(25 * gameContainer.getWidth() / 100,
                 10 * gameContainer.getHeight() / 100);
 
-        account = new Image("res/images/ButtonAccount.png").getScaledCopy(25 * gameContainer.getWidth() / 100,
+        account = new Image(ReadXmlFile.readXmlFile(0, "button")).getScaledCopy(25 * gameContainer.getWidth() / 100,
                 10 * gameContainer.getHeight() / 100);
 
         loginButton = new MouseOverArea(gameContainer, login, (gameContainer.getWidth() - login.getWidth()) / 2,

@@ -47,19 +47,19 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
 
         title = "SPACE INVADERS";
 
-        single = new Image("res/images/ButtonSinglePlayer.png").getScaledCopy(30*gameContainer.getWidth()/100,
+        single = new Image(ReadXmlFile.readXmlFile(6, "button")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         singleButton = new MouseOverArea(gameContainer, single,(gameContainer.getWidth() - single.getWidth())/2,
                 26*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        multi = new Image("res/images/ButtonMultiplayer.png").getScaledCopy(30*gameContainer.getWidth()/100,
+        multi = new Image(ReadXmlFile.readXmlFile(4, "button")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         multiButton = new MouseOverArea(gameContainer, multi,(gameContainer.getWidth() - multi.getWidth())/2,
                 45*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        settings = new Image("res/images/Settings.png").getScaledCopy(8*gameContainer.getWidth()/100,
+        settings = new Image(ReadXmlFile.readXmlFile(8, "button")).getScaledCopy(8*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         settingsButton = new MouseOverArea(gameContainer, settings,35*gameContainer.getWidth()/100,
                 63*gameContainer.getHeight()/100,8*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,

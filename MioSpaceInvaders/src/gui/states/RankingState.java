@@ -53,7 +53,7 @@ public class RankingState extends BasicInvaderState implements ComponentListener
         bronzeMedal = new Image("res/images/MedalBronze.png").getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
 
-        homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(ReadXmlFile.readXmlFile(7, "button")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
                 6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);

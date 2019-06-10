@@ -42,13 +42,13 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
 
         title = "NEW HIGHSCORE:";
 
-        newGame = new Image("res/images/ButtonNewGame.png").getScaledCopy(30*gameContainer.getWidth()/100,
+        newGame = new Image(ReadXmlFile.readXmlFile(5, "button")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
                 80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(ReadXmlFile.readXmlFile(7, "button")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
                 6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
