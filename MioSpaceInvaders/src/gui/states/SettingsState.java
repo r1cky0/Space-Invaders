@@ -1,5 +1,6 @@
 package gui.states;
 
+import logic.environment.manager.file_xml.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -60,7 +61,7 @@ public class SettingsState extends BasicInvaderState implements ComponentListene
         shipButtons = new ArrayList<>();
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        background = new Image("res/images/BackgroundSpace.png");
+        background = new Image(ReadXmlFile.readXmlFile(0, "background"));
         homeImage = new Image("res/images/Home.png").getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,

@@ -1,5 +1,6 @@
 package gui.states;
 
+import logic.environment.manager.file_xml.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -47,7 +48,7 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
                 6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
 
-        gameOver = new Image("res/images/BackgroundGameOver.png");
+        gameOver = new Image(ReadXmlFile.readXmlFile(1, "background"));
 
         uniFontScore = Build(9*gameContainer.getWidth()/100f);
     }

@@ -28,4 +28,12 @@
         <InvaderName>Default Invader</InvaderName>
         <ImgUrl>res/images/Alien0a.png</ImgUrl>
     </invader>
+    <background id="8001">
+        <BackgroundName>Default Background</BackgroundName>
+        <ImgUrl>res/images/BackgroundSpace.png</ImgUrl>
+    </background>
+    <background id="9001">
+        <BackgroundName>Background GameOver</BackgroundName>
+        <ImgUrl>res/images/BackgroundGameOver.png</ImgUrl>
+    </background>
 </company>

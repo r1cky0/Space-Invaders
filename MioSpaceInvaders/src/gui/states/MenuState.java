@@ -1,5 +1,6 @@
 package gui.states;
 
+import logic.environment.manager.file_xml.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -42,7 +43,7 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        this.background = new Image("res/images/BackgroundSpace.png");
+        this.background = new Image(ReadXmlFile.readXmlFile(0, "background"));
 
         title = "SPACE INVADERS";
 

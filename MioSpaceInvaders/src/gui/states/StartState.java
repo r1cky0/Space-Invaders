@@ -1,4 +1,5 @@
 package gui.states;
+import logic.environment.manager.file_xml.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.*;
@@ -48,10 +49,10 @@ public class StartState extends BasicInvaderState implements ComponentListener {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        background = new Image("res/images/BackgroundSpace.png");
+        background = new Image(ReadXmlFile.readXmlFile(0, "background"));
 
-        uniFontTitle = Build(5 * gameContainer.getWidth() / 100);
-        uniFontMessage = Build(3 * gameContainer.getWidth() / 100);
+        uniFontTitle = Build(5 * gameContainer.getWidth() / 100f);
+        uniFontMessage = Build(3 * gameContainer.getWidth() / 100f);
 
         title = "LOGIN AND ADD ACCOUNT";
 

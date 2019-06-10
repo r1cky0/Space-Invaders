@@ -55,9 +55,9 @@ public class SinglePlayerState extends BasicInvaderState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
-        background = new Image("res/images/BackgroundSpace.png");
+        background = new Image(ReadXmlFile.readXmlFile(0, "background"));
 
-        uniFontData = Build(3*gameContainer.getWidth()/100);
+        uniFontData = Build(3*gameContainer.getWidth()/100f);
 
         offlineGameManager = menu.getOfflineGameManager();
         spaceShipImage = new Image(menu.getCustomization().getCurrentShip());

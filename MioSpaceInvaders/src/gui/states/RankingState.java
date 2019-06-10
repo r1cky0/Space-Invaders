@@ -1,4 +1,5 @@
 package gui.states;
+import logic.environment.manager.file_xml.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -43,7 +44,7 @@ public class RankingState extends BasicInvaderState implements ComponentListener
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        background = new Image("res/images/BackgroundSpace.png");
+        background = new Image(ReadXmlFile.readXmlFile(0, "background"));
 
         goldMedal = new Image("res/images/MedalGold.png").getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
