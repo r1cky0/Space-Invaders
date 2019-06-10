@@ -10,7 +10,6 @@ public class Connection {
     public Connection(InetAddress destAddress, int destPort) {
         this.destAddress = destAddress;
         this.destPort = destPort;
-
     }
 
     public int getDestPort() {
