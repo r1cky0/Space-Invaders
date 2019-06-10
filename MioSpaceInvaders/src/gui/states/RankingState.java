@@ -61,7 +61,7 @@ public class RankingState extends BasicInvaderState implements ComponentListener
         nameString = "nickname";
         highscoreString = "highscore";
 
-        uniFontTitle = Build(9*gameContainer.getWidth()/100f);
+        uniFontTitle = Build(8*gameContainer.getWidth()/100f);
         uniFontData = Build(4*gameContainer.getWidth()/100f);
 
         menu.createRanking();

@@ -57,7 +57,7 @@ public class StartState extends BasicInvaderState implements ComponentListener {
 
         nameString = "NICKNAME:";
         passwordString = "PASSWORD:";
-        Font font = new Font("Verdana", Font.BOLD, 32);
+        Font font = new Font("Verdana", Font.BOLD, 3*gameContainer.getWidth()/100);
         TrueTypeFont ttf = new TrueTypeFont(font, true);
         nameField = new TextField(gameContainer, ttf, 40 * gameContainer.getWidth() / 100, 25 * gameContainer.getHeight() / 100,
                 gameContainer.getWidth() / 3, gameContainer.getHeight() / 18);

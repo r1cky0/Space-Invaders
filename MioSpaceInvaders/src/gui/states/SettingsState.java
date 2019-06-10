@@ -30,9 +30,7 @@ public class SettingsState extends BasicInvaderState implements ComponentListene
 
     private String title;
 
-   // private Font fontTitle;
     private UnicodeFont uniFontTitle;
-   // private Font fontData;
     private UnicodeFont uniFontData;
 
     private ArrayList<Image> ships;
@@ -83,8 +81,7 @@ public class SettingsState extends BasicInvaderState implements ComponentListene
             i++;
         }
 
-        uniFontTitle = Build(9*gameContainer.getWidth()/100f);
-        uniFontData = Build(9*gameContainer.getWidth()/100f);
+        uniFontTitle = Build(8*gameContainer.getWidth()/100f);
 
         cornice = new Rectangle(shipButtons.get(menu.getCustomization().getSpaceShips().indexOf(menu.getCustomization().getCurrentShip())).getX()
                 - 42*gameContainer.getWidth()/1000f, 40*gameContainer.getHeight()/100f,
