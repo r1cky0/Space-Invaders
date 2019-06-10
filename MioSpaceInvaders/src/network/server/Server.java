@@ -52,6 +52,28 @@ public class Server implements Runnable {
         server.start();
     }
 
+
+    /**
+     * Thread server invia pacchetti ai client contententi info sullo stato di gioco e resta in ascolto
+     * per la ricezione di nuovi pacchetti
+     */
+    public void run() {
+        running.set(true);
+        System.out.println("Server started on port: " + port);
+        while (running.get()) {
+            byte[] rcvdata = new byte[2048];
+            DatagramPacket packet = new DatagramPacket(rcvdata, rcvdata.length);
+            try {
+                socket.receive(packet);
+                addConnection(packet);
+                handler.process(packet);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            broadcast();
+        }
+    }
+
     private void addConnection(DatagramPacket packet) {
 
         if (clients.isEmpty()) {
@@ -104,26 +126,6 @@ public class Server implements Runnable {
         }
     }
 
-    /**
-     * Thread server invia pacchetti ai client contententi info sullo stato di gioco e resta in ascolto
-     * per la ricezione di nuovi pacchetti
-     */
-    public void run() {
-        running.set(true);
-        System.out.println("Server started on port: " + port);
-        while (running.get()) {
-            byte[] rcvdata = new byte[2048];
-            DatagramPacket packet = new DatagramPacket(rcvdata, rcvdata.length);
-            try {
-                socket.receive(packet);
-                addConnection(packet);
-                handler.process(packet);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            broadcast();
-        }
-    }
 
     public void setData(byte[] data){
         this.snddata = data;
