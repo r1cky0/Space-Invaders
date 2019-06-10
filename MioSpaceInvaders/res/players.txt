@@ -12,4 +12,8 @@ h	h	0	res/images/SpaceShip5.png
 PorcoZioDove	QuantoSeiArrosto	310	res/images/SpaceShip0.png
 giammar	simo	1220	res/images/SpaceShip0.png
 musi	777	310	res/images/SpaceShip3.png
-cr7	cr7	1830	res/images/SpaceShip3.png
+cr7	cr7	2210	res/images/SpaceShip3.png
+fecchioculo	cre	190	res/images/SpaceShip0.png
+1234	a	0	res/images/SpaceShip0.png
+cr8	abc	0	res/images/SpaceShip0.png
+cr9	aaaa	0	res/images/SpaceShip0.png

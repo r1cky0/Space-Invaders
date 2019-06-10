@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<company>
+    <ship id="1001">
+        <ShipName>Default Ship</ShipName>
+        <ImgUrl>res/images/SpaceShip0.png</ImgUrl>
+    </ship>
+    <ship id="2001">
+        <ShipName>Dark Ship</ShipName>
+        <ImgUrl>res/images/SpaceShip1.png</ImgUrl>
+    </ship>
+    <ship id="3001">
+        <ShipName>Octopus Ship</ShipName>
+        <ImgUrl>res/images/SpaceShip5.png</ImgUrl>
+    </ship>
+    <ship id="4001">
+        <ShipName>Small Ship</ShipName>
+        <ImgUrl>res/images/SpaceShip3.png</ImgUrl>
+    </ship>
+    <ship id="5001">
+        <ShipName>Extraterrestre Ship</ShipName>
+        <ImgUrl>res/images/SpaceShip4.png</ImgUrl>
+    </ship>
+    <bullet id="6001">
+        <BulletName>Default Bullet</BulletName>
+        <ImgUrl>res/images/Shot.png</ImgUrl>
+    </bullet>
+    <invader id="7001">
+        <InvaderName>Default Invader</InvaderName>
+        <ImgUrl>res/images/Alien0a.png</ImgUrl>
+    </invader>
+</company>

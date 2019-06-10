@@ -1,5 +1,6 @@
 package logic.environment.manager.menu;
 
+import logic.environment.manager.file_xml.ReadXmlFile;
 import logic.sprite.dinamic.SpaceShip;
 
 import java.util.ArrayList;
@@ -20,11 +21,11 @@ public class Customization {
     }
 
     private void initShips() {
-        spaceShips.add("res/images/SpaceShip0.png");
-        spaceShips.add("res/images/SpaceShip1.png");
-        spaceShips.add("res/images/SpaceShip5.png");
-        spaceShips.add("res/images/SpaceShip3.png");
-        spaceShips.add("res/images/SpaceShip4.png");
+        spaceShips.add(ReadXmlFile.readXmlFile(0, "ship"));
+        spaceShips.add(ReadXmlFile.readXmlFile(1, "ship"));
+        spaceShips.add(ReadXmlFile.readXmlFile(2, "ship"));
+        spaceShips.add(ReadXmlFile.readXmlFile(3, "ship"));
+        spaceShips.add(ReadXmlFile.readXmlFile(4, "ship"));
     }
 
     public String getCurrentShip() {

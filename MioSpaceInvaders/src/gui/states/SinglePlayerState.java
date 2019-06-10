@@ -1,5 +1,6 @@
 package gui.states;
 
+import logic.environment.manager.file_xml.ReadXmlFile;
 import logic.thread.ThreadInvader;
 import logic.environment.manager.game.OfflineGameManager;
 import logic.environment.manager.menu.Menu;
@@ -39,9 +40,10 @@ public class SinglePlayerState extends BasicInvaderState {
         this.menu = menu;
 
         try {
-            invaderImage = new Image("res/images/Alien0a.png");
+            invaderImage = new Image(ReadXmlFile.readXmlFile(0, "invader"));
             spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
-            bulletImage = new Image("res/images/Shot.png");
+            bulletImage = new Image(ReadXmlFile.readXmlFile(0, "bullet"));
+
             for(int i=0; i<4; i++){
                 brickImages.add(new Image("res/images/Brick" + i + ".png"));
             }
