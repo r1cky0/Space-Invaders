@@ -45,11 +45,6 @@ public class Server implements Runnable {
 
     public void init() throws SocketException {
         this.socket = new DatagramSocket(this.port);
-        try {
-            socket.bind(new InetSocketAddress(InetAddress.getByName("10.65.30.146"), port));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
         server = new Thread(this);
         server.start();
     }
