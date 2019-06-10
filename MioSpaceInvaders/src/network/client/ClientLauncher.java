@@ -8,7 +8,8 @@ public class ClientLauncher {
 
     public static void main(String[] args){
 
-        Client client = new Client("10.65.30.146", 9999);
+        //INDIRIZZO IP SERVER, PORTA SERVER
+        Client client = new Client("192.168.43.188", 9999);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
