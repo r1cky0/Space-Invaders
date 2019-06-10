@@ -15,13 +15,6 @@ public class Team {
         teamCurrentScore = 0;
     }
 
-    public void initPlayers(){
-        for(Player player : players){
-            player.getSpaceShip().setLife();
-            player.getSpaceShip().setCurrentScore();
-        }
-    }
-
     public void incrementLife(){
         for(Player player : players){
             player.getSpaceShip().incrementLife();

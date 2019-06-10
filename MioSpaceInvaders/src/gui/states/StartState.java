@@ -1,5 +1,5 @@
 package gui.states;
-import logic.environment.manager.file_xml.ReadXmlFile;
+import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.*;

@@ -1,5 +1,5 @@
 package logic.environment.manager.game;
 
 public enum MovingDirections {
-    RIGHT,LEFT, UP, DOWN
+    RIGHT,LEFT, DOWN
 }

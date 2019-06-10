@@ -18,6 +18,7 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class GameManager {
+
     //DIMENSIONS
     private final double MIN_WIDTH = 0.0;
     private double maxHeight;
@@ -28,6 +29,7 @@ public abstract class GameManager {
 
     private InvadersCreator invadersCreator;
     private BunkersCreator bunkersCreator;
+
     //STATE
     private boolean gameOver;
     private boolean newHighscore;
@@ -84,11 +86,12 @@ public abstract class GameManager {
     }
 
     /**
-     * Check di eventuale nuovo highscore con segnalazione a livello superiore dell'evento attraverso un' eccezione
+     * Check di eventuale nuovo highscore implementato in modo diverso se di squadra (multiplayer)
+     * o singolo (singleplayer)
      */
     public abstract void gameOver();
 
-    public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
+    void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
 
         if(((spaceShip.getX() + spaceShip.getSize()) < maxWidth) && (md == MovingDirections.RIGHT)){
             spaceShip.moveRight(delta);
@@ -100,12 +103,12 @@ public abstract class GameManager {
 
     }
 
-    public void shipShot(SpaceShip spaceShip){
+    void shipShot(SpaceShip spaceShip){
 
         if(!spaceShip.isShipShot()) {
             Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - bulletSize/2, spaceShip.getY());
-            shipBullet = new SpaceShipBullet(coordinate, bulletSize);
-            shipShot = true;
+            spaceShip.setShipBullet(new SpaceShipBullet(coordinate, bulletSize));
+            spaceShip.setShipShot(true);
         }
     }
 
@@ -114,7 +117,7 @@ public abstract class GameManager {
      * brick) e poi rispetto alla ship. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
      * fine schermata(y maggiore)
      */
-    public void checkInvaderShotCollision(SpaceShip spaceShip) {
+    void checkInvaderShotCollision(SpaceShip spaceShip) {
         for(Bullet bullet : invaderBullets){
             for (Bunker bunker : bunkers) {
                 if (bunker.checkBrickCollision(bullet)) {
@@ -143,22 +146,22 @@ public abstract class GameManager {
      * brick) e poi rispetto agli invaders. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
      * fine schermata(y minore)
      */
-    public void checkSpaceShipShotCollision() {
+    void checkSpaceShipShotCollision(SpaceShip spaceShip) {
 
         for (Bunker bunker : bunkers) {
-            if (bunker.checkBrickCollision(shipBullet)) {
-                shipShot = false;
-                shipBullet = null;
+            if (bunker.checkBrickCollision(spaceShip.getShipBullet())) {
+                spaceShip.setShipShot(false);
+                spaceShip.setShipBullet(null);
                 return;
             }
         }
 
         for(Invader invader : invaders){
-            if (invader.collides(shipBullet)) {
+            if (invader.collides(spaceShip.getShipBullet())) {
                 spaceShip.incrementCurrentScore(invader.getValue());
                 invaders.remove(invader);
-                shipShot = false;
-                shipBullet = null;
+                spaceShip.setShipShot(false);
+                spaceShip.setShipBullet(null);
                 if (invaders.isEmpty()) {
                     nextLevel();
                 }
@@ -166,8 +169,9 @@ public abstract class GameManager {
             }
         }
 
-        if (shipBullet.getY() <= 0) {
-            shipShot = false;
+        if (spaceShip.getShipBullet().getY() <= 0) {
+            spaceShip.setShipShot(false);
+            spaceShip.setShipBullet(null);
         }
     }
 
@@ -251,6 +255,14 @@ public abstract class GameManager {
 
     }
 
+    public void setNewLevel(boolean value){
+        newLevel = value;
+    }
+
+    public void setGameOver(boolean value){
+        gameOver = value;
+    }
+
     public List<Invader> getInvaders() {
         return invaders;
     }
@@ -263,14 +275,6 @@ public abstract class GameManager {
         return invaderBullets;
     }
 
-    public Bullet getShipBullet(){
-        return shipBullet;
-    }
-
-    public SpaceShip getSpaceShip(){
-        return spaceShip;
-    }
-
     public boolean isGameOver(){
         return gameOver;
     }
@@ -281,10 +285,6 @@ public abstract class GameManager {
 
     public boolean isNewLevel(){
         return newLevel;
-    }
-
-    public void setNewLevel(boolean value){
-        newLevel = value;
     }
 
     public int getDifficulty(){

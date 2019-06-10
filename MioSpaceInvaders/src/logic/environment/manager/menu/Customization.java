@@ -1,7 +1,6 @@
 package logic.environment.manager.menu;
 
-import logic.environment.manager.file_xml.ReadXmlFile;
-import logic.sprite.dinamic.SpaceShip;
+import logic.environment.manager.file.ReadXmlFile;
 
 import java.util.ArrayList;
 

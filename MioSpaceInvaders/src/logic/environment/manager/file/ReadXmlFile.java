@@ -1,4 +1,4 @@
-package logic.environment.manager.file_xml;
+package logic.environment.manager.file;
 
 
 import javax.xml.parsers.DocumentBuilderFactory;

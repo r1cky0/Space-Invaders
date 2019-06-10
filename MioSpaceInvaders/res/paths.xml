@@ -54,7 +54,7 @@
     </button>
     <button id="14001">
         <ButtonName>Button MultiPlayer</ButtonName>
-        <ImgUrl>res/images/ButtonMultiPlayer.png</ImgUrl>
+        <ImgUrl>res/images/ButtonMultiplayer.png</ImgUrl>
     </button>
     <button id="15001">
         <ButtonName>Button NewGame</ButtonName>

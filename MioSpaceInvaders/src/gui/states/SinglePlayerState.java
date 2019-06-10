@@ -1,6 +1,6 @@
 package gui.states;
 
-import logic.environment.manager.file_xml.ReadXmlFile;
+import logic.environment.manager.file.ReadXmlFile;
 import logic.thread.ThreadInvader;
 import logic.environment.manager.game.OfflineGameManager;
 import logic.environment.manager.menu.Menu;
@@ -110,8 +110,8 @@ public class SinglePlayerState extends BasicInvaderState {
             }
         }
 
-        if(offlineGameManager.getShipBullet() != null){
-            offlineGameManager.getShipBullet().render(bulletImage);
+        if(offlineGameManager.getSpaceShipBullet() != null){
+            offlineGameManager.getSpaceShipBullet().render(bulletImage);
         }
 
           for(Bullet bullet : offlineGameManager.getInvaderBullets()) {
@@ -165,11 +165,11 @@ public class SinglePlayerState extends BasicInvaderState {
             offlineGameManager.shipShot();
         }
 
-        if (offlineGameManager.getShipBullet() != null) {
-            offlineGameManager.getShipBullet().move(delta);
+        if (offlineGameManager.getSpaceShipBullet() != null) {
+            offlineGameManager.getSpaceShipBullet().move(delta);
         }
 
-        if(offlineGameManager.getShipBullet()!= null) {
+        if(offlineGameManager.getSpaceShipBullet()!= null) {
             offlineGameManager.checkSpaceShipShotCollision();
         }
 
