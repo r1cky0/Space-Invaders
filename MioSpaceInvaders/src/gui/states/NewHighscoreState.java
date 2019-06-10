@@ -38,17 +38,17 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        background = new Image(ReadXmlFile.readXmlFile(0, "background"));
+        background = new Image(ReadXmlFile.read(0, "background"));
 
         title = "NEW HIGHSCORE:";
 
-        newGame = new Image(ReadXmlFile.readXmlFile(5, "button")).getScaledCopy(30*gameContainer.getWidth()/100,
+        newGame = new Image(ReadXmlFile.read(5, "button")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
                 80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        homeImage = new Image(ReadXmlFile.readXmlFile(7, "button")).getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(ReadXmlFile.read(7, "button")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
                 6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);

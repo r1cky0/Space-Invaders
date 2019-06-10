@@ -25,7 +25,6 @@ public class Client implements Runnable {
     public Client(String destAddress, int destPort) {
 
         running = new AtomicBoolean(false);
-        snddata = new byte[2048];
         handler = new PacketHandler();
         try {
             //apertura connessione verso il server
@@ -76,7 +75,8 @@ public class Client implements Runnable {
         }
     }
 
-    public void setData(byte[] data){
+    public void setData(byte[] data, int length){
+        snddata = new byte[length];
         this.snddata = data;
     }
 

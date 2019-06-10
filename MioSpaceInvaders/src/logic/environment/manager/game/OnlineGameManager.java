@@ -1,6 +1,7 @@
 package logic.environment.manager.game;
 
 import logic.player.Player;
+import logic.player.Team;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 

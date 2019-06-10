@@ -10,7 +10,8 @@ import org.w3c.dom.Element;
 import java.io.File;
 
 public class ReadXmlFile {
-    public static String readXmlFile(int i, String tag) {
+
+    public static String read(int i, String tag) {
 
         try {
 

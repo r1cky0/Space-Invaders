@@ -1,4 +1,4 @@
-package logic.environment.manager.game;
+package logic.player;
 
 import logic.player.Player;
 
@@ -10,8 +10,8 @@ public class Team {
     private int teamHighScore;
     private int teamCurrentScore;
 
-    public Team(ArrayList<Player> players){
-        this.players = players;
+    public Team(){
+        players = new ArrayList<>();
         teamCurrentScore = 0;
     }
 
@@ -25,6 +25,10 @@ public class Team {
         for(Player player : players){
             teamCurrentScore += player.getSpaceShip().getCurrentScore();
         }
+    }
+
+    public void addPlayer(Player player){
+        players.add(player);
     }
 
     public void setTeamHighScore(int teamHighScore) {

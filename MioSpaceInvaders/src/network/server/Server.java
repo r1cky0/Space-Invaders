@@ -1,12 +1,15 @@
 package network.server;
 
 import logic.environment.manager.game.OnlineGameManager;
+import logic.player.Player;
+import logic.player.Team;
+import logic.sprite.Coordinate;
+import logic.sprite.dinamic.SpaceShip;
 import network.data.Connection;
 import network.data.PacketHandler;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -21,12 +24,17 @@ public class Server implements Runnable {
     private AtomicBoolean running;
     private DatagramSocket socket;
     private PacketHandler handler;
-    private Thread server;
+
+    //DIMENSION
+    private double maxHeight = 800;
+    private double maxWidth = 1000;
+
+    private OnlineGameManager onlineGameManager;
+    private Team team;
+    private boolean gameStarted;
 
     //INFORMAZIONI SU: POSIZIONI SHIP, POSIZIONI INVADER, STATO BRICK
     private byte[] snddata;
-
-    private OnlineGameManager onlineGameManager;
 
     //Arraylist connessioni al server da parte dei client
     public List<Connection> clients = new CopyOnWriteArrayList<>();
@@ -36,6 +44,8 @@ public class Server implements Runnable {
         snddata = new byte[2048];
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
+        team = new Team();
+        gameStarted = false;
         try {
             this.init();
         } catch (SocketException e) {
@@ -45,10 +55,9 @@ public class Server implements Runnable {
 
     public void init() throws SocketException {
         this.socket = new DatagramSocket(this.port);
-        server = new Thread(this);
-        server.start();
+        Thread listener = new Thread(this);
+        listener.start();
     }
-
 
     /**
      * Thread server invia pacchetti ai client contententi info sullo stato di gioco e resta in ascolto
@@ -58,12 +67,16 @@ public class Server implements Runnable {
         running.set(true);
         System.out.println("Server started on port: " + port);
         while (running.get()) {
-            byte[] rcvdata = new byte[2048];
+            byte[] rcvdata = new byte[1000];
             DatagramPacket packet = new DatagramPacket(rcvdata, rcvdata.length);
             try {
                 socket.receive(packet);
                 addConnection(packet);
-                handler.process(packet);
+
+                if (gameStarted) {
+                    execute(handler.process(packet));
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -72,18 +85,34 @@ public class Server implements Runnable {
     }
 
     private void addConnection(DatagramPacket packet) {
+        double shipSize = maxWidth / 20;
+        Coordinate coordinate = new Coordinate((maxWidth / 2 - shipSize / 2), (maxHeight - shipSize));
+        SpaceShip defaultShip = new SpaceShip(coordinate, shipSize);
 
-        if (clients.isEmpty()) {
-            clients.add(new Connection(packet.getAddress(), packet.getPort()));
-        } else {
+        if (clients.size() <= 4) {
             for (Connection connection : clients) {
                 if (connection.getDestAddress().equals(packet.getAddress())) {
                     return;
-                } else {
-                    clients.add(new Connection(packet.getAddress(), packet.getPort()));
                 }
             }
+            clients.add(new Connection(packet.getAddress(), packet.getPort()));
+            team.addPlayer(new Player(handler.process(packet), defaultShip));
+            if (clients.size() == 2) {
+                startGame();
+                gameStarted = true;
+            }
+
+
         }
+    }
+
+    public void startGame(){
+        onlineGameManager = new OnlineGameManager(team, maxWidth, maxHeight);
+    }
+
+    public void execute(String mex){
+
+        //leggere i comandi arrivati ed eseguirli sull'online game manager
     }
 
     public void removeConnection(InetAddress address){
@@ -97,7 +126,7 @@ public class Server implements Runnable {
     /**
      * Invio dati ad un singolo client
      */
-    public void send(int id) {
+    public void send(int id, String mex) {
         Connection connection = clients.get(id);
         DatagramPacket packet = new DatagramPacket(snddata, snddata.length, connection.getDestAddress(), connection.getDestPort());
         try {
@@ -122,7 +151,6 @@ public class Server implements Runnable {
             }
         }
     }
-
 
     public void setData(byte[] data){
         this.snddata = data;

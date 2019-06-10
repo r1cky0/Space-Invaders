@@ -40,9 +40,9 @@ public class SinglePlayerState extends BasicInvaderState {
         this.menu = menu;
 
         try {
-            invaderImage = new Image(ReadXmlFile.readXmlFile(0, "invader"));
+            invaderImage = new Image(ReadXmlFile.read(0, "invader"));
             spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
-            bulletImage = new Image(ReadXmlFile.readXmlFile(0, "bullet"));
+            bulletImage = new Image(ReadXmlFile.read(0, "bullet"));
 
             for(int i=0; i<4; i++){
                 brickImages.add(new Image("res/images/Brick" + i + ".png"));
@@ -55,7 +55,7 @@ public class SinglePlayerState extends BasicInvaderState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
-        background = new Image(ReadXmlFile.readXmlFile(0, "background"));
+        background = new Image(ReadXmlFile.read(0, "background"));
 
         uniFontData = Build(3*gameContainer.getWidth()/100f);
 
