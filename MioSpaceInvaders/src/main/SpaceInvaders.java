@@ -1,4 +1,4 @@
-package gui.main;
+package main;
 
 import gui.states.*;
 import logic.environment.manager.menu.Menu;
