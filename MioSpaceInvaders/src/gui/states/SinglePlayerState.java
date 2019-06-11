@@ -4,7 +4,6 @@ import logic.environment.manager.file.ReadXmlFile;
 import logic.thread.ThreadInvader;
 import logic.environment.manager.game.OfflineGameManager;
 import logic.environment.manager.menu.Menu;
-import logic.environment.manager.game.MovingDirections;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.unmovable.Brick;
@@ -40,12 +39,12 @@ public class SinglePlayerState extends BasicInvaderState {
         this.menu = menu;
 
         try {
-            invaderImage = new Image(ReadXmlFile.read(0, "invader"));
+            invaderImage = new Image(ReadXmlFile.read("defaultInvader"));
             spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
-            bulletImage = new Image(ReadXmlFile.read(0, "bullet"));
+            bulletImage = new Image(ReadXmlFile.read("defaultBullet"));
 
             for(int i=0; i<4; i++){
-                brickImages.add(new Image("res/images/Brick" + i + ".png"));
+                brickImages.add(new Image(ReadXmlFile.read("brick"+i)));
             }
         } catch (SlickException e) {
             e.printStackTrace();
@@ -55,7 +54,7 @@ public class SinglePlayerState extends BasicInvaderState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
-        background = new Image(ReadXmlFile.read(0, "background"));
+        background = new Image(ReadXmlFile.read("defaultBackground"));
 
         uniFontData = Build(3*gameContainer.getWidth()/100f);
 
@@ -84,7 +83,7 @@ public class SinglePlayerState extends BasicInvaderState {
         uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Highscore: " + highscore, Color.green);
 
-        singlePlayer.getPlayer().getSpaceShip().render(spaceShipImage);
+        singlePlayer.getSpaceShip().render(spaceShipImage);
 
 
         for (Invader invader: offlineGameManager.getInvaders()) {
@@ -115,7 +114,7 @@ public class SinglePlayerState extends BasicInvaderState {
             singlePlayer.getPlayer().getSpaceShip().getShipBullet().render(bulletImage);
         }
 
-          for(Bullet bullet : offlineGameManager.getInvaderBullets()) {
+        for(Bullet bullet : offlineGameManager.getInvaderBullets()) {
             bullet.render(bulletImage);
         }
 
@@ -126,10 +125,10 @@ public class SinglePlayerState extends BasicInvaderState {
         Input input = gameContainer.getInput();
 
         if(input.isKeyDown(Input.KEY_SPACE)||input.isKeyDown(Input.KEY_LEFT)||input.isKeyDown(Input.KEY_RIGHT)||input.isKeyDown(Input.KEY_0)){
-            singlePlayer.Exec(input);
+            singlePlayer.execCommand(input);
         }
 
-        singlePlayer.Exec();
+        singlePlayer.exec();
 
         if(!newThread){
             threadInvader = new ThreadInvader(singlePlayer.getOfflineGameManager().getDifficulty(), singlePlayer);

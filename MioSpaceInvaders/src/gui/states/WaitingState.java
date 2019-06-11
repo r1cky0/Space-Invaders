@@ -30,7 +30,7 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        background = new Image(ReadXmlFile.read(0, "background"));
+        background = new Image(ReadXmlFile.read("defaultBackground"));
 
         uniFontTitle = Build(5 * gameContainer.getWidth() / 100f);
         title = "WAITING FOR OTHER PLAYERS...";

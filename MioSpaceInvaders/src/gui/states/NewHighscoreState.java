@@ -38,22 +38,22 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        background = new Image(ReadXmlFile.read(0, "background"));
+        background = new Image(ReadXmlFile.read("defaultBackground"));
 
         title = "NEW HIGHSCORE:";
 
-        newGame = new Image(ReadXmlFile.read(5, "button")).getScaledCopy(30*gameContainer.getWidth()/100,
+        newGame = new Image(ReadXmlFile.read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
                 80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        homeImage = new Image(ReadXmlFile.read(7, "button")).getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(ReadXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
                 6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
 
-        cupImage = new Image("res/images/Cup.png").getScaledCopy(40*gameContainer.getWidth()/100,
+        cupImage = new Image(ReadXmlFile.read("buttonRanking")).getScaledCopy(40*gameContainer.getWidth()/100,
                 40*gameContainer.getHeight()/100);
 
 

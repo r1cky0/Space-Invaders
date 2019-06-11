@@ -3,7 +3,9 @@ package gui.states;
 import logic.environment.manager.game.MovingDirections;
 import logic.environment.manager.game.OfflineGameManager;
 import logic.player.Player;
+import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
+import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import org.newdawn.slick.Input;
 
 public class SinglePlayer {
@@ -16,39 +18,45 @@ public class SinglePlayer {
         this.offlineGameManager = offlineGameManager;
     }
 
-    public void Exec(Input input){
+    public void execCommand(Input input){
         if (input.isKeyDown(Input.KEY_RIGHT)) {
-            offlineGameManager.shipMovement(player.getSpaceShip(), MovingDirections.RIGHT);
+            offlineGameManager.shipMovement(getSpaceShip(), MovingDirections.RIGHT);
         }
         if (input.isKeyDown(Input.KEY_LEFT)) {
-            offlineGameManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT);
+            offlineGameManager.shipMovement(getSpaceShip(), MovingDirections.LEFT);
         }
         if (input.isKeyPressed(Input.KEY_SPACE)) {
-            offlineGameManager.shipShot(player.getSpaceShip());
-        }
-        if (input.isKeyPressed(Input.KEY_0)) {
-            offlineGameManager.invaderShot();
+            offlineGameManager.shipShot(getSpaceShip());
         }
     }
 
-    public void Exec(){
+    public void exec(){
 
-        if (player.getSpaceShip().getShipBullet() != null) {
+        if (getSpaceShipBullet() != null) {
             player.getSpaceShip().getShipBullet().move();
         }
 
-        if(player.getSpaceShip().getShipBullet() != null) {
-            offlineGameManager.checkSpaceShipShotCollision(player.getSpaceShip());
+        if(getSpaceShipBullet() != null) {
+            offlineGameManager.checkSpaceShipShotCollision(getSpaceShip());
         }
 
         for(Bullet bullet: offlineGameManager.getInvaderBullets()){
             bullet.move();
         }
 
-        offlineGameManager.checkInvaderShotCollision(player.getSpaceShip());
+        offlineGameManager.checkInvaderShotCollision(getSpaceShip());
     }
+
     public Player getPlayer() {
         return player;
+    }
+
+    public SpaceShip getSpaceShip(){
+        return player.getSpaceShip();
+    }
+
+    public SpaceShipBullet getSpaceShipBullet(){
+        return getSpaceShip().getShipBullet();
     }
 
     public OfflineGameManager getOfflineGameManager() {

@@ -1,95 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<company>
-    <ship id="1001">
-        <ShipName>Default Ship</ShipName>
-        <ImgUrl>res/images/SpaceShip0.png</ImgUrl>
+<SpaceInvaders>
+    <ship>
+        <ship0>res/images/SpaceShip0.png</ship0>
+        <ship1>res/images/SpaceShip1.png</ship1>
+        <ship2>res/images/SpaceShip2.png</ship2>
+        <ship3>res/images/SpaceShip3.png</ship3>
+        <ship4>res/images/SpaceShip4.png</ship4>
     </ship>
-    <ship id="2001">
-        <ShipName>Dark Ship</ShipName>
-        <ImgUrl>res/images/SpaceShip1.png</ImgUrl>
-    </ship>
-    <ship id="3001">
-        <ShipName>Octopus Ship</ShipName>
-        <ImgUrl>res/images/SpaceShip5.png</ImgUrl>
-    </ship>
-    <ship id="4001">
-        <ShipName>Small Ship</ShipName>
-        <ImgUrl>res/images/SpaceShip3.png</ImgUrl>
-    </ship>
-    <ship id="5001">
-        <ShipName>Extraterrestre Ship</ShipName>
-        <ImgUrl>res/images/SpaceShip4.png</ImgUrl>
-    </ship>
-    <bullet id="6001">
-        <BulletName>Default Bullet</BulletName>
-        <ImgUrl>res/images/Shot.png</ImgUrl>
+
+    <bullet>
+        <defaultBullet>res/images/Shot.png</defaultBullet>
     </bullet>
-    <invader id="7001">
-        <InvaderName>Default Invader</InvaderName>
-        <ImgUrl>res/images/Alien0a.png</ImgUrl>
+
+    <invader>
+        <defaultInvader>res/images/Alien0.png</defaultInvader>
     </invader>
-    <background id="8001">
-        <BackgroundName>Default Background</BackgroundName>
-        <ImgUrl>res/images/BackgroundSpace.png</ImgUrl>
+
+    <brick>
+        <brick0>res/images/Brick0.png</brick0>
+        <brick1>res/images/Brick1.png</brick1>
+        <brick2>res/images/Brick2.png</brick2>
+        <brick3>res/images/Brick3.png</brick3>
+    </brick>
+
+    <background>
+        <defaultBackground>res/images/BackgroundSpace.png</defaultBackground>
+        <gameoverBackground>res/images/BackgroundGameOver.png</gameoverBackground>
     </background>
-    <background id="9001">
-        <BackgroundName>Background GameOver</BackgroundName>
-        <ImgUrl>res/images/BackgroundGameOver.png</ImgUrl>
-    </background>
-    <button id="10001">
-        <ButtonName>Button Account</ButtonName>
-        <ImgUrl>res/images/ButtonAccount.png</ImgUrl>
+
+    <button>
+        <buttonAccount>res/images/ButtonAccount.png</buttonAccount>
+        <buttonExit>res/images/ButtonExit.png</buttonExit>
+        <buttonLogin>res/images/ButtonLogin.png</buttonLogin>
+        <buttonMenu>res/images/ButtonMenu.png</buttonMenu>
+        <buttonMultiplayer>res/images/ButtonMultiplayer.png</buttonMultiplayer>
+        <buttonNewGame>res/images/ButtonNewGame.png</buttonNewGame>
+        <buttonSinglePlayer>res/images/ButtonSinglePlayer.png</buttonSinglePlayer>
+        <buttonHome>res/images/Home.png</buttonHome>
+        <buttonSettings>res/images/Settings.png</buttonSettings>
+        <buttonRanking>res/images/Cup.png</buttonRanking>        
     </button>
-    <button id="11001">
-        <ButtonName>Button Exit</ButtonName>
-        <ImgUrl>res/images/ButtonExit.png</ImgUrl>
-    </button>
-    <button id="12001">
-        <ButtonName>Button Login</ButtonName>
-        <ImgUrl>res/images/ButtonLogin.png</ImgUrl>
-    </button>
-    <button id="13001">
-        <ButtonName>Button Menu</ButtonName>
-        <ImgUrl>res/images/ButtonMenu.png</ImgUrl>
-    </button>
-    <button id="14001">
-        <ButtonName>Button MultiPlayer</ButtonName>
-        <ImgUrl>res/images/ButtonMultiplayer.png</ImgUrl>
-    </button>
-    <button id="15001">
-        <ButtonName>Button NewGame</ButtonName>
-        <ImgUrl>res/images/ButtonNewGame.png</ImgUrl>
-    </button>
-    <button id="16001">
-        <ButtonName>Button SinglePlayer</ButtonName>
-        <ImgUrl>res/images/ButtonSinglePlayer.png</ImgUrl>
-    </button>
-    <button id="17001">
-        <ButtonName>Button Home</ButtonName>
-        <ImgUrl>res/images/Home.png</ImgUrl>
-    </button>
-    <button id="18001">
-        <ButtonName>Button Settings</ButtonName>
-        <ImgUrl>res/images/Settings.png</ImgUrl>
-    </button>
-    <button id="19001">
-        <ButtonName>Button Ranking</ButtonName>
-        <ImgUrl>res/images/cup.png</ImgUrl>
-    </button>
-    <button id="20001">
-        <ButtonName>Button Exit</ButtonName>
-        <ImgUrl>res/images/ButtonExit.png</ImgUrl>
-    </button>
-    <medal id="000">
-        <MedalName>Gold Medal</MedalName>
-        <ImgUrl>res/images/MedalGold.png</ImgUrl>
+
+    <medal>
+        <medalGold>res/images/MedalGold.png</medalGold>
+        <medalSilver>res/images/MedalSilver.png</medalSilver>
+        <medalBronze>res/images/MedalBronze.png</medalBronze>
     </medal>
-    <medal id="001">
-        <MedalName>Silver Medal</MedalName>
-        <ImgUrl>res/images/MedalSilver.png</ImgUrl>
-    </medal>
-    <medal id="002">
-        <MedalName>Bronze Medal</MedalName>
-        <ImgUrl>res/images/MedalBronze.png</ImgUrl>
-    </medal>
-</company>
+</SpaceInvaders>

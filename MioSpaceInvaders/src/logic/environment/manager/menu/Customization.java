@@ -20,11 +20,9 @@ public class Customization {
     }
 
     private void initShips() {
-        spaceShips.add(ReadXmlFile.read(0, "ship"));
-        spaceShips.add(ReadXmlFile.read(1, "ship"));
-        spaceShips.add(ReadXmlFile.read(2, "ship"));
-        spaceShips.add(ReadXmlFile.read(3, "ship"));
-        spaceShips.add(ReadXmlFile.read(4, "ship"));
+        for(int i=0; i<5; i++){
+            spaceShips.add(ReadXmlFile.read("ship"+i));
+        }
     }
 
     public String getCurrentShip() {

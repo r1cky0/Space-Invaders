@@ -44,16 +44,16 @@ public class RankingState extends BasicInvaderState implements ComponentListener
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        background = new Image(ReadXmlFile.read(0, "background"));
+        background = new Image(ReadXmlFile.read("defaultBackground"));
 
-        goldMedal = new Image(ReadXmlFile.read(0, "medal")).getScaledCopy(6*gameContainer.getWidth()/100,
+        goldMedal = new Image(ReadXmlFile.read("medalGold")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        silverMedal = new Image(ReadXmlFile.read(1, "medal")).getScaledCopy(6*gameContainer.getWidth()/100,
+        silverMedal = new Image(ReadXmlFile.read("medalSilver")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        bronzeMedal = new Image(ReadXmlFile.read(2, "medal")).getScaledCopy(6*gameContainer.getWidth()/100,
+        bronzeMedal = new Image(ReadXmlFile.read("medalBronze")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
 
-        homeImage = new Image(ReadXmlFile.read(7, "button")).getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(ReadXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
                 6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);

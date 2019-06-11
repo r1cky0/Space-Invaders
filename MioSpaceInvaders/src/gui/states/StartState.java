@@ -49,7 +49,7 @@ public class StartState extends BasicInvaderState implements ComponentListener {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        background = new Image(ReadXmlFile.read(0, "background"));
+        background = new Image(ReadXmlFile.read("defaultBackground"));
 
         uniFontTitle = Build(5 * gameContainer.getWidth() / 100f);
         uniFontMessage = Build(3 * gameContainer.getWidth() / 100f);
@@ -73,10 +73,10 @@ public class StartState extends BasicInvaderState implements ComponentListener {
         passwordField.setBackgroundColor(Color.white);
         passwordField.setTextColor(Color.black);
 
-        login = new Image(ReadXmlFile.read(2, "button")).getScaledCopy(25 * gameContainer.getWidth() / 100,
+        login = new Image(ReadXmlFile.read("buttonLogin")).getScaledCopy(25 * gameContainer.getWidth() / 100,
                 10 * gameContainer.getHeight() / 100);
 
-        account = new Image(ReadXmlFile.read(0, "button")).getScaledCopy(25 * gameContainer.getWidth() / 100,
+        account = new Image(ReadXmlFile.read("buttonAccount")).getScaledCopy(25 * gameContainer.getWidth() / 100,
                 10 * gameContainer.getHeight() / 100);
 
         loginButton = new MouseOverArea(gameContainer, login, (gameContainer.getWidth() - login.getWidth()) / 2,

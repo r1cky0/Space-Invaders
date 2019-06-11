@@ -1,6 +1,5 @@
 package logic.environment.manager.file;
 
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
@@ -11,26 +10,18 @@ import java.io.File;
 
 public class ReadXmlFile {
 
-    public static String read(int i, String tag) {
+    public static String read(String tag) {
 
         try {
-
-            File fXmlFile = new File("res/paths.xml");
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(fXmlFile);
-
-            doc.getDocumentElement().normalize();
-
-            NodeList nList = doc.getElementsByTagName(tag);
-
-            Node nNode1 = nList.item(i);
-            Element element = (Element) nNode1;
-            return element.getElementsByTagName("ImgUrl").item(0).getTextContent();
+            File file = new File("res/paths.xml");
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(file);
+            return document.getElementsByTagName(tag).item(0).getTextContent();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return "";
     }
-
 }
