@@ -4,6 +4,7 @@ import gui.states.*;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 

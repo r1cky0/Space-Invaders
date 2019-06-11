@@ -16,6 +16,7 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
 
     private GameContainer gameContainer;
     private StateBasedGame stateBasedGame;
+    private SinglePlayer singlePlayer;
 
     private Image gameOver;
     private Image newGame;
@@ -36,6 +37,7 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
+        this.singlePlayer = menu.getSinglePlayer();
 
         newGame = new Image(ReadXmlFile.read(5, "button")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
@@ -54,7 +56,7 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        score = "SCORE: " + menu.getOfflineGameManager().getSpaceShip().getCurrentScore();
+        score = "SCORE: " + menu.getSinglePlayer().getPlayer().getSpaceShip().getCurrentScore();
         gameOver.draw((gameContainer.getWidth() - gameOver.getWidth())/2f,(gameContainer.getHeight() - gameOver.getHeight())/2f);
         newGameButton.render(gameContainer, graphics);
         homeButton.render(gameContainer,graphics);

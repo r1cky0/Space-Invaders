@@ -7,7 +7,7 @@ import logic.sprite.dinamic.bullets.SpaceShipBullet;
 public class SpaceShip extends Sprite {
 
     private int life, currentScore;
-    private double horizontalOffset = 0.5;
+    private double horizontalOffset = 2;
 
     private SpaceShipBullet shipBullet;
     private boolean shipShot;
@@ -20,12 +20,12 @@ public class SpaceShip extends Sprite {
         shipShot = false;
     }
 
-    public void moveLeft(int delta) {
-        super.setX(super.getX() - horizontalOffset*delta);
+    public void moveLeft() {
+        super.setX(super.getX() - horizontalOffset);
     }
 
-    public void moveRight(int delta) {
-        super.setX(super.getX() + horizontalOffset*delta);
+    public void moveRight() {
+        super.setX(super.getX() + horizontalOffset);
     }
 
     public void decreaseLife() {

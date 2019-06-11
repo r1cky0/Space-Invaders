@@ -91,19 +91,19 @@ public abstract class GameManager {
      */
     public abstract void gameOver(Object obj);
 
-    void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
+    public void shipMovement(SpaceShip spaceShip, MovingDirections md){
 
         if(((spaceShip.getX() + spaceShip.getSize()) < maxWidth) && (md == MovingDirections.RIGHT)){
-            spaceShip.moveRight(delta);
+            spaceShip.moveRight();
         }
 
         if((spaceShip.getX() > MIN_WIDTH) && (md == MovingDirections.LEFT)){
-            spaceShip.moveLeft(delta);
+            spaceShip.moveLeft();
         }
 
     }
 
-    void shipShot(SpaceShip spaceShip){
+    public void shipShot(SpaceShip spaceShip){
 
         if(!spaceShip.isShipShot()) {
             Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - bulletSize/2, spaceShip.getY());
@@ -117,7 +117,7 @@ public abstract class GameManager {
      * brick) e poi rispetto alla ship. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
      * fine schermata(y maggiore)
      */
-    void checkInvaderShotCollision(SpaceShip spaceShip) {
+    public void checkInvaderShotCollision(SpaceShip spaceShip) {
         for(Bullet bullet : invaderBullets){
             for (Bunker bunker : bunkers) {
                 if (bunker.checkBrickCollision(bullet)) {
@@ -143,7 +143,7 @@ public abstract class GameManager {
      * brick) e poi rispetto agli invaders. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
      * fine schermata(y minore)
      */
-    void checkSpaceShipShotCollision(SpaceShip spaceShip) {
+    public void checkSpaceShipShotCollision(SpaceShip spaceShip) {
 
         for (Bunker bunker : bunkers) {
             if (bunker.checkBrickCollision(spaceShip.getShipBullet())) {

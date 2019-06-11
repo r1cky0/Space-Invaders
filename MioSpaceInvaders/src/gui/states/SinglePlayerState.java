@@ -21,7 +21,7 @@ public class SinglePlayerState extends BasicInvaderState {
     private Menu menu;
     private OfflineGameManager offlineGameManager;
     private GameContainer gameContainer;
-
+    private SinglePlayer singlePlayer;
 
     private java.awt.Font fontData;
     private UnicodeFont uniFontData;
@@ -60,6 +60,7 @@ public class SinglePlayerState extends BasicInvaderState {
         uniFontData = Build(3*gameContainer.getWidth()/100f);
 
         offlineGameManager = menu.getOfflineGameManager();
+        singlePlayer = menu.getSinglePlayer();
         spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
         newThread = false;
     }
@@ -69,21 +70,21 @@ public class SinglePlayerState extends BasicInvaderState {
         graphics.drawImage(background,0,0);
         Color color;
         int highscore;
-        if(menu.getPlayer().getHighScore() >= offlineGameManager.getSpaceShip().getCurrentScore()){
+        if(menu.getPlayer().getHighScore() >= singlePlayer.getPlayer().getSpaceShip().getCurrentScore()){
             color = Color.white;
             highscore = menu.getPlayer().getHighScore();
         }else{
             color = Color.green;
-            highscore = offlineGameManager.getSpaceShip().getCurrentScore();
+            highscore = singlePlayer.getPlayer().getSpaceShip().getCurrentScore();
         }
         uniFontData.drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
-                "Lives: " + offlineGameManager.getSpaceShip().getLife(), Color.red);
+                "Lives: " + singlePlayer.getPlayer().getSpaceShip().getLife(), Color.red);
         uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: "))/2,
-                2*gameContainer.getHeight()/100f,"Score: " + offlineGameManager.getSpaceShip().getCurrentScore(), color);
+                2*gameContainer.getHeight()/100f,"Score: " + singlePlayer.getPlayer().getSpaceShip().getCurrentScore(), color);
         uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Highscore: " + highscore, Color.green);
 
-        offlineGameManager.getSpaceShip().render(spaceShipImage);
+        singlePlayer.getPlayer().getSpaceShip().render(spaceShipImage);
 
 
         for (Invader invader: offlineGameManager.getInvaders()) {
@@ -110,8 +111,8 @@ public class SinglePlayerState extends BasicInvaderState {
             }
         }
 
-        if(offlineGameManager.getSpaceShipBullet() != null){
-            offlineGameManager.getSpaceShipBullet().render(bulletImage);
+        if(singlePlayer.getPlayer().getSpaceShip().getShipBullet() != null){
+            singlePlayer.getPlayer().getSpaceShip().getShipBullet().render(bulletImage);
         }
 
           for(Bullet bullet : offlineGameManager.getInvaderBullets()) {
@@ -120,12 +121,18 @@ public class SinglePlayerState extends BasicInvaderState {
 
     }
 
-    @Override
+
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
+        if(input.isKeyDown(Input.KEY_SPACE)||input.isKeyDown(Input.KEY_LEFT)||input.isKeyDown(Input.KEY_RIGHT)||input.isKeyDown(Input.KEY_0)){
+            singlePlayer.Exec(input);
+        }
+
+        singlePlayer.Exec();
+
         if(!newThread){
-            threadInvader = new ThreadInvader(offlineGameManager.getDifficulty(), offlineGameManager);
+            threadInvader = new ThreadInvader(singlePlayer.getOfflineGameManager().getDifficulty(), singlePlayer);
             threadInvader.start();
             newThread = true;
         }
@@ -152,37 +159,6 @@ public class SinglePlayerState extends BasicInvaderState {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
 
-        //MOVIMENTI E AZIONI SPACE SHIP
-        if (input.isKeyDown(Input.KEY_LEFT)) {
-            offlineGameManager.shipMovement(MovingDirections.LEFT, delta);
-        }
-
-        if (input.isKeyDown(Input.KEY_RIGHT)) {
-            offlineGameManager.shipMovement(MovingDirections.RIGHT, delta);
-        }
-
-        if (input.isKeyPressed(Input.KEY_SPACE)) {
-            offlineGameManager.shipShot();
-        }
-
-        if (offlineGameManager.getSpaceShipBullet() != null) {
-            offlineGameManager.getSpaceShipBullet().move(delta);
-        }
-
-        if(offlineGameManager.getSpaceShipBullet()!= null) {
-            offlineGameManager.checkSpaceShipShotCollision();
-        }
-
-        //MOVIMENTI E AZIONI INVADERS
-        if (input.isKeyPressed(Input.KEY_0)) {
-            offlineGameManager.invaderShot();
-        }
-
-        for(Bullet bullet: offlineGameManager.getInvaderBullets()){
-            bullet.move(delta);
-        }
-
-        offlineGameManager.checkInvaderShotCollision();
     }
 
     @Override

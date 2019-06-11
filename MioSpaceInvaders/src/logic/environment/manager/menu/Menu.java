@@ -1,5 +1,6 @@
 package logic.environment.manager.menu;
 
+import gui.states.SinglePlayer;
 import logic.environment.manager.file.AddAccount;
 import logic.environment.manager.file.Login;
 import logic.environment.manager.file.SaveCustomization;
@@ -20,6 +21,7 @@ public class Menu {
 
     private Customization customization;
     private OfflineGameManager offlineGameManager;
+    private SinglePlayer singlePlayer;
     private SpaceShip defaultShip;
     private Player player;
 
@@ -63,7 +65,8 @@ public class Menu {
 
             customization = new Customization("res/images/SpaceShip0.png");
 
-            offlineGameManager = new OfflineGameManager(player, maxWidth, maxHeight);
+            offlineGameManager = new OfflineGameManager(maxWidth, maxHeight);
+            singlePlayer = new SinglePlayer(player, offlineGameManager);
             return true;
         }
         return false;
@@ -78,7 +81,8 @@ public class Menu {
             player.setHighScore(Integer.parseInt(components[2]));
             customization = new Customization(components[3]);
 
-            offlineGameManager = new OfflineGameManager(player, maxWidth, maxHeight);
+            offlineGameManager = new OfflineGameManager(maxWidth, maxHeight);
+            singlePlayer = new SinglePlayer(player, offlineGameManager);
             return true;
         }
         else{
@@ -94,13 +98,16 @@ public class Menu {
      * Funzione necessaria per reinizializzare il sistema dopo un gameOver
      */
     public void restartGame() {
-        offlineGameManager = new OfflineGameManager(player, maxWidth, maxHeight);
+        offlineGameManager = new OfflineGameManager(maxWidth, maxHeight);
+        singlePlayer = new SinglePlayer(player, offlineGameManager);
     }
 
     //A programma sistemato togliere questo getter e fare che startGame restituisca il offlineGameManager
     public OfflineGameManager getOfflineGameManager() {
         return offlineGameManager;
     }
+
+    public SinglePlayer getSinglePlayer(){return singlePlayer;}
 
     public Player getPlayer() {
         return player;

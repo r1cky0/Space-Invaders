@@ -8,7 +8,7 @@ public class InvaderBullet extends Bullet {
         super(coordinate, size);
     }
 
-    public void move(int delta) {
-        super.setY(super.getY() + verticalOffset*delta);
+    public void move() {
+        super.setY(super.getY() + verticalOffset);
     }
 }
