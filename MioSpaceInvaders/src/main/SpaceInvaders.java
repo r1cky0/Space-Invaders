@@ -24,6 +24,7 @@ public class SpaceInvaders extends StateBasedGame {
         this.addState(new RankingState(menu));
         this.addState(new NewHighscoreState(menu));
         this.addState(new SettingsState(menu));
+        this.addState(new WaitingState(menu));
         this.enterState(0);
     }
 

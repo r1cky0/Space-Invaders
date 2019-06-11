@@ -9,7 +9,7 @@ public class ClientLauncher {
     public static void main(String[] args){
 
         //INDIRIZZO IP SERVER, PORTA SERVER
-        Client client = new Client("localhost", 9999);
+        Client client = new Client("192.168.43.188", 9999);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 

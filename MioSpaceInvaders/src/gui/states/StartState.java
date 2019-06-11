@@ -115,8 +115,19 @@ public class StartState extends BasicInvaderState implements ComponentListener {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
-        if (input.isKeyDown(Input.KEY_TAB)) {
+        if (input.isKeyPressed(Input.KEY_TAB)) {
             passwordField.setFocus(true);
+        }
+        if(input.isKeyPressed(Input.KEY_ENTER)){
+            String nickname = nameField.getText();
+            String password = passwordField.getText();
+
+            if (menu.logIn(nickname, password)) {
+                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            } else {
+                errorFlag = true;
+                errorMessage = "Nickname o password errati";
+            }
         }
     }
 
