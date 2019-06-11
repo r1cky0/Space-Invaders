@@ -72,4 +72,24 @@
         <ButtonName>Button Settings</ButtonName>
         <ImgUrl>res/images/Settings.png</ImgUrl>
     </button>
+    <button id="19001">
+        <ButtonName>Button Ranking</ButtonName>
+        <ImgUrl>res/images/cup.png</ImgUrl>
+    </button>
+    <button id="20001">
+        <ButtonName>Button Exit</ButtonName>
+        <ImgUrl>res/images/ButtonExit.png</ImgUrl>
+    </button>
+    <medal id="000">
+        <MedalName>Gold Medal</MedalName>
+        <ImgUrl>res/images/MedalGold.png</ImgUrl>
+    </medal>
+    <medal id="001">
+        <MedalName>Silver Medal</MedalName>
+        <ImgUrl>res/images/MedalSilver.png</ImgUrl>
+    </medal>
+    <medal id="002">
+        <MedalName>Bronze Medal</MedalName>
+        <ImgUrl>res/images/MedalBronze.png</ImgUrl>
+    </medal>
 </company>
