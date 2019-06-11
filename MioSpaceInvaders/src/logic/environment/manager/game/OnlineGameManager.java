@@ -1,13 +1,10 @@
 package logic.environment.manager.game;
 
-import logic.player.Player;
 import logic.player.Team;
-import logic.sprite.dinamic.SpaceShip;
-import logic.sprite.dinamic.bullets.SpaceShipBullet;
 
 public class OnlineGameManager extends GameManager{
 
-    public OnlineGameManager(Team team, double maxWidth, double maxHeight){
+    public OnlineGameManager(double maxWidth, double maxHeight){
         super(maxWidth, maxHeight);
     }
 

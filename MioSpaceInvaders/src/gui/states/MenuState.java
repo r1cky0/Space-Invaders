@@ -14,26 +14,27 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class MenuState extends BasicInvaderState implements ComponentListener {
-    private Menu menu;
 
     private GameContainer gameContainer;
+    private StateBasedGame stateBasedGame;
+
     private Image single;
     private Image multi;
     private Image exit;
     private Image settings;
     private Image background;
     private Image ranking;
-    private String title;
 
-    private StateBasedGame stateBasedGame;
     private MouseOverArea singleButton;
     private MouseOverArea multiButton;
     private MouseOverArea exitButton;
     private MouseOverArea settingsButton;
     private MouseOverArea rankingButton;
 
-    //private Font fontTitle;
     private UnicodeFont uniFontTitle;
+    private String title;
+
+    private Menu menu;
 
     public MenuState(Menu menu){
         this.menu = menu;
@@ -43,8 +44,8 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        this.background = new Image(ReadXmlFile.read("defaultBackground"));
 
+        this.background = new Image(ReadXmlFile.read("defaultBackground"));
         title = "SPACE INVADERS";
 
         single = new Image(ReadXmlFile.read("buttonSinglePlayer")).getScaledCopy(30*gameContainer.getWidth()/100,
@@ -77,8 +78,7 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
                 63*gameContainer.getHeight()/100,12*gameContainer.getWidth()/100,12*gameContainer.getHeight()/100,
                 this);
 
-        uniFontTitle = Build(9*gameContainer.getWidth()/100f);
-
+        uniFontTitle = build(9*gameContainer.getWidth()/100f);
     }
 
     @Override

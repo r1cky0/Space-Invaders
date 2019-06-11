@@ -285,5 +285,4 @@ public abstract class GameManager {
         return difficulty.getDifficulty();
     }
 
-
 }

@@ -30,9 +30,7 @@ public class Menu {
         this.maxWidth = maxWidth;
         double shipSize = maxWidth / 20;
 
-        // solo per non avere nullPointerExc, poi tanto dopo il logIn viene sovrascritta con quella da file
-        customization = new Customization("res/images/SpaceShip0.png");
-
+        customization = new Customization();
         ranking = new Ranking();
 
         Coordinate coordinate = new Coordinate((maxWidth/2 - shipSize /2),(maxHeight - shipSize));
@@ -47,8 +45,8 @@ public class Menu {
         }
     }
 
-    public void saveCustomization(String name, String shipTypePath) {  // salva la current ship nel file
-        SaveCustomization.saveCustomization(name, shipTypePath);
+    public void saveCustomization(String name, String shipType) {
+        SaveCustomization.saveCustomization(name, shipType);
     }
 
     /**
@@ -63,7 +61,7 @@ public class Menu {
         if(AddAccount.newAccount(name,password)){
             this.player = new Player(name,defaultShip);
 
-            customization = new Customization("res/images/SpaceShip0.png");
+            customization.setCurrentShip("ship0");
 
             offlineGameManager = new OfflineGameManager(maxWidth, maxHeight);
             singlePlayer = new SinglePlayer(player, offlineGameManager);
@@ -79,7 +77,8 @@ public class Menu {
         if(components != null){
             player = new Player(name, defaultShip);
             player.setHighScore(Integer.parseInt(components[2]));
-            customization = new Customization(components[3]);
+
+            customization.setCurrentShip(components[3]);
 
             offlineGameManager = new OfflineGameManager(maxWidth, maxHeight);
             singlePlayer = new SinglePlayer(player, offlineGameManager);

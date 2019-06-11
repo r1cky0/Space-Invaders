@@ -4,7 +4,6 @@ import gui.states.*;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -24,7 +23,7 @@ public class SpaceInvaders extends StateBasedGame {
         this.addState(new GameOverState(menu));
         this.addState(new RankingState(menu));
         this.addState(new NewHighscoreState(menu));
-        this.addState(new SettingsState(menu));
+        this.addState(new CustomizationState(menu));
         this.addState(new WaitingState(menu));
         this.enterState(0);
     }

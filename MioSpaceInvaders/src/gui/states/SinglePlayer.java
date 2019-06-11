@@ -30,20 +30,16 @@ public class SinglePlayer {
         }
     }
 
-    public void exec(){
-
+    public void loop(){
         if (getSpaceShipBullet() != null) {
             player.getSpaceShip().getShipBullet().move();
         }
-
         if(getSpaceShipBullet() != null) {
             offlineGameManager.checkSpaceShipShotCollision(getSpaceShip());
         }
-
         for(Bullet bullet: offlineGameManager.getInvaderBullets()){
             bullet.move();
         }
-
         offlineGameManager.checkInvaderShotCollision(getSpaceShip());
     }
 

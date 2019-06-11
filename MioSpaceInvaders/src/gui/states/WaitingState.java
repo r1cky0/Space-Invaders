@@ -16,11 +16,13 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
 
     private StateBasedGame stateBasedGame;
     private GameContainer gameContainer;
-    private Menu menu;
-    private String title;
-    private Image background;
-    private UnicodeFont uniFontTitle;
 
+    private UnicodeFont uniFontTitle;
+    private String title;
+
+    private Image background;
+
+    private Menu menu;
 
     public WaitingState(Menu menu) {
         this.menu = menu;
@@ -30,14 +32,10 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
+
         background = new Image(ReadXmlFile.read("defaultBackground"));
-
-        uniFontTitle = Build(5 * gameContainer.getWidth() / 100f);
+        uniFontTitle = build(5 * gameContainer.getWidth() / 100f);
         title = "WAITING FOR OTHER PLAYERS...";
-        Font font = new java.awt.Font("Verdana", java.awt.Font.BOLD, 3*gameContainer.getWidth()/100);
-        TrueTypeFont ttf = new TrueTypeFont(font, true);
-
-
     }
 
     @Override
@@ -45,7 +43,6 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
         graphics.drawImage(background, 0, 0);
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title)) / 2f,
                 7 * gameContainer.getHeight() / 100f, title);
-
     }
 
     @Override
@@ -56,7 +53,6 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
     }
-
 
     @Override
     public void componentActivated(AbstractComponent abstractComponent) {

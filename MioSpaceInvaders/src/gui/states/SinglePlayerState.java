@@ -22,7 +22,6 @@ public class SinglePlayerState extends BasicInvaderState {
     private GameContainer gameContainer;
     private SinglePlayer singlePlayer;
 
-    private java.awt.Font fontData;
     private UnicodeFont uniFontData;
 
     //IMAGES
@@ -37,10 +36,8 @@ public class SinglePlayerState extends BasicInvaderState {
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
-
         try {
             invaderImage = new Image(ReadXmlFile.read("defaultInvader"));
-            spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
             bulletImage = new Image(ReadXmlFile.read("defaultBullet"));
 
             for(int i=0; i<4; i++){
@@ -56,11 +53,11 @@ public class SinglePlayerState extends BasicInvaderState {
         this.gameContainer = gameContainer;
         background = new Image(ReadXmlFile.read("defaultBackground"));
 
-        uniFontData = Build(3*gameContainer.getWidth()/100f);
+        uniFontData = build(3*gameContainer.getWidth()/100f);
 
         offlineGameManager = menu.getOfflineGameManager();
         singlePlayer = menu.getSinglePlayer();
-        spaceShipImage = new Image(menu.getCustomization().getCurrentShip());
+        spaceShipImage = new Image(ReadXmlFile.read(menu.getCustomization().getCurrentShip()));
         newThread = false;
     }
 
@@ -84,7 +81,6 @@ public class SinglePlayerState extends BasicInvaderState {
                 "Highscore: " + highscore, Color.green);
 
         singlePlayer.getSpaceShip().render(spaceShipImage);
-
 
         for (Invader invader: offlineGameManager.getInvaders()) {
             invader.render(invaderImage);
@@ -113,13 +109,10 @@ public class SinglePlayerState extends BasicInvaderState {
         if(singlePlayer.getPlayer().getSpaceShip().getShipBullet() != null){
             singlePlayer.getPlayer().getSpaceShip().getShipBullet().render(bulletImage);
         }
-
         for(Bullet bullet : offlineGameManager.getInvaderBullets()) {
             bullet.render(bulletImage);
         }
-
     }
-
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
@@ -128,7 +121,7 @@ public class SinglePlayerState extends BasicInvaderState {
             singlePlayer.execCommand(input);
         }
 
-        singlePlayer.exec();
+        singlePlayer.loop();
 
         if(!newThread){
             threadInvader = new ThreadInvader(singlePlayer.getOfflineGameManager().getDifficulty(), singlePlayer);
@@ -157,7 +150,6 @@ public class SinglePlayerState extends BasicInvaderState {
             threadInvader.stop();
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
-
     }
 
     @Override

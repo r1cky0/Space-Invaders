@@ -25,7 +25,6 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
     private MouseOverArea newGameButton;
 
     private UnicodeFont uniFontScore;
-
     private String score;
 
     private Menu menu;
@@ -52,7 +51,7 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
 
         gameOver = new Image(ReadXmlFile.read("gameoverBackground"));
 
-        uniFontScore = Build(9*gameContainer.getWidth()/100f);
+        uniFontScore = build(9*gameContainer.getWidth()/100f);
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
@@ -60,18 +59,12 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
         gameOver.draw((gameContainer.getWidth() - gameOver.getWidth())/2f,(gameContainer.getHeight() - gameOver.getHeight())/2f);
         newGameButton.render(gameContainer, graphics);
         homeButton.render(gameContainer,graphics);
-
         uniFontScore.drawString((this.gameContainer.getWidth() - uniFontScore.getWidth(score))/2f,
                 7* this.gameContainer.getHeight()/100f, score);
     }
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
 
-    }
-
-    @Override
-    public int getID() {
-        return 3;
     }
 
     /**
@@ -92,5 +85,10 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
         if (source == homeButton) {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
+    }
+
+    @Override
+    public int getID() {
+        return 3;
     }
 }

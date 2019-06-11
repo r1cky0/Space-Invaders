@@ -7,7 +7,7 @@ import logic.sprite.dinamic.bullets.SpaceShipBullet;
 public class SpaceShip extends Sprite {
 
     private int life, currentScore;
-    private double horizontalOffset = 2;
+    private double horizontalOffset = 0.5;
 
     private SpaceShipBullet shipBullet;
     private boolean shipShot;

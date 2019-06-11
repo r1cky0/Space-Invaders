@@ -1,7 +1,5 @@
 package logic.environment.manager.menu;
 
-import logic.environment.manager.file.ReadXmlFile;
-
 import java.util.ArrayList;
 
 public class Customization {
@@ -9,10 +7,10 @@ public class Customization {
     private String currentShip;
     private ArrayList<String> spaceShips;
 
-    public Customization(String currentTypeShip) {
+    public Customization() {
         spaceShips = new ArrayList<>();
+        currentShip = "ship0";
         initShips();
-        this.currentShip = currentTypeShip;
     }
 
     public ArrayList<String> getSpaceShips() {
@@ -21,12 +19,20 @@ public class Customization {
 
     private void initShips() {
         for(int i=0; i<5; i++){
-            spaceShips.add(ReadXmlFile.read("ship"+i));
+            spaceShips.add("ship"+i);
         }
+    }
+
+    public int indexOfCurrentShip(){
+        return spaceShips.indexOf(currentShip);
     }
 
     public String getCurrentShip() {
         return currentShip;
+    }
+
+    public void setCurrentShip(int index) {
+        this.currentShip = spaceShips.get(index);
     }
 
     public void setCurrentShip(String currentShip) {

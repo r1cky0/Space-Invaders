@@ -1,13 +1,8 @@
 package logic.environment.manager.game;
 
-import gui.states.SinglePlayer;
 import logic.player.Player;
-import logic.sprite.dinamic.SpaceShip;
-import logic.sprite.dinamic.bullets.SpaceShipBullet;
 
 public class OfflineGameManager extends GameManager{
-
-
 
     public OfflineGameManager(double maxWidth, double maxHeight){
         super(maxWidth, maxHeight);

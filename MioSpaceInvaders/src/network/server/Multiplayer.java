@@ -45,6 +45,6 @@ public class Multiplayer {
     }
 
     public void startGame(){
-        onlineGameManager = new OnlineGameManager(team, maxWidth, maxHeight);
+        onlineGameManager = new OnlineGameManager(maxWidth, maxHeight);
     }
 }

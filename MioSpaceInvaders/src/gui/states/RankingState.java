@@ -22,8 +22,6 @@ public class RankingState extends BasicInvaderState implements ComponentListener
     private String nameString;
     private String highscoreString;
 
-   // private Font fontData;
-   // private Font fontTitle;
     private UnicodeFont uniFontData;
     private UnicodeFont uniFontTitle;
 
@@ -32,6 +30,7 @@ public class RankingState extends BasicInvaderState implements ComponentListener
     private Image bronzeMedal;
     private Image background;
     private Image homeImage;
+
     private MouseOverArea homeButton;
 
     private Menu menu;
@@ -44,6 +43,7 @@ public class RankingState extends BasicInvaderState implements ComponentListener
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
+
         background = new Image(ReadXmlFile.read("defaultBackground"));
 
         goldMedal = new Image(ReadXmlFile.read("medalGold")).getScaledCopy(6*gameContainer.getWidth()/100,
@@ -62,8 +62,8 @@ public class RankingState extends BasicInvaderState implements ComponentListener
         nameString = "nickname";
         highscoreString = "highscore";
 
-        uniFontTitle = Build(8*gameContainer.getWidth()/100f);
-        uniFontData = Build(4*gameContainer.getWidth()/100f);
+        uniFontTitle = build(8*gameContainer.getWidth()/100f);
+        uniFontData = build(4*gameContainer.getWidth()/100f);
 
         menu.createRanking();
     }
@@ -74,7 +74,6 @@ public class RankingState extends BasicInvaderState implements ComponentListener
 
         int offset = 0;
         int numPlayer = 0;
-
         Iterator rankIter = menu.getRanking().getRank().entrySet().iterator();
         while (rankIter.hasNext() && numPlayer<10) {
             Map.Entry pair = (Map.Entry) rankIter.next();
@@ -82,7 +81,6 @@ public class RankingState extends BasicInvaderState implements ComponentListener
                     28*gameContainer.getHeight()/100f + offset, (String) pair.getKey());
             uniFontData.drawString(65*gameContainer.getWidth()/100f, 28*gameContainer.getHeight()/100f + offset,
                     Integer.toString((int) pair.getValue()));
-
             if(numPlayer>2){
                 offset += gameContainer.getHeight()/15;
             }else {
@@ -110,11 +108,6 @@ public class RankingState extends BasicInvaderState implements ComponentListener
 
     }
 
-    @Override
-    public int getID() {
-        return 4;
-    }
-
     /**
      * Funzione che setta il gestore dell' evento di click sul bottone per ritorno nella home
      * @param source Il tasto di cui dobbiamo settare il comportamento
@@ -123,5 +116,10 @@ public class RankingState extends BasicInvaderState implements ComponentListener
         if (source == homeButton) {
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
+    }
+
+    @Override
+    public int getID() {
+        return 4;
     }
 }

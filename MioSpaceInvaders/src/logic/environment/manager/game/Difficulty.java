@@ -7,6 +7,7 @@ public class Difficulty {
     public Difficulty(){
         this.difficulty = 900;
     }
+
     public void incrementDifficulty(){
         if(difficulty >= 300){
             difficulty -= 100;
