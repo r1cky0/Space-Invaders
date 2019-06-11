@@ -6,11 +6,13 @@ public class PacketHandler{
 
     public PacketHandler(){}
 
-    public String process(DatagramPacket packet) {
+    public String[] process(DatagramPacket packet) {
         byte[] data = packet.getData();
         String dati = new String(data);
         System.out.println(dati);
-        return dati;
+        String[] utile = dati.split("\r");
+        String[] infos = utile[0].split("\\t");
+        return infos;
     }
 
 }

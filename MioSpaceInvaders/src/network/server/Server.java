@@ -25,12 +25,7 @@ public class Server implements Runnable {
     private DatagramSocket socket;
     private PacketHandler handler;
 
-    //DIMENSION
-    private double maxHeight = 800;
-    private double maxWidth = 1000;
-
-    private OnlineGameManager onlineGameManager;
-    private Team team;
+    private Multiplayer multiplayer;
     private boolean gameStarted;
 
     //INFORMAZIONI SU: POSIZIONI SHIP, POSIZIONI INVADER, STATO BRICK
@@ -44,8 +39,8 @@ public class Server implements Runnable {
         snddata = new byte[2048];
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
-        team = new Team();
         gameStarted = false;
+        multiplayer = new Multiplayer();
         try {
             this.init();
         } catch (SocketException e) {
@@ -72,11 +67,9 @@ public class Server implements Runnable {
             try {
                 socket.receive(packet);
                 addConnection(packet);
-
                 if (gameStarted) {
-                    execute(handler.process(packet));
+                    multiplayer.execute(handler.process(packet));
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -85,10 +78,6 @@ public class Server implements Runnable {
     }
 
     private void addConnection(DatagramPacket packet) {
-        double shipSize = maxWidth / 20;
-        Coordinate coordinate = new Coordinate((maxWidth / 2 - shipSize / 2), (maxHeight - shipSize));
-        SpaceShip defaultShip = new SpaceShip(coordinate, shipSize);
-
         if (clients.size() <= 4) {
             for (Connection connection : clients) {
                 if (connection.getDestAddress().equals(packet.getAddress())) {
@@ -96,23 +85,12 @@ public class Server implements Runnable {
                 }
             }
             clients.add(new Connection(packet.getAddress(), packet.getPort()));
-            team.addPlayer(new Player(handler.process(packet), defaultShip));
-            if (clients.size() == 2) {
-                startGame();
+            multiplayer.init(handler.process(packet));
+            if (clients.size() == 1) {
+                multiplayer.startGame();
                 gameStarted = true;
             }
-
-
         }
-    }
-
-    public void startGame(){
-        onlineGameManager = new OnlineGameManager(team, maxWidth, maxHeight);
-    }
-
-    public void execute(String mex){
-
-        //leggere i comandi arrivati ed eseguirli sull'online game manager
     }
 
     public void removeConnection(InetAddress address){

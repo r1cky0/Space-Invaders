@@ -89,7 +89,7 @@ public abstract class GameManager {
      * Check di eventuale nuovo highscore implementato in modo diverso se di squadra (multiplayer)
      * o singolo (singleplayer)
      */
-    public abstract void gameOver();
+    public abstract void gameOver(Object obj);
 
     void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
 
@@ -128,9 +128,6 @@ public abstract class GameManager {
 
             if (spaceShip.collides(bullet)) {
                 spaceShip.decreaseLife();
-                if (spaceShip.getLife() == 0) {
-                    gameOver();
-                }
                 invaderBullets.remove(bullet);
                 return;
             }
@@ -196,9 +193,6 @@ public abstract class GameManager {
             if (maxY < invader.getY()) {
                 maxY = invader.getY();
             }
-        }
-        if((maxY + invaderSize) >= (maxHeight - 7*brickSize)){
-            gameOver();
         }
         if(((maxX + invaderSize + Invader.HORIZONTAL_OFFSET) > maxWidth) && !goDown){
             goDown = true;
