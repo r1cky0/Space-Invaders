@@ -13,14 +13,24 @@ public class ClientLauncher {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+
         while(true) {
             try {
-                byte[] mex = br.readLine().getBytes();
-                client.setData(mex, mex.length);
+                if(br.readLine() == "\n") {
+                    byte[] mex = br.readLine().getBytes();
+                    client.setData(mex, mex.length);
+                    client.send();
+
+
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            byte[] message = "0\tMOVE_LEFT\r".getBytes();
+            client.setData(message, message.length);
             client.send();
         }
+
+
     }
 }

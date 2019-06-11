@@ -1,5 +1,4 @@
 package gui.states;
-import javafx.scene.control.PasswordField;
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.Color;
