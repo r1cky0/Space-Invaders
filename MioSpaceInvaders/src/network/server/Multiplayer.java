@@ -1,11 +1,12 @@
 package network.server;
 
+import logic.environment.manager.game.MovingDirections;
 import logic.environment.manager.game.OnlineGameManager;
 import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
-import network.server.enums.Commands;
+
 
 public class Multiplayer {
     //DIMENSION
@@ -24,7 +25,14 @@ public class Multiplayer {
         Player player = team.getPlayers().get(Integer.parseInt(infos[0]));
         switch (Commands.valueOf(infos[1])){
             case MOVE_LEFT:
-                //onlineGameManager.
+                onlineGameManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT);
+                break;
+            case MOVE_RIGHT:
+                onlineGameManager.shipMovement(player.getSpaceShip(),MovingDirections.RIGHT);
+                break;
+            case SHOT:
+                onlineGameManager.shipShot(player.getSpaceShip());
+                break;
         }
     }
 
