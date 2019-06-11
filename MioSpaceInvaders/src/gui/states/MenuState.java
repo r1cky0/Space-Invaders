@@ -65,13 +65,13 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
                 63*gameContainer.getHeight()/100,8*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        exit = new Image("res/images/ButtonExit.png").getScaledCopy(15*gameContainer.getWidth()/100,
+        exit = new Image(ReadXmlFile.read(10, "button")).getScaledCopy(15*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         exitButton = new MouseOverArea(gameContainer, exit,(gameContainer.getWidth() - exit.getWidth())/2,
                 80*gameContainer.getHeight()/100,15*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        ranking = new Image("res/images/Cup.png").getScaledCopy(12*gameContainer.getWidth()/100,
+        ranking = new Image(ReadXmlFile.read(9, "button")).getScaledCopy(12*gameContainer.getWidth()/100,
                 12*gameContainer.getHeight()/100);
         rankingButton = new MouseOverArea(gameContainer, ranking,55*gameContainer.getWidth()/100,
                 63*gameContainer.getHeight()/100,12*gameContainer.getWidth()/100,12*gameContainer.getHeight()/100,

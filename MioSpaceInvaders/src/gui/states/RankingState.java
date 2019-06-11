@@ -46,11 +46,11 @@ public class RankingState extends BasicInvaderState implements ComponentListener
         this.stateBasedGame = stateBasedGame;
         background = new Image(ReadXmlFile.read(0, "background"));
 
-        goldMedal = new Image("res/images/MedalGold.png").getScaledCopy(6*gameContainer.getWidth()/100,
+        goldMedal = new Image(ReadXmlFile.read(0, "medal")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        silverMedal = new Image("res/images/MedalSilver.png").getScaledCopy(6*gameContainer.getWidth()/100,
+        silverMedal = new Image(ReadXmlFile.read(1, "medal")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        bronzeMedal = new Image("res/images/MedalBronze.png").getScaledCopy(6*gameContainer.getWidth()/100,
+        bronzeMedal = new Image(ReadXmlFile.read(2, "medal")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
 
         homeImage = new Image(ReadXmlFile.read(7, "button")).getScaledCopy(6*gameContainer.getWidth()/100,

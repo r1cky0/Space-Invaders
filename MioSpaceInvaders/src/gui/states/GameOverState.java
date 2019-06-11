@@ -37,7 +37,7 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
-        newGame = new Image(ReadXmlFile.read(6, "button")).getScaledCopy(30*gameContainer.getWidth()/100,
+        newGame = new Image(ReadXmlFile.read(5, "button")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
                 80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,

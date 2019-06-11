@@ -1,4 +1,5 @@
 package gui.states;
+import javafx.scene.control.PasswordField;
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.Color;
@@ -67,7 +68,6 @@ public class StartState extends BasicInvaderState implements ComponentListener {
 
         passwordField = new TextField(gameContainer, ttf, 40 * gameContainer.getWidth() / 100, 33 * gameContainer.getHeight() / 100,
                 gameContainer.getWidth() / 3, gameContainer.getHeight() / 18);
-
         nameField.setBackgroundColor(Color.white);
         nameField.setTextColor(Color.black);
 
@@ -115,8 +115,19 @@ public class StartState extends BasicInvaderState implements ComponentListener {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
-        if (input.isKeyDown(Input.KEY_TAB)) {
+        if (input.isKeyPressed(Input.KEY_TAB)) {
             passwordField.setFocus(true);
+        }
+        if(input.isKeyPressed(Input.KEY_ENTER)){
+            String nickname = nameField.getText();
+            String password = passwordField.getText();
+
+            if (menu.logIn(nickname, password)) {
+                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            } else {
+                errorFlag = true;
+                errorMessage = "Nickname o password errati";
+            }
         }
     }
 
