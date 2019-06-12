@@ -1,5 +1,5 @@
 package network.server;
 
 public enum GameStates {
-    START,GAMEOVER,HIGHSCORE;
+    START,GAMEOVER, NEWHIGHSCORE
 }

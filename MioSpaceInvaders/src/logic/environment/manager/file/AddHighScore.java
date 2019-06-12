@@ -27,7 +27,6 @@ public class AddHighScore {
             String newContent = oldContent.toString().replaceAll(oldLine, newLine);
             FileWriter out = new FileWriter(fileToBeModified);
             out.write(newContent);
-
             in.close();
             out.close();
         }catch (IOException e){

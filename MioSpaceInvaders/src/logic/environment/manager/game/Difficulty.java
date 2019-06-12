@@ -5,6 +5,7 @@ public class Difficulty {
     private int difficulty;
 
     public Difficulty(){
+        //millisecondi di sleep thread alieni
         this.difficulty = 900;
     }
 

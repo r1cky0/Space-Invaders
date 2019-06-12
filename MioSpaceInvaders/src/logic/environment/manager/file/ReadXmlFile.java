@@ -21,7 +21,6 @@ public class ReadXmlFile {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return "";
     }
 }

@@ -1,2 +1,2 @@
-a	a	0	ship0
+a	a	120	ship0
 b	b	0	ship0

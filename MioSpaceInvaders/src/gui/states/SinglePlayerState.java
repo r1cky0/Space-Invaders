@@ -8,19 +8,20 @@ import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
+import network.server.Commands;
+import network.server.GameStates;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 public class SinglePlayerState extends BasicInvaderState {
 
     private Menu menu;
-    private OfflineGameManager offlineGameManager;
-    private GameContainer gameContainer;
     private SinglePlayer singlePlayer;
 
     private UnicodeFont uniFontData;
@@ -32,8 +33,8 @@ public class SinglePlayerState extends BasicInvaderState {
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
 
-    private ThreadInvader threadInvader;
-    public boolean newThread;
+//    private ThreadInvader threadInvader;
+//    public boolean newThread;
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
@@ -51,15 +52,13 @@ public class SinglePlayerState extends BasicInvaderState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.gameContainer = gameContainer;
         background = new Image(ReadXmlFile.read("defaultBackground"));
 
         uniFontData = build(3*gameContainer.getWidth()/100f);
 
-        offlineGameManager = menu.getOfflineGameManager();
         singlePlayer = menu.getSinglePlayer();
         spaceShipImage = new Image(ReadXmlFile.read(menu.getCustomization().getCurrentShip()));
-        newThread = false;
+//        newThread = false;
     }
 
     @Override
@@ -83,11 +82,11 @@ public class SinglePlayerState extends BasicInvaderState {
 
         singlePlayer.getSpaceShip().render(spaceShipImage);
 
-        for (Invader invader: offlineGameManager.getInvaders()) {
+        for (Invader invader: singlePlayer.getOfflineGameManager().getInvaders()) {
             invader.render(invaderImage);
         }
 
-        for(Bunker bunker: offlineGameManager.getBunkers()){
+        for(Bunker bunker: singlePlayer.getOfflineGameManager().getBunkers()){
             for(Brick brick:bunker.getBricks()){
                 switch (brick.getLife()){
 
@@ -110,7 +109,7 @@ public class SinglePlayerState extends BasicInvaderState {
         if(singlePlayer.getPlayer().getSpaceShip().getShipBullet() != null){
             singlePlayer.getPlayer().getSpaceShip().getShipBullet().render(bulletImage);
         }
-        for(Bullet bullet : offlineGameManager.getInvaderBullets()) {
+        for(Bullet bullet : singlePlayer.getOfflineGameManager().getInvaderBullets()) {
             bullet.render(bulletImage);
         }
     }
@@ -118,36 +117,30 @@ public class SinglePlayerState extends BasicInvaderState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
-        if(!newThread){
-            threadInvader = new ThreadInvader(singlePlayer.getOfflineGameManager().getDifficulty(), singlePlayer);
-            threadInvader.start();
-            newThread = true;
+        if(input.isKeyDown(Input.KEY_RIGHT)){
+            singlePlayer.execCommand(Commands.MOVE_RIGHT);
         }
-
-        if(input != null){
-            singlePlayer.execCommand(input);
+        if(input.isKeyDown(Input.KEY_LEFT)){
+            singlePlayer.execCommand(Commands.MOVE_LEFT);
+        }
+        if(input.isKeyDown(Input.KEY_SPACE)){
+            singlePlayer.execCommand(Commands.SHOT);
+        }
+        if (input.isKeyDown(Input.KEY_ESCAPE)){
+            singlePlayer.execCommand(Commands.EXIT);
+            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
         singlePlayer.loop();
 
         //STATO GIOCO
-        if(offlineGameManager.isGameOver()){
-            threadInvader.stop();
+        if (singlePlayer.checkGameState() == GameStates.GAMEOVER) {
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         }
-        if(offlineGameManager.isNewHighscore()){
-            threadInvader.stop();
+        if (singlePlayer.checkGameState() == GameStates.NEWHIGHSCORE) {
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
-        if(offlineGameManager.isNewLevel()){
-            threadInvader.stop();
-            offlineGameManager.setNewLevel(false);
-            newThread = false;
-        }
-        if(input.isKeyDown(Input.KEY_ESCAPE)){
-            threadInvader.stop();
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
-        }
     }
+
 
     @Override
     public int getID() {

@@ -10,7 +10,10 @@ public class AddAccount {
 
     public static boolean newAccount(String name, String password){
         try {
+            int baseScore = 0;
+            String baseShip = "ship0";
             String file = "res/players.txt";
+
             BufferedReader in = new BufferedReader(new FileReader(file));
             String riga = in.readLine();
             while (riga != null) {
@@ -22,7 +25,7 @@ public class AddAccount {
                 riga = in.readLine();
             }
             in.close();
-            String textToAppend = (name + "\t" + password + "\t" + 0 + "\t" + "ship0" + "\n");
+            String textToAppend = (name + "\t" + password + "\t" + baseScore + "\t" + baseShip + "\n");
             Path path = Paths.get("res/players.txt");
             Files.write(path, textToAppend.getBytes(), StandardOpenOption.APPEND);
             return true;

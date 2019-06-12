@@ -20,6 +20,11 @@ public class SpaceShip extends Sprite {
         shipShot = false;
     }
 
+    public void init(){
+        currentScore = 0;
+        life = 3;
+    }
+
     public void moveLeft() {
         super.setX(super.getX() - horizontalOffset);
     }

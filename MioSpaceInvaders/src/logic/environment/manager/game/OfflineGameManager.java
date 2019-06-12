@@ -11,15 +11,11 @@ public class OfflineGameManager extends GameManager{
     /**
      * Check di eventuale nuovo highscore personale
      */
-    public void gameOver(Object obj){
+    public void checkHighscore(Object obj){
         Player player = (Player)obj;
         if(player.getHighScore() < player.getSpaceShip().getCurrentScore()){
             player.setHighScore(player.getSpaceShip().getCurrentScore());
-            setNewLevel(true);
-        }else {
-            setGameOver(true);
+            setNewHighscore(true);
         }
     }
-
-
 }

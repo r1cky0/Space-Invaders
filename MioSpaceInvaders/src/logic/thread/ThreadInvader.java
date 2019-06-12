@@ -1,6 +1,6 @@
 package logic.thread;
 
-import gui.states.SinglePlayer;
+import logic.environment.manager.game.GameManager;
 import logic.environment.manager.game.OfflineGameManager;
 
 import java.util.Random;
@@ -9,15 +9,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ThreadInvader implements Runnable {
 
     private OfflineGameManager offlineGameManager;
-    private SinglePlayer singlePlayer;
     private Thread thread;
     private AtomicBoolean running;
     private int sleepInterval;
 
-    public ThreadInvader(int sleepInterval, SinglePlayer singlePlayer) {
+    public ThreadInvader(int sleepInterval, GameManager gameManager) {
         this.sleepInterval = sleepInterval;
-        this.singlePlayer = singlePlayer;
-        this.offlineGameManager = singlePlayer.getOfflineGameManager();
+        this.offlineGameManager = (OfflineGameManager) gameManager;
         running = new AtomicBoolean(false);
     }
 

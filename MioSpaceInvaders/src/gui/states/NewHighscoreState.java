@@ -40,7 +40,7 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
         this.stateBasedGame = stateBasedGame;
 
         background = new Image(ReadXmlFile.read("defaultBackground"));
-        title = "NEW HIGHSCORE:";
+        title = "NEW NEWHIGHSCORE:";
 
         newGame = new Image(ReadXmlFile.read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);

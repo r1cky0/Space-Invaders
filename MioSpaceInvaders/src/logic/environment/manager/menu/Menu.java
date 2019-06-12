@@ -94,16 +94,11 @@ public class Menu {
     }
 
     /**
-     * Funzione necessaria per reinizializzare il sistema dopo un gameOver
+     * Funzione necessaria per reinizializzare il sistema dopo un checkHighscore
      */
     public void restartGame() {
         offlineGameManager = new OfflineGameManager(maxWidth, maxHeight);
         singlePlayer = new SinglePlayer(player, offlineGameManager);
-    }
-
-    //A programma sistemato togliere questo getter e fare che startGame restituisca il offlineGameManager
-    public OfflineGameManager getOfflineGameManager() {
-        return offlineGameManager;
     }
 
     public SinglePlayer getSinglePlayer(){return singlePlayer;}

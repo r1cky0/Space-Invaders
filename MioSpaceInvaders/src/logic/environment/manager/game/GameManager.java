@@ -42,7 +42,7 @@ public abstract class GameManager {
     private boolean goDown;
     private Difficulty difficulty;
 
-    public GameManager(double maxWidth, double maxHeight){
+    GameManager(double maxWidth, double maxHeight){
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
 
@@ -89,7 +89,7 @@ public abstract class GameManager {
      * Check di eventuale nuovo highscore implementato in modo diverso se di squadra (multiplayer)
      * o singolo (singleplayer)
      */
-    public abstract void gameOver(Object obj);
+    public abstract void checkHighscore(Object obj);
 
     public void shipMovement(SpaceShip spaceShip, MovingDirections md){
 
@@ -128,6 +128,9 @@ public abstract class GameManager {
 
             if (spaceShip.collides(bullet)) {
                 spaceShip.decreaseLife();
+                if(spaceShip.getLife() == 0){
+                    gameOver = true;
+                }
                 invaderBullets.remove(bullet);
                 return;
             }
@@ -194,6 +197,9 @@ public abstract class GameManager {
                 maxY = invader.getY();
             }
         }
+        if((maxY + invaderSize) >= (maxHeight - 7*brickSize)){
+            gameOver = true;
+        }
         if(((maxX + invaderSize + Invader.HORIZONTAL_OFFSET) > maxWidth) && !goDown){
             goDown = true;
             return MovingDirections.DOWN;
@@ -249,12 +255,12 @@ public abstract class GameManager {
 
     }
 
-    public void setNewLevel(boolean value){
-        newLevel = value;
+    public void setNewHighscore(boolean value){
+        newHighscore = value;
     }
 
-    public void setGameOver(boolean value){
-        gameOver = value;
+    public void setNewLevel(boolean value){
+        newLevel = value;
     }
 
     public List<Invader> getInvaders() {
@@ -284,5 +290,4 @@ public abstract class GameManager {
     public int getDifficulty(){
         return difficulty.getDifficulty();
     }
-
 }

@@ -11,14 +11,11 @@ public class OnlineGameManager extends GameManager{
     /**
      * Check di eventuale nuovo highscore di squadra
      */
-    public void gameOver(Object obj){
+    public void checkHighscore(Object obj){
         Team team = (Team) obj;
         if(team.getTeamHighScore() < team.getTeamCurrentScore()){
             team.setTeamHighScore(team.getTeamCurrentScore());
-            setNewLevel(true);
-        }else {
-            setGameOver(true);
+            setNewHighscore(true);
         }
     }
-
 }
