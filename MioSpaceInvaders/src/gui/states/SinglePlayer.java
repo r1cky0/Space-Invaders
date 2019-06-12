@@ -14,7 +14,6 @@ public class SinglePlayer {
 
     private Player player;
     private OfflineGameManager offlineGameManager;
-    private boolean exit;
 
     private ThreadInvader threadInvader;
     public boolean newThread;
@@ -24,7 +23,6 @@ public class SinglePlayer {
         this.offlineGameManager = offlineGameManager;
         player.getSpaceShip().init();
         newThread = false;
-        exit = false;
     }
 
     public void execCommand(Commands commands){
