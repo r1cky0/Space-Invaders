@@ -9,7 +9,7 @@ public class Difficulty {
     }
 
     public void incrementDifficulty(){
-        if(difficulty >= 300){
+        if(difficulty >= 500){
             difficulty -= 100;
         }
     }

@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class SinglePlayerState extends BasicInvaderState {
@@ -117,35 +118,31 @@ public class SinglePlayerState extends BasicInvaderState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
-        if(input.isKeyDown(Input.KEY_SPACE)||input.isKeyDown(Input.KEY_LEFT)||input.isKeyDown(Input.KEY_RIGHT)||input.isKeyDown(Input.KEY_0)){
-            singlePlayer.execCommand(input);
-        }
-
-        singlePlayer.loop();
-
         if(!newThread){
             threadInvader = new ThreadInvader(singlePlayer.getOfflineGameManager().getDifficulty(), singlePlayer);
             threadInvader.start();
             newThread = true;
         }
 
+        if(input != null){
+            singlePlayer.execCommand(input);
+        }
+        singlePlayer.loop();
+
         //STATO GIOCO
         if(offlineGameManager.isGameOver()){
             threadInvader.stop();
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         }
-
         if(offlineGameManager.isNewHighscore()){
             threadInvader.stop();
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
-
         if(offlineGameManager.isNewLevel()){
             threadInvader.stop();
             offlineGameManager.setNewLevel(false);
             newThread = false;
         }
-
         if(input.isKeyDown(Input.KEY_ESCAPE)){
             threadInvader.stop();
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
