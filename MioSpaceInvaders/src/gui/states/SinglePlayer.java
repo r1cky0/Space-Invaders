@@ -10,6 +10,8 @@ import logic.thread.ThreadInvader;
 import network.server.Commands;
 import network.server.GameStates;
 
+import java.util.List;
+
 public class SinglePlayer {
 
     private Player player;
@@ -94,6 +96,10 @@ public class SinglePlayer {
 
     public SpaceShipBullet getSpaceShipBullet(){
         return getSpaceShip().getShipBullet();
+    }
+
+    public List getInvadersBullet(){
+        return offlineGameManager.getInvaderBullets();
     }
 
     public OfflineGameManager getOfflineGameManager() {

@@ -66,17 +66,17 @@ public class SinglePlayerState extends BasicInvaderState {
         graphics.drawImage(background,0,0);
         Color color;
         int highscore;
-        if(menu.getPlayer().getHighScore() >= singlePlayer.getPlayer().getSpaceShip().getCurrentScore()){
+        if(singlePlayer.getPlayer().getHighScore() >= singlePlayer.getSpaceShip().getCurrentScore()){
             color = Color.white;
-            highscore = menu.getPlayer().getHighScore();
+            highscore = singlePlayer.getPlayer().getHighScore();
         }else{
             color = Color.green;
-            highscore = singlePlayer.getPlayer().getSpaceShip().getCurrentScore();
+            highscore = singlePlayer.getSpaceShip().getCurrentScore();
         }
         uniFontData.drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
-                "Lives: " + singlePlayer.getPlayer().getSpaceShip().getLife(), Color.red);
+                "Lives: " + singlePlayer.getSpaceShip().getLife(), Color.red);
         uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: "))/2,
-                2*gameContainer.getHeight()/100f,"Score: " + singlePlayer.getPlayer().getSpaceShip().getCurrentScore(), color);
+                2*gameContainer.getHeight()/100f,"Score: " + singlePlayer.getSpaceShip().getCurrentScore(), color);
         uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Highscore: " + highscore, Color.green);
 
@@ -92,8 +92,8 @@ public class SinglePlayerState extends BasicInvaderState {
             }
         }
 
-        if(singlePlayer.getPlayer().getSpaceShip().getShipBullet() != null){
-            singlePlayer.getPlayer().getSpaceShip().getShipBullet().render(bulletImage);
+        if(singlePlayer.getSpaceShipBullet() != null){
+            singlePlayer.getSpaceShipBullet().render(bulletImage);
         }
         for(Bullet bullet : singlePlayer.getOfflineGameManager().getInvaderBullets()) {
             bullet.render(bulletImage);
