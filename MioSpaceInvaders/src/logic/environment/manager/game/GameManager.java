@@ -78,8 +78,9 @@ public abstract class GameManager {
     /**
      * Reinizializzazione degli invaders e incremento life ship al nuovo livello
      */
-    public void nextLevel(){
+    public void nextLevel(SpaceShip spaceShip){
         difficulty.incrementDifficulty();
+        spaceShip.incrementLife();
         md = MovingDirections.RIGHT;
         invaders = invadersCreator.create();
         newLevel = true;
@@ -163,7 +164,7 @@ public abstract class GameManager {
                 spaceShip.setShipShot(false);
                 spaceShip.setShipBullet(null);
                 if (invaders.isEmpty()) {
-                    nextLevel();
+                    nextLevel(spaceShip);
                 }
                 return;
             }
