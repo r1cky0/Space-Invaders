@@ -1,2 +1,3 @@
 a	a	120	ship0
 b	b	0	ship0
+arrosto	dove	0	ship2
