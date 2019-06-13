@@ -21,6 +21,8 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
     private String title;
 
     private Image background;
+    private Animation movingAnimation;
+    private int[] duration = {500,500};
 
     private Menu menu;
 
@@ -36,6 +38,9 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
         background = new Image(ReadXmlFile.read("defaultBackground"));
         uniFontTitle = build(5 * gameContainer.getWidth() / 100f);
         title = "WAITING FOR OTHER PLAYERS...";
+        Image[] moving= {new Image(ReadXmlFile.read("defaultInvader")),new Image(ReadXmlFile.read("defaultInvader"))};
+
+        movingAnimation = new Animation(moving, duration, true);
     }
 
     @Override
@@ -43,6 +48,8 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
         graphics.drawImage(background, 0, 0);
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title)) / 2f,
                 7 * gameContainer.getHeight() / 100f, title);
+
+        movingAnimation.draw(200,200);
     }
 
     @Override
