@@ -1,7 +1,7 @@
-package gui.states;
+package logic.environment.manager.game;
 
-import logic.environment.manager.game.MovingDirections;
-import logic.environment.manager.game.OfflineGameManager;
+import logic.environment.manager.field.FieldManager;
+import logic.environment.manager.field.MovingDirections;
 import logic.player.Player;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
@@ -19,14 +19,14 @@ import java.util.List;
 public class SinglePlayer {
 
     private Player player;
-    private OfflineGameManager offlineGameManager;
+    private FieldManager fieldManager;
 
     private ThreadInvader threadInvader;
     public boolean newThread;
 
-    public SinglePlayer(Player player, OfflineGameManager offlineGameManager) {
+    public SinglePlayer(Player player, FieldManager fieldManager) {
         this.player = player;
-        this.offlineGameManager = offlineGameManager;
+        this.fieldManager = fieldManager;
         player.getSpaceShip().init();
         newThread = false;
     }
@@ -34,13 +34,13 @@ public class SinglePlayer {
     public void execCommand(Commands commands, int delta){
         switch (commands){
             case MOVE_LEFT:
-                offlineGameManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT, delta);
+                fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT, delta);
                 break;
             case MOVE_RIGHT:
-                offlineGameManager.shipMovement(player.getSpaceShip(),MovingDirections.RIGHT, delta);
+                fieldManager.shipMovement(player.getSpaceShip(),MovingDirections.RIGHT, delta);
                 break;
             case SHOT:
-                offlineGameManager.shipShot(player.getSpaceShip());
+                fieldManager.shipShot(player.getSpaceShip());
                 break;
             case EXIT:
                 threadInvader.stop();
@@ -53,22 +53,20 @@ public class SinglePlayer {
             player.getSpaceShip().getShipBullet().move(delta);
         }
         if (getSpaceShipBullet() != null) {
-            offlineGameManager.checkSpaceShipShotCollision(getSpaceShip());
+            fieldManager.checkSpaceShipShotCollision(getSpaceShip());
         }
-        for (Bullet bullet : offlineGameManager.getInvaderBullets()) {
+        for (Bullet bullet : fieldManager.getInvaderBullets()) {
             bullet.move(delta);
         }
-        offlineGameManager.checkInvaderShotCollision(getSpaceShip());
+        fieldManager.checkInvaderShotCollision(getSpaceShip());
         threadManager();
     }
 
     public GameStates checkGameState(){
-        if (offlineGameManager.isGameOver()) {
+        if (fieldManager.isGameOver()) {
             threadInvader.stop();
-            offlineGameManager.checkHighscore(player);
 
-            if (offlineGameManager.isNewHighscore()) {
-                offlineGameManager.setNewHighscore(true);
+            if (player.checkHighscore()) {
                 return GameStates.NEWHIGHSCORE;
             }
             return GameStates.GAMEOVER;
@@ -79,13 +77,13 @@ public class SinglePlayer {
     private void threadManager(){
 
         if (!newThread) {
-            threadInvader = new ThreadInvader(offlineGameManager.getDifficulty(), offlineGameManager);
+            threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
             threadInvader.start();
             newThread = true;
         }
-        if (offlineGameManager.isNewLevel()) {
+        if (fieldManager.isNewLevel()) {
             threadInvader.stop();
-            offlineGameManager.setNewLevel(false);
+            fieldManager.setNewLevel(false);
             newThread = false;
         }
     }
@@ -103,20 +101,17 @@ public class SinglePlayer {
     }
 
     public List<InvaderBullet> getInvadersBullet(){
-        return offlineGameManager.getInvaderBullets();
+        return fieldManager.getInvaderBullets();
     }
 
     public ArrayList<Bunker> getBunkers(){
-        return offlineGameManager.getBunkers();
+        return fieldManager.getBunkers();
     }
 
     public List<Invader> getInvaders(){
-        return offlineGameManager.getInvaders();
+        return fieldManager.getInvaders();
     }
 
-    public OfflineGameManager getOfflineGameManager() {
-        return offlineGameManager;
-    }
 }
 
 

@@ -1,7 +1,6 @@
 package network.server;
 
-import logic.environment.manager.game.MovingDirections;
-import logic.environment.manager.game.OnlineGameManager;
+import logic.environment.manager.field.FieldManager;
 import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
@@ -13,7 +12,7 @@ public class Multiplayer {
     private double maxHeight = 800;
     private double maxWidth = 1000;
 
-    private OnlineGameManager onlineGameManager;
+    private FieldManager fieldManager;
     private Team team;
 
     public Multiplayer(){
@@ -25,13 +24,13 @@ public class Multiplayer {
         Player player = team.getPlayers().get(Integer.parseInt(infos[0]));
         switch (Commands.valueOf(infos[1])){
             case MOVE_LEFT:
-                //onlineGameManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT);
+                //fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT);
                 break;
             case MOVE_RIGHT:
-                //onlineGameManager.shipMovement(player.getSpaceShip(),MovingDirections.RIGHT);
+                //fieldManager.shipMovement(player.getSpaceShip(),MovingDirections.RIGHT);
                 break;
             case SHOT:
-                onlineGameManager.shipShot(player.getSpaceShip());
+                fieldManager.shipShot(player.getSpaceShip());
                 break;
         }
     }
@@ -45,6 +44,6 @@ public class Multiplayer {
     }
 
     public void startGame(){
-        onlineGameManager = new OnlineGameManager(maxWidth, maxHeight);
+        fieldManager = new FieldManager(maxWidth, maxHeight);
     }
 }

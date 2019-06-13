@@ -27,6 +27,17 @@ public class Team {
         }
     }
 
+    /**
+     * Check di eventuale nuovo highscore
+     */
+    public boolean checkHighscore(){
+        if(teamHighScore < teamCurrentScore){
+            teamHighScore = teamCurrentScore;
+            return true;
+        }
+        return false;
+    }
+
     public void addPlayer(Player player){
         players.add(player);
     }

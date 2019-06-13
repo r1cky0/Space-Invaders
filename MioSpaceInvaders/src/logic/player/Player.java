@@ -3,7 +3,7 @@ package logic.player;
 import logic.environment.manager.file.AddHighScore;
 import logic.sprite.dinamic.SpaceShip;
 
-public class Player implements Comparable{
+public class Player {
 
     private String name;
     private int highScore;
@@ -15,21 +15,29 @@ public class Player implements Comparable{
         this.highScore = 0;
     }
 
+    /**
+     * Check di eventuale nuovo highscore.
+     * Se il player batte il proprio highscore, questo viene aggiornato nel file
+     */
+    public boolean checkHighscore(){
+        if(highScore < spaceShip.getCurrentScore()){
+            highScore = getSpaceShip().getCurrentScore();
+            AddHighScore.saveHighscore(name, highScore);
+            return true;
+        }
+        return false;
+    }
+
+    public void setHighScore(int highScore){
+        this.highScore = highScore;
+    }
+
     public String getName() {
         return name;
     }
 
     public int getHighScore() {
         return highScore;
-    }
-
-    /**
-     * Se il player batte il proprio highscore, questo viene aggiornato nel database (PER ORA SALVATO SU FILE DI TESTO)
-     * @param highscore Il nuovo record da salvare
-     */
-    public void setHighScore(int highscore) {
-        this.highScore = highscore;
-        AddHighScore.saveHighscore(name,highscore);
     }
 
     public SpaceShip getSpaceShip() {
@@ -40,13 +48,4 @@ public class Player implements Comparable{
         this.spaceShip = spaceShip;
     }
 
-    /**
-     * Funzione di comparazione per ordinare i player in modo crescente rispetto al proprio highscore
-     * @param o Object che viene castato a player per fare confronto
-     * @return ritorna un int indice dell' esito del confronto
-     */
-    @Override
-    public int compareTo(Object o) {
-        return Integer.compare(((Player) o).highScore, this.highScore);
-    }
 }

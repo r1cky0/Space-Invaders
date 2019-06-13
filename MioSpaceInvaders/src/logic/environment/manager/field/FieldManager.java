@@ -1,8 +1,7 @@
-package logic.environment.manager.game;
+package logic.environment.manager.field;
 
 import logic.environment.creators.BunkersCreator;
 import logic.environment.creators.InvadersCreator;
-import logic.player.Player;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
@@ -10,14 +9,13 @@ import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Bunker;
-import org.newdawn.slick.util.pathfinding.navmesh.Space;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public abstract class GameManager {
+public class FieldManager {
 
     //DIMENSIONS
     private final double MIN_WIDTH = 0.0;
@@ -32,7 +30,6 @@ public abstract class GameManager {
 
     //STATE
     private boolean gameOver;
-    private boolean newHighscore;
     private boolean newLevel;
 
     private List<Invader> invaders;
@@ -42,7 +39,7 @@ public abstract class GameManager {
     private boolean goDown;
     private Difficulty difficulty;
 
-    GameManager(double maxWidth, double maxHeight){
+    public FieldManager(double maxWidth, double maxHeight){
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
 
@@ -63,13 +60,12 @@ public abstract class GameManager {
         difficulty = new Difficulty(); //millisecondi pausa sparo/movimento alieni
 
         gameOver = false;
-        newHighscore = false;
         newLevel = false;
 
         initComponents();
     }
 
-    public void initComponents(){
+    private void initComponents(){
         //inizializzazione di tutti gli elementi all'inizio del gioco
         invaders = invadersCreator.create();
         bunkers = bunkersCreator.create();
@@ -78,19 +74,13 @@ public abstract class GameManager {
     /**
      * Reinizializzazione degli invaders e incremento life ship al nuovo livello
      */
-    public void nextLevel(SpaceShip spaceShip){
+    private void nextLevel(SpaceShip spaceShip){
         difficulty.incrementDifficulty();
         spaceShip.incrementLife();
         md = MovingDirections.RIGHT;
         invaders = invadersCreator.create();
         newLevel = true;
     }
-
-    /**
-     * Check di eventuale nuovo highscore implementato in modo diverso se di squadra (multiplayer)
-     * o singolo (singleplayer)
-     */
-    public abstract void checkHighscore(Object obj);
 
     public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
 
@@ -256,10 +246,6 @@ public abstract class GameManager {
 
     }
 
-    public void setNewHighscore(boolean value){
-        newHighscore = value;
-    }
-
     public void setNewLevel(boolean value){
         newLevel = value;
     }
@@ -278,10 +264,6 @@ public abstract class GameManager {
 
     public boolean isGameOver(){
         return gameOver;
-    }
-
-    public boolean isNewHighscore(){
-        return newHighscore;
     }
 
     public boolean isNewLevel(){

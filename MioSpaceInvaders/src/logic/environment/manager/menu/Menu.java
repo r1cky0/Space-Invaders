@@ -1,10 +1,10 @@
 package logic.environment.manager.menu;
 
-import gui.states.SinglePlayer;
+import logic.environment.manager.field.FieldManager;
+import logic.environment.manager.game.SinglePlayer;
 import logic.environment.manager.file.AddAccount;
 import logic.environment.manager.file.Login;
 import logic.environment.manager.file.SaveCustomization;
-import logic.environment.manager.game.OfflineGameManager;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
@@ -20,7 +20,7 @@ public class Menu {
     private Ranking ranking;
 
     private Customization customization;
-    private OfflineGameManager offlineGameManager;
+    private FieldManager fieldManager;
     private SinglePlayer singlePlayer;
     private SpaceShip defaultShip;
     private Player player;
@@ -50,7 +50,7 @@ public class Menu {
     }
 
     /**
-     * Funzione di creazione di un nuovo account attuata la quale viene inizializzato il offlineGameManager e il nuovo utente puó
+     * Funzione di creazione di un nuovo account attuata la quale viene inizializzato il fieldManager e il nuovo utente puó
      * giocare senza effettuare nuovamente accesso
      * @param name Nickname del giocatore
      * @param password Password del giocatore
@@ -63,8 +63,8 @@ public class Menu {
 
             customization.setCurrentShip("ship0");
 
-            offlineGameManager = new OfflineGameManager(maxWidth, maxHeight);
-            singlePlayer = new SinglePlayer(player, offlineGameManager);
+            fieldManager = new FieldManager(maxWidth, maxHeight);
+            singlePlayer = new SinglePlayer(player, fieldManager);
             return true;
         }
         return false;
@@ -80,8 +80,8 @@ public class Menu {
 
             customization.setCurrentShip(components[3]);
 
-            offlineGameManager = new OfflineGameManager(maxWidth, maxHeight);
-            singlePlayer = new SinglePlayer(player, offlineGameManager);
+            fieldManager = new FieldManager(maxWidth, maxHeight);
+            singlePlayer = new SinglePlayer(player, fieldManager);
             return true;
         }
         else{
@@ -97,8 +97,8 @@ public class Menu {
      * Funzione necessaria per reinizializzare il sistema dopo un checkHighscore
      */
     public void restartGame() {
-        offlineGameManager = new OfflineGameManager(maxWidth, maxHeight);
-        singlePlayer = new SinglePlayer(player, offlineGameManager);
+        fieldManager = new FieldManager(maxWidth, maxHeight);
+        singlePlayer = new SinglePlayer(player, fieldManager);
     }
 
     public SinglePlayer getSinglePlayer(){return singlePlayer;}

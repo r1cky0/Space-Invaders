@@ -1,11 +1,9 @@
 package gui.states;
 
 import logic.environment.manager.file.ReadXmlFile;
+import logic.environment.manager.game.SinglePlayer;
 import logic.sprite.dinamic.bullets.InvaderBullet;
-import logic.thread.ThreadInvader;
-import logic.environment.manager.game.OfflineGameManager;
 import logic.environment.manager.menu.Menu;
-import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
@@ -16,8 +14,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import java.io.InputStream;
-import java.net.InetAddress;
 import java.util.ArrayList;
 
 public class SinglePlayerState extends BasicInvaderState {
@@ -106,7 +102,7 @@ public class SinglePlayerState extends BasicInvaderState {
         if(input.isKeyDown(Input.KEY_LEFT)){
             singlePlayer.execCommand(Commands.MOVE_LEFT, delta);
         }
-        if(input.isKeyDown(Input.KEY_SPACE)){
+        if(input.isKeyPressed(Input.KEY_SPACE)){
             singlePlayer.execCommand(Commands.SHOT, delta);
         }
         if (input.isKeyDown(Input.KEY_ESCAPE)){
@@ -116,10 +112,12 @@ public class SinglePlayerState extends BasicInvaderState {
         singlePlayer.loop(delta);
 
         //STATO GIOCO
-        if (singlePlayer.checkGameState() == GameStates.GAMEOVER) {
+        GameStates gameStates = singlePlayer.checkGameState();
+
+        if (gameStates == GameStates.GAMEOVER) {
             stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
         }
-        if (singlePlayer.checkGameState() == GameStates.NEWHIGHSCORE) {
+        if (gameStates == GameStates.NEWHIGHSCORE) {
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
     }

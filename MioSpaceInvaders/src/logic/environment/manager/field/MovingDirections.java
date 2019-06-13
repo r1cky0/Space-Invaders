@@ -1,4 +1,4 @@
-package logic.environment.manager.game;
+package logic.environment.manager.field;
 
 public enum MovingDirections {
     RIGHT,LEFT, DOWN

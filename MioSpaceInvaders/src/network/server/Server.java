@@ -1,10 +1,5 @@
 package network.server;
 
-import logic.environment.manager.game.OnlineGameManager;
-import logic.player.Player;
-import logic.player.Team;
-import logic.sprite.Coordinate;
-import logic.sprite.dinamic.SpaceShip;
 import network.data.Connection;
 import network.data.PacketHandler;
 
