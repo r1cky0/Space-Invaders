@@ -88,21 +88,7 @@ public class SinglePlayerState extends BasicInvaderState {
 
         for(Bunker bunker: singlePlayer.getOfflineGameManager().getBunkers()){
             for(Brick brick:bunker.getBricks()){
-                switch (brick.getLife()){
-
-                    case 4:
-                        brick.render(brickImages.get(0));
-                        break;
-                    case 3:
-                        brick.render(brickImages.get(1));
-                        break;
-                    case 2:
-                        brick.render(brickImages.get(2));
-                        break;
-                    case 1:
-                        brick.render(brickImages.get(3));
-                        break;
-                }
+                brick.render(brickImages.get(4 - brick.getLife()));
             }
         }
 
