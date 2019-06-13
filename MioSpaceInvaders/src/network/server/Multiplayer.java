@@ -25,10 +25,10 @@ public class Multiplayer {
         Player player = team.getPlayers().get(Integer.parseInt(infos[0]));
         switch (Commands.valueOf(infos[1])){
             case MOVE_LEFT:
-                onlineGameManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT);
+                //onlineGameManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT);
                 break;
             case MOVE_RIGHT:
-                onlineGameManager.shipMovement(player.getSpaceShip(),MovingDirections.RIGHT);
+                //onlineGameManager.shipMovement(player.getSpaceShip(),MovingDirections.RIGHT);
                 break;
             case SHOT:
                 onlineGameManager.shipShot(player.getSpaceShip());

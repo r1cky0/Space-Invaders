@@ -92,14 +92,14 @@ public abstract class GameManager {
      */
     public abstract void checkHighscore(Object obj);
 
-    public void shipMovement(SpaceShip spaceShip, MovingDirections md){
+    public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
 
         if(((spaceShip.getX() + spaceShip.getSize()) < maxWidth) && (md == MovingDirections.RIGHT)){
-            spaceShip.moveRight();
+            spaceShip.moveRight(delta);
         }
 
         if((spaceShip.getX() > MIN_WIDTH) && (md == MovingDirections.LEFT)){
-            spaceShip.moveLeft();
+            spaceShip.moveLeft(delta);
         }
 
     }

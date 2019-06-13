@@ -31,13 +31,13 @@ public class SinglePlayer {
         newThread = false;
     }
 
-    public void execCommand(Commands commands){
+    public void execCommand(Commands commands, int delta){
         switch (commands){
             case MOVE_LEFT:
-                offlineGameManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT);
+                offlineGameManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT, delta);
                 break;
             case MOVE_RIGHT:
-                offlineGameManager.shipMovement(player.getSpaceShip(),MovingDirections.RIGHT);
+                offlineGameManager.shipMovement(player.getSpaceShip(),MovingDirections.RIGHT, delta);
                 break;
             case SHOT:
                 offlineGameManager.shipShot(player.getSpaceShip());
@@ -48,15 +48,15 @@ public class SinglePlayer {
         }
     }
 
-    public void loop() {
+    public void loop(int delta) {
         if (getSpaceShipBullet() != null) {
-            player.getSpaceShip().getShipBullet().move();
+            player.getSpaceShip().getShipBullet().move(delta);
         }
         if (getSpaceShipBullet() != null) {
             offlineGameManager.checkSpaceShipShotCollision(getSpaceShip());
         }
         for (Bullet bullet : offlineGameManager.getInvaderBullets()) {
-            bullet.move();
+            bullet.move(delta);
         }
         offlineGameManager.checkInvaderShotCollision(getSpaceShip());
         threadManager();

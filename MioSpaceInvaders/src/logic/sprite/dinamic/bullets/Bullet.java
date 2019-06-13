@@ -12,5 +12,5 @@ public abstract class Bullet extends Sprite implements Movable{
         super(coordinate, size);
     }
 
-    public abstract void move();
+    public abstract void move(int delta);
 }

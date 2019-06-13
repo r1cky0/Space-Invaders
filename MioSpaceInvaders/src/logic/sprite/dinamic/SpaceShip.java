@@ -25,12 +25,12 @@ public class SpaceShip extends Sprite {
         life = 3;
     }
 
-    public void moveLeft() {
-        super.setX(super.getX() - horizontalOffset);
+    public void moveLeft(int delta) {
+        super.setX(super.getX() - horizontalOffset*delta);
     }
 
-    public void moveRight() {
-        super.setX(super.getX() + horizontalOffset);
+    public void moveRight(int delta) {
+        super.setX(super.getX() + horizontalOffset*delta);
     }
 
     public void decreaseLife() {

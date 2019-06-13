@@ -101,19 +101,19 @@ public class SinglePlayerState extends BasicInvaderState {
         Input input = gameContainer.getInput();
 
         if(input.isKeyDown(Input.KEY_RIGHT)){
-            singlePlayer.execCommand(Commands.MOVE_RIGHT);
+            singlePlayer.execCommand(Commands.MOVE_RIGHT, delta);
         }
         if(input.isKeyDown(Input.KEY_LEFT)){
-            singlePlayer.execCommand(Commands.MOVE_LEFT);
+            singlePlayer.execCommand(Commands.MOVE_LEFT, delta);
         }
         if(input.isKeyDown(Input.KEY_SPACE)){
-            singlePlayer.execCommand(Commands.SHOT);
+            singlePlayer.execCommand(Commands.SHOT, delta);
         }
         if (input.isKeyDown(Input.KEY_ESCAPE)){
-            singlePlayer.execCommand(Commands.EXIT);
+            singlePlayer.execCommand(Commands.EXIT, delta);
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
-        singlePlayer.loop();
+        singlePlayer.loop(delta);
 
         //STATO GIOCO
         if (singlePlayer.checkGameState() == GameStates.GAMEOVER) {
