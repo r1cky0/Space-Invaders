@@ -95,4 +95,11 @@ public class Multiplayer {
     public void startGame(){
         fieldManager = new FieldManager(maxWidth, maxHeight);
     }
+
+    public String getInfos(){
+
+        String infos = "";
+        return infos;
+
+    }
 }

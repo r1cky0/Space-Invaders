@@ -20,19 +20,16 @@ public class Server implements Runnable {
     private AtomicBoolean running;
     private DatagramSocket socket;
     private PacketHandler handler;
+    private int maxPlayers = 1;
 
     private Multiplayer multiplayer;
     private boolean gameStarted;
-
-    //INFORMAZIONI SU: POSIZIONI SHIP, POSIZIONI INVADER, STATO BRICK
-    private byte[] snddata;
 
     //Arraylist connessioni al server da parte dei client
     public List<Connection> clients = new CopyOnWriteArrayList<>();
 
     public Server(int port) {
         this.port = port;
-        snddata = new byte[2048];
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
         gameStarted = false;
@@ -69,7 +66,6 @@ public class Server implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            broadcast();
         }
     }
 
@@ -82,7 +78,12 @@ public class Server implements Runnable {
             }
             clients.add(new Connection(packet.getAddress(), packet.getPort()));
             multiplayer.init(handler.process(packet));
-            if (clients.size() == 1) {
+
+            //*******************************************************************
+            //INVIO AL CLIENT IL SUO ID = POSIZIONE NELL'ARRAYLIST DI CONNESSIONI
+            //*******************************************************************
+
+            if (clients.size() == maxPlayers) {
                 multiplayer.startGame();
                 gameStarted = true;
             }
@@ -102,9 +103,8 @@ public class Server implements Runnable {
      */
     public void send(int id, String mex) {
         Connection connection = clients.get(id);
-        DatagramPacket packet = new DatagramPacket(snddata, snddata.length, connection.getDestAddress(), connection.getDestPort());
         try {
-            socket.send(packet);
+            socket.send(handler.build(mex, connection));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -117,17 +117,12 @@ public class Server implements Runnable {
      */
     public void broadcast() {
         for(Connection connection : clients) {
-            DatagramPacket packet = new DatagramPacket(snddata, snddata.length, connection.getDestAddress(), connection.getDestPort());
             try {
-                socket.send(packet);
+                socket.send(handler.build(multiplayer.getInfos(), connection));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    public void setData(byte[] data){
-        this.snddata = data;
     }
 
     public int getPort() {

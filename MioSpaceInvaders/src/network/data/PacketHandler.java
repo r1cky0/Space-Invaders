@@ -7,12 +7,19 @@ public class PacketHandler{
     public PacketHandler(){}
 
     public String[] process(DatagramPacket packet) {
-        byte[] data = packet.getData();
-        String dati = new String(data);
-        System.out.println(dati);
-        String[] utile = dati.split("\r");
-        String[] infos = utile[0].split("\\t");
-        return infos;
+        String data = new String(packet.getData());
+        System.out.println(data);
+
+        //split fine messaggio
+        String[] infos = data.split("\r");
+
+        //split informazioni
+        return infos[0].split("\\t");
+    }
+
+    public DatagramPacket build(String data, Connection connection){
+        byte[] infos = data.getBytes();
+        return new DatagramPacket(infos, infos.length, connection.getDestAddress(), connection.getDestPort());
     }
 
 }
