@@ -44,8 +44,4 @@ public class Player {
         return spaceShip;
     }
 
-    public void setSpaceShip(SpaceShip spaceShip) {
-        this.spaceShip = spaceShip;
-    }
-
 }

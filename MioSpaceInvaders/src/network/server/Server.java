@@ -1,5 +1,6 @@
 package network.server;
 
+import logic.environment.manager.game.Multiplayer;
 import network.data.Connection;
 import network.data.PacketHandler;
 
@@ -63,7 +64,7 @@ public class Server implements Runnable {
                 socket.receive(packet);
                 addConnection(packet);
                 if (gameStarted) {
-                    multiplayer.execute(handler.process(packet));
+                    multiplayer.execCommand(handler.process(packet));
                 }
             } catch (IOException e) {
                 e.printStackTrace();

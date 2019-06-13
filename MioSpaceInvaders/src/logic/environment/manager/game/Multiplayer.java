@@ -3,36 +3,42 @@ package logic.environment.manager.game;
 import logic.environment.manager.field.FieldManager;
 import logic.environment.manager.field.MovingDirections;
 import logic.player.Player;
-import logic.sprite.dinamic.Invader;
+import logic.player.Team;
+import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
-import logic.sprite.dinamic.bullets.InvaderBullet;
-import logic.sprite.dinamic.bullets.SpaceShipBullet;
-import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
 import network.server.Commands;
 import network.server.GameStates;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Multiplayer {
+    //DIMENSION
+    private final double maxWidth = 1000;
+    private final double maxHeight = 800;
+    private final int delta = 30;
 
-public class SinglePlayer {
-
-    private Player player;
     private FieldManager fieldManager;
+    private Team team;
 
     private ThreadInvader threadInvader;
     public boolean newThread;
 
-    public SinglePlayer(Player player, FieldManager fieldManager) {
-        this.player = player;
-        this.fieldManager = fieldManager;
-        player.getSpaceShip().init();
+    public Multiplayer(){
+        team = new Team();
         newThread = false;
     }
 
-    public void execCommand(Commands commands, int delta){
-        switch (commands){
+    public void init(String[] name){
+        double shipSize = maxWidth / 20;
+        Coordinate coordinate = new Coordinate((maxWidth / 2 - shipSize / 2), (maxHeight - shipSize));
+        SpaceShip defaultShip = new SpaceShip(coordinate, shipSize);
+
+        team.addPlayer(new Player(name[0], defaultShip));
+    }
+
+    public void execCommand(String[] infos){
+        Player player = team.getPlayers().get(Integer.parseInt(infos[0]));
+        switch (Commands.valueOf(infos[1])){
             case MOVE_LEFT:
                 fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT, delta);
                 break;
@@ -42,23 +48,21 @@ public class SinglePlayer {
             case SHOT:
                 fieldManager.shipShot(player.getSpaceShip());
                 break;
-            case EXIT:
-                threadInvader.stop();
-                break;
         }
     }
 
-    public void loop(int delta) {
+    public void loop() {
 
         for (Bullet bullet : fieldManager.getInvaderBullets()) {
             bullet.move(delta);
         }
-        if (getSpaceShipBullet() != null) {
-            player.getSpaceShip().getShipBullet().move(delta);
-            fieldManager.checkSpaceShipShotCollision(getSpaceShip());
+        for(Player player : team.getPlayers()) {
+            if (player.getSpaceShip().getShipBullet() != null) {
+                player.getSpaceShip().getShipBullet().move(delta);
+                fieldManager.checkSpaceShipShotCollision(player.getSpaceShip());
+            }
+            fieldManager.checkInvaderShotCollision(player.getSpaceShip());
         }
-
-        fieldManager.checkInvaderShotCollision(getSpaceShip());
         threadManager();
     }
 
@@ -66,7 +70,7 @@ public class SinglePlayer {
         if (fieldManager.isGameOver()) {
             threadInvader.stop();
 
-            if (player.checkHighscore()) {
+            if (team.checkHighscore()) {
                 return GameStates.NEWHIGHSCORE;
             }
             return GameStates.GAMEOVER;
@@ -88,30 +92,7 @@ public class SinglePlayer {
         }
     }
 
-    public Player getPlayer() {
-        return player;
+    public void startGame(){
+        fieldManager = new FieldManager(maxWidth, maxHeight);
     }
-
-    public SpaceShip getSpaceShip(){
-        return player.getSpaceShip();
-    }
-
-    public SpaceShipBullet getSpaceShipBullet(){
-        return getSpaceShip().getShipBullet();
-    }
-
-    public List<InvaderBullet> getInvadersBullet(){
-        return fieldManager.getInvaderBullets();
-    }
-
-    public ArrayList<Bunker> getBunkers(){
-        return fieldManager.getBunkers();
-    }
-
-    public List<Invader> getInvaders(){
-        return fieldManager.getInvaders();
-    }
-
 }
-
-
