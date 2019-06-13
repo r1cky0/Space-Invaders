@@ -1,6 +1,7 @@
 package gui.states;
 
 import logic.environment.manager.file.ReadXmlFile;
+import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.thread.ThreadInvader;
 import logic.environment.manager.game.OfflineGameManager;
 import logic.environment.manager.menu.Menu;
@@ -22,8 +23,8 @@ import java.util.ArrayList;
 public class SinglePlayerState extends BasicInvaderState {
 
     private Menu menu;
-    private SinglePlayer singlePlayer;
 
+    private SinglePlayer singlePlayer;
     private UnicodeFont uniFontData;
 
     //IMAGES
@@ -32,9 +33,6 @@ public class SinglePlayerState extends BasicInvaderState {
     private Image spaceShipImage;
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
-
-//    private ThreadInvader threadInvader;
-//    public boolean newThread;
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
@@ -58,7 +56,6 @@ public class SinglePlayerState extends BasicInvaderState {
 
         singlePlayer = menu.getSinglePlayer();
         spaceShipImage = new Image(ReadXmlFile.read(menu.getCustomization().getCurrentShip()));
-//        newThread = false;
     }
 
     @Override
@@ -82,11 +79,11 @@ public class SinglePlayerState extends BasicInvaderState {
 
         singlePlayer.getSpaceShip().render(spaceShipImage);
 
-        for (Invader invader: singlePlayer.getOfflineGameManager().getInvaders()) {
+        for (Invader invader: singlePlayer.getInvaders()) {
             invader.render(invaderImage);
         }
 
-        for(Bunker bunker: singlePlayer.getOfflineGameManager().getBunkers()){
+        for(Bunker bunker: singlePlayer.getBunkers()){
             for(Brick brick:bunker.getBricks()){
                 brick.render(brickImages.get(4 - brick.getLife()));
             }
@@ -95,7 +92,7 @@ public class SinglePlayerState extends BasicInvaderState {
         if(singlePlayer.getSpaceShipBullet() != null){
             singlePlayer.getSpaceShipBullet().render(bulletImage);
         }
-        for(Bullet bullet : singlePlayer.getOfflineGameManager().getInvaderBullets()) {
+        for(InvaderBullet bullet : singlePlayer.getInvadersBullet()) {
             bullet.render(bulletImage);
         }
     }

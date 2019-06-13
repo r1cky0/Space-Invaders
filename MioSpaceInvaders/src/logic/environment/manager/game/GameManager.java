@@ -37,7 +37,7 @@ public abstract class GameManager {
 
     private List<Invader> invaders;
     private ArrayList<Bunker> bunkers;
-    private List<Bullet> invaderBullets;
+    private List<InvaderBullet> invaderBullets;
     private MovingDirections md;
     private boolean goDown;
     private Difficulty difficulty;
@@ -272,7 +272,7 @@ public abstract class GameManager {
         return bunkers;
     }
 
-    public List<Bullet> getInvaderBullets(){
+    public List<InvaderBullet> getInvaderBullets(){
         return invaderBullets;
     }
 

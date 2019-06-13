@@ -3,13 +3,17 @@ package gui.states;
 import logic.environment.manager.game.MovingDirections;
 import logic.environment.manager.game.OfflineGameManager;
 import logic.player.Player;
+import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
+import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
+import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
 import network.server.Commands;
 import network.server.GameStates;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SinglePlayer {
@@ -98,8 +102,16 @@ public class SinglePlayer {
         return getSpaceShip().getShipBullet();
     }
 
-    public List getInvadersBullet(){
+    public List<InvaderBullet> getInvadersBullet(){
         return offlineGameManager.getInvaderBullets();
+    }
+
+    public ArrayList<Bunker> getBunkers(){
+        return offlineGameManager.getBunkers();
+    }
+
+    public List<Invader> getInvaders(){
+        return offlineGameManager.getInvaders();
     }
 
     public OfflineGameManager getOfflineGameManager() {
