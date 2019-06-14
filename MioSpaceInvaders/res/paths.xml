@@ -14,6 +14,7 @@
 
     <invader>
         <defaultInvader>res/images/Alien0.png</defaultInvader>
+        <defaultInvaderb>res/images/Alien0b.png</defaultInvaderb>
     </invader>
 
     <brick>
