@@ -47,9 +47,9 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background, 0, 0);
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title)) / 2f,
-                7 * gameContainer.getHeight() / 100f, title);
+                8 * gameContainer.getHeight() / 100f, title);
 
-        movingAnimation.draw(200,200);
+        movingAnimation.draw(gameContainer.getWidth()/2f - movingAnimation.getWidth()/2f,gameContainer.getHeight()/3f);
     }
 
     @Override
