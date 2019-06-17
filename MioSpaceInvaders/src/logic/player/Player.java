@@ -2,6 +2,7 @@ package logic.player;
 
 import logic.environment.manager.file.AddHighScore;
 import logic.sprite.dinamic.SpaceShip;
+import logic.sprite.dinamic.bullets.SpaceShipBullet;
 
 public class Player {
 
@@ -42,6 +43,10 @@ public class Player {
 
     public SpaceShip getSpaceShip() {
         return spaceShip;
+    }
+
+    public SpaceShipBullet getSpaceShipBullet(){
+        return spaceShip.getShipBullet();
     }
 
 }

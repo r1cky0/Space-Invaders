@@ -21,10 +21,9 @@ public class Server implements Runnable {
     private DatagramSocket socket;
     private PacketHandler handler;
     private int maxPlayers = 1;
-
-    private Multiplayer multiplayer;
     private boolean gameStarted;
 
+    private Multiplayer multiplayer;
     //Arraylist connessioni al server da parte dei client
     public List<Connection> clients = new CopyOnWriteArrayList<>();
 
@@ -44,6 +43,7 @@ public class Server implements Runnable {
     public void init() throws SocketException {
         this.socket = new DatagramSocket(this.port);
         Thread listener = new Thread(this);
+        running.set(true);
         listener.start();
     }
 
@@ -52,16 +52,16 @@ public class Server implements Runnable {
      * per la ricezione di nuovi pacchetti
      */
     public void run() {
-        running.set(true);
         System.out.println("Server started on port: " + port);
         while (running.get()) {
             byte[] rcvdata = new byte[1000];
             DatagramPacket packet = new DatagramPacket(rcvdata, rcvdata.length);
             try {
                 socket.receive(packet);
-                addConnection(packet);
                 if (gameStarted) {
                     multiplayer.execCommand(handler.process(packet));
+                }else{
+                    addConnection(packet);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -78,14 +78,12 @@ public class Server implements Runnable {
             }
             clients.add(new Connection(packet.getAddress(), packet.getPort()));
             multiplayer.init(handler.process(packet));
-
-            //*******************************************************************
-            //INVIO AL CLIENT IL SUO ID = POSIZIONE NELL'ARRAYLIST DI CONNESSIONI
-            //*******************************************************************
-
+            int id = clients.size() - 1;
+            send(id, Integer.toString(id)); //INVIO AL CLIENT IL SUO ID = POSIZIONE NELL'ARRAYLIST DI CONNESSIONI
             if (clients.size() == maxPlayers) {
                 multiplayer.startGame();
                 gameStarted = true;
+                broadcast();
             }
         }
     }
@@ -116,13 +114,23 @@ public class Server implements Runnable {
      * elementi per permettere ai client di renderizzarli.
      */
     public void broadcast() {
-        for(Connection connection : clients) {
-            try {
-                socket.send(handler.build(multiplayer.getInfos(), connection));
-            } catch (IOException e) {
-                e.printStackTrace();
+        Thread sender = new Thread(() -> {
+            while (running.get()) {
+                for (Connection connection : clients) {
+                    try {
+                        socket.send(handler.build(multiplayer.getInfos(), connection));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                stop();
             }
-        }
+        });
+        sender.start();
+    }
+
+    public void stop(){
+        running.set(false);
     }
 
     public int getPort() {

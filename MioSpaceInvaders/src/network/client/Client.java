@@ -1,5 +1,7 @@
 package network.client;
 
+import logic.player.Player;
+import logic.sprite.dinamic.Invader;
 import network.data.Connection;
 import network.data.PacketHandler;
 import java.io.IOException;
@@ -7,7 +9,7 @@ import java.net.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Classe client UDP
+ * Classe listener UDP
  */
 public class Client implements Runnable {
 
@@ -15,19 +17,23 @@ public class Client implements Runnable {
     private DatagramSocket socket;
     private AtomicBoolean running;
     private PacketHandler handler;
-
+    private int ID;
+    private boolean initialization;
+    private Player player;
     //INFORMAZIONI POSIZIONE SHIP, AZIONE SPARO
     private byte[] snddata;
 
-    private Thread client;
+    private Thread listener;
 
 
-    public Client(String destAddress, int destPort) {
-
+    public Client(Player player, String destAddress, int destPort) {
+        this.player = player;
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
+        initialization = true;
+        ID = -1; //fintanto che il server non comunica un id al listener è settato a -1
         try {
-            //apertura connessione verso il server
+            //aggiunta connessione verso il server
             connection = new Connection(InetAddress.getByName(destAddress), destPort);
             this.init();
         } catch (IOException e) {
@@ -37,15 +43,15 @@ public class Client implements Runnable {
 
     private void init() throws SocketException {
         socket = new DatagramSocket(8888);
-        client = new Thread(this);
-        client.start();
+        listener = new Thread(this);
+        listener.start();
+        send(handler.build(player.getName(), connection));
     }
 
     /**
-     * Invio dati dal client
+     * Invio dati dal listener
      */
-    public void send() {
-        DatagramPacket packet = new DatagramPacket(snddata, snddata.length, connection.getDestAddress(), connection.getDestPort());
+    public void send(DatagramPacket packet) {
         try {
             socket.send(packet);
         } catch (IOException e) {
@@ -55,8 +61,8 @@ public class Client implements Runnable {
 
     /**
      * Ricezione dati dal server.
-     * Il server invia ai client le informazioni sullo stato del gioco e sulla posizione degli
-     * elementi per permettere ai client di renderizzare il tutto.
+     * Il server invia ai listener le informazioni sullo stato del gioco e sulla posizione degli
+     * elementi per permettere ai listener di renderizzare il tutto.
      */
     @Override
     public void run() {
@@ -66,8 +72,15 @@ public class Client implements Runnable {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
-                //Packet contiene dati ricevuti
-                handler.process(packet);
+                if(initialization){
+                    ID = Integer.parseInt(handler.process(packet)[0]);
+                    initialization = false;
+                }else {
+                    //Packet contiene dati ricevuti
+                    //che client deve renderizzare
+                    String []prova = handler.process(packet);
+                    for (String stringa : prova) System.out.println(stringa);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 close();
@@ -81,7 +94,7 @@ public class Client implements Runnable {
     }
 
     /**
-     * Chiusura connessione del client
+     * Chiusura connessione del listener
      */
     public void close() {
         socket.close();
