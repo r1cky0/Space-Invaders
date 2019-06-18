@@ -23,6 +23,7 @@ public class FieldManager {
 
     //STATE
     private boolean gameOver;
+    private boolean endReached;
     private boolean newLevel;
 
     private List<Invader> invaders;
@@ -44,6 +45,7 @@ public class FieldManager {
 
         difficulty = new Difficulty(); //millisecondi pausa sparo/movimento alieni
 
+        endReached = false;
         gameOver = false;
         newLevel = false;
 
@@ -175,7 +177,7 @@ public class FieldManager {
             }
         }
         if((maxY + Dimensions.INVADER_SIZE) >= (Dimensions.MAX_HEIGHT - 7* Dimensions.BRICK_SIZE)){
-            gameOver = true;
+            endReached = true;
         }
         if(((maxX + Dimensions.INVADER_SIZE + Invader.HORIZONTAL_OFFSET) > Dimensions.MAX_WIDTH) && !goDown){
             goDown = true;
@@ -230,7 +232,6 @@ public class FieldManager {
                 invaders.get(random).getY() + Dimensions.INVADER_SIZE/2);
 
         invaderBullets.add(new InvaderBullet(coordinate, Dimensions.BULLET_SIZE));
-
     }
 
     public void setNewLevel(boolean value){
@@ -251,6 +252,10 @@ public class FieldManager {
 
     public boolean isGameOver(){
         return gameOver;
+    }
+
+    public boolean isEndReached(){
+        return endReached;
     }
 
     public boolean isNewLevel(){

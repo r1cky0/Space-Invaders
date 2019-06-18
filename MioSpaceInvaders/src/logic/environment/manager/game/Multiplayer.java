@@ -12,11 +12,9 @@ import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
 import main.Dimensions;
-import network.server.thread.ThreadUpdate;
+import logic.thread.ThreadUpdate;
 
 public class Multiplayer {
-    private static int DELTA = 1;
-
     private FieldManager fieldManager;
     private Team team;
     private GameStates gameStates;
@@ -24,6 +22,8 @@ public class Multiplayer {
     private ThreadInvader threadInvader;
     private boolean newThread;
     private ThreadUpdate threadUpdate;
+
+    private static int DELTA = 1;
 
     public Multiplayer(){
         team = new Team();
@@ -35,12 +35,10 @@ public class Multiplayer {
         double shipSize = Dimensions.MAX_WIDTH / 20;
         Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - shipSize / 2), (Dimensions.MAX_HEIGHT - shipSize));
         SpaceShip defaultShip = new SpaceShip(coordinate, shipSize);
-
         team.addPlayer(new Player(name[0], defaultShip));
     }
 
     public int execCommand(String[] infos){
-
         try {
             Integer.parseInt(infos[0]);
         }catch (NumberFormatException err){
@@ -71,7 +69,6 @@ public class Multiplayer {
     }
 
     public void threadInvaderManager(){
-
         if (!newThread) {
             threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
             threadInvader.start();

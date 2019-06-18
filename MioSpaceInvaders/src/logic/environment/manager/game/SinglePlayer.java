@@ -59,7 +59,7 @@ public class SinglePlayer {
     }
 
     public GameStates checkGameState(){
-        if (fieldManager.isGameOver()) {
+        if (fieldManager.isGameOver() || fieldManager.isEndReached()) {
             threadInvader.stop();
 
             if (player.checkHighscore()) {

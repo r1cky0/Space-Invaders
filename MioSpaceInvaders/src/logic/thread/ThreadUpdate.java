@@ -1,4 +1,4 @@
-package network.server.thread;
+package logic.thread;
 
 import logic.environment.manager.game.GameStates;
 import logic.environment.manager.game.Multiplayer;
@@ -36,7 +36,7 @@ public class ThreadUpdate implements Runnable{
                     multiplayer.getTeam().removePlayer(player);
                 }
             }
-            if(multiplayer.getTeam().getPlayers().isEmpty()){
+            if(multiplayer.getTeam().getPlayers().isEmpty() || multiplayer.getFieldManager().isEndReached()){
                 multiplayer.setGameStates(GameStates.GAMEOVER);
             }
             multiplayer.getTeam().calculateTeamCurrentScore();
