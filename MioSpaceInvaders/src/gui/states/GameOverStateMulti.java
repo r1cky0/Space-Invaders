@@ -15,13 +15,10 @@ public class GameOverStateMulti extends BasicInvaderState implements ComponentLi
 
     private GameContainer gameContainer;
     private StateBasedGame stateBasedGame;
-    private SinglePlayer singlePlayer;
 
     private Image gameOver;
-    private Image newGame;
     private Image homeImage;
     private MouseOverArea homeButton;
-    private MouseOverArea newGameButton;
 
     private UnicodeFont uniFontScore;
     private String score;
@@ -35,7 +32,6 @@ public class GameOverStateMulti extends BasicInvaderState implements ComponentLi
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        this.singlePlayer = menu.getSinglePlayer();
 
         homeImage = new Image(ReadXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
