@@ -8,18 +8,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Bunker {
 
     private double brickSize;
-    private ArrayList<Brick> bricks;
+    private CopyOnWriteArrayList<Brick> bricks;
 
     public Bunker(double indexX, double indexY, double brickSize) {
         this.brickSize = brickSize;
         createBunker(indexX, indexY);
     }
 
-    public ArrayList<Brick> getBricks() {
+    public CopyOnWriteArrayList<Brick> getBricks() {
         return bricks;
     }
 
@@ -30,7 +31,7 @@ public class Bunker {
      * @param indexY: indice di partenza coordinata x
      */
     private void createBunker(double indexX, double indexY) {
-        bricks = new ArrayList<>();
+        bricks = new CopyOnWriteArrayList<>(  );
         double indX = indexX;
         double indY = indexY;
 
@@ -64,14 +65,11 @@ public class Bunker {
      * @return
      */
     public boolean checkBrickCollision(Sprite sprite) {
-        ListIterator<Brick> brickIter = bricks.listIterator();
-
-        while (brickIter.hasNext()) {
-            Brick brick = brickIter.next();
+        for(Brick brick : bricks){
             if (brick.collides(sprite)) {
                 brick.decreaseLife();
                 if (brick.getLife() == 0) {
-                    brickIter.remove();
+                    bricks.remove(brick);
                 }
                 return true;
             }

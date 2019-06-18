@@ -114,7 +114,6 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
         if (source == multiButton ) {
             try {
                 stateBasedGame.getState(IDStates.WAITING_STATE).init(gameContainer,stateBasedGame);
-                stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }

@@ -14,6 +14,7 @@ import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
 import network.server.thread.ThreadUpdate;
+import org.newdawn.slick.GameContainer;
 
 public class Multiplayer {
 
@@ -24,10 +25,10 @@ public class Multiplayer {
 
     private FieldManager fieldManager;
     private Team team;
+    private GameStates gameStates;
 
     private ThreadInvader threadInvader;
     private boolean newThread;
-
     private ThreadUpdate threadUpdate;
 
     public Multiplayer(){
@@ -85,19 +86,6 @@ public class Multiplayer {
         threadUpdate.start();
     }
 
-    public GameStates checkGameState(){
-        if (fieldManager.isGameOver()) {
-            threadInvader.stop();
-            threadUpdate.stop();
-
-            if (team.checkHighscore()) {
-                return GameStates.NEWHIGHSCORE;
-            }
-            return GameStates.GAMEOVER;
-        }
-        return null;
-    }
-
     public void threadInvaderManager(){
 
         if (!newThread) {
@@ -115,11 +103,28 @@ public class Multiplayer {
 
     public void startGame(){
         fieldManager = new FieldManager(maxWidth, maxHeight);
+        newThread = false;
+        gameStates = GameStates.START;
         update();
     }
 
+    public void stopGame(){
+        threadInvader.stop();
+        threadUpdate.stop();
+        team.clear();
+    }
+
+    public void setGameStates(GameStates gameStates){
+        this.gameStates = gameStates;
+    }
+
+    public GameStates getGameStates(){
+        return gameStates;
+    }
+
     public String getInfos(){
-        String infos = "";
+
+        String infos = gameStates.toString() + "\n";
 
         for(Invader invader : fieldManager.getInvaders()){
             infos += invader.getX() + "_" + invader.getY() + "\t";

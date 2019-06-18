@@ -1,15 +1,14 @@
 package logic.player;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Team {
 
-    private ArrayList<Player> players;
-    private int teamHighScore;
+    private CopyOnWriteArrayList<Player> players;
     private int teamCurrentScore;
 
     public Team(){
-        players = new ArrayList<>();
+        players = new CopyOnWriteArrayList<>();
         teamCurrentScore = 0;
     }
 
@@ -26,34 +25,20 @@ public class Team {
         }
     }
 
-    /**
-     * Check di eventuale nuovo highscore
-     */
-    public boolean checkHighscore(){
-        if(teamHighScore < teamCurrentScore){
-            teamHighScore = teamCurrentScore;
-            return true;
-        }
-        return false;
-    }
-
     public void removePlayer(Player player){
         players.remove(player);
+    }
+
+    public void clear(){
+        players.clear();
+        teamCurrentScore = 0;
     }
 
     public void addPlayer(Player player){
         players.add(player);
     }
 
-    public void setTeamHighScore(int teamHighScore) {
-        this.teamHighScore = teamHighScore;
-    }
-
-    public int getTeamHighScore() {
-        return teamHighScore;
-    }
-
-    public ArrayList<Player> getPlayers() {
+    public CopyOnWriteArrayList<Player> getPlayers() {
         return players;
     }
 

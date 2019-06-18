@@ -14,15 +14,14 @@ public class SpaceShip extends Sprite {
 
     public SpaceShip(Coordinate coordinate, double size) {
         super(coordinate, size);
-        life = 3;
-        currentScore = 0;
+        init();
         shipBullet = null;
         shipShot = false;
     }
 
     public void init(){
         currentScore = 0;
-        life = 3;
+        life = 1;
     }
 
     public void moveLeft(int delta) {

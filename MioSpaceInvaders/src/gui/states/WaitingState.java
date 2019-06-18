@@ -72,6 +72,11 @@ public class WaitingState extends BasicInvaderState{
 
         if(client.getGameState() == GameStates.START){
             MultiplayerState.setClient(client);
+            try {
+                stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer,stateBasedGame);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
             stateBasedGame.enterState(IDStates.MULTIPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
         }else if(client.getInitialization()){
             client.send(handler.build(client.getPlayer().getName(), client.getConnection()));

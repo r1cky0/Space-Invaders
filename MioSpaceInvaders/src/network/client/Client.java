@@ -4,6 +4,7 @@ import logic.player.Player;
 import network.data.Connection;
 import network.data.PacketHandler;
 import logic.environment.manager.game.GameStates;
+import org.lwjgl.Sys;
 
 import java.io.IOException;
 import java.net.*;
@@ -71,8 +72,11 @@ public class Client implements Runnable {
             try {
                 socket.receive(packet);
                 if(initialization){
-                    ID = Integer.parseInt(handler.process(packet)[0]);
-                    initialization = false;
+                    try {
+                        ID = Integer.parseInt(handler.process(packet)[0]);
+                        initialization = false;
+                    }catch (NumberFormatException ignored){
+                    }
                 }else if(gameState != GameStates.START) {
                     gameState = GameStates.valueOf(handler.process(packet)[0]);
                 }

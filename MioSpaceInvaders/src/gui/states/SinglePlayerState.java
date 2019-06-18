@@ -114,10 +114,10 @@ public class SinglePlayerState extends BasicInvaderState {
         GameStates gameStates = singlePlayer.checkGameState();
 
         if (gameStates == GameStates.GAMEOVER) {
-            stateBasedGame.enterState(3, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.GAMEOVERSINGLE_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (gameStates == GameStates.NEWHIGHSCORE) {
-            stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.NEWHIGHSCORE_STATE, new FadeOutTransition(), new FadeInTransition());
         }
     }
 

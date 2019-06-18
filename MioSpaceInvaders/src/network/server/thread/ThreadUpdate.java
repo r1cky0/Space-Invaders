@@ -1,5 +1,6 @@
 package network.server.thread;
 
+import logic.environment.manager.game.GameStates;
 import logic.environment.manager.game.Multiplayer;
 import logic.player.Player;
 import logic.sprite.dinamic.bullets.InvaderBullet;
@@ -8,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ThreadUpdate implements Runnable{
 
     private Multiplayer multiplayer;
-    private Thread thread;
     private AtomicBoolean running;
 
     public ThreadUpdate(Multiplayer multiplayer){
@@ -17,7 +17,7 @@ public class ThreadUpdate implements Runnable{
     }
 
     public void start() {
-        thread = new Thread(this);
+        Thread thread = new Thread(this);
         thread.start();
     }
 
@@ -33,10 +33,15 @@ public class ThreadUpdate implements Runnable{
                     multiplayer.getFieldManager().checkSpaceShipShotCollision(player.getSpaceShip());
                 }
                 multiplayer.getFieldManager().checkInvaderShotCollision(player.getSpaceShip());
+                if(player.getSpaceShip().getLife() == 0){
+                    multiplayer.getTeam().removePlayer(player);
+                }
+            }
+            if(multiplayer.getTeam().getPlayers().isEmpty()){
+                multiplayer.setGameStates(GameStates.GAMEOVER);
             }
             multiplayer.getTeam().calculateTeamCurrentScore();
             multiplayer.threadInvaderManager();
-            multiplayer.checkGameState();
             try {
                 Thread.sleep(multiplayer.getDelta());
             } catch (InterruptedException e) {

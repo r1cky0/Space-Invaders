@@ -18,19 +18,22 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Server implements Runnable {
 
     private int port;
-    private AtomicBoolean running;
+    private AtomicBoolean runningSender;
+    private AtomicBoolean runningListener;
     private DatagramSocket socket;
     private PacketHandler handler;
     private int maxPlayers = 1;
     private boolean gameStarted;
 
+    private Thread sender;
     private Multiplayer multiplayer;
     //Arraylist connessioni al server da parte dei client
     private List<Connection> clients = new CopyOnWriteArrayList<>();
 
     Server(int port) {
         this.port = port;
-        running = new AtomicBoolean(false);
+        runningSender = new AtomicBoolean(false);
+        runningListener = new AtomicBoolean(false);
         handler = new PacketHandler();
         gameStarted = false;
         multiplayer = new Multiplayer();
@@ -44,7 +47,7 @@ public class Server implements Runnable {
     public void init() throws SocketException {
         this.socket = new DatagramSocket(this.port);
         Thread listener = new Thread(this);
-        running.set(true);
+        runningSender.set(true);
         listener.start();
     }
 
@@ -53,8 +56,9 @@ public class Server implements Runnable {
      * per la ricezione di nuovi pacchetti
      */
     public void run() {
+        runningListener.set(true);
         System.out.println("Server started on port: " + port);
-        while (running.get()) {
+        while (runningListener.get()) {
             byte[] rcvdata = new byte[1000];
             DatagramPacket packet = new DatagramPacket(rcvdata, rcvdata.length);
             try {
@@ -86,19 +90,30 @@ public class Server implements Runnable {
             int id = clients.size() - 1;
             send(id, Integer.toString(id)); //INVIO AL CLIENT IL SUO ID = POSIZIONE NELL'ARRAYLIST DI CONNESSIONI
             if (clients.size() == maxPlayers) {
+                broadcast(GameStates.START.toString());
+                try {
+                    //sleep per dare il tempo ai client di inizializzare il campo di gioco prima di iniziare
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 multiplayer.startGame();
                 gameStarted = true;
-                broadcast(GameStates.START.toString());
                 broadcastRenderInfos();
             }
         }
     }
 
+    public void checkEmptyList(){
+        if(clients.isEmpty()){
+            multiplayer.stopGame();
+            sender.interrupt();
+            gameStarted = false;
+        }
+    }
+
     private void removeConnection(int id){
         clients.remove(id);
-        if(clients.isEmpty()){
-            stop();
-        }
     }
 
     /**
@@ -119,17 +134,26 @@ public class Server implements Runnable {
      * elementi per permettere ai client di renderizzarli.
      */
     private void broadcastRenderInfos() {
-        Thread sender = new Thread(() -> {
-            while (running.get()) {
-                for (Connection connection : clients) {
-                    try {
-                        socket.send(handler.build(multiplayer.getInfos(), connection));
-                    } catch (IOException e) {
-                        e.printStackTrace();
+        sender = new Thread() {
+            public void run() {
+                runningSender.set(true);
+                while (runningSender.get()) {
+                    checkEmptyList();
+                    String infos = multiplayer.getInfos();
+                    for (Connection connection : clients) {
+                        try {
+                            socket.send(handler.build(infos, connection));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
-        });
+
+            public void interrupt() {
+                runningSender.set(false);
+            }
+        };
         sender.start();
     }
 
@@ -143,11 +167,4 @@ public class Server implements Runnable {
         }
     }
 
-    private void stop(){
-        running.set(false);
-    }
-
-    public int getPort() {
-        return port;
-    }
 }
