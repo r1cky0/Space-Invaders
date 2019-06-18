@@ -27,8 +27,6 @@ public class Client implements Runnable {
     private String[] rcvdata;
     private GameStates gameState;
 
-    private Thread listener;
-
     public Client(Player player, String destAddress, int destPort) {
         this.player = player;
         running = new AtomicBoolean(false);
@@ -46,11 +44,8 @@ public class Client implements Runnable {
 
     private void init() throws SocketException {
         socket = new DatagramSocket(8888);
-        listener = new Thread(this);
+        Thread listener = new Thread(this);
         listener.start();
-        while(ID == -1) {
-            send(handler.build(player.getName(), connection));
-        }
     }
 
     /**
@@ -60,7 +55,7 @@ public class Client implements Runnable {
         try {
             socket.send(packet);
         } catch (IOException e) {
-            e.printStackTrace();
+            close();
         }
     }
 
@@ -89,7 +84,6 @@ public class Client implements Runnable {
                     rcvdata = handler.process(packet);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
                 close();
             }
         }
@@ -121,6 +115,10 @@ public class Client implements Runnable {
 
     public Connection getConnection(){
         return connection;
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
 }

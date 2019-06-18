@@ -3,6 +3,7 @@ package gui.states;
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import network.client.Client;
+import network.data.PacketHandler;
 import network.server.GameStates;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.AbstractComponent;
@@ -14,7 +15,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import java.awt.Font;
 
 
-public class WaitingState extends BasicInvaderState implements ComponentListener {
+public class WaitingState extends BasicInvaderState{
 
     private StateBasedGame stateBasedGame;
     private GameContainer gameContainer;
@@ -27,12 +28,13 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
     private int[] duration = {500,500};
 
     private Menu menu;
-    private GameStates gameStates;
     private Client client;
+    private PacketHandler handler;
     private boolean connectionOpened;
 
     public WaitingState(Menu menu) {
         this.menu = menu;
+        handler = new PacketHandler();
     }
 
     @Override
@@ -54,7 +56,6 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
         graphics.drawImage(background, 0, 0);
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title)) / 2f,
                 8 * gameContainer.getHeight() / 100f, title);
-
         movingAnimation.draw((gameContainer.getWidth() - movingAnimation.getWidth())/2f,
                 (gameContainer.getHeight() - movingAnimation.getHeight())/2f);
     }
@@ -64,6 +65,7 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
         Input input = gameContainer.getInput();
 
         if(input.isKeyDown(Input.KEY_ESCAPE)){
+            client.close();
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
 
@@ -75,14 +77,11 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
         if(client.getGameState() == GameStates.START){
             MultiplayerState.setClient(client);
             stateBasedGame.enterState(9, new FadeOutTransition(), new FadeInTransition());
-        }else if(!client.getInitialization()){
+        }else if(client.getInitialization()){
+            client.send(handler.build(client.getPlayer().getName(), client.getConnection()));
+        }else{
             title = "WAITING FOR OTHER PLAYERS...";
         }
-    }
-
-    @Override
-    public void componentActivated(AbstractComponent abstractComponent) {
-
     }
 
     @Override

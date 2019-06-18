@@ -20,7 +20,7 @@ public class Server implements Runnable {
     private AtomicBoolean running;
     private DatagramSocket socket;
     private PacketHandler handler;
-    private int maxPlayers = 1;
+    private int maxPlayers = 2;
     private boolean gameStarted;
 
     private Multiplayer multiplayer;
