@@ -66,7 +66,7 @@ public class WaitingState extends BasicInvaderState{
 
         if(input.isKeyDown(Input.KEY_ESCAPE)){
             client.close();
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
 
         if(!connectionOpened){
@@ -76,7 +76,7 @@ public class WaitingState extends BasicInvaderState{
 
         if(client.getGameState() == GameStates.START){
             MultiplayerState.setClient(client);
-            stateBasedGame.enterState(9, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.MULTIPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
         }else if(client.getInitialization()){
             client.send(handler.build(client.getPlayer().getName(), client.getConnection()));
         }else{
@@ -86,7 +86,7 @@ public class WaitingState extends BasicInvaderState{
 
     @Override
     public int getID() {
-        return 8;
+        return IDStates.WAITING_STATE;
     }
 
 }

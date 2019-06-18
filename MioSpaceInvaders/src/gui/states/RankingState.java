@@ -114,12 +114,12 @@ public class RankingState extends BasicInvaderState implements ComponentListener
      */
     public void componentActivated(AbstractComponent source) {
         if (source == homeButton) {
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
     }
 
     @Override
     public int getID() {
-        return 4;
+        return IDStates.RANKING_STATE;
     }
 }

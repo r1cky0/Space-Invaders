@@ -99,7 +99,7 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
     @Override
     public void componentActivated(AbstractComponent source) {
         if (source == homeButton) {
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == shipButtons.get(0)) {
             menu.getCustomization().setCurrentShip(0);
@@ -130,6 +130,6 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
 
     @Override
     public int getID() {
-        return 7;
+        return IDStates.CUSTOMIZATION_STATE;
     }
 }

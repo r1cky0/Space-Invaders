@@ -65,7 +65,6 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
     }
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
     }
 
     /**
@@ -77,19 +76,19 @@ public class GameOverState extends BasicInvaderState implements ComponentListene
         if (source == newGameButton) {
             try {
                 menu.restartGame();
-                stateBasedGame.getState(2).init(gameContainer, stateBasedGame);
+                stateBasedGame.getState(IDStates.SINGLEPLAYER_STATE).init(gameContainer, stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.SINGLEPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == homeButton) {
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
     }
 
     @Override
     public int getID() {
-        return 3;
+        return IDStates.GAMEOVER_STATE;
     }
 }

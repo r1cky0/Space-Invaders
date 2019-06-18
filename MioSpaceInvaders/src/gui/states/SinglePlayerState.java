@@ -106,7 +106,7 @@ public class SinglePlayerState extends BasicInvaderState {
         }
         if (input.isKeyDown(Input.KEY_ESCAPE)){
             singlePlayer.execCommand(Commands.EXIT, delta);
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         singlePlayer.update(delta);
 
@@ -123,6 +123,6 @@ public class SinglePlayerState extends BasicInvaderState {
 
     @Override
     public int getID() {
-        return 2;
+        return IDStates.SINGLEPLAYER_STATE;
     }
 }

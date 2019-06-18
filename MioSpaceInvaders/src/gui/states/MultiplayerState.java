@@ -141,7 +141,7 @@ public class MultiplayerState extends BasicInvaderState {
             message = client.getID() + "\n" + Commands.EXIT.toString();
             client.send(handler.build(message, client.getConnection()));
             client.close();
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
     }
 
@@ -199,6 +199,6 @@ public class MultiplayerState extends BasicInvaderState {
 
     @Override
     public int getID() {
-        return 9;
+        return IDStates.MULTIPLAYER_STATE;
     }
 }

@@ -15,7 +15,6 @@ public abstract class BasicInvaderState extends BasicGameState {
      * Metodo che esegue le operazioni di creazione font comuni a tutti gli stati
      *
      * @param size Dimensioni da apportare al font (ricordare di inserirle dinamiche alla finestra)
-     * @return
      */
     public UnicodeFont build(float size) {
         try {

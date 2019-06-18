@@ -80,19 +80,19 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
         if (source == newGameButton) {
             try {
                 menu.restartGame();
-                stateBasedGame.getState(2).init(gameContainer, stateBasedGame);
+                stateBasedGame.getState(IDStates.SINGLEPLAYER_STATE).init(gameContainer, stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.SINGLEPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == homeButton) {
-            stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
     }
 
     @Override
     public int getID() {
-        return 6;
+        return IDStates.NEWHIGHSCORE_STATE;
     }
 }

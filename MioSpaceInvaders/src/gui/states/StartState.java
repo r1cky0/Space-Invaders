@@ -107,6 +107,7 @@ public class StartState extends BasicInvaderState implements ComponentListener {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
+
         if (input.isKeyPressed(Input.KEY_TAB)) {
             passwordField.setFocus(true);
         }
@@ -114,7 +115,8 @@ public class StartState extends BasicInvaderState implements ComponentListener {
             String nickname = nameField.getText();
             String password = passwordField.getText();
             if (menu.logIn(nickname, password)) {
-                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
+                resetComponents();
             } else {
                 errorFlag = true;
                 errorMessage = "Nickname o password errati";
@@ -133,7 +135,8 @@ public class StartState extends BasicInvaderState implements ComponentListener {
             String password = passwordField.getText();
 
             if (menu.logIn(nickname, password)) {
-                stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
+                resetComponents();
             } else {
                 errorFlag = true;
                 errorMessage = "Nickname o password errati";
@@ -145,7 +148,8 @@ public class StartState extends BasicInvaderState implements ComponentListener {
 
             if (!(nickname.isEmpty() || password.isEmpty())) {
                 if (menu.newAccount(nickname, password)) {
-                    stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
+                    stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
+                    resetComponents();
                 } else {
                     errorFlag = true;
                     errorMessage = "Account già esistente";
@@ -154,8 +158,15 @@ public class StartState extends BasicInvaderState implements ComponentListener {
         }
     }
 
+    private void resetComponents(){
+        errorMessage = "";
+        nameField.setText("");
+        passwordField.setText("");
+        nameField.setFocus(true);
+    }
+
     @Override
     public int getID() {
-        return 0;
+        return IDStates.START_STATE;
     }
 }

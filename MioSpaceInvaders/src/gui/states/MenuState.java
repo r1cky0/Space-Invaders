@@ -28,7 +28,7 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
     private MouseOverArea singleButton;
     private MouseOverArea multiButton;
     private MouseOverArea exitButton;
-    private MouseOverArea settingsButton;
+    private MouseOverArea customizationButton;
     private MouseOverArea rankingButton;
 
     private UnicodeFont uniFontTitle;
@@ -62,7 +62,7 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
 
         settings = new Image(ReadXmlFile.read("buttonSettings")).getScaledCopy(8*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
-        settingsButton = new MouseOverArea(gameContainer, settings,35*gameContainer.getWidth()/100,
+        customizationButton = new MouseOverArea(gameContainer, settings,35*gameContainer.getWidth()/100,
                 63*gameContainer.getHeight()/100,8*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
@@ -86,7 +86,7 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
         graphics.drawImage(background,0,0);
         singleButton.render(gameContainer, graphics);
         multiButton.render(gameContainer, graphics);
-        settingsButton.render(gameContainer,graphics);
+        customizationButton.render(gameContainer,graphics);
         exitButton.render(gameContainer,graphics);
         rankingButton.render(gameContainer,graphics);
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,7*gameContainer.getHeight()/100f,
@@ -105,45 +105,45 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
         if (source == singleButton ) {
             try {
                 menu.restartGame();
-                stateBasedGame.getState(2).init(gameContainer,stateBasedGame);
+                stateBasedGame.getState(IDStates.SINGLEPLAYER_STATE).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(2, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.SINGLEPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == multiButton ) {
             try {
-                stateBasedGame.getState(8).init(gameContainer,stateBasedGame);
-                stateBasedGame.getState(9).init(gameContainer,stateBasedGame);
+                stateBasedGame.getState(IDStates.WAITING_STATE).init(gameContainer,stateBasedGame);
+                stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(8, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.WAITING_STATE, new FadeOutTransition(), new FadeInTransition());
         }
-        if (source == settingsButton) {
+        if (source == customizationButton) {
             try {
-                stateBasedGame.getState(7).init(gameContainer, stateBasedGame);
+                stateBasedGame.getState(IDStates.CUSTOMIZATION_STATE).init(gameContainer, stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(7, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.CUSTOMIZATION_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == rankingButton ) {
             try {
-                stateBasedGame.getState(4).init(gameContainer, stateBasedGame);
+                stateBasedGame.getState(IDStates.RANKING_STATE).init(gameContainer, stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(4, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.RANKING_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if(source == exitButton){
             menu.logOut();
-            System.exit(0);
+            stateBasedGame.enterState(IDStates.START_STATE, new FadeOutTransition(), new FadeInTransition());
         }
     }
 
     @Override
     public int getID() {
-        return 1;
+        return IDStates.MENU_STATE;
     }
 }
