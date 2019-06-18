@@ -3,7 +3,6 @@ package logic.player;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Team {
-
     private CopyOnWriteArrayList<Player> players;
     private int teamCurrentScore;
 

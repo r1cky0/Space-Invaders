@@ -20,9 +20,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import java.util.ArrayList;
 
 public class CustomizationState extends BasicInvaderState implements ComponentListener {
-
     private StateBasedGame stateBasedGame;
-    private GameContainer gameContainer;
 
     private Image background;
     private Image homeImage;
@@ -52,14 +50,14 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
         background = new Image(ReadXmlFile.read("defaultBackground"));
         homeImage = new Image(ReadXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
-                6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
+        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
+                7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
+                this);
         title = "SET YOUR SHIP!";
 
         int offset = 17*gameContainer.getWidth()/100;
@@ -67,8 +65,8 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
         for (Image img: ships) {
             img = img.getScaledCopy(10*gameContainer.getWidth()/100,10*gameContainer.getWidth()/100);
             shipButtons.add(new MouseOverArea(gameContainer, img,5*gameContainer.getScreenWidth()/100 + offset*i,
-                    45*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
-                    this ));
+                    45*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,
+                    6*gameContainer.getHeight()/100,this ));
             i++;
         }
 
@@ -80,7 +78,7 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background, 0, 0);
         homeButton.render(gameContainer, graphics);
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
@@ -93,7 +91,7 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
     }
 
     @Override

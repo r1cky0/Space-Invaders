@@ -3,7 +3,6 @@ package logic.environment.manager.menu;
 import java.util.ArrayList;
 
 public class Customization {
-
     private String currentShip;
     private ArrayList<String> spaceShips;
 

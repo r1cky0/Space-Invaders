@@ -50,8 +50,9 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
 
         homeImage = new Image(ReadXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
-                6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
+        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
+                7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
+                this);
 
         cupImage = new Image(ReadXmlFile.read("buttonRanking")).getScaledCopy(40*gameContainer.getWidth()/100,
                 40*gameContainer.getHeight()/100);
@@ -59,20 +60,23 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
         uniFontTitle = build(8*gameContainer.getWidth()/100f);
     }
 
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background,0,0);
+
         highscore = Integer.toString(menu.getPlayer().getHighScore());
         cupImage.draw((gameContainer.getWidth() - cupImage.getWidth())/2f,
                 (gameContainer.getHeight() - cupImage.getHeight())/2f);
+
         newGameButton.render(gameContainer, graphics);
         homeButton.render(gameContainer,graphics);
+
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
                 7*gameContainer.getHeight()/100f, title);
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(highscore))/2f,
                 20*gameContainer.getHeight()/100f, highscore);
     }
 
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
     }
 
     @Override

@@ -18,7 +18,7 @@ public abstract class BasicInvaderState extends BasicGameState {
      */
     public UnicodeFont build(float size) {
         try {
-            fontTitle = Font.createFont(Font.TRUETYPE_FONT, ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
+            fontTitle = Font.createFont(Font.TRUETYPE_FONT,ResourceLoader.getResourceAsStream("res/font/invaders_font.ttf"));
             fontTitle = this.fontTitle.deriveFont(Font.BOLD, size);
             uniFontTitle = new UnicodeFont(fontTitle);
             uniFontTitle.getEffects().add(new ColorEffect(java.awt.Color.white));

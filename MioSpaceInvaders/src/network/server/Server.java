@@ -7,6 +7,7 @@ import network.data.PacketHandler;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -16,26 +17,24 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  */
 public class Server implements Runnable {
-
-    private int port;
-    private AtomicBoolean runningSender;
-    private AtomicBoolean runningListener;
-    private DatagramSocket socket;
-    private PacketHandler handler;
-    private int maxPlayers = 1;
-    private boolean gameStarted;
-
-    private Thread sender;
     private Multiplayer multiplayer;
     //Arraylist connessioni al server da parte dei client
     private List<Connection> clients = new CopyOnWriteArrayList<>();
+    private DatagramSocket socket;
+    private PacketHandler handler;
+
+    private Thread sender;
+    private AtomicBoolean runningSender;
+    private AtomicBoolean runningListener;
+
+    private int port;
+    private int maxPlayers = 1;
 
     Server(int port) {
         this.port = port;
         runningSender = new AtomicBoolean(false);
         runningListener = new AtomicBoolean(false);
         handler = new PacketHandler();
-        gameStarted = false;
         multiplayer = new Multiplayer();
         try {
             this.init();
@@ -59,19 +58,21 @@ public class Server implements Runnable {
         runningListener.set(true);
         System.out.println("Server started on port: " + port);
         while (runningListener.get()) {
-            byte[] rcvdata = new byte[1000];
+            byte[] rcvdata = new byte[64];
             DatagramPacket packet = new DatagramPacket(rcvdata, rcvdata.length);
             try {
                 socket.receive(packet);
-                if (gameStarted) {
-                    multiplayer.execCommand(handler.process(packet));
-                    int id = multiplayer.checkPlayers(handler.process(packet));
+                if (multiplayer.getGameStates() == GameStates.START) {
+                    int id = multiplayer.execCommand(handler.process(packet));
                     if(id != -1){
                         removeConnection(id);
                     }
-                }else{
+                }else if(multiplayer.getGameStates() == GameStates.GAMEOVER){
+                    clients.clear();
+                }else if(multiplayer.getGameStates() == GameStates.WAITING){
                     addConnection(packet);
                 }
+                checkEmptyList();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -98,17 +99,16 @@ public class Server implements Runnable {
                     e.printStackTrace();
                 }
                 multiplayer.startGame();
-                gameStarted = true;
                 broadcastRenderInfos();
             }
         }
     }
 
-    public void checkEmptyList(){
+    private void checkEmptyList(){
         if(clients.isEmpty()){
             multiplayer.stopGame();
             sender.interrupt();
-            gameStarted = false;
+            multiplayer.setGameStates(GameStates.WAITING);
         }
     }
 
@@ -138,7 +138,6 @@ public class Server implements Runnable {
             public void run() {
                 runningSender.set(true);
                 while (runningSender.get()) {
-                    checkEmptyList();
                     String infos = multiplayer.getInfos();
                     for (Connection connection : clients) {
                         try {
@@ -166,5 +165,4 @@ public class Server implements Runnable {
             }
         }
     }
-
 }

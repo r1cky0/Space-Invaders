@@ -1,9 +1,9 @@
 package gui.states;
 
 import logic.environment.manager.file.ReadXmlFile;
-import logic.environment.manager.menu.Menu;
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
+import main.Dimensions;
 import network.client.Client;
 import network.data.PacketHandler;
 import logic.environment.manager.game.Commands;
@@ -17,13 +17,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MultiplayerState extends BasicInvaderState {
-
-    //DIMENSIONS
-    private double maxWidth;
-    private double bulletSize;
-    private double brickSize;
-    private double invaderSize;
-    private double shipSize;
+    private GameStates gameStates;
+    private String message;
+    private UnicodeFont uniFontData;
 
     private ArrayList<Sprite> invaderInfos;
     private ArrayList<Sprite> invaderBulletInfos;
@@ -32,11 +28,9 @@ public class MultiplayerState extends BasicInvaderState {
     private ArrayList<Sprite> spaceShipBulletInfos;
     private String scoreInfos;
     private int life;
-    private PacketHandler handler;
-    private String message;
-    private GameStates gameStates;
 
-    private UnicodeFont uniFontData;
+    private Client client;
+    private PacketHandler handler;
 
     //IMAGES
     private Image background;
@@ -45,23 +39,14 @@ public class MultiplayerState extends BasicInvaderState {
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
 
-    private Menu menu;
-    private static Client client;
-
-    public MultiplayerState(Menu menu) {
-        this.menu = menu;
+    public MultiplayerState(Client client) {
+        this.client = client;
         invaderInfos = new ArrayList<>();
         invaderBulletInfos = new ArrayList<>();
         brickInfos = new HashMap<>();
         spaceShipInfos = new ArrayList<>();
         spaceShipBulletInfos = new ArrayList<>();
         handler = new PacketHandler();
-
-        maxWidth = menu.getMaxWidth();
-        shipSize = maxWidth / 20;
-        bulletSize = maxWidth / 60;
-        brickSize = maxWidth / 40;
-        invaderSize = maxWidth / 20;
 
         try {
             invaderImage = new Image(ReadXmlFile.read("defaultInvader"));
@@ -81,15 +66,11 @@ public class MultiplayerState extends BasicInvaderState {
         uniFontData = build(3 * gameContainer.getWidth() / 100f);
     }
 
-    static void setClient(Client client){
-        MultiplayerState.client = client;
-    }
-
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background, 0, 0);
 
-        uniFontData.drawString(85 * gameContainer.getWidth() / 100f, 2 * gameContainer.getHeight() / 100f,
+        uniFontData.drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Lives: " + life, Color.red);
         uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Score: " + scoreInfos, Color.white);
@@ -98,29 +79,23 @@ public class MultiplayerState extends BasicInvaderState {
         if(rcvdata != null) {
             create(rcvdata);
         }
-
         for (Sprite sprite : invaderInfos) {
             sprite.render(invaderImage);
         }
-
         for (Sprite sprite : invaderBulletInfos) {
             sprite.render(bulletImage);
         }
-
         for (Sprite sprite : brickInfos.keySet()) {
             if(4 - brickInfos.get(sprite) < 4) {
                 sprite.render(brickImages.get(4 - brickInfos.get(sprite)));
             }
         }
-
         for (Sprite sprite : spaceShipInfos) {
             sprite.render(spaceShipImage);
         }
-
         for (Sprite sprite : spaceShipBulletInfos) {
             sprite.render(bulletImage);
         }
-
     }
 
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
@@ -147,63 +122,62 @@ public class MultiplayerState extends BasicInvaderState {
         if(gameStates == GameStates.GAMEOVER){
             message = client.getID() + "\n" + Commands.EXIT.toString();
             client.send(handler.build(message, client.getConnection()));
+            try {
+                stateBasedGame.addState(new GameOverStateMulti(scoreInfos));
+                stateBasedGame.getState(IDStates.GAMEOVERMULTI_STATE).init(gameContainer,stateBasedGame);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
             stateBasedGame.enterState(IDStates.GAMEOVERMULTI_STATE, new FadeOutTransition(), new FadeInTransition());
             client.close();
         }
     }
 
     private void create(String[] rcvdata) {
-
         gameStates = GameStates.valueOf(rcvdata[0]);
 
         invaderInfos.clear();
         for (String strings : rcvdata[1].split("\\t")) {
             if (!strings.equals("")) {
                 invaderInfos.add(new Sprite(new Coordinate(Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1])), invaderSize));
+                        Float.parseFloat(strings.split("_")[1])), Dimensions.INVADER_SIZE));
             }
         }
-
         invaderBulletInfos.clear();
         for (String strings : rcvdata[2].split("\\t")) {
             if (!strings.equals("")) {
                 invaderBulletInfos.add(new Sprite(new Coordinate(Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1])), bulletSize));
+                        Float.parseFloat(strings.split("_")[1])), Dimensions.BULLET_SIZE));
             }
         }
-
         brickInfos.clear();
         for (String strings : rcvdata[3].split("\\t")) {
             if (!strings.equals("")) {
                 brickInfos.put(new Sprite(new Coordinate(Float.parseFloat(strings.split("_")[0]),
-                                Float.parseFloat(strings.split("_")[1])), brickSize),
+                                Float.parseFloat(strings.split("_")[1])), Dimensions.BRICK_SIZE),
                         Integer.parseInt(strings.split("_")[2]));
             }
         }
-
         spaceShipInfos.clear();
         int count = 0;
         for (String strings : rcvdata[4].split("\\t")) {
             if (!strings.equals("")) {
                 spaceShipInfos.add(new Sprite(new Coordinate(Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1])), shipSize));
+                        Float.parseFloat(strings.split("_")[1])), Dimensions.SHIP_SIZE));
                 if (count == client.getID()) {
                     life = Integer.parseInt(strings.split("_")[2]);
                 }
                 count++;
             }
         }
-
         spaceShipBulletInfos.clear();
         for (String strings : rcvdata[5].split("\\t")) {
             if (!strings.equals("")) {
                 spaceShipBulletInfos.add(new Sprite(new Coordinate(Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1])), bulletSize));
+                        Float.parseFloat(strings.split("_")[1])), Dimensions.BULLET_SIZE));
             }
         }
-
         scoreInfos = rcvdata[6];
-
     }
 
     @Override

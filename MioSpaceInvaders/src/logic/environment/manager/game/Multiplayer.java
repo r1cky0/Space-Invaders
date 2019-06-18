@@ -2,8 +2,6 @@ package logic.environment.manager.game;
 
 import logic.environment.manager.field.FieldManager;
 import logic.environment.manager.field.MovingDirections;
-import logic.environment.manager.game.Commands;
-import logic.environment.manager.game.GameStates;
 import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
@@ -13,15 +11,11 @@ import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
+import main.Dimensions;
 import network.server.thread.ThreadUpdate;
-import org.newdawn.slick.GameContainer;
 
 public class Multiplayer {
-
-    //DIMENSION
-    private final double maxWidth = 1000;
-    private final double maxHeight = 800;
-    private final int delta = 1;
+    private static int DELTA = 1;
 
     private FieldManager fieldManager;
     private Team team;
@@ -34,49 +28,39 @@ public class Multiplayer {
     public Multiplayer(){
         team = new Team();
         newThread = false;
+        gameStates = GameStates.WAITING;
     }
 
     public void init(String[] name){
-        double shipSize = maxWidth / 20;
-        Coordinate coordinate = new Coordinate((maxWidth / 2 - shipSize / 2), (maxHeight - shipSize));
+        double shipSize = Dimensions.MAX_WIDTH / 20;
+        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - shipSize / 2), (Dimensions.MAX_HEIGHT - shipSize));
         SpaceShip defaultShip = new SpaceShip(coordinate, shipSize);
 
         team.addPlayer(new Player(name[0], defaultShip));
     }
 
-    public void execCommand(String[] infos){
-        try {
-            Integer.parseInt(infos[0]);
-        }catch (NumberFormatException err){
-            return;
-        }
-        Player player = team.getPlayers().get(Integer.parseInt(infos[0]));
-        switch (Commands.valueOf(infos[1])) {
-            case MOVE_LEFT:
-                fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT, delta);
-                break;
-            case MOVE_RIGHT:
-                fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.RIGHT, delta);
-                break;
-            case SHOT:
-                fieldManager.shipShot(player.getSpaceShip());
-                break;
-            default:
-                break;
-        }
-    }
+    public int execCommand(String[] infos){
 
-    public int checkPlayers(String[] infos){
         try {
             Integer.parseInt(infos[0]);
         }catch (NumberFormatException err){
             return -1;
         }
         Player player = team.getPlayers().get(Integer.parseInt(infos[0]));
-        if(Commands.valueOf(infos[1]) == Commands.EXIT){
-            int id = team.getPlayers().indexOf(player);
-            team.removePlayer(player);
-            return id;
+        switch (Commands.valueOf(infos[1])) {
+            case MOVE_LEFT:
+                fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT, DELTA);
+                break;
+            case MOVE_RIGHT:
+                fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.RIGHT, DELTA);
+                break;
+            case SHOT:
+                fieldManager.shipShot(player.getSpaceShip());
+                break;
+            case EXIT:
+                int id = team.getPlayers().indexOf(player);
+                team.removePlayer(player);
+                return id;
         }
         return -1;
     }
@@ -102,7 +86,7 @@ public class Multiplayer {
     }
 
     public void startGame(){
-        fieldManager = new FieldManager(maxWidth, maxHeight);
+        fieldManager = new FieldManager();
         newThread = false;
         gameStates = GameStates.START;
         update();
@@ -116,10 +100,6 @@ public class Multiplayer {
 
     public void setGameStates(GameStates gameStates){
         this.gameStates = gameStates;
-    }
-
-    public GameStates getGameStates(){
-        return gameStates;
     }
 
     public String getInfos(){
@@ -161,6 +141,10 @@ public class Multiplayer {
         return infos;
     }
 
+    public GameStates getGameStates(){
+        return gameStates;
+    }
+
     public FieldManager getFieldManager(){
         return fieldManager;
     }
@@ -170,6 +154,6 @@ public class Multiplayer {
     }
 
     public int getDelta(){
-        return delta;
+        return DELTA;
     }
 }

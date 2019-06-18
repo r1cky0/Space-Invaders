@@ -82,19 +82,19 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background,0,0);
         singleButton.render(gameContainer, graphics);
         multiButton.render(gameContainer, graphics);
         customizationButton.render(gameContainer,graphics);
         exitButton.render(gameContainer,graphics);
         rankingButton.render(gameContainer,graphics);
-        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,7*gameContainer.getHeight()/100f,
-                title, Color.white);
+        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
+                7*gameContainer.getHeight()/100f, title, Color.white);
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
     }
 
     /**

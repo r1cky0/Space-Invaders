@@ -9,6 +9,7 @@ import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Bunker;
+import main.Dimensions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +17,6 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FieldManager {
-
-    //DIMENSIONS
-    private final double MIN_WIDTH = 0.0;
-    private double maxWidth;
-    private double maxHeight;
-    private double bulletSize;
-    private double brickSize;
-    private double invaderSize;
 
     private InvadersCreator invadersCreator;
     private BunkersCreator bunkersCreator;
@@ -39,16 +32,9 @@ public class FieldManager {
     private boolean goDown;
     private Difficulty difficulty;
 
-    public FieldManager(double maxWidth, double maxHeight){
-        this.maxHeight = maxHeight;
-        this.maxWidth = maxWidth;
-
-        bulletSize = maxWidth / 60;
-        brickSize = maxWidth / 40;
-        invaderSize = maxWidth / 20;
-
-        invadersCreator = new InvadersCreator(maxHeight,maxWidth,invaderSize);
-        bunkersCreator = new BunkersCreator(maxHeight,maxWidth,brickSize);
+    public FieldManager(){
+        invadersCreator = new InvadersCreator();
+        bunkersCreator = new BunkersCreator();
 
         bunkers = new ArrayList<>();
         invaderBullets = new CopyOnWriteArrayList<>();
@@ -83,11 +69,11 @@ public class FieldManager {
 
     public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
 
-        if(((spaceShip.getX() + spaceShip.getSize()) < maxWidth) && (md == MovingDirections.RIGHT)){
+        if(((spaceShip.getX() + spaceShip.getSize()) < Dimensions.MAX_WIDTH) && (md == MovingDirections.RIGHT)){
             spaceShip.moveRight(delta);
         }
 
-        if((spaceShip.getX() > MIN_WIDTH) && (md == MovingDirections.LEFT)){
+        if((spaceShip.getX() > Dimensions.MIN_WIDTH) && (md == MovingDirections.LEFT)){
             spaceShip.moveLeft(delta);
         }
 
@@ -96,8 +82,9 @@ public class FieldManager {
     public void shipShot(SpaceShip spaceShip){
 
         if(!spaceShip.isShipShot()) {
-            Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - bulletSize/2, spaceShip.getY());
-            spaceShip.setShipBullet(new SpaceShipBullet(coordinate, bulletSize));
+            Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - Dimensions.BULLET_SIZE/2,
+                    spaceShip.getY());
+            spaceShip.setShipBullet(new SpaceShipBullet(coordinate, Dimensions.BULLET_SIZE));
             spaceShip.setShipShot(true);
         }
     }
@@ -124,7 +111,7 @@ public class FieldManager {
                 invaderBullets.remove(bullet);
                 return;
             }
-            if (bullet.getY() >= maxHeight) {
+            if (bullet.getY() >= Dimensions.MAX_HEIGHT) {
                 invaderBullets.remove(bullet);
                 return;
             }
@@ -187,14 +174,14 @@ public class FieldManager {
                 maxY = invader.getY();
             }
         }
-        if((maxY + invaderSize) >= (maxHeight - 7*brickSize)){
+        if((maxY + Dimensions.INVADER_SIZE) >= (Dimensions.MAX_HEIGHT - 7* Dimensions.BRICK_SIZE)){
             gameOver = true;
         }
-        if(((maxX + invaderSize + Invader.HORIZONTAL_OFFSET) > maxWidth) && !goDown){
+        if(((maxX + Dimensions.INVADER_SIZE + Invader.HORIZONTAL_OFFSET) > Dimensions.MAX_WIDTH) && !goDown){
             goDown = true;
             return MovingDirections.DOWN;
 
-        } else if((minX - Invader.HORIZONTAL_OFFSET < MIN_WIDTH) && !goDown) {
+        } else if((minX - Invader.HORIZONTAL_OFFSET < Dimensions.MIN_WIDTH) && !goDown) {
             goDown = true;
             return MovingDirections.DOWN;
         }
@@ -239,9 +226,10 @@ public class FieldManager {
         Random rand = new Random();
         int random = rand.nextInt(invaders.size());
         Coordinate coordinate = new Coordinate(invaders.get(random).getX() +
-                invaderSize / 2 - bulletSize /2, invaders.get(random).getY()+invaderSize/2);
+                Dimensions.INVADER_SIZE / 2 - Dimensions.BULLET_SIZE /2,
+                invaders.get(random).getY() + Dimensions.INVADER_SIZE/2);
 
-        invaderBullets.add(new InvaderBullet(coordinate, bulletSize));
+        invaderBullets.add(new InvaderBullet(coordinate, Dimensions.BULLET_SIZE));
 
     }
 

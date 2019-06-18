@@ -5,7 +5,6 @@ import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 
 public class Player {
-
     private String name;
     private int highScore;
     private SpaceShip spaceShip;

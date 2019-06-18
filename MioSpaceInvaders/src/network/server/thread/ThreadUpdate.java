@@ -7,7 +7,6 @@ import logic.sprite.dinamic.bullets.InvaderBullet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThreadUpdate implements Runnable{
-
     private Multiplayer multiplayer;
     private AtomicBoolean running;
 

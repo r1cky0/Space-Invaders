@@ -14,15 +14,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Classe listener UDP
  */
 public class Client implements Runnable {
-
     private Connection connection;
     private DatagramSocket socket;
-    private AtomicBoolean running;
     private PacketHandler handler;
-    private int ID;
-    private boolean initialization;
     private Player player;
 
+    private AtomicBoolean running;
+    private int ID;
+    private boolean initialization;
     private String[] rcvdata;
     private GameStates gameState;
 
@@ -42,7 +41,7 @@ public class Client implements Runnable {
     }
 
     private void init() throws SocketException {
-        socket = new DatagramSocket(8888);
+        socket = new DatagramSocket(8888); //porta ascolto del client
         Thread listener = new Thread(this);
         listener.start();
     }
@@ -122,5 +121,4 @@ public class Client implements Runnable {
     public Player getPlayer(){
         return player;
     }
-
 }

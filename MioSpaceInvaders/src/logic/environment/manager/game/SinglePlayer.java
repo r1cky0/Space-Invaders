@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SinglePlayer {
-
     private Player player;
     private FieldManager fieldManager;
 
@@ -47,7 +46,6 @@ public class SinglePlayer {
     }
 
     public void update(int delta) {
-
         for (Bullet bullet : fieldManager.getInvaderBullets()) {
             bullet.move(delta);
         }
@@ -73,7 +71,6 @@ public class SinglePlayer {
     }
 
     private void threadManager(){
-
         if (!newThread) {
             threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
             threadInvader.start();

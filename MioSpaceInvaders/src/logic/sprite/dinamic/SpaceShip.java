@@ -3,9 +3,9 @@ package logic.sprite.dinamic;
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
+import main.Dimensions;
 
 public class SpaceShip extends Sprite {
-
     private int life, currentScore;
     private double horizontalOffset = 0.5;
 
@@ -20,8 +20,13 @@ public class SpaceShip extends Sprite {
     }
 
     public void init(){
+        Coordinate defaultCoordinate = new Coordinate(Dimensions.MAX_WIDTH/2 - Dimensions.SHIP_SIZE/2,
+                Dimensions.MAX_HEIGHT - Dimensions.SHIP_SIZE);
+        setCoordinate(defaultCoordinate);
+        shipBullet = null;
+        shipShot = false;
         currentScore = 0;
-        life = 1;
+        life = 3;
     }
 
     public void moveLeft(int delta) {

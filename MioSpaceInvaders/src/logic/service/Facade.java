@@ -7,7 +7,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 public abstract class Facade {
-
     private Shape shape;
 
     public Facade(Coordinate coordinate, double size) {

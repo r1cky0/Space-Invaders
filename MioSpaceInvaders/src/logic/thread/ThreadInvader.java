@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThreadInvader implements Runnable {
-
     private FieldManager fieldManager;
     private Thread thread;
     private AtomicBoolean running;

@@ -18,7 +18,6 @@ public class Ranking {
     }
 
     public void createRanking() throws IOException {
-
         BufferedReader in = new BufferedReader(new FileReader("res/players.txt"));
         String riga = in.readLine();
         while (riga != null) {
@@ -34,25 +33,16 @@ public class Ranking {
      * Creazione della classifica ordinata dal punteggio piú alto a quello piú basso per i primi 10 classificati
      */
     private void sortRanking() {
-
         Comparator<Map.Entry<String,Integer>> comp = Comparator.comparingInt(Map.Entry::getValue);
-
         Comparator<Map.Entry<String,Integer>> rev = comp.reversed();
 
         Set<Map.Entry<String,Integer>> entries = rank.entrySet();
-
         List<Map.Entry<String,Integer>> entrylist = new ArrayList<>(entries);
-
         entrylist.sort(rev);
-
         HashMap<String, Integer> temp = new LinkedHashMap<>();
         for (Map.Entry<String, Integer> map : entrylist) {
             temp.put(map.getKey(), map.getValue());
         }
         rank = temp;
     }
-
-
-
-
 }

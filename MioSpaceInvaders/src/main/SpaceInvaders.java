@@ -25,25 +25,19 @@ public class SpaceInvaders extends StateBasedGame {
         this.addState(new NewHighscoreState(menu));
         this.addState(new CustomizationState(menu));
         this.addState(new WaitingState(menu));
-        this.addState(new MultiplayerState(menu));
-        this.addState(new GameOverStateMulti(menu));
         this.enterState(0);
     }
 
     public static void main(String[] args) {
-
-        try {
-            int width = 1000;
-            int height = 800;
-            Menu menu = new Menu(width, height);
+        try{
+            Menu menu = new Menu();
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
-            container.setDisplayMode(width, height, false);
+            container.setDisplayMode((int) Dimensions.MAX_WIDTH,(int) Dimensions.MAX_HEIGHT,false);
             container.setSmoothDeltas(false);
             container.setShowFPS(false);
             container.setVSync(false);
             container.start();
-
-        } catch (SlickException e) {
+        }catch(SlickException e){
             e.printStackTrace();
         }
     }

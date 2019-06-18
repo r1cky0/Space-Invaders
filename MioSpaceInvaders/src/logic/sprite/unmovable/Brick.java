@@ -4,7 +4,6 @@ import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
 
 public class Brick extends Sprite {
-
     private int life;
 
     public Brick(Coordinate coordinate, double size) {

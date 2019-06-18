@@ -17,7 +17,6 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import java.util.ArrayList;
 
 public class SinglePlayerState extends BasicInvaderState {
-
     private Menu menu;
 
     private SinglePlayer singlePlayer;
@@ -56,6 +55,7 @@ public class SinglePlayerState extends BasicInvaderState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background,0,0);
+
         Color color;
         int highscore;
         if(singlePlayer.getPlayer().getHighScore() >= singlePlayer.getSpaceShip().getCurrentScore()){
@@ -65,6 +65,7 @@ public class SinglePlayerState extends BasicInvaderState {
             color = Color.green;
             highscore = singlePlayer.getSpaceShip().getCurrentScore();
         }
+
         uniFontData.drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Lives: " + singlePlayer.getSpaceShip().getLife(), Color.red);
         uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: "))/2,

@@ -8,33 +8,25 @@ import logic.environment.manager.file.SaveCustomization;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
+import main.Dimensions;
 
 import java.io.IOException;
 
 public class Menu {
-
-    //DIMENSION
-    private double maxWidth;
-    private double maxHeight;
-
     private Ranking ranking;
-
     private Customization customization;
     private FieldManager fieldManager;
     private SinglePlayer singlePlayer;
     private SpaceShip defaultShip;
     private Player player;
 
-    public Menu(double maxWidth, double maxHeight){
-        this.maxHeight = maxHeight;
-        this.maxWidth = maxWidth;
-        double shipSize = maxWidth / 20;
-
+    public Menu(){
         customization = new Customization();
         ranking = new Ranking();
 
-        Coordinate coordinate = new Coordinate((maxWidth/2 - shipSize /2),(maxHeight - shipSize));
-        defaultShip = new SpaceShip(coordinate, shipSize);
+        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH/2 - Dimensions.SHIP_SIZE/2),
+                (Dimensions.MAX_HEIGHT - Dimensions.SHIP_SIZE));
+        defaultShip = new SpaceShip(coordinate, Dimensions.SHIP_SIZE);
     }
 
     public void createRanking(){
@@ -57,13 +49,12 @@ public class Menu {
      * @return Segnala se aggiunta dell' acount é andata a buon fine
      */
     public boolean newAccount(String name, String password){
-
         if(AddAccount.newAccount(name,password)){
             this.player = new Player(name,defaultShip);
 
             customization.setCurrentShip("ship0");
 
-            fieldManager = new FieldManager(maxWidth, maxHeight);
+            fieldManager = new FieldManager();
             singlePlayer = new SinglePlayer(player, fieldManager);
             return true;
         }
@@ -71,7 +62,6 @@ public class Menu {
     }
 
     public boolean logIn(String name, String password){
-
         String [] components = Login.login(name, password);
 
         if(components != null){
@@ -80,7 +70,7 @@ public class Menu {
 
             customization.setCurrentShip(components[3]);
 
-            fieldManager = new FieldManager(maxWidth, maxHeight);
+            fieldManager = new FieldManager();
             singlePlayer = new SinglePlayer(player, fieldManager);
             return true;
         }
@@ -97,7 +87,7 @@ public class Menu {
      * Funzione necessaria per reinizializzare il sistema dopo un checkHighscore
      */
     public void restartGame() {
-        fieldManager = new FieldManager(maxWidth, maxHeight);
+        fieldManager = new FieldManager();
         singlePlayer = new SinglePlayer(player, fieldManager);
     }
 
@@ -113,9 +103,5 @@ public class Menu {
 
     public Customization getCustomization() {
         return customization;
-    }
-
-    public double getMaxWidth(){
-        return maxWidth;
     }
 }

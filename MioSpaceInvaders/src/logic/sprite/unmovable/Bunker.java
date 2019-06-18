@@ -11,7 +11,6 @@ import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Bunker {
-
     private double brickSize;
     private CopyOnWriteArrayList<Brick> bricks;
 
@@ -61,8 +60,8 @@ public class Bunker {
     /**
      * Iteriamo tutti i brick che costituiscono il bunker per attuare un check di collisioni con lo sprite passsato
      * come parametro
-     * @param sprite
-     * @return
+     *
+     * @param sprite: oggetto con cui controllare la collisione
      */
     public boolean checkBrickCollision(Sprite sprite) {
         for(Brick brick : bricks){

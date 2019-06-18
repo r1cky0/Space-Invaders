@@ -1,8 +1,6 @@
 package gui.states;
 
 import logic.environment.manager.file.ReadXmlFile;
-import logic.environment.manager.game.SinglePlayer;
-import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -23,10 +21,8 @@ public class GameOverStateMulti extends BasicInvaderState implements ComponentLi
     private UnicodeFont uniFontScore;
     private String score;
 
-    private Menu menu;
-
-    public GameOverStateMulti(Menu menu) {
-        this.menu = menu;
+    public GameOverStateMulti(String score) {
+        this.score = score;
     }
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -44,16 +40,17 @@ public class GameOverStateMulti extends BasicInvaderState implements ComponentLi
         uniFontScore = build(9 * gameContainer.getWidth() / 100f);
     }
 
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        score = "SCORE: " + menu.getSinglePlayer().getPlayer().getSpaceShip().getCurrentScore();
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
+        String title = "SCORE: " + score;
         gameOver.draw((gameContainer.getWidth() - gameOver.getWidth())/2f,
                 (gameContainer.getHeight() - gameOver.getHeight())/2f);
         homeButton.render(gameContainer, graphics);
-        uniFontScore.drawString((this.gameContainer.getWidth() - uniFontScore.getWidth(score))/2f,
-                7*this.gameContainer.getHeight()/100f, score);
+
+        uniFontScore.drawString((this.gameContainer.getWidth() - uniFontScore.getWidth(title))/2f,
+                7*this.gameContainer.getHeight()/100f, title);
     }
 
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i){
     }
 
     /**

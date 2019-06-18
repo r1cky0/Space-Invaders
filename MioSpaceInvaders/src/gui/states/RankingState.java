@@ -14,9 +14,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import java.util.*;
 
 public class RankingState extends BasicInvaderState implements ComponentListener {
-
     private StateBasedGame stateBasedGame;
-    private GameContainer gameContainer;
 
     private String title;
     private String nameString;
@@ -41,7 +39,6 @@ public class RankingState extends BasicInvaderState implements ComponentListener
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
         background = new Image(ReadXmlFile.read("defaultBackground"));
@@ -55,8 +52,9 @@ public class RankingState extends BasicInvaderState implements ComponentListener
 
         homeImage = new Image(ReadXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,7*gameContainer.getHeight()/100,
-                6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,this);
+        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
+                7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
+                this);
 
         title = "TOP 10 RANKING";
         nameString = "nickname";
@@ -69,7 +67,7 @@ public class RankingState extends BasicInvaderState implements ComponentListener
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background, 0, 0);
 
         int offset = 0;
@@ -104,8 +102,7 @@ public class RankingState extends BasicInvaderState implements ComponentListener
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
     }
 
     /**

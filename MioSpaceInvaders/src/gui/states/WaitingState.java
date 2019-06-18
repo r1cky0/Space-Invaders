@@ -12,11 +12,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 
 public class WaitingState extends BasicInvaderState{
-
-    private StateBasedGame stateBasedGame;
-    private GameContainer gameContainer;
-
-    private UnicodeFont uniFontTitle;
+        private UnicodeFont uniFontTitle;
     private String title;
 
     private Image background;
@@ -35,14 +31,14 @@ public class WaitingState extends BasicInvaderState{
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.gameContainer = gameContainer;
-        this.stateBasedGame = stateBasedGame;
         background = new Image(ReadXmlFile.read("defaultBackground"));
         uniFontTitle = build(5 * gameContainer.getWidth() / 100f);
         title = "WAITING FOR CONNECTION...";
+
         Image[] moving= {new Image(ReadXmlFile.read("defaultInvader")).getScaledCopy(20*gameContainer.getWidth()/100,
                 20*gameContainer.getHeight()/100), new Image(ReadXmlFile.read("defaultInvaderb")).
                 getScaledCopy(20*gameContainer.getWidth()/100,20*gameContainer.getHeight()/100)};
+
         movingAnimation = new Animation(moving, duration, true);
         connectionOpened = false;
     }
@@ -50,6 +46,7 @@ public class WaitingState extends BasicInvaderState{
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background, 0, 0);
+
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title)) / 2f,
                 8 * gameContainer.getHeight() / 100f, title);
         movingAnimation.draw((gameContainer.getWidth() - movingAnimation.getWidth())/2f,
@@ -71,8 +68,8 @@ public class WaitingState extends BasicInvaderState{
         }
 
         if(client.getGameState() == GameStates.START){
-            MultiplayerState.setClient(client);
             try {
+                stateBasedGame.addState(new MultiplayerState(client));
                 stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();

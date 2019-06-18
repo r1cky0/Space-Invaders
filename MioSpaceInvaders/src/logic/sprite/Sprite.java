@@ -3,7 +3,6 @@ package logic.sprite;
 import logic.service.Facade;
 
 public class Sprite extends Facade {
-
     private Coordinate coordinate;
     private double size;
 
@@ -18,6 +17,7 @@ public class Sprite extends Facade {
     }
 
     public void setCoordinate(Coordinate coordinate) {
+        super.setCoordinate(coordinate);
         this.coordinate = coordinate;
     }
 
