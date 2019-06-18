@@ -10,8 +10,6 @@ import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
-import network.server.Commands;
-import network.server.GameStates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,7 @@ public class SinglePlayer {
     private FieldManager fieldManager;
 
     private ThreadInvader threadInvader;
-    public boolean newThread;
+    private boolean newThread;
 
     public SinglePlayer(Player player, FieldManager fieldManager) {
         this.player = player;

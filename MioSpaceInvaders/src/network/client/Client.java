@@ -1,11 +1,9 @@
 package network.client;
 
 import logic.player.Player;
-import logic.sprite.dinamic.Invader;
 import network.data.Connection;
 import network.data.PacketHandler;
-import network.server.GameStates;
-import org.newdawn.slick.Game;
+import logic.environment.manager.game.GameStates;
 
 import java.io.IOException;
 import java.net.*;

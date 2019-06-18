@@ -2,6 +2,8 @@ package logic.environment.manager.game;
 
 import logic.environment.manager.field.FieldManager;
 import logic.environment.manager.field.MovingDirections;
+import logic.environment.manager.game.Commands;
+import logic.environment.manager.game.GameStates;
 import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
@@ -11,9 +13,7 @@ import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
-import logic.thread.ThreadUpdate;
-import network.server.Commands;
-import network.server.GameStates;
+import network.server.thread.ThreadUpdate;
 
 public class Multiplayer {
 
@@ -26,7 +26,7 @@ public class Multiplayer {
     private Team team;
 
     private ThreadInvader threadInvader;
-    public boolean newThread;
+    private boolean newThread;
 
     private ThreadUpdate threadUpdate;
 
@@ -60,12 +60,24 @@ public class Multiplayer {
             case SHOT:
                 fieldManager.shipShot(player.getSpaceShip());
                 break;
-            case EXIT:
-                team.removePlayer(player);
-                break;
             default:
                 break;
         }
+    }
+
+    public int checkPlayers(String[] infos){
+        try {
+            Integer.parseInt(infos[0]);
+        }catch (NumberFormatException err){
+            return -1;
+        }
+        Player player = team.getPlayers().get(Integer.parseInt(infos[0]));
+        if(Commands.valueOf(infos[1]) == Commands.EXIT){
+            int id = team.getPlayers().indexOf(player);
+            team.removePlayer(player);
+            return id;
+        }
+        return -1;
     }
 
     private void update() {

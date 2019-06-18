@@ -7,8 +7,8 @@ import logic.environment.manager.menu.Menu;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
-import network.server.Commands;
-import network.server.GameStates;
+import logic.environment.manager.game.Commands;
+import logic.environment.manager.game.GameStates;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -54,7 +54,7 @@ public class SinglePlayerState extends BasicInvaderState {
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background,0,0);
         Color color;
         int highscore;
@@ -92,7 +92,7 @@ public class SinglePlayerState extends BasicInvaderState {
         }
     }
 
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
         Input input = gameContainer.getInput();
 
         if(input.isKeyDown(Input.KEY_RIGHT)){

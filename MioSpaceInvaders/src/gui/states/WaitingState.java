@@ -4,15 +4,11 @@ import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import network.client.Client;
 import network.data.PacketHandler;
-import network.server.GameStates;
+import logic.environment.manager.game.GameStates;
 import org.newdawn.slick.*;
-import org.newdawn.slick.gui.AbstractComponent;
-import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-
-import java.awt.Font;
 
 
 public class WaitingState extends BasicInvaderState{
@@ -52,7 +48,7 @@ public class WaitingState extends BasicInvaderState{
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background, 0, 0);
         uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title)) / 2f,
                 8 * gameContainer.getHeight() / 100f, title);
@@ -61,7 +57,7 @@ public class WaitingState extends BasicInvaderState{
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         Input input = gameContainer.getInput();
 
         if(input.isKeyDown(Input.KEY_ESCAPE)){

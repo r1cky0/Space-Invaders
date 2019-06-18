@@ -1,4 +1,4 @@
-package logic.thread;
+package network.server.thread;
 
 import logic.environment.manager.game.Multiplayer;
 import logic.player.Player;

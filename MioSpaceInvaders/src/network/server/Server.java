@@ -1,5 +1,6 @@
 package network.server;
 
+import logic.environment.manager.game.GameStates;
 import logic.environment.manager.game.Multiplayer;
 import network.data.Connection;
 import network.data.PacketHandler;
@@ -20,14 +21,14 @@ public class Server implements Runnable {
     private AtomicBoolean running;
     private DatagramSocket socket;
     private PacketHandler handler;
-    private int maxPlayers = 2;
+    private int maxPlayers = 1;
     private boolean gameStarted;
 
     private Multiplayer multiplayer;
     //Arraylist connessioni al server da parte dei client
-    public List<Connection> clients = new CopyOnWriteArrayList<>();
+    private List<Connection> clients = new CopyOnWriteArrayList<>();
 
-    public Server(int port) {
+    Server(int port) {
         this.port = port;
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
@@ -60,6 +61,10 @@ public class Server implements Runnable {
                 socket.receive(packet);
                 if (gameStarted) {
                     multiplayer.execCommand(handler.process(packet));
+                    int id = multiplayer.checkPlayers(handler.process(packet));
+                    if(id != -1){
+                        removeConnection(id);
+                    }
                 }else{
                     addConnection(packet);
                 }
@@ -89,10 +94,17 @@ public class Server implements Runnable {
         }
     }
 
+    private void removeConnection(int id){
+        clients.remove(id);
+        if(clients.isEmpty()){
+            stop();
+        }
+    }
+
     /**
      * Invio dati ad un singolo client
      */
-    public void send(int id, String mex) {
+    private void send(int id, String mex) {
         Connection connection = clients.get(id);
         try {
             socket.send(handler.build(mex, connection));
@@ -106,7 +118,7 @@ public class Server implements Runnable {
      * Il server invia a tutti i client le informazioni sullo stato del gioco e sulla posizione degli
      * elementi per permettere ai client di renderizzarli.
      */
-    public void broadcastRenderInfos() {
+    private void broadcastRenderInfos() {
         Thread sender = new Thread(() -> {
             while (running.get()) {
                 for (Connection connection : clients) {
@@ -121,7 +133,7 @@ public class Server implements Runnable {
         sender.start();
     }
 
-    public void broadcast(String mex){
+    private void broadcast(String mex){
         for(Connection connection : clients) {
             try {
                 socket.send(handler.build(mex, connection));
@@ -131,7 +143,7 @@ public class Server implements Runnable {
         }
     }
 
-    public void stop(){
+    private void stop(){
         running.set(false);
     }
 
