@@ -108,7 +108,7 @@ public class SinglePlayerState extends BasicInvaderState {
             singlePlayer.execCommand(Commands.EXIT, delta);
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
-        singlePlayer.loop(delta);
+        singlePlayer.update(delta);
 
         //STATO GIOCO
         GameStates gameStates = singlePlayer.checkGameState();
@@ -120,7 +120,6 @@ public class SinglePlayerState extends BasicInvaderState {
             stateBasedGame.enterState(6, new FadeOutTransition(), new FadeInTransition());
         }
     }
-
 
     @Override
     public int getID() {

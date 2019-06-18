@@ -2,7 +2,7 @@ package logic.sprite;
 
 import logic.service.Facade;
 
-public abstract class Sprite extends Facade {
+public class Sprite extends Facade {
 
     private Coordinate coordinate;
     private double size;

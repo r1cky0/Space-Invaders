@@ -48,7 +48,7 @@ public class SinglePlayer {
         }
     }
 
-    public void loop(int delta) {
+    public void update(int delta) {
 
         for (Bullet bullet : fieldManager.getInvaderBullets()) {
             bullet.move(delta);

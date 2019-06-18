@@ -1,7 +1,5 @@
 package logic.player;
 
-import logic.player.Player;
-
 import java.util.ArrayList;
 
 public class Team {
@@ -22,6 +20,7 @@ public class Team {
     }
 
     public void calculateTeamCurrentScore(){
+        teamCurrentScore = 0;
         for(Player player : players){
             teamCurrentScore += player.getSpaceShip().getCurrentScore();
         }
@@ -38,6 +37,10 @@ public class Team {
         return false;
     }
 
+    public void removePlayer(Player player){
+        players.remove(player);
+    }
+
     public void addPlayer(Player player){
         players.add(player);
     }
@@ -46,12 +49,12 @@ public class Team {
         this.teamHighScore = teamHighScore;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
     public int getTeamHighScore() {
         return teamHighScore;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public int getTeamCurrentScore() {

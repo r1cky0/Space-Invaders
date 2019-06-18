@@ -23,10 +23,6 @@ public class ThreadInvader implements Runnable {
         thread.start();
     }
 
-    public void stop() {
-        running.set(false);
-    }
-
     public void run() {
         running.set(true);
         Random rand = new Random();
@@ -42,4 +38,9 @@ public class ThreadInvader implements Runnable {
             }
         }
     }
+
+    public void stop() {
+        running.set(false);
+    }
+
 }

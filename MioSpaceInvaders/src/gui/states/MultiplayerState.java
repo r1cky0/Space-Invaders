@@ -2,7 +2,12 @@ package gui.states;
 
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
+import logic.service.Facade;
+import logic.sprite.Coordinate;
+import logic.sprite.Sprite;
 import network.client.Client;
+import network.data.PacketHandler;
+import network.server.Commands;
 import network.server.GameStates;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -10,6 +15,8 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.ListIterator;
 
 public class MultiplayerState extends BasicInvaderState {
 
@@ -20,12 +27,15 @@ public class MultiplayerState extends BasicInvaderState {
     private double invaderSize;
     private double shipSize;
 
-    private ArrayList<String[]> invaderInfos;
-    private ArrayList<String[]> invaderBulletInfos;
-    private ArrayList<String[]> brickInfos;
-    private ArrayList<String[]> spaceShipInfos;
-    private ArrayList<String[]> spaceShipBulletInfos;
+    private ArrayList<Sprite> invaderInfos;
+    private ArrayList<Sprite> invaderBulletInfos;
+    private HashMap<Sprite, Integer> brickInfos;
+    private ArrayList<Sprite> spaceShipInfos;
+    private ArrayList<Sprite> spaceShipBulletInfos;
     private String scoreInfos;
+    private int life;
+    private PacketHandler handler;
+    private String message;
     private GameStates gameStates;
 
     private UnicodeFont uniFontData;
@@ -39,14 +49,16 @@ public class MultiplayerState extends BasicInvaderState {
 
     private Menu menu;
     private static Client client;
+    public boolean firstTime;
 
     public MultiplayerState(Menu menu) {
         this.menu = menu;
         invaderInfos = new ArrayList<>();
         invaderBulletInfos = new ArrayList<>();
-        brickInfos = new ArrayList<>();
+        brickInfos = new HashMap<>();
         spaceShipInfos = new ArrayList<>();
         spaceShipBulletInfos = new ArrayList<>();
+        handler = new PacketHandler();
 
         maxWidth = menu.getMaxWidth();
         shipSize = maxWidth / 20;
@@ -70,6 +82,7 @@ public class MultiplayerState extends BasicInvaderState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background = new Image(ReadXmlFile.read("defaultBackground"));
         uniFontData = build(3 * gameContainer.getWidth() / 100f);
+        firstTime = true;
     }
 
     public static void setClient(Client client){
@@ -80,36 +93,31 @@ public class MultiplayerState extends BasicInvaderState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.drawImage(background, 0, 0);
 
-        getString();
-
         uniFontData.drawString(85 * gameContainer.getWidth() / 100f, 2 * gameContainer.getHeight() / 100f,
-                "Lives: " + spaceShipInfos.get(client.getID())[2], Color.red);
+                "Lives: " + life, Color.red);
         uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: ")) / 2,
                 2 * gameContainer.getHeight() / 100f, "Score: " + scoreInfos, Color.white);
 
-        for (String[] string : invaderInfos) {
-            invaderImage.draw(Float.parseFloat(string[0]), Float.parseFloat(string[1]),
-                    (float) invaderSize, (float) invaderSize);
+        create();
+
+        for (Sprite sprite : invaderInfos) {
+            sprite.render(invaderImage);
         }
 
-        for (String[] string : invaderBulletInfos) {
-            bulletImage.draw(Float.parseFloat(string[0]), Float.parseFloat(string[1]),
-                    (float) bulletSize, (float) bulletSize);
+        for (Sprite sprite : invaderBulletInfos) {
+            sprite.render(bulletImage);
         }
 
-        for (String[] string : brickInfos) {
-            brickImages.get(4 - Integer.parseInt(string[2])).draw(Float.parseFloat(string[0]),
-                    Float.parseFloat(string[1]), (float) brickSize, (float) brickSize);
+        for (Sprite sprite : brickInfos.keySet()) {
+            sprite.render(brickImages.get(4 - brickInfos.get(sprite)));
         }
 
-        for (String[] string : spaceShipInfos) {
-            spaceShipImage.draw(Float.parseFloat(string[0]), Float.parseFloat(string[1]),
-                    (float) shipSize, (float) shipSize);
+        for (Sprite sprite : spaceShipInfos) {
+            sprite.render(spaceShipImage);
         }
 
-        for (String[] string : spaceShipBulletInfos) {
-            bulletImage.draw(Float.parseFloat(string[0]), Float.parseFloat(string[1]),
-                    (float) bulletSize, (float) bulletSize);
+        for (Sprite sprite : spaceShipBulletInfos) {
+            sprite.render(bulletImage);
         }
 
     }
@@ -117,41 +125,75 @@ public class MultiplayerState extends BasicInvaderState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
+        if(input.isKeyDown(Input.KEY_RIGHT)){
+            message = client.getID() + "\n" + Commands.MOVE_RIGHT.toString();
+            client.send(handler.build(message, client.getConnection()));
+        }
+        if(input.isKeyDown(Input.KEY_LEFT)){
+            message = client.getID() + "\n" + Commands.MOVE_LEFT.toString();
+            client.send(handler.build(message, client.getConnection()));
+        }
+        if(input.isKeyPressed(Input.KEY_SPACE)){
+            message = client.getID() + "\n" + Commands.SHOT.toString();
+            client.send(handler.build(message, client.getConnection()));
+        }
         if (input.isKeyDown(Input.KEY_ESCAPE)) {
+            message = client.getID() + "\n" + Commands.EXIT.toString();
+            client.send(handler.build(message, client.getConnection()));
             client.close();
             stateBasedGame.enterState(1, new FadeOutTransition(), new FadeInTransition());
         }
     }
 
-    private void getString(){
-        String []rcvdata = client.getRcvdata();
+    private void create(){
+        String[] rcvdata = client.getRcvdata();
 
-        for(String strings : rcvdata[0].split("\\t")) {
-            if(!strings.equals("")) {
-                invaderInfos.add(strings.split("_"));
+        invaderInfos.clear();
+        for (String strings : rcvdata[0].split("\\t")) {
+            if (!strings.equals("")) {
+                invaderInfos.add(new Sprite(new Coordinate(Float.parseFloat(strings.split("_")[0]),
+                        Float.parseFloat(strings.split("_")[1])), invaderSize));
             }
         }
 
-        for(String strings : rcvdata[1].split("\\t")) {
-            if(!strings.equals("")) {
-                invaderBulletInfos.add(strings.split("_"));
+        invaderBulletInfos.clear();
+        for (String strings : rcvdata[1].split("\\t")) {
+            if (!strings.equals("")) {
+                invaderBulletInfos.add(new Sprite(new Coordinate(Float.parseFloat(strings.split("_")[0]),
+                        Float.parseFloat(strings.split("_")[1])), bulletSize));
             }
         }
-        for(String strings : rcvdata[2].split("\\t")) {
-            if(!strings.equals("")) {
-                brickInfos.add(strings.split("_"));
+
+        brickInfos.clear();
+        for (String strings : rcvdata[2].split("\\t")) {
+            if (!strings.equals("")) {
+                brickInfos.put(new Sprite(new Coordinate(Float.parseFloat(strings.split("_")[0]),
+                                Float.parseFloat(strings.split("_")[1])), brickSize),
+                        Integer.parseInt(strings.split("_")[2]));
             }
         }
-        for(String strings : rcvdata[3].split("\\t")) {
-            if(!strings.equals("")) {
-                spaceShipInfos.add(strings.split("_"));
+
+        spaceShipInfos.clear();
+        int count = 0;
+        for (String strings : rcvdata[3].split("\\t")) {
+            if (!strings.equals("")) {
+                spaceShipInfos.add(new Sprite(new Coordinate(Float.parseFloat(strings.split("_")[0]),
+                        Float.parseFloat(strings.split("_")[1])), shipSize));
+                if (count == client.getID()) {
+                    life = Integer.parseInt(strings.split("_")[2]);
+                }
+                count++;
             }
         }
-        for(String strings : rcvdata[4].split("\\t")) {
-            if(!strings.equals("")) {
-                spaceShipBulletInfos.add(strings.split("_"));
+
+        spaceShipBulletInfos.clear();
+        for (String strings : rcvdata[4].split("\\t")) {
+            if (!strings.equals("")) {
+                spaceShipBulletInfos.add(new Sprite(new Coordinate(Float.parseFloat(strings.split("_")[0]),
+                        Float.parseFloat(strings.split("_")[1])), bulletSize));
             }
         }
+
         scoreInfos = rcvdata[5];
     }
 

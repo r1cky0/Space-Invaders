@@ -34,7 +34,6 @@ public class Client implements Runnable {
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
         initialization = true;
-
         ID = -1; //fintanto che il server non comunica un id al listener è settato a -1
         try {
             //aggiunta connessione verso il server
@@ -49,7 +48,9 @@ public class Client implements Runnable {
         socket = new DatagramSocket(8888);
         listener = new Thread(this);
         listener.start();
-        send(handler.build(player.getName(), connection));
+        while(ID == -1) {
+            send(handler.build(player.getName(), connection));
+        }
     }
 
     /**
@@ -98,12 +99,16 @@ public class Client implements Runnable {
      * Chiusura connessione del listener
      */
     public void close() {
-        socket.close();
         running.set(false);
+        socket.close();
     }
 
     public GameStates getGameState(){
         return gameState;
+    }
+
+    public boolean getInitialization(){
+        return initialization;
     }
 
     public String[] getRcvdata(){
@@ -112,6 +117,10 @@ public class Client implements Runnable {
 
     public int getID(){
         return ID;
+    }
+
+    public Connection getConnection(){
+        return connection;
     }
 
 }

@@ -6,7 +6,7 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public class Facade {
+public abstract class Facade {
 
     private Shape shape;
 

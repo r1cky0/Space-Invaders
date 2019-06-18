@@ -7,25 +7,28 @@ import logic.player.Team;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
-import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
+import logic.thread.ThreadUpdate;
 import network.server.Commands;
 import network.server.GameStates;
 
 public class Multiplayer {
+
     //DIMENSION
     private final double maxWidth = 1000;
     private final double maxHeight = 800;
-    private final int delta = 30;
+    private final int delta = 1;
 
     private FieldManager fieldManager;
     private Team team;
 
     private ThreadInvader threadInvader;
     public boolean newThread;
+
+    private ThreadUpdate threadUpdate;
 
     public Multiplayer(){
         team = new Team();
@@ -41,6 +44,11 @@ public class Multiplayer {
     }
 
     public void execCommand(String[] infos){
+        try {
+            Integer.parseInt(infos[0]);
+        }catch (NumberFormatException err){
+            return;
+        }
         Player player = team.getPlayers().get(Integer.parseInt(infos[0]));
         switch (Commands.valueOf(infos[1])) {
             case MOVE_LEFT:
@@ -52,37 +60,23 @@ public class Multiplayer {
             case SHOT:
                 fieldManager.shipShot(player.getSpaceShip());
                 break;
+            case EXIT:
+                team.removePlayer(player);
+                break;
             default:
                 break;
         }
     }
 
-    private void loop() {
-        Thread thread = new Thread(() -> {
-            for (Bullet bullet : fieldManager.getInvaderBullets()) {
-                bullet.move(delta);
-            }
-            for (Player player : team.getPlayers()) {
-                if (player.getSpaceShip().getShipBullet() != null) {
-                    player.getSpaceShip().getShipBullet().move(delta);
-                    fieldManager.checkSpaceShipShotCollision(player.getSpaceShip());
-                }
-                fieldManager.checkInvaderShotCollision(player.getSpaceShip());
-            }
-            threadManager();
-            checkGameState();
-            try {
-                Thread.sleep(delta);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        thread.start();
+    private void update() {
+        threadUpdate = new ThreadUpdate(this);
+        threadUpdate.start();
     }
 
-    private GameStates checkGameState(){
+    public GameStates checkGameState(){
         if (fieldManager.isGameOver()) {
             threadInvader.stop();
+            threadUpdate.stop();
 
             if (team.checkHighscore()) {
                 return GameStates.NEWHIGHSCORE;
@@ -92,7 +86,7 @@ public class Multiplayer {
         return null;
     }
 
-    private void threadManager(){
+    public void threadInvaderManager(){
 
         if (!newThread) {
             threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
@@ -101,6 +95,7 @@ public class Multiplayer {
         }
         if (fieldManager.isNewLevel()) {
             threadInvader.stop();
+            team.incrementLife();
             fieldManager.setNewLevel(false);
             newThread = false;
         }
@@ -108,7 +103,7 @@ public class Multiplayer {
 
     public void startGame(){
         fieldManager = new FieldManager(maxWidth, maxHeight);
-        loop();
+        update();
     }
 
     public String getInfos(){
@@ -147,5 +142,17 @@ public class Multiplayer {
         infos += team.getTeamCurrentScore() + "\n";
 
         return infos;
+    }
+
+    public FieldManager getFieldManager(){
+        return fieldManager;
+    }
+
+    public Team getTeam(){
+        return team;
+    }
+
+    public int getDelta(){
+        return delta;
     }
 }

@@ -41,7 +41,7 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
         this.stateBasedGame = stateBasedGame;
         background = new Image(ReadXmlFile.read("defaultBackground"));
         uniFontTitle = build(5 * gameContainer.getWidth() / 100f);
-        title = "WAITING FOR OTHER PLAYERS...";
+        title = "WAITING FOR CONNECTION...";
         Image[] moving= {new Image(ReadXmlFile.read("defaultInvader")).getScaledCopy(20*gameContainer.getWidth()/100,
                 20*gameContainer.getHeight()/100), new Image(ReadXmlFile.read("defaultInvaderb")).
                 getScaledCopy(20*gameContainer.getWidth()/100,20*gameContainer.getHeight()/100)};
@@ -75,6 +75,8 @@ public class WaitingState extends BasicInvaderState implements ComponentListener
         if(client.getGameState() == GameStates.START){
             MultiplayerState.setClient(client);
             stateBasedGame.enterState(9, new FadeOutTransition(), new FadeInTransition());
+        }else if(!client.getInitialization()){
+            title = "WAITING FOR OTHER PLAYERS...";
         }
     }
 
