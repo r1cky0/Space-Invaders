@@ -83,15 +83,8 @@ public class Server implements Runnable {
             if (clients.size() == maxPlayers) {
                 multiplayer.startGame();
                 gameStarted = true;
-                broadcast();
-            }
-        }
-    }
-
-    public void removeConnection(InetAddress address){
-        for(Connection connection : clients) {
-            if (connection.getDestAddress() == address) {
-                clients.remove(connection);
+                broadcast(GameStates.START.toString());
+                broadcastRenderInfos();
             }
         }
     }
@@ -113,7 +106,7 @@ public class Server implements Runnable {
      * Il server invia a tutti i client le informazioni sullo stato del gioco e sulla posizione degli
      * elementi per permettere ai client di renderizzarli.
      */
-    public void broadcast() {
+    public void broadcastRenderInfos() {
         Thread sender = new Thread(() -> {
             while (running.get()) {
                 for (Connection connection : clients) {
@@ -123,10 +116,19 @@ public class Server implements Runnable {
                         e.printStackTrace();
                     }
                 }
-                stop();
             }
         });
         sender.start();
+    }
+
+    public void broadcast(String mex){
+        for(Connection connection : clients) {
+            try {
+                socket.send(handler.build(mex, connection));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void stop(){

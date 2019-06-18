@@ -4,6 +4,9 @@ import logic.player.Player;
 import logic.sprite.dinamic.Invader;
 import network.data.Connection;
 import network.data.PacketHandler;
+import network.server.GameStates;
+import org.newdawn.slick.Game;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -20,17 +23,18 @@ public class Client implements Runnable {
     private int ID;
     private boolean initialization;
     private Player player;
-    //INFORMAZIONI POSIZIONE SHIP, AZIONE SPARO
-    private byte[] snddata;
+
+    private String[] rcvdata;
+    private GameStates gameState;
 
     private Thread listener;
-
 
     public Client(Player player, String destAddress, int destPort) {
         this.player = player;
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
         initialization = true;
+
         ID = -1; //fintanto che il server non comunica un id al listener è settato a -1
         try {
             //aggiunta connessione verso il server
@@ -75,11 +79,13 @@ public class Client implements Runnable {
                 if(initialization){
                     ID = Integer.parseInt(handler.process(packet)[0]);
                     initialization = false;
-                }else {
+                }else if(gameState != GameStates.START) {
+                    gameState = GameStates.valueOf(handler.process(packet)[0]);
+                }
+                else {
                     //Packet contiene dati ricevuti
                     //che client deve renderizzare
-                    String []prova = handler.process(packet);
-                    for (String stringa : prova) System.out.println(stringa);
+                    rcvdata = handler.process(packet);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -88,17 +94,24 @@ public class Client implements Runnable {
         }
     }
 
-    public void setData(byte[] data, int length){
-        snddata = new byte[length];
-        this.snddata = data;
-    }
-
     /**
      * Chiusura connessione del listener
      */
     public void close() {
         socket.close();
         running.set(false);
+    }
+
+    public GameStates getGameState(){
+        return gameState;
+    }
+
+    public String[] getRcvdata(){
+        return rcvdata;
+    }
+
+    public int getID(){
+        return ID;
     }
 
 }

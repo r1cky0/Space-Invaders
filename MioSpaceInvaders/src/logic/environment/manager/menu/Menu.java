@@ -14,8 +14,8 @@ import java.io.IOException;
 public class Menu {
 
     //DIMENSION
-    private double maxHeight;
     private double maxWidth;
+    private double maxHeight;
 
     private Ranking ranking;
 
@@ -113,5 +113,13 @@ public class Menu {
 
     public Customization getCustomization() {
         return customization;
+    }
+
+    public double getMaxWidth(){
+        return maxWidth;
+    }
+
+    public double getMaxHeight(){
+        return maxHeight;
     }
 }

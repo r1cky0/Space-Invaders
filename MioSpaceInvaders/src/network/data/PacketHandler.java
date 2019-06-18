@@ -13,7 +13,7 @@ public class PacketHandler{
         String[] infos = data.split("\\r");
 
         //split informazioni
-        return infos[0].split("\\t");
+        return infos[0].split("\\n");
     }
 
     public DatagramPacket build(String data, Connection connection){

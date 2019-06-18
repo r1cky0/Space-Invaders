@@ -35,7 +35,6 @@ public class SinglePlayerState extends BasicInvaderState {
         try {
             invaderImage = new Image(ReadXmlFile.read("defaultInvader"));
             bulletImage = new Image(ReadXmlFile.read("defaultBullet"));
-
             for(int i=0; i<4; i++){
                 brickImages.add(new Image(ReadXmlFile.read("brick"+i)));
             }

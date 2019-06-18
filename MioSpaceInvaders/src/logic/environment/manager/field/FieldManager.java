@@ -19,8 +19,8 @@ public class FieldManager {
 
     //DIMENSIONS
     private final double MIN_WIDTH = 0.0;
-    private double maxHeight;
     private double maxWidth;
+    private double maxHeight;
     private double bulletSize;
     private double brickSize;
     private double invaderSize;
@@ -45,7 +45,6 @@ public class FieldManager {
 
         bulletSize = maxWidth / 60;
         brickSize = maxWidth / 40;
-
         invaderSize = maxWidth / 20;
 
         invadersCreator = new InvadersCreator(maxHeight,maxWidth,invaderSize);

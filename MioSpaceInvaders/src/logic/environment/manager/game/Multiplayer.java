@@ -57,22 +57,30 @@ public class Multiplayer {
         }
     }
 
-    public void loop() {
-
-        for (Bullet bullet : fieldManager.getInvaderBullets()) {
-            bullet.move(delta);
-        }
-        for(Player player : team.getPlayers()) {
-            if (player.getSpaceShip().getShipBullet() != null) {
-                player.getSpaceShip().getShipBullet().move(delta);
-                fieldManager.checkSpaceShipShotCollision(player.getSpaceShip());
+    private void loop() {
+        Thread thread = new Thread(() -> {
+            for (Bullet bullet : fieldManager.getInvaderBullets()) {
+                bullet.move(delta);
             }
-            fieldManager.checkInvaderShotCollision(player.getSpaceShip());
-        }
-        threadManager();
+            for (Player player : team.getPlayers()) {
+                if (player.getSpaceShip().getShipBullet() != null) {
+                    player.getSpaceShip().getShipBullet().move(delta);
+                    fieldManager.checkSpaceShipShotCollision(player.getSpaceShip());
+                }
+                fieldManager.checkInvaderShotCollision(player.getSpaceShip());
+            }
+            threadManager();
+            checkGameState();
+            try {
+                Thread.sleep(delta);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
-    public GameStates checkGameState(){
+    private GameStates checkGameState(){
         if (fieldManager.isGameOver()) {
             threadInvader.stop();
 
@@ -100,6 +108,7 @@ public class Multiplayer {
 
     public void startGame(){
         fieldManager = new FieldManager(maxWidth, maxHeight);
+        loop();
     }
 
     public String getInfos(){
@@ -123,7 +132,8 @@ public class Multiplayer {
         infos += "\n";
 
         for(Player player : team.getPlayers()){
-            infos += player.getSpaceShip().getX() + "_" + player.getSpaceShip().getLife() + "\t";
+            infos += player.getSpaceShip().getX() + "_" + player.getSpaceShip().getY() + "_" +
+                    player.getSpaceShip().getLife() + "\t";
         }
         infos += "\n";
 
