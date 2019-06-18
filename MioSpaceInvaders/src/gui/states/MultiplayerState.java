@@ -131,27 +131,27 @@ public class MultiplayerState extends BasicInvaderState {
                 invaderInfos.add(strings.split("_"));
             }
         }
-        
-//        for(String strings : rcvdata[1].split("\\t")) {
-//            if(!strings.equals("")) {
-//                invaderBulletInfos.add(strings.split("_"));
-//            }
-//        }
-//        for(String strings : rcvdata[2].split("\\t")) {
-//            if(!strings.equals("")) {
-//                brickInfos.add(strings.split("_"));
-//            }
-//        }
-//        for(String strings : rcvdata[3].split("\\t")) {
-//            if(!strings.equals("")) {
-//                spaceShipInfos.add(strings.split("_"));
-//            }
-//        }
-//        for(String strings : rcvdata[4].split("\\t")) {
-//            if(!strings.equals("")) {
-//                spaceShipBulletInfos.add(strings.split("_"));
-//            }
-//        }
+
+        for(String strings : rcvdata[1].split("\\t")) {
+            if(!strings.equals("")) {
+                invaderBulletInfos.add(strings.split("_"));
+            }
+        }
+        for(String strings : rcvdata[2].split("\\t")) {
+            if(!strings.equals("")) {
+                brickInfos.add(strings.split("_"));
+            }
+        }
+        for(String strings : rcvdata[3].split("\\t")) {
+            if(!strings.equals("")) {
+                spaceShipInfos.add(strings.split("_"));
+            }
+        }
+        for(String strings : rcvdata[4].split("\\t")) {
+            if(!strings.equals("")) {
+                spaceShipBulletInfos.add(strings.split("_"));
+            }
+        }
         scoreInfos = rcvdata[5];
     }
 
