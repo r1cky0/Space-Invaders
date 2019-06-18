@@ -118,8 +118,4 @@ public class Menu {
     public double getMaxWidth(){
         return maxWidth;
     }
-
-    public double getMaxHeight(){
-        return maxHeight;
-    }
 }
