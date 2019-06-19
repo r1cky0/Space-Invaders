@@ -28,7 +28,7 @@ public class Server implements Runnable {
     private AtomicBoolean runningListener;
 
     private int port;
-    private int maxPlayers = 1;
+    private int maxPlayers = 2;
 
     Server(int port) {
         this.port = port;
@@ -87,9 +87,9 @@ public class Server implements Runnable {
                 }
             }
             clients.add(new Connection(packet.getAddress(), packet.getPort()));
-            multiplayer.init(handler.process(packet));
-            int id = clients.size() - 1;
-            send(id, Integer.toString(id)); //INVIO AL CLIENT IL SUO ID = POSIZIONE NELL'ARRAYLIST DI CONNESSIONI
+            int ID = clients.size() - 1;
+            multiplayer.init(ID, handler.process(packet));
+            send(ID, Integer.toString(ID)); //INVIO AL CLIENT IL SUO ID = POSIZIONE NELL'ARRAYLIST DI CONNESSIONI
             if (clients.size() == maxPlayers) {
                 broadcast(GameStates.START.toString());
                 try {

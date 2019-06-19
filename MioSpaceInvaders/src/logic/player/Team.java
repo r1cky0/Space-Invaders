@@ -1,27 +1,31 @@
 package logic.player;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.HashMap;
 
 public class Team {
-    private CopyOnWriteArrayList<Player> players;
+    private HashMap<Integer, Player> players;
     private int teamCurrentScore;
 
     public Team(){
-        players = new CopyOnWriteArrayList<>();
+        players = new HashMap<>();
         teamCurrentScore = 0;
     }
 
     public void incrementLife(){
-        for(Player player : players){
+        for(Player player : players.values()){
             player.getSpaceShip().incrementLife();
         }
     }
 
     public void calculateTeamCurrentScore(){
         teamCurrentScore = 0;
-        for(Player player : players){
+        for(Player player : players.values()){
             teamCurrentScore += player.getSpaceShip().getCurrentScore();
         }
+    }
+
+    public void removePlayer(int ID){
+        players.remove(ID);
     }
 
     public void removePlayer(Player player){
@@ -33,11 +37,11 @@ public class Team {
         teamCurrentScore = 0;
     }
 
-    public void addPlayer(Player player){
-        players.add(player);
+    public void addPlayer(int ID, Player player){
+        players.put(ID, player);
     }
 
-    public CopyOnWriteArrayList<Player> getPlayers() {
+    public HashMap<Integer, Player> getPlayers() {
         return players;
     }
 

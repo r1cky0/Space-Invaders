@@ -23,7 +23,7 @@ public class Multiplayer {
     private boolean newThread;
     private ThreadUpdate threadUpdate;
 
-    private static int DELTA = 1;
+    private static int DELTA = 10;
 
     public Multiplayer(){
         team = new Team();
@@ -31,20 +31,21 @@ public class Multiplayer {
         gameStates = GameStates.WAITING;
     }
 
-    public void init(String[] name){
+    public void init(int ID, String[] name){
         double shipSize = Dimensions.MAX_WIDTH / 20;
         Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - shipSize / 2), (Dimensions.MAX_HEIGHT - shipSize));
         SpaceShip defaultShip = new SpaceShip(coordinate, shipSize);
-        team.addPlayer(new Player(name[0], defaultShip));
+        team.addPlayer(ID, new Player(name[0], defaultShip));
     }
 
     public int execCommand(String[] infos){
+        int ID;
         try {
-            Integer.parseInt(infos[0]);
+             ID = Integer.parseInt(infos[0]);
         }catch (NumberFormatException err){
             return -1;
         }
-        Player player = team.getPlayers().get(Integer.parseInt(infos[0]));
+        Player player = team.getPlayers().get(ID);
         switch (Commands.valueOf(infos[1])) {
             case MOVE_LEFT:
                 fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT, DELTA);
@@ -56,9 +57,8 @@ public class Multiplayer {
                 fieldManager.shipShot(player.getSpaceShip());
                 break;
             case EXIT:
-                int id = team.getPlayers().indexOf(player);
-                team.removePlayer(player);
-                return id;
+                team.removePlayer(ID);
+                return ID;
         }
         return -1;
     }
@@ -120,13 +120,13 @@ public class Multiplayer {
         }
         infos += "\n";
 
-        for(Player player : team.getPlayers()){
+        for(Player player : team.getPlayers().values()){
             infos += player.getSpaceShip().getX() + "_" + player.getSpaceShip().getY() + "_" +
                     player.getSpaceShip().getLife() + "\t";
         }
         infos += "\n";
 
-        for(Player player : team.getPlayers()){
+        for(Player player : team.getPlayers().values()){
             if(player.getSpaceShipBullet() != null){
                 infos += player.getSpaceShipBullet().getX() + "_" + player.getSpaceShipBullet().getY() + "\t";
             }

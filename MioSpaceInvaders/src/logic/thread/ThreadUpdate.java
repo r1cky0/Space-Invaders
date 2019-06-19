@@ -26,7 +26,7 @@ public class ThreadUpdate implements Runnable{
             for (InvaderBullet bullet : multiplayer.getFieldManager().getInvaderBullets()) {
                 bullet.move(multiplayer.getDelta());
             }
-            for (Player player : multiplayer.getTeam().getPlayers()) {
+            for (Player player : multiplayer.getTeam().getPlayers().values()) {
                 if (player.getSpaceShip().getShipBullet() != null) {
                     player.getSpaceShip().getShipBullet().move(multiplayer.getDelta());
                     multiplayer.getFieldManager().checkSpaceShipShotCollision(player.getSpaceShip());
