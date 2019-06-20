@@ -18,6 +18,7 @@ import logic.thread.ThreadUpdate;
 import org.newdawn.slick.util.pathfinding.navmesh.Space;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Multiplayer {
     private FieldManager fieldManager;
@@ -125,15 +126,15 @@ public class Multiplayer {
         }
         infos += "\n";
 
-        for(Player player : team.getPlayers().values()){
-            infos += player.getSpaceShip().getX() + "_" + player.getSpaceShip().getY() + "_" +
-                    player.getSpaceShip().getLife() + "\t";
+        for(Integer ID : getPlayers().keySet()){
+            infos += ID + "_" + getSpaceShip(ID).getX() + "_" + getSpaceShip(ID).getY() + "_" +
+                    getSpaceShip(ID).getLife() + "\t";
         }
         infos += "\n";
 
-        for(Player player : team.getPlayers().values()){
-            if(player.getSpaceShipBullet() != null){
-                infos += player.getSpaceShipBullet().getX() + "_" + player.getSpaceShipBullet().getY() + "\t";
+        for(Integer ID : getPlayers().keySet()){
+            if(getSpaceShipBullet(ID) != null){
+                infos += getSpaceShipBullet(ID).getX() + "_" + getSpaceShipBullet(ID).getY() + "\t";
             }
         }
         infos += "\n";
@@ -155,7 +156,7 @@ public class Multiplayer {
         return team;
     }
 
-    public HashMap<Integer, Player> getPlayers(){
+    public ConcurrentHashMap<Integer, Player> getPlayers(){
         return team.getPlayers();
     }
 

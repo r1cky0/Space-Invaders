@@ -5,7 +5,6 @@ import logic.environment.manager.field.MovingDirections;
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.game.ShipManager;
 import logic.sprite.Coordinate;
-import logic.sprite.Sprite;
 import logic.sprite.dinamic.SpaceShip;
 import main.Dimension;
 import network.client.Client;
@@ -18,8 +17,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 public class MultiplayerState extends BasicInvaderState {
     private GameStates gameStates;
@@ -28,8 +25,9 @@ public class MultiplayerState extends BasicInvaderState {
 
     private SpriteDrawer spriteDrawer;
     private ShipManager shipManager;
-    private String scoreInfos;
+    private String score;
     private int life;
+    private boolean checkIsDead;
 
     private Client client;
     private PacketHandler handler;
@@ -79,7 +77,7 @@ public class MultiplayerState extends BasicInvaderState {
         uniFontData.drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Lives: " + life, Color.red);
         uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
-                "Score: " + scoreInfos, Color.white);
+                "Score: " + score, Color.white);
 
         String[] rcvdata = client.getRcvdata();
         if(rcvdata != null) {
@@ -113,7 +111,7 @@ public class MultiplayerState extends BasicInvaderState {
             message = client.getID() + "\n" + Commands.EXIT.toString();
             client.send(handler.build(message, client.getConnection()));
             try {
-                stateBasedGame.addState(new GameOverStateMulti(scoreInfos));
+                stateBasedGame.addState(new GameOverStateMulti(score));
                 stateBasedGame.getState(IDStates.GAMEOVERMULTI_STATE).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
@@ -121,6 +119,7 @@ public class MultiplayerState extends BasicInvaderState {
             stateBasedGame.enterState(IDStates.GAMEOVERMULTI_STATE, new FadeOutTransition(), new FadeInTransition());
             client.close();
         }
+        checkIsDead = true;
     }
 
     private void create(String[] rcvdata) {
@@ -147,15 +146,16 @@ public class MultiplayerState extends BasicInvaderState {
                 }
             }
         }
-        int count = 0;
         for (String strings : rcvdata[4].split("\\t")) {
             if (!strings.equals("")) {
-                spriteDrawer.render(spaceShipImage, Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1]), Dimension.SHIP_WIDTH, Dimension.SHIP_HEIGHT);
-                if (count == client.getID()) {
-                    life = Integer.parseInt(strings.split("_")[2]);
+                spriteDrawer.render(spaceShipImage, Float.parseFloat(strings.split("_")[1]),
+                        Float.parseFloat(strings.split("_")[2]), Dimension.SHIP_WIDTH, Dimension.SHIP_HEIGHT);
+                if (client.getID() == Integer.parseInt(strings.split("_")[0])) {
+                    life = Integer.parseInt(strings.split("_")[3]);
+                    checkIsDead = false;
+                }else if(checkIsDead){
+                    life = 0;
                 }
-                count++;
             }
         }
         for (String strings : rcvdata[5].split("\\t")) {
@@ -164,7 +164,7 @@ public class MultiplayerState extends BasicInvaderState {
                         Float.parseFloat(strings.split("_")[1]), Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT);
             }
         }
-        scoreInfos = rcvdata[6];
+        score = rcvdata[6];
     }
 
     @Override

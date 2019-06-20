@@ -1,13 +1,14 @@
 package logic.player;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Team {
-    private HashMap<Integer, Player> players;
+    private ConcurrentHashMap<Integer, Player> players;
     private int teamCurrentScore;
 
     public Team(){
-        players = new HashMap<>();
+        players = new ConcurrentHashMap<>();
         teamCurrentScore = 0;
     }
 
@@ -41,7 +42,7 @@ public class Team {
         return teamCurrentScore;
     }
 
-    public HashMap<Integer, Player> getPlayers() {
+    public ConcurrentHashMap<Integer, Player> getPlayers() {
         return players;
     }
 
