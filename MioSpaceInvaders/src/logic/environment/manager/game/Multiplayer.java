@@ -9,11 +9,15 @@ import logic.sprite.Sprite;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.InvaderBullet;
+import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
 import main.Dimension;
 import logic.thread.ThreadUpdate;
+import org.newdawn.slick.util.pathfinding.navmesh.Space;
+
+import java.util.HashMap;
 
 public class Multiplayer {
     private FieldManager fieldManager;
@@ -24,7 +28,7 @@ public class Multiplayer {
     private boolean newThread;
     private ThreadUpdate threadUpdate;
 
-    private static int DELTA = 10;
+    private static int DELTA = 1;
 
     public Multiplayer(){
         team = new Team();
@@ -42,24 +46,23 @@ public class Multiplayer {
     public int execCommand(String[] infos){
         int ID;
         try {
-             ID = Integer.parseInt(infos[0]);
-        }catch (NumberFormatException err){
+            ID = Integer.parseInt(infos[0]);
+
+            Player player = team.getPlayers().get(ID);
+            switch (Commands.valueOf(infos[1])) {
+                case MOVE_LEFT:
+                case MOVE_RIGHT:
+                    player.getSpaceShip().setX(Double.parseDouble(infos[2]));
+                    break;
+                case SHOT:
+                    fieldManager.shipShot(player.getSpaceShip());
+                    break;
+                case EXIT:
+                    team.removePlayer(ID);
+                    return ID;
+            }
+        }catch (RuntimeException err){
             return -1;
-        }
-        Player player = team.getPlayers().get(ID);
-        switch (Commands.valueOf(infos[1])) {
-            case MOVE_LEFT:
-                fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT, DELTA);
-                break;
-            case MOVE_RIGHT:
-                fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.RIGHT, DELTA);
-                break;
-            case SHOT:
-                fieldManager.shipShot(player.getSpaceShip());
-                break;
-            case EXIT:
-                team.removePlayer(ID);
-                return ID;
         }
         return -1;
     }
@@ -93,6 +96,7 @@ public class Multiplayer {
     public void stopGame(){
         threadInvader.stop();
         threadUpdate.stop();
+        gameStates = GameStates.WAITING;
         team.clear();
     }
 
@@ -104,8 +108,7 @@ public class Multiplayer {
 
         String infos = gameStates.toString() + "\n";
 
-        for(Sprite sprite : fieldManager.getInvaders()){
-            Invader invader = (Invader) sprite;
+        for(Invader invader : fieldManager.getInvaders()){
             infos += invader.getX() + "_" + invader.getY() + "\t";
         }
         infos += "\n";
@@ -135,7 +138,7 @@ public class Multiplayer {
         }
         infos += "\n";
 
-        infos += team.getTeamCurrentScore() + "\n";
+        infos += team.getTeamCurrentScore();
 
         return infos;
     }
@@ -150,6 +153,18 @@ public class Multiplayer {
 
     public Team getTeam(){
         return team;
+    }
+
+    public HashMap<Integer, Player> getPlayers(){
+        return team.getPlayers();
+    }
+
+    public SpaceShip getSpaceShip(int ID){
+        return getPlayers().get(ID).getSpaceShip();
+    }
+
+    public SpaceShipBullet getSpaceShipBullet(int ID){
+        return getSpaceShip(ID).getShipBullet();
     }
 
     public int getDelta(){

@@ -28,7 +28,7 @@ public class Server implements Runnable {
     private AtomicBoolean runningListener;
 
     private int port;
-    private int maxPlayers = 2;
+    private int maxPlayers = 1;
 
     Server(int port) {
         this.port = port;
@@ -62,14 +62,12 @@ public class Server implements Runnable {
             DatagramPacket packet = new DatagramPacket(rcvdata, rcvdata.length);
             try {
                 socket.receive(packet);
-                if (multiplayer.getGameStates() == GameStates.START) {
+                if (multiplayer.getGameStates() != GameStates.WAITING) {
                     int id = multiplayer.execCommand(handler.process(packet));
                     if(id != -1){
                         removeConnection(id);
                     }
-                }else if(multiplayer.getGameStates() == GameStates.GAMEOVER){
-                    clients.clear();
-                }else if(multiplayer.getGameStates() == GameStates.WAITING){
+                }else{
                     addConnection(packet);
                 }
                 checkEmptyList();
@@ -108,7 +106,6 @@ public class Server implements Runnable {
         if(clients.isEmpty()){
             multiplayer.stopGame();
             sender.interrupt();
-            multiplayer.setGameStates(GameStates.WAITING);
         }
     }
 

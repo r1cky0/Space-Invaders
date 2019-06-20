@@ -124,12 +124,12 @@ public class FieldManager {
      * brick) e poi rispetto agli invaders. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
      * fine schermata(y minore)
      */
-    public void checkSpaceShipShotCollision(SpaceShip spaceShip) {
+    public boolean checkSpaceShipShotCollision(SpaceShip spaceShip) {
         for (Bunker bunker : bunkers) {
             if (bunker.checkBrickCollision(spaceShip.getShipBullet())) {
                 spaceShip.setShipShot(false);
                 spaceShip.setShipBullet(null);
-                return;
+                return true;
             }
         }
         for(Invader invader : invaders){
@@ -141,13 +141,14 @@ public class FieldManager {
                 if (invaders.isEmpty()) {
                     nextLevel(spaceShip);
                 }
-                return;
+                return true;
             }
         }
         if (spaceShip.getShipBullet().getY() <= 0) {
             spaceShip.setShipShot(false);
             spaceShip.setShipBullet(null);
         }
+        return false;
     }
 
     /**

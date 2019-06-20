@@ -26,7 +26,7 @@ public class SpaceShip extends Sprite {
         shipBullet = null;
         shipShot = false;
         currentScore = 0;
-        life = 3;
+        life = 1;
     }
 
     public void moveLeft(int delta) {

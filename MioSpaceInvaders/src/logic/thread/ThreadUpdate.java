@@ -26,20 +26,21 @@ public class ThreadUpdate implements Runnable{
             for (InvaderBullet bullet : multiplayer.getFieldManager().getInvaderBullets()) {
                 bullet.move(multiplayer.getDelta());
             }
-            for (Player player : multiplayer.getTeam().getPlayers().values()) {
-                if (player.getSpaceShip().getShipBullet() != null) {
-                    player.getSpaceShip().getShipBullet().move(multiplayer.getDelta());
-                    multiplayer.getFieldManager().checkSpaceShipShotCollision(player.getSpaceShip());
+            for (int ID : multiplayer.getPlayers().keySet()) {
+                if (multiplayer.getSpaceShipBullet(ID) != null) {
+                    multiplayer.getSpaceShipBullet(ID).move(multiplayer.getDelta());
+                    if(multiplayer.getFieldManager().checkSpaceShipShotCollision(multiplayer.getSpaceShip(ID))){
+                        multiplayer.getTeam().calculateTeamCurrentScore();
+                    }
                 }
-                multiplayer.getFieldManager().checkInvaderShotCollision(player.getSpaceShip());
-                if(player.getSpaceShip().getLife() == 0){
-                    multiplayer.getTeam().removePlayer(player);
+                multiplayer.getFieldManager().checkInvaderShotCollision(multiplayer.getSpaceShip(ID));
+                if(multiplayer.getSpaceShip(ID).getLife() == 0){
+                    multiplayer.getTeam().removePlayer(ID);
                 }
             }
-            if(multiplayer.getTeam().getPlayers().isEmpty() || multiplayer.getFieldManager().isEndReached()){
+            if(multiplayer.getPlayers().isEmpty() || multiplayer.getFieldManager().isEndReached()){
                 multiplayer.setGameStates(GameStates.GAMEOVER);
             }
-            multiplayer.getTeam().calculateTeamCurrentScore();
             multiplayer.threadInvaderManager();
             try {
                 Thread.sleep(multiplayer.getDelta());

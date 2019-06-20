@@ -28,10 +28,6 @@ public class Team {
         players.remove(ID);
     }
 
-    public void removePlayer(Player player){
-        players.remove(player);
-    }
-
     public void clear(){
         players.clear();
         teamCurrentScore = 0;
@@ -41,11 +37,12 @@ public class Team {
         players.put(ID, player);
     }
 
+    public int getTeamCurrentScore(){
+        return teamCurrentScore;
+    }
+
     public HashMap<Integer, Player> getPlayers() {
         return players;
     }
 
-    public int getTeamCurrentScore() {
-        return teamCurrentScore;
-    }
 }

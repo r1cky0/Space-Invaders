@@ -1,6 +1,7 @@
 package gui.states;
 
 import logic.environment.manager.file.ReadXmlFile;
+import logic.environment.manager.game.Commands;
 import logic.environment.manager.menu.Menu;
 import network.client.Client;
 import network.data.PacketHandler;
@@ -21,7 +22,6 @@ public class WaitingState extends BasicInvaderState{
     private Menu menu;
     private Client client;
     private PacketHandler handler;
-    private boolean connectionOpened;
 
     public WaitingState(Menu menu) {
         this.menu = menu;
@@ -39,7 +39,10 @@ public class WaitingState extends BasicInvaderState{
                 getScaledCopy(20*gameContainer.getWidth()/100,20*gameContainer.getHeight()/100)};
 
         movingAnimation = new Animation(moving, duration, true);
-        connectionOpened = false;
+    }
+
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
+        client = new Client(menu.getPlayer(), "localhost", 9999);
     }
 
     @Override
@@ -57,15 +60,11 @@ public class WaitingState extends BasicInvaderState{
         Input input = gameContainer.getInput();
 
         if(input.isKeyDown(Input.KEY_ESCAPE)){
+            String message = client.getID() + "\n" + Commands.EXIT.toString();
+            client.send(handler.build(message, client.getConnection()));
             client.close();
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
-
-        if(!connectionOpened){
-            client = new Client(menu.getPlayer(), "localhost", 9999);
-            connectionOpened = true;
-        }
-
         if(client.getGameState() == GameStates.START){
             try {
                 stateBasedGame.addState(new MultiplayerState(client));

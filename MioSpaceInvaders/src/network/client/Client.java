@@ -66,7 +66,7 @@ public class Client implements Runnable {
     public void run() {
         running.set(true);
         while(running.get()) {
-            byte[] buffer = new byte[2048];
+            byte[] buffer = new byte[3000];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
