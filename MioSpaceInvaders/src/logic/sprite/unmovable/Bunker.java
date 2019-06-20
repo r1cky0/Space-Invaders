@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Bunker {
     private CopyOnWriteArrayList<Brick> bricks;
 
-    public Bunker(double indexX, double indexY) {
+    public Bunker(float indexX, float indexY) {
         createBunker(indexX, indexY);
     }
 
@@ -26,10 +26,10 @@ public class Bunker {
      * @param indexX: indice di partenza coordinata x
      * @param indexY: indice di partenza coordinata x
      */
-    private void createBunker(double indexX, double indexY) {
+    private void createBunker(float indexX, float indexY) {
         bricks = new CopyOnWriteArrayList<>(  );
-        double indX = indexX;
-        double indY = indexY;
+        float indX = indexX;
+        float indY = indexY;
 
         try {
             BufferedReader in = new BufferedReader(new FileReader("res/bunker.txt"));

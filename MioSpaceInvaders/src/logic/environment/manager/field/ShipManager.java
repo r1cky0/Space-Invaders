@@ -1,4 +1,4 @@
-package logic.environment.manager.game;
+package logic.environment.manager.field;
 
 import logic.environment.manager.field.MovingDirections;
 import logic.sprite.dinamic.SpaceShip;
@@ -24,11 +24,11 @@ public class ShipManager {
 
     }
 
-    public double getX(){
+    public float getX(){
         return spaceShip.getX();
     }
 
-    public double getY(){
+    public float getY(){
         return spaceShip.getY();
     }
 }

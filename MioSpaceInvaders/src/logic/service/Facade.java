@@ -9,8 +9,8 @@ import org.newdawn.slick.geom.Shape;
 public abstract class Facade {
     private Shape shape;
 
-    public Facade(Coordinate coordinate, double width, double height) {
-        shape = new Rectangle((float)coordinate.getX(), (float) coordinate.getY(), (float) width, (float) height);
+    public Facade(Coordinate coordinate, float width, float height) {
+        shape = new Rectangle(coordinate.getX(), coordinate.getY(), width, height);
     }
 
     /**
@@ -23,7 +23,7 @@ public abstract class Facade {
     }
 
     public void setCoordinate(Coordinate coordinate){
-        shape.setLocation((float)coordinate.getX(),(float)coordinate.getY());
+        shape.setLocation(coordinate.getX(), coordinate.getY());
     }
 
     public Shape getShape(){

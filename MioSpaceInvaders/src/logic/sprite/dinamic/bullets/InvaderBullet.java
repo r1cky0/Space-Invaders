@@ -4,7 +4,7 @@ import logic.sprite.Coordinate;
 
 public class InvaderBullet extends Bullet implements Movable{
 
-    public InvaderBullet(Coordinate coordinate, double width, double height) {
+    public InvaderBullet(Coordinate coordinate, float width, float height) {
         super(coordinate, width, height);
     }
 

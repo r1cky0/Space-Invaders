@@ -19,10 +19,10 @@ public class InvadersCreator implements Creator{
      * Inizializzazione degli invaders, posti in alto a sinistra nella schermata di gioco
      */
     public List<Invader> create(){
-        final double HORIZONTAL_OFFSET = Dimension.MAX_WIDTH/32;
-        final double VERTICAL_OFFSET = Dimension.MAX_HEIGHT/100;
-        double baseY = Dimension.MAX_HEIGHT/10;
-        double x;
+        final float HORIZONTAL_OFFSET = Dimension.MAX_WIDTH/32;
+        final float VERTICAL_OFFSET = Dimension.MAX_HEIGHT/100;
+        float baseY = Dimension.MAX_HEIGHT/10;
+        float x;
 
         for(int i=0; i<4; i++){
             x = Invader.HORIZONTAL_OFFSET;

@@ -1,9 +1,12 @@
-package gui.states;
+package gui.states.multi;
 
+import gui.states.BasicInvaderState;
+import gui.states.IDStates;
 import gui.states.drawer.SpriteDrawer;
+import gui.states.multi.GameOverStateMulti;
 import logic.environment.manager.field.MovingDirections;
 import logic.environment.manager.file.ReadXmlFile;
-import logic.environment.manager.game.ShipManager;
+import logic.environment.manager.field.ShipManager;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import main.Dimension;
@@ -27,6 +30,7 @@ public class MultiplayerState extends BasicInvaderState {
     private ShipManager shipManager;
     private String score;
     private int life;
+    private float yShip;
     private boolean checkIsDead;
 
     private Client client;
@@ -61,15 +65,13 @@ public class MultiplayerState extends BasicInvaderState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background = new Image(ReadXmlFile.read("defaultBackground"));
         uniFontData = build(3 * gameContainer.getWidth() / 100f);
+        yShip = Dimension.MAX_HEIGHT - Dimension.SHIP_HEIGHT;
     }
 
-    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
-        Coordinate coordinate = new Coordinate((Dimension.MAX_WIDTH / 2 - Dimension.SHIP_WIDTH / 2),
-                (Dimension.MAX_HEIGHT - Dimension.SHIP_HEIGHT));
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) {
+        Coordinate coordinate = new Coordinate((Dimension.MAX_WIDTH / 2 - Dimension.SHIP_WIDTH / 2), yShip);
         SpaceShip spaceShip = new SpaceShip(coordinate, Dimension.SHIP_WIDTH, Dimension.MAX_HEIGHT);
         shipManager = new ShipManager(spaceShip);
-
-
     }
 
     @Override
@@ -152,12 +154,16 @@ public class MultiplayerState extends BasicInvaderState {
         }
         for (String strings : rcvdata[4].split("\\t")) {
             if (!strings.equals("")) {
-                spriteDrawer.render(spaceShipImage, Float.parseFloat(strings.split("_")[1]),
-                        Float.parseFloat(strings.split("_")[2]), Dimension.SHIP_WIDTH, Dimension.SHIP_HEIGHT);
                 if (client.getID() == Integer.parseInt(strings.split("_")[0])) {
-                    life = Integer.parseInt(strings.split("_")[3]);
+                    spriteDrawer.render(spaceShipImage, shipManager.getX(), yShip, Dimension.SHIP_WIDTH,
+                            Dimension.SHIP_HEIGHT);
+                    life = Integer.parseInt(strings.split("_")[2]);
                     checkIsDead = false;
-                }else if(checkIsDead){
+                }else {
+                    spriteDrawer.render(spaceShipImage, Float.parseFloat(strings.split("_")[1]),
+                            yShip, Dimension.SHIP_WIDTH, Dimension.SHIP_HEIGHT);
+                }
+                if(checkIsDead){
                     life = 0;
                 }
             }

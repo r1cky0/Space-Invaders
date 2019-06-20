@@ -1,5 +1,7 @@
-package gui.states;
+package gui.states.single;
 
+import gui.states.BasicInvaderState;
+import gui.states.IDStates;
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.GameContainer;

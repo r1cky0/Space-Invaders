@@ -7,12 +7,12 @@ import main.Dimension;
 
 public class SpaceShip extends Sprite {
     private int life, currentScore;
-    private static double HORIZONTAL_OFFSET = 0.05;
+    private static float HORIZONTAL_OFFSET = 0.05f;
 
     private SpaceShipBullet shipBullet;
     private boolean shipShot;
 
-    public SpaceShip(Coordinate coordinate, double width, double height) {
+    public SpaceShip(Coordinate coordinate, float width, float height) {
         super(coordinate, width, height);
         init();
         shipBullet = null;

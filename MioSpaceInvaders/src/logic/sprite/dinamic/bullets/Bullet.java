@@ -6,9 +6,9 @@ import logic.sprite.Sprite;
 
 public abstract class Bullet extends Sprite implements Movable{
 
-    public static double VERTICAL_OFFSET = 0.07;
+    public static float VERTICAL_OFFSET = 0.07f;
 
-    public Bullet(Coordinate coordinate, double width, double height) {
+    public Bullet(Coordinate coordinate, float width, float height) {
         super(coordinate, width, height);
     }
 

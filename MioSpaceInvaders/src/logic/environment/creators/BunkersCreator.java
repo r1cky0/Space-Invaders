@@ -14,13 +14,12 @@ public class BunkersCreator implements Creator{
     }
 
     /**
-     * Inizializzazione della lista di bunker, con attenzione particolare alla distanza tra ognuno di essi
-     * proporzionale alla dimensione della schermata di gioco
+     * Inizializzazione della lista di bunker
      */
     public ArrayList<Bunker> create(){
-        double baseX = (Dimension.MAX_WIDTH - 35*Dimension.BRICK_WIDTH)/2;
-        double baseY = (Dimension.MAX_HEIGHT - 5*Dimension.BRICK_HEIGHT);
-        double x = baseX;
+        float baseX = (Dimension.MAX_WIDTH - 35*Dimension.BRICK_WIDTH)/2;
+        float baseY = (Dimension.MAX_HEIGHT - 5*Dimension.BRICK_HEIGHT);
+        float x = baseX;
 
         for(int i=1; i<5;i++){
             Bunker bunker = new Bunker(x,baseY);

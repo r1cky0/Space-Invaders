@@ -1,6 +1,7 @@
 package main;
 
-import gui.states.*;
+import gui.states.multi.WaitingState;
+import gui.states.single.*;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -13,8 +14,8 @@ import java.awt.Dimension;
 public class SpaceInvaders extends StateBasedGame {
 
     private Menu menu;
-    public static double SCALE_X;
-    public static double SCALE_Y;
+    public static float SCALE_X;
+    public static float SCALE_Y;
 
     public SpaceInvaders(Menu menu) {
         super("Space Invaders");
@@ -36,8 +37,8 @@ public class SpaceInvaders extends StateBasedGame {
     public static void main(String[] args) {
         try{
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            SCALE_X = screenSize.getWidth()/190;
-            SCALE_Y = screenSize.getHeight()/125;
+            SCALE_X = (float) screenSize.getWidth()/190;
+            SCALE_Y = (float) screenSize.getHeight()/125;
             Menu menu = new Menu();
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
             container.setDisplayMode((int) (main.Dimension.MAX_WIDTH*SCALE_X),(int) (main.Dimension.MAX_HEIGHT*SCALE_Y),

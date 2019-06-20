@@ -105,8 +105,7 @@ public class Multiplayer{
         infos += "\n";
 
         for(Integer ID : getPlayers().keySet()){
-            infos += ID + "_" + getSpaceShip(ID).getX() + "_" + getSpaceShip(ID).getY() + "_" +
-                    getSpaceShip(ID).getLife() + "\t";
+            infos += ID + "_" + getSpaceShip(ID).getX() + "_" + getSpaceShip(ID).getLife() + "\t";
         }
         infos += "\n";
 

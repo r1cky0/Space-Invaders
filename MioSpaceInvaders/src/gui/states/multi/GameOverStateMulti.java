@@ -1,5 +1,7 @@
-package gui.states;
+package gui.states.multi;
 
+import gui.states.BasicInvaderState;
+import gui.states.IDStates;
 import logic.environment.manager.file.ReadXmlFile;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.AbstractComponent;

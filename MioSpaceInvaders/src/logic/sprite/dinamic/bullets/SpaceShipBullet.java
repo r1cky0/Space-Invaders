@@ -4,7 +4,7 @@ import logic.sprite.Coordinate;
 
 public class SpaceShipBullet extends Bullet implements Movable{
 
-    public SpaceShipBullet(Coordinate coordinate, double width, double height) {
+    public SpaceShipBullet(Coordinate coordinate, float width, float height) {
         super(coordinate, width, height);
     }
 

@@ -1,5 +1,8 @@
-package gui.states;
+package gui.states.multi;
 
+import gui.states.BasicInvaderState;
+import gui.states.IDStates;
+import gui.states.multi.MultiplayerState;
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.game.Commands;
 import logic.environment.manager.menu.Menu;
@@ -11,7 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class WaitingState extends BasicInvaderState{
+public class WaitingState extends BasicInvaderState {
     private UnicodeFont uniFontTitle;
     private String title;
 

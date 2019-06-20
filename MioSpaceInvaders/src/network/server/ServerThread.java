@@ -47,7 +47,7 @@ public class ServerThread implements Runnable{
         switch (Commands.valueOf(infos[1])) {
             case MOVE_LEFT:
             case MOVE_RIGHT:
-                player.getSpaceShip().setX(Double.parseDouble(infos[2]));
+                player.getSpaceShip().setX(Float.parseFloat(infos[2]));
                 break;
             case SHOT:
                 multiplayer.getFieldManager().shipShot(player.getSpaceShip());
