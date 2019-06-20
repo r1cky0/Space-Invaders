@@ -5,13 +5,14 @@ import logic.environment.manager.field.MovingDirections;
 import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
+import logic.sprite.Sprite;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
-import main.Dimensions;
+import main.Dimension;
 import logic.thread.ThreadUpdate;
 
 public class Multiplayer {
@@ -32,9 +33,9 @@ public class Multiplayer {
     }
 
     public void init(int ID, String[] name){
-        double shipSize = Dimensions.MAX_WIDTH / 20;
-        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - shipSize / 2), (Dimensions.MAX_HEIGHT - shipSize));
-        SpaceShip defaultShip = new SpaceShip(coordinate, shipSize);
+        Coordinate coordinate = new Coordinate((Dimension.MAX_WIDTH / 2 - Dimension.SHIP_WIDTH / 2),
+                (Dimension.MAX_HEIGHT - Dimension.SHIP_HEIGHT));
+        SpaceShip defaultShip = new SpaceShip(coordinate, Dimension.SHIP_WIDTH, Dimension.MAX_HEIGHT);
         team.addPlayer(ID, new Player(name[0], defaultShip));
     }
 
@@ -103,7 +104,8 @@ public class Multiplayer {
 
         String infos = gameStates.toString() + "\n";
 
-        for(Invader invader : fieldManager.getInvaders()){
+        for(Sprite sprite : fieldManager.getInvaders()){
+            Invader invader = (Invader) sprite;
             infos += invader.getX() + "_" + invader.getY() + "\t";
         }
         infos += "\n";

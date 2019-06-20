@@ -4,12 +4,14 @@ import logic.service.Facade;
 
 public class Sprite extends Facade {
     private Coordinate coordinate;
-    private double size;
+    private double width;
+    private double height;
 
-    public Sprite(Coordinate coordinate, double size) {
-        super(coordinate,size);
+    public Sprite(Coordinate coordinate, double width, double height) {
+        super(coordinate,width, height);
         this.coordinate = coordinate;
-        this.size = size;
+        this.width = width;
+        this.height = height;
     }
 
     public Coordinate getCoordinate() {
@@ -27,10 +29,6 @@ public class Sprite extends Facade {
 
     public double getY() {
         return coordinate.getY();
-    }
-
-    public double getSize(){
-        return size;
     }
 
     public void setX(double x) {

@@ -6,8 +6,8 @@ import logic.sprite.Sprite;
 public class Brick extends Sprite {
     private int life;
 
-    public Brick(Coordinate coordinate, double size) {
-        super(coordinate, size);
+    public Brick(Coordinate coordinate, double width, double height) {
+        super(coordinate, width, height);
         life = 4;
     }
 

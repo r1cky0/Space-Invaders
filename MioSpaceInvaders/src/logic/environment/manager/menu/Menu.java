@@ -8,7 +8,7 @@ import logic.environment.manager.file.SaveCustomization;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
-import main.Dimensions;
+import main.Dimension;
 
 import java.io.IOException;
 
@@ -24,9 +24,9 @@ public class Menu {
         customization = new Customization();
         ranking = new Ranking();
 
-        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH/2 - Dimensions.SHIP_SIZE/2),
-                (Dimensions.MAX_HEIGHT - Dimensions.SHIP_SIZE));
-        defaultShip = new SpaceShip(coordinate, Dimensions.SHIP_SIZE);
+        Coordinate coordinate = new Coordinate((Dimension.MAX_WIDTH/2 - Dimension.SHIP_WIDTH /2),
+                (Dimension.MAX_HEIGHT - Dimension.SHIP_WIDTH));
+        defaultShip = new SpaceShip(coordinate, Dimension.SHIP_WIDTH, Dimension.SHIP_HEIGHT);
     }
 
     public void createRanking(){

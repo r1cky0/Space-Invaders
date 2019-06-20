@@ -9,7 +9,7 @@ import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Bunker;
-import main.Dimensions;
+import main.Dimension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,22 +71,21 @@ public class FieldManager {
 
     public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
 
-        if(((spaceShip.getX() + spaceShip.getSize()) < Dimensions.MAX_WIDTH) && (md == MovingDirections.RIGHT)){
+        if(((spaceShip.getX() + Dimension.SHIP_WIDTH) < Dimension.MAX_WIDTH) && (md == MovingDirections.RIGHT)){
             spaceShip.moveRight(delta);
         }
 
-        if((spaceShip.getX() > Dimensions.MIN_WIDTH) && (md == MovingDirections.LEFT)){
+        if((spaceShip.getX() > Dimension.MIN_WIDTH) && (md == MovingDirections.LEFT)){
             spaceShip.moveLeft(delta);
         }
 
     }
 
     public void shipShot(SpaceShip spaceShip){
-
         if(!spaceShip.isShipShot()) {
-            Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - Dimensions.BULLET_SIZE/2,
+            Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - Dimension.BULLET_WIDTH /2,
                     spaceShip.getY());
-            spaceShip.setShipBullet(new SpaceShipBullet(coordinate, Dimensions.BULLET_SIZE));
+            spaceShip.setShipBullet(new SpaceShipBullet(coordinate, Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT));
             spaceShip.setShipShot(true);
         }
     }
@@ -113,7 +112,7 @@ public class FieldManager {
                 invaderBullets.remove(bullet);
                 return;
             }
-            if (bullet.getY() >= Dimensions.MAX_HEIGHT) {
+            if (bullet.getY() >= Dimension.MAX_HEIGHT) {
                 invaderBullets.remove(bullet);
                 return;
             }
@@ -126,7 +125,6 @@ public class FieldManager {
      * fine schermata(y minore)
      */
     public void checkSpaceShipShotCollision(SpaceShip spaceShip) {
-
         for (Bunker bunker : bunkers) {
             if (bunker.checkBrickCollision(spaceShip.getShipBullet())) {
                 spaceShip.setShipShot(false);
@@ -134,7 +132,6 @@ public class FieldManager {
                 return;
             }
         }
-
         for(Invader invader : invaders){
             if (invader.collides(spaceShip.getShipBullet())) {
                 spaceShip.incrementCurrentScore(invader.getValue());
@@ -147,7 +144,6 @@ public class FieldManager {
                 return;
             }
         }
-
         if (spaceShip.getShipBullet().getY() <= 0) {
             spaceShip.setShipShot(false);
             spaceShip.setShipBullet(null);
@@ -160,7 +156,6 @@ public class FieldManager {
      * corrispondendo Enum 'MovingDirections' fondamentale nella funzione successiva
      */
     public MovingDirections checkInvaderDirection() {
-
         double maxX = 0;
         double minX = Invader.HORIZONTAL_OFFSET;
         double maxY = 0;
@@ -176,14 +171,14 @@ public class FieldManager {
                 maxY = invader.getY();
             }
         }
-        if((maxY + Dimensions.INVADER_SIZE) >= (Dimensions.MAX_HEIGHT - 7* Dimensions.BRICK_SIZE)){
+        if((maxY + Dimension.INVADER_HEIGHT) >= (Dimension.MAX_HEIGHT - 7*Dimension.BRICK_HEIGHT)){
             endReached = true;
         }
-        if(((maxX + Dimensions.INVADER_SIZE + Invader.HORIZONTAL_OFFSET) > Dimensions.MAX_WIDTH) && !goDown){
+        if(((maxX + Dimension.INVADER_WIDTH + Invader.HORIZONTAL_OFFSET) > Dimension.MAX_WIDTH) && !goDown){
             goDown = true;
             return MovingDirections.DOWN;
 
-        } else if((minX - Invader.HORIZONTAL_OFFSET < Dimensions.MIN_WIDTH) && !goDown) {
+        } else if((minX - Invader.HORIZONTAL_OFFSET < Dimension.MIN_WIDTH) && !goDown) {
             goDown = true;
             return MovingDirections.DOWN;
         }
@@ -202,9 +197,7 @@ public class FieldManager {
      * @param md Enum che indica la direzione di movimento
      */
     public void invaderMovement(MovingDirections md){
-
         for(Invader invader:invaders) {
-
             switch (md) {
                 case RIGHT:
                     invader.moveRight();
@@ -224,14 +217,13 @@ public class FieldManager {
      * sparare
      */
     public void invaderShot() {
-
         Random rand = new Random();
         int random = rand.nextInt(invaders.size());
         Coordinate coordinate = new Coordinate(invaders.get(random).getX() +
-                Dimensions.INVADER_SIZE / 2 - Dimensions.BULLET_SIZE /2,
-                invaders.get(random).getY() + Dimensions.INVADER_SIZE/2);
+                Dimension.INVADER_WIDTH / 2 - Dimension.BULLET_WIDTH /2,
+                invaders.get(random).getY() + Dimension.INVADER_HEIGHT /2);
 
-        invaderBullets.add(new InvaderBullet(coordinate, Dimensions.BULLET_SIZE));
+        invaderBullets.add(new InvaderBullet(coordinate, Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT));
     }
 
     public void setNewLevel(boolean value){

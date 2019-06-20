@@ -1,7 +1,7 @@
 package logic.environment.creators;
 
 import logic.sprite.unmovable.Bunker;
-import main.Dimensions;
+import main.Dimension;
 
 import java.util.ArrayList;
 
@@ -18,14 +18,14 @@ public class BunkersCreator implements Creator{
      * proporzionale alla dimensione della schermata di gioco
      */
     public ArrayList<Bunker> create(){
-        double baseX = (Dimensions.MAX_WIDTH - 35* Dimensions.BRICK_SIZE)/2;
-        double baseY = (Dimensions.MAX_HEIGHT - 4* Dimensions.BRICK_SIZE);
+        double baseX = (Dimension.MAX_WIDTH - 35*Dimension.BRICK_WIDTH)/2;
+        double baseY = (Dimension.MAX_HEIGHT - 5*Dimension.BRICK_HEIGHT);
         double x = baseX;
 
         for(int i=1; i<5;i++){
-            Bunker bunker = new Bunker(x,baseY, Dimensions.BRICK_SIZE);
+            Bunker bunker = new Bunker(x,baseY);
             bunkers.add(bunker);
-            x = baseX + (10* Dimensions.BRICK_SIZE)*i;
+            x = baseX + (10*Dimension.BRICK_WIDTH)*i;
         }
         return bunkers;
     }

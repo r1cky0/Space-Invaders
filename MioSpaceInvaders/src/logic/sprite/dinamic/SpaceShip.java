@@ -3,25 +3,25 @@ package logic.sprite.dinamic;
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
-import main.Dimensions;
+import main.Dimension;
 
 public class SpaceShip extends Sprite {
     private int life, currentScore;
-    private double horizontalOffset = 0.5;
+    private static double HORIZONTAL_OFFSET = 0.05;
 
     private SpaceShipBullet shipBullet;
     private boolean shipShot;
 
-    public SpaceShip(Coordinate coordinate, double size) {
-        super(coordinate, size);
+    public SpaceShip(Coordinate coordinate, double width, double height) {
+        super(coordinate, width, height);
         init();
         shipBullet = null;
         shipShot = false;
     }
 
     public void init(){
-        Coordinate defaultCoordinate = new Coordinate(Dimensions.MAX_WIDTH/2 - Dimensions.SHIP_SIZE/2,
-                Dimensions.MAX_HEIGHT - Dimensions.SHIP_SIZE);
+        Coordinate defaultCoordinate = new Coordinate(Dimension.MAX_WIDTH/2 - Dimension.SHIP_WIDTH /2,
+                Dimension.MAX_HEIGHT - Dimension.SHIP_WIDTH);
         setCoordinate(defaultCoordinate);
         shipBullet = null;
         shipShot = false;
@@ -30,11 +30,11 @@ public class SpaceShip extends Sprite {
     }
 
     public void moveLeft(int delta) {
-        super.setX(super.getX() - horizontalOffset*delta);
+        super.setX(super.getX() - HORIZONTAL_OFFSET*delta);
     }
 
     public void moveRight(int delta) {
-        super.setX(super.getX() + horizontalOffset*delta);
+        super.setX(super.getX() + HORIZONTAL_OFFSET*delta);
     }
 
     public void decreaseLife() {

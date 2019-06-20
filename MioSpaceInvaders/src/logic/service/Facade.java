@@ -9,8 +9,8 @@ import org.newdawn.slick.geom.Shape;
 public abstract class Facade {
     private Shape shape;
 
-    public Facade(Coordinate coordinate, double size) {
-        shape = new Rectangle((float)coordinate.getX(), (float) coordinate.getY(), (float) size, (float) size);
+    public Facade(Coordinate coordinate, double width, double height) {
+        shape = new Rectangle((float)coordinate.getX(), (float) coordinate.getY(), (float) width, (float) height);
     }
 
     /**
@@ -28,15 +28,6 @@ public abstract class Facade {
 
     public Shape getShape(){
         return shape;
-    }
-
-    /**
-     * Renderizza lo sprite scelto andando a ricavare l' immagine dal path fornito e settando le dimensioni prelevandole
-     * dalla shape corrispondente
-     * @param image Immagine
-     */
-    public void render(Image image){
-        image.draw(shape.getX(),shape.getY(), shape.getWidth(), shape.getHeight());
     }
 
 }

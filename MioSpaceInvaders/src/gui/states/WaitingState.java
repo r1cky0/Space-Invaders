@@ -10,22 +10,26 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-
 public class WaitingState extends BasicInvaderState{
-        private UnicodeFont uniFontTitle;
+    private UnicodeFont uniFontTitle;
     private String title;
 
     private Image background;
     private Animation movingAnimation;
     private int[] duration = {500,500};
 
+    private double scaleX;
+    private double scaleY;
+
     private Menu menu;
     private Client client;
     private PacketHandler handler;
     private boolean connectionOpened;
 
-    public WaitingState(Menu menu) {
+    public WaitingState(Menu menu, double scaleX, double scaleY) {
         this.menu = menu;
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
         handler = new PacketHandler();
     }
 
@@ -69,7 +73,7 @@ public class WaitingState extends BasicInvaderState{
 
         if(client.getGameState() == GameStates.START){
             try {
-                stateBasedGame.addState(new MultiplayerState(client));
+                stateBasedGame.addState(new MultiplayerState(client, scaleX, scaleY));
                 stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();

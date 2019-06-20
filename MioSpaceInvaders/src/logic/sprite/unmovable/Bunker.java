@@ -2,20 +2,17 @@ package logic.sprite.unmovable;
 
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
+import main.Dimension;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Bunker {
-    private double brickSize;
     private CopyOnWriteArrayList<Brick> bricks;
 
-    public Bunker(double indexX, double indexY, double brickSize) {
-        this.brickSize = brickSize;
+    public Bunker(double indexX, double indexY) {
         createBunker(indexX, indexY);
     }
 
@@ -41,19 +38,19 @@ public class Bunker {
                 for (int i = 0; i < riga.length(); i++) {
                     if (riga.charAt(i) == '*') {
                         Coordinate coordinate = new Coordinate(indX, indY);
-                        Brick brick = new Brick(coordinate, brickSize);
+                        Brick brick = new Brick(coordinate, Dimension.BRICK_WIDTH, Dimension.BRICK_HEIGHT);
                         bricks.add(brick);
-                        indX += brickSize;
+                        indX += Dimension.BRICK_WIDTH;
                     } else {
-                        indX += brickSize;
+                        indX += Dimension.BRICK_WIDTH;
                     }
                 }
-                indY -= brickSize;
+                indY -= Dimension.BRICK_HEIGHT;
                 riga = in.readLine();
                 indX = indexX;
             }
         } catch (IOException err) {
-            System.err.println(err.getMessage());
+            err.printStackTrace();
         }
     }
 

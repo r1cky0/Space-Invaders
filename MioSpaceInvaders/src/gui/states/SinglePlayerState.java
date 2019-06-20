@@ -2,25 +2,33 @@ package gui.states;
 
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.game.SinglePlayer;
-import logic.sprite.dinamic.bullets.InvaderBullet;
+import gui.states.drawer.SpriteDrawer;
 import logic.environment.manager.menu.Menu;
-import logic.sprite.dinamic.Invader;
-import logic.sprite.unmovable.Brick;
-import logic.sprite.unmovable.Bunker;
 import logic.environment.manager.game.Commands;
 import logic.environment.manager.game.GameStates;
+import logic.sprite.dinamic.Invader;
+import logic.sprite.dinamic.bullets.InvaderBullet;
+import logic.sprite.unmovable.Brick;
+import logic.sprite.unmovable.Bunker;
+import main.Dimension;
 import org.newdawn.slick.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-
 import java.util.ArrayList;
 
 public class SinglePlayerState extends BasicInvaderState {
     private Menu menu;
+    private SpriteDrawer spriteDrawer;
 
     private SinglePlayer singlePlayer;
     private UnicodeFont uniFontData;
+
+    private double scaleX;
+    private double scaleY;
 
     //IMAGES
     private Image background;
@@ -29,8 +37,13 @@ public class SinglePlayerState extends BasicInvaderState {
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
 
-    public SinglePlayerState(Menu menu){
+    public SinglePlayerState(Menu menu, double scaleX, double scaleY){
         this.menu = menu;
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+
+        spriteDrawer = new SpriteDrawer();
+
         try {
             invaderImage = new Image(ReadXmlFile.read("defaultInvader"));
             bulletImage = new Image(ReadXmlFile.read("defaultBullet"));
@@ -73,23 +86,26 @@ public class SinglePlayerState extends BasicInvaderState {
         uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Highscore: " + highscore, Color.green);
 
-        singlePlayer.getSpaceShip().render(spaceShipImage);
-
-        for (Invader invader: singlePlayer.getInvaders()) {
-            invader.render(invaderImage);
-        }
-
-        for(Bunker bunker: singlePlayer.getBunkers()){
-            for(Brick brick:bunker.getBricks()){
-                brick.render(brickImages.get(4 - brick.getLife()));
-            }
-        }
+        spriteDrawer.render(spaceShipImage,singlePlayer.getSpaceShip().getX(),
+                singlePlayer.getSpaceShip().getY(), Dimension.SHIP_WIDTH, Dimension.SHIP_HEIGHT);
 
         if(singlePlayer.getSpaceShipBullet() != null){
-            singlePlayer.getSpaceShipBullet().render(bulletImage);
+            spriteDrawer.render(bulletImage,singlePlayer.getSpaceShipBullet().getX(),
+                    singlePlayer.getSpaceShipBullet().getY(), Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT);
         }
-        for(InvaderBullet bullet : singlePlayer.getInvadersBullet()) {
-            bullet.render(bulletImage);
+        for (Invader invader : singlePlayer.getInvaders()) {
+            spriteDrawer.render(invaderImage, invader.getX(), invader.getY(), Dimension.INVADER_WIDTH,
+                    Dimension.INVADER_HEIGHT);
+        }
+        for (InvaderBullet invaderBullet : singlePlayer.getInvadersBullet()) {
+            spriteDrawer.render(bulletImage,invaderBullet.getX(),invaderBullet.getY(), Dimension.BULLET_WIDTH,
+                    Dimension.BULLET_HEIGHT);
+        }
+        for(Bunker bunker : singlePlayer.getBunkers()) {
+            for(Brick brick : bunker.getBricks()) {
+                spriteDrawer.render(brickImages.get(4 - brick.getLife()),brick.getX(),brick.getY(), Dimension.BRICK_WIDTH,
+                        Dimension.BRICK_HEIGHT);
+            }
         }
     }
 
@@ -122,7 +138,7 @@ public class SinglePlayerState extends BasicInvaderState {
         }
     }
 
-    @Override
+     @Override
     public int getID() {
         return IDStates.SINGLEPLAYER_STATE;
     }
