@@ -27,9 +27,6 @@ public class SinglePlayerState extends BasicInvaderState {
     private SinglePlayer singlePlayer;
     private UnicodeFont uniFontData;
 
-    private double scaleX;
-    private double scaleY;
-
     //IMAGES
     private Image background;
     private Image invaderImage;
@@ -37,10 +34,8 @@ public class SinglePlayerState extends BasicInvaderState {
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
 
-    public SinglePlayerState(Menu menu, double scaleX, double scaleY){
+    public SinglePlayerState(Menu menu){
         this.menu = menu;
-        this.scaleX = scaleX;
-        this.scaleY = scaleY;
 
         spriteDrawer = new SpriteDrawer();
 

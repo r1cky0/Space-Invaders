@@ -18,18 +18,13 @@ public class WaitingState extends BasicInvaderState{
     private Animation movingAnimation;
     private int[] duration = {500,500};
 
-    private double scaleX;
-    private double scaleY;
-
     private Menu menu;
     private Client client;
     private PacketHandler handler;
     private boolean connectionOpened;
 
-    public WaitingState(Menu menu, double scaleX, double scaleY) {
+    public WaitingState(Menu menu) {
         this.menu = menu;
-        this.scaleX = scaleX;
-        this.scaleY = scaleY;
         handler = new PacketHandler();
     }
 
@@ -73,7 +68,7 @@ public class WaitingState extends BasicInvaderState{
 
         if(client.getGameState() == GameStates.START){
             try {
-                stateBasedGame.addState(new MultiplayerState(client, scaleX, scaleY));
+                stateBasedGame.addState(new MultiplayerState(client));
                 stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();

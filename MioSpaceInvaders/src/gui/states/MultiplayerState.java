@@ -37,13 +37,8 @@ public class MultiplayerState extends BasicInvaderState {
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
 
-    private double scaleX;
-    private double scaleY;
-
-    public MultiplayerState(Client client, double scaleX, double scaleY) {
+    public MultiplayerState(Client client) {
         this.client = client;
-        this.scaleX = scaleX;
-        this.scaleY = scaleY;
 
         invaderInfos = new ArrayList<>();
         invaderBulletInfos = new ArrayList<>();
