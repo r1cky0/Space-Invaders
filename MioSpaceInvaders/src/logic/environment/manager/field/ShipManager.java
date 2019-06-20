@@ -1,6 +1,5 @@
 package logic.environment.manager.field;
 
-import logic.environment.manager.field.MovingDirections;
 import logic.sprite.dinamic.SpaceShip;
 import main.Dimension;
 
@@ -28,7 +27,4 @@ public class ShipManager {
         return spaceShip.getX();
     }
 
-    public float getY(){
-        return spaceShip.getY();
-    }
 }

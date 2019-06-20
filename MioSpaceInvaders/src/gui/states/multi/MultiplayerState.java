@@ -163,18 +163,16 @@ public class MultiplayerState extends BasicInvaderState {
                     spriteDrawer.render(spaceShipImage, Float.parseFloat(strings.split("_")[1]),
                             yShip, Dimension.SHIP_WIDTH, Dimension.SHIP_HEIGHT);
                 }
+                if(!strings.split("_")[3].equals(" ")) {
+                    spriteDrawer.render(bulletImage, Float.parseFloat(strings.split("_")[3]),
+                            Float.parseFloat(strings.split("_")[4]), Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT);
+                }
                 if(checkIsDead){
                     life = 0;
                 }
             }
         }
-        for (String strings : rcvdata[5].split("\\t")) {
-            if (!strings.equals("")) {
-                spriteDrawer.render(bulletImage, Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1]), Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT);
-            }
-        }
-        score = rcvdata[6];
+        score = rcvdata[5];
     }
 
     @Override

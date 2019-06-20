@@ -15,6 +15,7 @@ import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
 import main.Dimension;
 import logic.thread.ThreadUpdate;
+import org.lwjgl.Sys;
 import org.newdawn.slick.util.pathfinding.navmesh.Space;
 
 import java.util.HashMap;
@@ -105,13 +106,12 @@ public class Multiplayer{
         infos += "\n";
 
         for(Integer ID : getPlayers().keySet()){
-            infos += ID + "_" + getSpaceShip(ID).getX() + "_" + getSpaceShip(ID).getLife() + "\t";
-        }
-        infos += "\n";
-
-        for(Integer ID : getPlayers().keySet()){
-            if(getSpaceShipBullet(ID) != null){
+            infos += ID + "_" + getSpaceShip(ID).getX() + "_" + getSpaceShip(ID).getLife() + "_";
+            if(getSpaceShipBullet(ID) != null) {
                 infos += getSpaceShipBullet(ID).getX() + "_" + getSpaceShipBullet(ID).getY() + "\t";
+            }
+            else {
+                infos += " " + "_" + " " +"\t";
             }
         }
         infos += "\n";
