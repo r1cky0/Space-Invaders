@@ -20,7 +20,7 @@ import org.newdawn.slick.util.pathfinding.navmesh.Space;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Multiplayer {
+public class Multiplayer{
     private FieldManager fieldManager;
     private Team team;
     private GameStates gameStates;
@@ -37,35 +37,13 @@ public class Multiplayer {
         gameStates = GameStates.WAITING;
     }
 
-    public void init(int ID, String[] name){
+    public Player init(int ID, String[] name){
         Coordinate coordinate = new Coordinate((Dimension.MAX_WIDTH / 2 - Dimension.SHIP_WIDTH / 2),
                 (Dimension.MAX_HEIGHT - Dimension.SHIP_HEIGHT));
         SpaceShip defaultShip = new SpaceShip(coordinate, Dimension.SHIP_WIDTH, Dimension.MAX_HEIGHT);
-        team.addPlayer(ID, new Player(name[0], defaultShip));
-    }
-
-    public int execCommand(String[] infos){
-        int ID;
-        try {
-            ID = Integer.parseInt(infos[0]);
-
-            Player player = team.getPlayers().get(ID);
-            switch (Commands.valueOf(infos[1])) {
-                case MOVE_LEFT:
-                case MOVE_RIGHT:
-                    player.getSpaceShip().setX(Double.parseDouble(infos[2]));
-                    break;
-                case SHOT:
-                    fieldManager.shipShot(player.getSpaceShip());
-                    break;
-                case EXIT:
-                    team.removePlayer(ID);
-                    return ID;
-            }
-        }catch (RuntimeException err){
-            return -1;
-        }
-        return -1;
+        Player player = new Player(name[0], defaultShip);
+        team.addPlayer(ID, player);
+        return player;
     }
 
     private void update() {

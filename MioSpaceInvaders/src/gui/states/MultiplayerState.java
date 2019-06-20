@@ -68,6 +68,8 @@ public class MultiplayerState extends BasicInvaderState {
                 (Dimension.MAX_HEIGHT - Dimension.SHIP_HEIGHT));
         SpaceShip spaceShip = new SpaceShip(coordinate, Dimension.SHIP_WIDTH, Dimension.MAX_HEIGHT);
         shipManager = new ShipManager(spaceShip);
+
+
     }
 
     @Override
@@ -100,12 +102,14 @@ public class MultiplayerState extends BasicInvaderState {
         }
         if(input.isKeyDown(Input.KEY_RIGHT)){
             shipManager.shipMovement(MovingDirections.RIGHT, delta);
+            message = client.getID() + "\n" + Commands.MOVE_RIGHT.toString() + "\n" + shipManager.getX();
+            client.send(handler.build(message, client.getConnection()));
         }
         if(input.isKeyDown(Input.KEY_LEFT)){
             shipManager.shipMovement(MovingDirections.LEFT, delta);
+            message = client.getID() + "\n" + Commands.MOVE_LEFT.toString() + "\n" + shipManager.getX();
+            client.send(handler.build(message, client.getConnection()));
         }
-        message = client.getID() + "\n" + Commands.MOVE_RIGHT.toString() + "\n" + shipManager.getX();
-        client.send(handler.build(message, client.getConnection()));
 
         if(gameStates == GameStates.GAMEOVER){
             message = client.getID() + "\n" + Commands.EXIT.toString();

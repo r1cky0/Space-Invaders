@@ -2,14 +2,13 @@ package network.server;
 
 import logic.environment.manager.game.GameStates;
 import logic.environment.manager.game.Multiplayer;
+import logic.player.Player;
 import network.data.Connection;
 import network.data.PacketHandler;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -18,22 +17,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Server implements Runnable {
     private Multiplayer multiplayer;
-    //Arraylist connessioni al server da parte dei client
-    private List<Connection> clients = new CopyOnWriteArrayList<>();
     private DatagramSocket socket;
     private PacketHandler handler;
 
-    private Thread sender;
-    private AtomicBoolean runningSender;
-    private AtomicBoolean runningListener;
+    private ConcurrentHashMap<Integer, ServerThread> clients;
+    private AtomicBoolean runningServer;
 
     private int port;
     private int maxPlayers = 2;
 
     Server(int port) {
         this.port = port;
-        runningSender = new AtomicBoolean(false);
-        runningListener = new AtomicBoolean(false);
+        clients = new ConcurrentHashMap<>();
+        runningServer = new AtomicBoolean(false);
         handler = new PacketHandler();
         multiplayer = new Multiplayer();
         try {
@@ -45,9 +41,8 @@ public class Server implements Runnable {
 
     public void init() throws SocketException {
         this.socket = new DatagramSocket(this.port);
-        Thread listener = new Thread(this);
-        runningSender.set(true);
-        listener.start();
+        Thread server = new Thread(this);
+        server.start();
     }
 
     /**
@@ -55,22 +50,27 @@ public class Server implements Runnable {
      * per la ricezione di nuovi pacchetti
      */
     public void run() {
-        runningListener.set(true);
+        runningServer.set(true);
         System.out.println("Server started on port: " + port);
-        while (runningListener.get()) {
+        while (runningServer.get()) {
             byte[] rcvdata = new byte[64];
             DatagramPacket packet = new DatagramPacket(rcvdata, rcvdata.length);
             try {
                 socket.receive(packet);
-                if (multiplayer.getGameStates() != GameStates.WAITING) {
-                    int id = multiplayer.execCommand(handler.process(packet));
-                    if(id != -1){
-                        removeConnection(id);
-                    }
-                }else{
+                if(multiplayer.getGameStates() == GameStates.WAITING) {
                     addConnection(packet);
+                }else {
+                    String[] infos = handler.process(packet);
+                    try {
+                        int ID = Integer.parseInt(infos[0]);
+                        clients.get(ID).execCommand(infos);
+                    }catch (NumberFormatException ignored){}
                 }
-                checkEmptyList();
+                checkClients();
+                if(clients.isEmpty()){
+                    multiplayer.stopGame();
+                    multiplayer.setGameStates(GameStates.WAITING);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -79,15 +79,16 @@ public class Server implements Runnable {
 
     private void addConnection(DatagramPacket packet) {
         if (clients.size() <= 4) {
-            for (Connection connection : clients) {
-                if (connection.getDestAddress().equals(packet.getAddress())) {
+            for (int ID : clients.keySet()) {
+                if (clients.get(ID).getConnection().getDestAddress().equals(packet.getAddress())) {
                     return;
                 }
             }
-            clients.add(new Connection(packet.getAddress(), packet.getPort()));
-            int ID = clients.size() - 1;
-            multiplayer.init(ID, handler.process(packet));
-            send(ID, Integer.toString(ID)); //INVIO AL CLIENT IL SUO ID = POSIZIONE NELL'ARRAYLIST DI CONNESSIONI
+            Connection connection = new Connection(packet.getAddress(), packet.getPort());
+            int ID = clients.size();
+            Player player = multiplayer.init(ID, handler.process(packet));
+            clients.put(ID, new ServerThread(player, multiplayer, connection, socket));
+            clients.get(ID).send(String.valueOf(ID));
             if (clients.size() == maxPlayers) {
                 broadcast(GameStates.START.toString());
                 try {
@@ -97,69 +98,24 @@ public class Server implements Runnable {
                     e.printStackTrace();
                 }
                 multiplayer.startGame();
-                broadcastRenderInfos();
-            }
-        }
-    }
-
-    private void checkEmptyList(){
-        if(clients.isEmpty()){
-            multiplayer.stopGame();
-            sender.interrupt();
-        }
-    }
-
-    private void removeConnection(int id){
-        clients.remove(id);
-    }
-
-    /**
-     * Invio dati ad un singolo client
-     */
-    private void send(int id, String mex) {
-        Connection connection = clients.get(id);
-        try {
-            socket.send(handler.build(mex, connection));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Invio dati al client.
-     * Il server invia a tutti i client le informazioni sullo stato del gioco e sulla posizione degli
-     * elementi per permettere ai client di renderizzarli.
-     */
-    private void broadcastRenderInfos() {
-        sender = new Thread() {
-            public void run() {
-                runningSender.set(true);
-                while (runningSender.get()) {
-                    String infos = multiplayer.getInfos();
-                    for (Connection connection : clients) {
-                        try {
-                            socket.send(handler.build(infos, connection));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                for(int id : clients.keySet()){
+                    clients.get(id).start();
                 }
             }
+        }
+    }
 
-            public void interrupt() {
-                runningSender.set(false);
+    private void checkClients(){
+        for(int ID : clients.keySet()){
+            if(!clients.get(ID).isRunning().get()){
+                clients.remove(clients.get(ID));
             }
-        };
-        sender.start();
+        }
     }
 
     private void broadcast(String mex){
-        for(Connection connection : clients) {
-            try {
-                socket.send(handler.build(mex, connection));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        for(int ID : clients.keySet()) {
+            clients.get(ID).send(mex);
         }
     }
 }
