@@ -1,4 +1,4 @@
-package gui.states.drawer;
+package gui.drawer;
 
 import org.newdawn.slick.Image;
 

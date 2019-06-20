@@ -4,7 +4,7 @@ import gui.states.BasicInvaderState;
 import gui.states.IDStates;
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.game.SinglePlayer;
-import gui.states.drawer.SpriteDrawer;
+import gui.drawer.SpriteDrawer;
 import logic.environment.manager.menu.Menu;
 import logic.environment.manager.game.Commands;
 import logic.environment.manager.game.GameStates;

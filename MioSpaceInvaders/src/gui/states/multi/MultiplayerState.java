@@ -2,8 +2,7 @@ package gui.states.multi;
 
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
-import gui.states.drawer.SpriteDrawer;
-import gui.states.multi.GameOverStateMulti;
+import gui.drawer.SpriteDrawer;
 import logic.environment.manager.field.MovingDirections;
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.field.ShipManager;
