@@ -5,7 +5,6 @@ import gui.states.IDStates;
 import gui.drawer.SpriteDrawer;
 import logic.environment.manager.field.MovingDirections;
 import logic.environment.manager.file.ReadXmlFile;
-import logic.environment.manager.field.ShipManager;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import main.Dimension;
