@@ -11,7 +11,7 @@ import main.Dimension;
 import network.client.Client;
 import network.data.PacketHandler;
 import logic.environment.manager.game.Commands;
-import logic.environment.manager.game.GameStates;
+import logic.environment.manager.game.States;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -20,7 +20,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import java.util.ArrayList;
 
 public class MultiplayerState extends BasicInvaderState {
-    private GameStates gameStates;
+    private States states;
     private String message;
     private UnicodeFont uniFontData;
 
@@ -111,7 +111,7 @@ public class MultiplayerState extends BasicInvaderState {
             client.send(handler.build(message, client.getConnection()));
         }
 
-        if(gameStates == GameStates.GAMEOVER){
+        if(states == States.GAMEOVER){
             message = client.getID() + "\n" + Commands.EXIT.toString();
             client.send(handler.build(message, client.getConnection()));
             try {
@@ -127,7 +127,7 @@ public class MultiplayerState extends BasicInvaderState {
     }
 
     private void create(String[] rcvdata) {
-        gameStates = GameStates.valueOf(rcvdata[0]);
+        states = States.valueOf(rcvdata[0]);
 
         for (String strings : rcvdata[1].split("\\t")) {
             if (!strings.equals("")) {

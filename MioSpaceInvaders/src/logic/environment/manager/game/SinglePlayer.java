@@ -58,14 +58,14 @@ public class SinglePlayer {
         threadManager();
     }
 
-    public GameStates checkGameState(){
+    public States checkGameState(){
         if (fieldManager.isGameOver() || fieldManager.isEndReached()) {
             threadInvader.stop();
 
             if (player.checkHighscore()) {
-                return GameStates.NEWHIGHSCORE;
+                return States.NEWHIGHSCORE;
             }
-            return GameStates.GAMEOVER;
+            return States.GAMEOVER;
         }
         return null;
     }

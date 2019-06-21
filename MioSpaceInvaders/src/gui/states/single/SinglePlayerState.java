@@ -7,7 +7,7 @@ import logic.environment.manager.game.SinglePlayer;
 import gui.drawer.SpriteDrawer;
 import logic.environment.manager.menu.Menu;
 import logic.environment.manager.game.Commands;
-import logic.environment.manager.game.GameStates;
+import logic.environment.manager.game.States;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Brick;
@@ -125,12 +125,12 @@ public class SinglePlayerState extends BasicInvaderState {
         singlePlayer.update(delta);
 
         //STATO GIOCO
-        GameStates gameStates = singlePlayer.checkGameState();
+        States states = singlePlayer.checkGameState();
 
-        if (gameStates == GameStates.GAMEOVER) {
+        if (states == States.GAMEOVER) {
             stateBasedGame.enterState(IDStates.GAMEOVERSINGLE_STATE, new FadeOutTransition(), new FadeInTransition());
         }
-        if (gameStates == GameStates.NEWHIGHSCORE) {
+        if (states == States.NEWHIGHSCORE) {
             stateBasedGame.enterState(IDStates.NEWHIGHSCORE_STATE, new FadeOutTransition(), new FadeInTransition());
         }
     }

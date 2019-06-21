@@ -1,4 +1,4 @@
-package gui.states.single;
+package gui.states.menu;
 
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;

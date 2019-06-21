@@ -1,5 +1,9 @@
 package main;
 
+import gui.states.menu.CustomizationState;
+import gui.states.menu.MenuState;
+import gui.states.menu.RankingState;
+import gui.states.menu.StartState;
 import gui.states.multi.WaitingState;
 import gui.states.single.*;
 import logic.environment.manager.menu.Menu;
@@ -37,8 +41,8 @@ public class SpaceInvaders extends StateBasedGame {
     public static void main(String[] args) {
         try{
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            SCALE_X = (float) screenSize.getWidth()/190;
-            SCALE_Y = (float) screenSize.getHeight()/125;
+            SCALE_X = (float) screenSize.getWidth()/175;
+            SCALE_Y = (float) screenSize.getHeight()/110;
             Menu menu = new Menu();
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
             container.setDisplayMode((int) (main.Dimension.MAX_WIDTH*SCALE_X),(int) (main.Dimension.MAX_HEIGHT*SCALE_Y),

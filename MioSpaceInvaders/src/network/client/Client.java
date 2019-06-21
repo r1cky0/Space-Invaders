@@ -3,8 +3,7 @@ package network.client;
 import logic.player.Player;
 import network.data.Connection;
 import network.data.PacketHandler;
-import logic.environment.manager.game.GameStates;
-import org.lwjgl.Sys;
+import logic.environment.manager.game.States;
 
 import java.io.IOException;
 import java.net.*;
@@ -21,20 +20,20 @@ public class Client implements Runnable {
 
     private AtomicBoolean running;
     private int ID;
-    private boolean initialization;
     private String[] rcvdata;
-    private GameStates gameState;
+    private States gameState;
 
     public Client(Player player, String destAddress, int destPort) {
         this.player = player;
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
-        initialization = true;
+
+        gameState = States.INITIALIZATION;
         ID = -1; //fintanto che il server non comunica un id al listener è settato a -1
         try {
             //aggiunta connessione verso il server
             connection = new Connection(InetAddress.getByName(destAddress), destPort);
-            this.init();
+            init();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,19 +69,17 @@ public class Client implements Runnable {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
-                if(initialization){
-                    try {
+                switch (gameState){
+                    case INITIALIZATION:
                         ID = Integer.parseInt(handler.process(packet)[0]);
-                        initialization = false;
-                    }catch (NumberFormatException ignored){
-                    }
-                }else if(gameState != GameStates.START) {
-                    gameState = GameStates.valueOf(handler.process(packet)[0]);
-                }
-                else {
-                    //Packet contiene dati ricevuti
-                    //che client deve renderizzare
-                    rcvdata = handler.process(packet);
+                        gameState = States.WAITING;
+                        break;
+                    case WAITING:
+                        gameState = States.valueOf(handler.process(packet)[0]);
+                        break;
+                    case START:
+                        rcvdata = handler.process(packet); //rcvdata contiene dati ricevuti che client deve renderizzare
+                        break;
                 }
             } catch (IOException e) {
                 close();
@@ -98,12 +95,8 @@ public class Client implements Runnable {
         socket.close();
     }
 
-    public GameStates getGameState(){
+    public States getGameState(){
         return gameState;
-    }
-
-    public boolean getInitialization(){
-        return initialization;
     }
 
     public String[] getRcvdata(){

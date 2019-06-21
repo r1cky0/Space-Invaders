@@ -7,7 +7,7 @@ public class Dimension {
     public static float MIN_WIDTH = 0;
 
     public static float SHIP_WIDTH = MAX_WIDTH/17;
-    public static float BULLET_WIDTH = MAX_WIDTH/50;
+    public static float BULLET_WIDTH = MAX_WIDTH/90;
     public static float BRICK_WIDTH = MAX_WIDTH/40;
     public static float INVADER_WIDTH = MAX_WIDTH/17;
 

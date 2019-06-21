@@ -1,8 +1,7 @@
 package logic.thread;
 
-import logic.environment.manager.game.GameStates;
+import logic.environment.manager.game.States;
 import logic.environment.manager.game.Multiplayer;
-import logic.player.Player;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -39,7 +38,7 @@ public class ThreadUpdate implements Runnable{
                 }
             }
             if(multiplayer.getPlayers().isEmpty() || multiplayer.getFieldManager().isEndReached()){
-                multiplayer.setGameStates(GameStates.GAMEOVER);
+                multiplayer.setStates(States.GAMEOVER);
             }
             multiplayer.threadInvaderManager();
             try {

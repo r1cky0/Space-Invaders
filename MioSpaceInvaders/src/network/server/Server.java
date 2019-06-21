@@ -1,6 +1,6 @@
 package network.server;
 
-import logic.environment.manager.game.GameStates;
+import logic.environment.manager.game.States;
 import logic.environment.manager.game.Multiplayer;
 import logic.player.Player;
 import network.data.Connection;
@@ -57,19 +57,12 @@ public class Server implements Runnable {
             DatagramPacket packet = new DatagramPacket(rcvdata, rcvdata.length);
             try {
                 socket.receive(packet);
-                if(multiplayer.getGameStates() == GameStates.WAITING) {
+                String[] infos = handler.process(packet);
+                try{
+                    Integer.parseInt(infos[0]);
+                    clients.get(Integer.parseInt(infos[0])).setInfos(infos);
+                }catch (NumberFormatException e){
                     addConnection(packet);
-                }else {
-                    String[] infos = handler.process(packet);
-                    try {
-                        int ID = Integer.parseInt(infos[0]);
-                        clients.get(ID).execCommand(infos);
-                    }catch (NumberFormatException ignored){}
-                }
-                checkClients();
-                if(clients.isEmpty()){
-                    multiplayer.stopGame();
-                    multiplayer.setGameStates(GameStates.WAITING);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -90,25 +83,22 @@ public class Server implements Runnable {
             clients.put(ID, new ServerThread(player, multiplayer, connection, socket));
             clients.get(ID).send(String.valueOf(ID));
             if (clients.size() == maxPlayers) {
-                broadcast(GameStates.START.toString());
-                try {
-                    //sleep per dare il tempo ai client di inizializzare il campo di gioco prima di iniziare
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                broadcast(States.START.toString());
                 multiplayer.startGame();
                 for(int id : clients.keySet()){
-                    clients.get(id).start();
+                    clients.get(id).sender();
                 }
             }
         }
     }
 
-    private void checkClients(){
-        for(int ID : clients.keySet()){
-            if(!clients.get(ID).isRunning().get()){
-                clients.remove(clients.get(ID));
+    public void checkClients() {
+        for (int ID : clients.keySet()) {
+            if (!clients.get(ID).isRunning().get()) {
+                clients.remove(ID);
+                if (clients.isEmpty()) {
+                    multiplayer.stopGame();
+                }
             }
         }
     }
@@ -118,4 +108,5 @@ public class Server implements Runnable {
             clients.get(ID).send(mex);
         }
     }
+
 }

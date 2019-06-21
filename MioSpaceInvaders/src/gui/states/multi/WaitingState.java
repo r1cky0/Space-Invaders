@@ -2,13 +2,12 @@ package gui.states.multi;
 
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
-import gui.states.multi.MultiplayerState;
 import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.game.Commands;
 import logic.environment.manager.menu.Menu;
 import network.client.Client;
 import network.data.PacketHandler;
-import logic.environment.manager.game.GameStates;
+import logic.environment.manager.game.States;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -46,6 +45,7 @@ public class WaitingState extends BasicInvaderState {
 
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
         client = new Client(menu.getPlayer(), "localhost", 9999);
+        client.send(handler.build(client.getPlayer().getName(), client.getConnection()));
     }
 
     @Override
@@ -68,7 +68,7 @@ public class WaitingState extends BasicInvaderState {
             client.close();
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
-        if(client.getGameState() == GameStates.START){
+        if(client.getGameState() == States.START){
             try {
                 stateBasedGame.addState(new MultiplayerState(client));
                 stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer,stateBasedGame);
@@ -76,9 +76,7 @@ public class WaitingState extends BasicInvaderState {
                 e.printStackTrace();
             }
             stateBasedGame.enterState(IDStates.MULTIPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
-        }else if(client.getInitialization()){
-            client.send(handler.build(client.getPlayer().getName(), client.getConnection()));
-        }else{
+        }else if(client.getGameState() == States.WAITING){
             title = "WAITING FOR OTHER PLAYERS...";
         }
     }

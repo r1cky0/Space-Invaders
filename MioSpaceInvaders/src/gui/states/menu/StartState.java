@@ -1,4 +1,4 @@
-package gui.states.single;
+package gui.states.menu;
 
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
@@ -140,10 +140,10 @@ public class StartState extends BasicInvaderState implements ComponentListener {
      * @param source Il tasto di cui dobbiamo settare il comportamento
      */
     public void componentActivated(AbstractComponent source) {
-        if (source == loginButton) {
-            String nickname = nameField.getText();
-            String password = passwordField.getText();
+        String nickname = nameField.getText();
+        String password = passwordField.getText();
 
+        if (source == loginButton) {
             if (menu.logIn(nickname, password)) {
                 stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
             } else {
@@ -152,15 +152,18 @@ public class StartState extends BasicInvaderState implements ComponentListener {
             }
         }
         if (source == accountButton) {
-            String nickname = nameField.getText();
-            String password = passwordField.getText();
-
             if (!(nickname.isEmpty() || password.isEmpty())) {
-                if (menu.newAccount(nickname, password)) {
-                    stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
-                } else {
+                try {
+                    Integer.parseInt(nickname);
                     errorFlag = true;
-                    errorMessage = "Account già esistente";
+                    errorMessage = "Nickname non valido";
+                }catch (NumberFormatException e) {
+                    if (menu.newAccount(nickname, password)) {
+                        stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
+                    } else {
+                        errorFlag = true;
+                        errorMessage = "Account già esistente";
+                    }
                 }
             }
         }

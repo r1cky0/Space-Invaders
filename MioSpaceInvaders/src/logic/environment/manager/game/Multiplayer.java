@@ -1,11 +1,9 @@
 package logic.environment.manager.game;
 
 import logic.environment.manager.field.FieldManager;
-import logic.environment.manager.field.MovingDirections;
 import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
-import logic.sprite.Sprite;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.InvaderBullet;
@@ -15,27 +13,23 @@ import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
 import main.Dimension;
 import logic.thread.ThreadUpdate;
-import org.lwjgl.Sys;
-import org.newdawn.slick.util.pathfinding.navmesh.Space;
 
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Multiplayer{
     private FieldManager fieldManager;
     private Team team;
-    private GameStates gameStates;
+    private States states;
 
     private ThreadInvader threadInvader;
-    private boolean newThread;
+    private boolean threadRunning;
     private ThreadUpdate threadUpdate;
 
     private static int DELTA = 1;
 
     public Multiplayer(){
         team = new Team();
-        newThread = false;
-        gameStates = GameStates.WAITING;
+        threadRunning = false;
     }
 
     public Player init(int ID, String[] name){
@@ -53,40 +47,41 @@ public class Multiplayer{
     }
 
     public void threadInvaderManager(){
-        if (!newThread) {
+        if (!threadRunning) {
             threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
             threadInvader.start();
-            newThread = true;
+            threadRunning = true;
         }
         if (fieldManager.isNewLevel()) {
             threadInvader.stop();
             team.incrementLife();
             fieldManager.setNewLevel(false);
-            newThread = false;
+            threadRunning = false;
         }
     }
 
     public void startGame(){
         fieldManager = new FieldManager();
-        newThread = false;
-        gameStates = GameStates.START;
+        threadRunning = false;
+        states = States.START;
         update();
     }
 
-    public void stopGame(){
-        threadInvader.stop();
-        threadUpdate.stop();
-        gameStates = GameStates.WAITING;
+    public void stopGame() {
+        if(threadRunning) {
+            threadInvader.stop();
+            threadUpdate.stop();
+        }
         team.clear();
     }
 
-    public void setGameStates(GameStates gameStates){
-        this.gameStates = gameStates;
+    public void setStates(States states){
+        this.states = states;
     }
 
     public String getInfos(){
 
-        String infos = gameStates.toString() + "\n";
+        String infos = states.toString() + "\n";
 
         for(Invader invader : fieldManager.getInvaders()){
             infos += invader.getX() + "_" + invader.getY() + "\t";
@@ -119,10 +114,6 @@ public class Multiplayer{
         infos += team.getTeamCurrentScore();
 
         return infos;
-    }
-
-    public GameStates getGameStates(){
-        return gameStates;
     }
 
     public FieldManager getFieldManager(){
