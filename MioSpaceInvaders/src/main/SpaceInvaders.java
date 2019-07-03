@@ -4,6 +4,7 @@ import gui.states.menu.CustomizationState;
 import gui.states.menu.MenuState;
 import gui.states.menu.RankingState;
 import gui.states.menu.StartState;
+import gui.states.multi.NetworkState;
 import gui.states.multi.WaitingState;
 import gui.states.single.*;
 import logic.environment.manager.menu.Menu;
@@ -34,7 +35,7 @@ public class SpaceInvaders extends StateBasedGame {
         this.addState(new RankingState(menu));
         this.addState(new NewHighscoreState(menu));
         this.addState(new CustomizationState(menu));
-        this.addState(new WaitingState(menu));
+        this.addState(new NetworkState(menu));
         this.enterState(0);
     }
 
@@ -42,7 +43,7 @@ public class SpaceInvaders extends StateBasedGame {
         try{
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             SCALE_X = (float) screenSize.getWidth()/175;
-            SCALE_Y = (float) screenSize.getHeight()/110;
+            SCALE_Y = (float) screenSize.getHeight()/120;
             Menu menu = new Menu();
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
             container.setDisplayMode((int) (main.Dimension.MAX_WIDTH*SCALE_X),(int) (main.Dimension.MAX_HEIGHT*SCALE_Y),
