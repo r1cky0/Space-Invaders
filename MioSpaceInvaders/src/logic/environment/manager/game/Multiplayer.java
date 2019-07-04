@@ -102,7 +102,7 @@ public class Multiplayer{
 
         for(Integer ID : getPlayers().keySet()){
             infos += ID + "_" + getSpaceShip(ID).getX() + "_" + getSpaceShip(ID).getLife() + "_";
-            if(getSpaceShipBullet(ID) != null) {
+            if(getSpaceShip(ID).isShipShot()) {
                 infos += getSpaceShipBullet(ID).getX() + "_" + getSpaceShipBullet(ID).getY() + "\t";
             }
             else {

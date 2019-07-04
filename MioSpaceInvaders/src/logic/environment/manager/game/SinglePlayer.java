@@ -16,6 +16,7 @@ import java.util.List;
 
 public class SinglePlayer {
     private Player player;
+    private SpaceShip ship;
     private FieldManager fieldManager;
 
     private ThreadInvader threadInvader;
@@ -23,6 +24,7 @@ public class SinglePlayer {
 
     public SinglePlayer(Player player, FieldManager fieldManager) {
         this.player = player;
+        this.ship = getSpaceShip();
         this.fieldManager = fieldManager;
         player.getSpaceShip().init();
         newThread = false;
@@ -31,13 +33,13 @@ public class SinglePlayer {
     public void execCommand(Commands commands, int delta){
         switch (commands){
             case MOVE_LEFT:
-                fieldManager.shipMovement(player.getSpaceShip(), MovingDirections.LEFT, delta);
+                fieldManager.shipMovement(ship, MovingDirections.LEFT, delta);
                 break;
             case MOVE_RIGHT:
-                fieldManager.shipMovement(player.getSpaceShip(),MovingDirections.RIGHT, delta);
+                fieldManager.shipMovement(ship,MovingDirections.RIGHT, delta);
                 break;
             case SHOT:
-                fieldManager.shipShot(player.getSpaceShip());
+                fieldManager.shipShot(ship);
                 break;
             case EXIT:
                 threadInvader.stop();
@@ -49,12 +51,12 @@ public class SinglePlayer {
         for (Bullet bullet : fieldManager.getInvaderBullets()) {
             bullet.move(delta);
         }
-        if (getSpaceShipBullet() != null) {
-            player.getSpaceShip().getShipBullet().move(delta);
+        if (ship.isShipShot()) {
+            ship.getShipBullet().move(delta);
             fieldManager.checkSpaceShipShotCollision(getSpaceShip());
         }
 
-        fieldManager.checkInvaderShotCollision(getSpaceShip());
+        fieldManager.checkInvaderShotCollision(ship);
         threadManager();
     }
 

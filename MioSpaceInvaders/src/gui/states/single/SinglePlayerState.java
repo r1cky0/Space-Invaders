@@ -86,7 +86,7 @@ public class SinglePlayerState extends BasicInvaderState {
         spriteDrawer.render(spaceShipImage,singlePlayer.getSpaceShip().getX(),
                 singlePlayer.getSpaceShip().getY(), Dimension.SHIP_WIDTH, Dimension.SHIP_HEIGHT);
 
-        if(singlePlayer.getSpaceShipBullet() != null){
+        if(singlePlayer.getSpaceShip().isShipShot()){
             spriteDrawer.render(bulletImage,singlePlayer.getSpaceShipBullet().getX(),
                     singlePlayer.getSpaceShipBullet().getY(), Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT);
         }

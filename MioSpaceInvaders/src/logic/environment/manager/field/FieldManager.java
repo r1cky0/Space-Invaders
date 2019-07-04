@@ -85,7 +85,7 @@ public class FieldManager {
         if(!spaceShip.isShipShot()) {
             Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - Dimension.BULLET_WIDTH /2,
                     spaceShip.getY());
-            spaceShip.setShipBullet(new SpaceShipBullet(coordinate, Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT));
+            spaceShip.setShipBullet(coordinate);
             spaceShip.setShipShot(true);
         }
     }
@@ -128,7 +128,6 @@ public class FieldManager {
         for (Bunker bunker : bunkers) {
             if (bunker.checkBrickCollision(spaceShip.getShipBullet())) {
                 spaceShip.setShipShot(false);
-                spaceShip.setShipBullet(null);
                 return true;
             }
         }
@@ -137,7 +136,6 @@ public class FieldManager {
                 spaceShip.incrementCurrentScore(invader.getValue());
                 invaders.remove(invader);
                 spaceShip.setShipShot(false);
-                spaceShip.setShipBullet(null);
                 if (invaders.isEmpty()) {
                     nextLevel(spaceShip);
                 }
@@ -146,7 +144,6 @@ public class FieldManager {
         }
         if (spaceShip.getShipBullet().getY() <= 0) {
             spaceShip.setShipShot(false);
-            spaceShip.setShipBullet(null);
         }
         return false;
     }
