@@ -49,7 +49,7 @@ public class WaitingState extends BasicInvaderState {
     }
 
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
-        client = new Client(menu.getPlayer(), "ip", port);
+        client = new Client(menu.getPlayer(), ip, port);
         client.send(handler.build(client.getPlayer().getName(), client.getConnection()));
     }
 
