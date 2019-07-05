@@ -26,7 +26,7 @@ public class ThreadUpdate implements Runnable{
                 bullet.move(multiplayer.getDelta());
             }
             for (int ID : multiplayer.getPlayers().keySet()) {
-                if (multiplayer.getSpaceShipBullet(ID) != null) {
+                if (multiplayer.getSpaceShip(ID).isShipShot()) {
                     multiplayer.getSpaceShipBullet(ID).move(multiplayer.getDelta());
                     if(multiplayer.getFieldManager().checkSpaceShipShotCollision(multiplayer.getSpaceShip(ID))){
                         multiplayer.getTeam().calculateTeamCurrentScore();
