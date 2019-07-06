@@ -8,6 +8,7 @@ import logic.environment.manager.menu.Menu;
 import network.client.Client;
 import network.data.PacketHandler;
 import logic.environment.manager.game.States;
+import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -49,7 +50,7 @@ public class WaitingState extends BasicInvaderState {
     }
 
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
-        client = new Client(menu.getPlayer(), "ip", port);
+        client = new Client(menu.getPlayer(), ip, port);
         client.send(handler.build(client.getPlayer().getName(), client.getConnection()));
     }
 

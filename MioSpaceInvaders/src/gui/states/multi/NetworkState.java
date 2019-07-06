@@ -29,6 +29,7 @@ public class NetworkState extends BasicInvaderState implements ComponentListener
     private String portString;
     private String errorMessage;
     private boolean errorFlag = false;
+    private boolean startGame = false;
 
     private UnicodeFont uniFontTitle;
     private UnicodeFont uniFontMessage;
@@ -114,8 +115,18 @@ public class NetworkState extends BasicInvaderState implements ComponentListener
         if (input.isKeyPressed(Input.KEY_TAB)) {
             portField.setFocus(true);
         }
+
         if(input.isKeyPressed(Input.KEY_ENTER)){
             setParameters();
+        }
+
+        if(startGame){
+            try {
+                stateBasedGame.getState(IDStates.WAITING_STATE).init(gameContainer,stateBasedGame);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+            stateBasedGame.enterState(IDStates.WAITING_STATE, new FadeOutTransition(), new FadeInTransition());
         }
     }
 
@@ -141,7 +152,7 @@ public class NetworkState extends BasicInvaderState implements ComponentListener
         }
         if(!ip.isEmpty() && port > 0) {
             stateBasedGame.addState(new WaitingState(menu, ip, port));
-            stateBasedGame.enterState(IDStates.WAITING_STATE, new FadeOutTransition(), new FadeInTransition());
+            startGame = true;
         } else {
             errorFlag = true;
             errorMessage = "Porta non valida";
