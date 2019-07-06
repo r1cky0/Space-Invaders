@@ -11,7 +11,7 @@ import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
-import main.Dimension;
+import main.Dimensions;
 import logic.thread.ThreadUpdate;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,9 +33,9 @@ public class Multiplayer{
     }
 
     public Player init(int ID, String[] name){
-        Coordinate coordinate = new Coordinate((Dimension.MAX_WIDTH / 2 - Dimension.SHIP_WIDTH / 2),
-                (Dimension.MAX_HEIGHT - Dimension.SHIP_HEIGHT));
-        SpaceShip defaultShip = new SpaceShip(coordinate, Dimension.SHIP_WIDTH, Dimension.MAX_HEIGHT);
+        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2),
+                (Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT));
+        SpaceShip defaultShip = new SpaceShip(coordinate, Dimensions.SHIP_WIDTH, Dimensions.MAX_HEIGHT);
         Player player = new Player(name[0], defaultShip);
         team.addPlayer(ID, player);
         return player;

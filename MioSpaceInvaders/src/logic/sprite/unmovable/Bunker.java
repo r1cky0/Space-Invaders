@@ -2,7 +2,7 @@ package logic.sprite.unmovable;
 
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
-import main.Dimension;
+import main.Dimensions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,14 +38,14 @@ public class Bunker {
                 for (int i = 0; i < riga.length(); i++) {
                     if (riga.charAt(i) == '*') {
                         Coordinate coordinate = new Coordinate(indX, indY);
-                        Brick brick = new Brick(coordinate, Dimension.BRICK_WIDTH, Dimension.BRICK_HEIGHT);
+                        Brick brick = new Brick(coordinate, Dimensions.BRICK_WIDTH, Dimensions.BRICK_HEIGHT);
                         bricks.add(brick);
-                        indX += Dimension.BRICK_WIDTH;
+                        indX += Dimensions.BRICK_WIDTH;
                     } else {
-                        indX += Dimension.BRICK_WIDTH;
+                        indX += Dimensions.BRICK_WIDTH;
                     }
                 }
-                indY -= Dimension.BRICK_HEIGHT;
+                indY -= Dimensions.BRICK_HEIGHT;
                 riga = in.readLine();
                 indX = indexX;
             }

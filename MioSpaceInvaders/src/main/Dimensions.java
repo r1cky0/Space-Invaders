@@ -1,6 +1,6 @@
 package main;
 
-public class Dimension {
+public class Dimensions {
 
     public static float MAX_WIDTH = 100;
     public static float MAX_HEIGHT = 100;

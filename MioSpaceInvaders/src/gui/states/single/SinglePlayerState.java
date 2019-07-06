@@ -12,7 +12,7 @@ import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
-import main.Dimension;
+import main.Dimensions;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -84,24 +84,24 @@ public class SinglePlayerState extends BasicInvaderState {
                 "Highscore: " + highscore, Color.green);
 
         spriteDrawer.render(spaceShipImage,singlePlayer.getSpaceShip().getX(),
-                singlePlayer.getSpaceShip().getY(), Dimension.SHIP_WIDTH, Dimension.SHIP_HEIGHT);
+                singlePlayer.getSpaceShip().getY(), Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
 
         if(singlePlayer.getSpaceShip().isShipShot()){
             spriteDrawer.render(bulletImage,singlePlayer.getSpaceShipBullet().getX(),
-                    singlePlayer.getSpaceShipBullet().getY(), Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT);
+                    singlePlayer.getSpaceShipBullet().getY(), Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
         }
         for (Invader invader : singlePlayer.getInvaders()) {
-            spriteDrawer.render(invaderImage, invader.getX(), invader.getY(), Dimension.INVADER_WIDTH,
-                    Dimension.INVADER_HEIGHT);
+            spriteDrawer.render(invaderImage, invader.getX(), invader.getY(), Dimensions.INVADER_WIDTH,
+                    Dimensions.INVADER_HEIGHT);
         }
         for (InvaderBullet invaderBullet : singlePlayer.getInvadersBullet()) {
-            spriteDrawer.render(bulletImage,invaderBullet.getX(),invaderBullet.getY(), Dimension.BULLET_WIDTH,
-                    Dimension.BULLET_HEIGHT);
+            spriteDrawer.render(bulletImage,invaderBullet.getX(),invaderBullet.getY(), Dimensions.BULLET_WIDTH,
+                    Dimensions.BULLET_HEIGHT);
         }
         for(Bunker bunker : singlePlayer.getBunkers()) {
             for(Brick brick : bunker.getBricks()) {
-                spriteDrawer.render(brickImages.get(4 - brick.getLife()),brick.getX(),brick.getY(), Dimension.BRICK_WIDTH,
-                        Dimension.BRICK_HEIGHT);
+                spriteDrawer.render(brickImages.get(4 - brick.getLife()),brick.getX(),brick.getY(), Dimensions.BRICK_WIDTH,
+                        Dimensions.BRICK_HEIGHT);
             }
         }
     }

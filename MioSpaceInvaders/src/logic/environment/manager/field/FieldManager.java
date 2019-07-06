@@ -7,9 +7,8 @@ import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.InvaderBullet;
-import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Bunker;
-import main.Dimension;
+import main.Dimensions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,11 +70,11 @@ public class FieldManager {
 
     public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
 
-        if(((spaceShip.getX() + Dimension.SHIP_WIDTH) < Dimension.MAX_WIDTH) && (md == MovingDirections.RIGHT)){
+        if(((spaceShip.getX() + Dimensions.SHIP_WIDTH) < Dimensions.MAX_WIDTH) && (md == MovingDirections.RIGHT)){
             spaceShip.moveRight(delta);
         }
 
-        if((spaceShip.getX() > Dimension.MIN_WIDTH) && (md == MovingDirections.LEFT)){
+        if((spaceShip.getX() > Dimensions.MIN_WIDTH) && (md == MovingDirections.LEFT)){
             spaceShip.moveLeft(delta);
         }
 
@@ -83,7 +82,7 @@ public class FieldManager {
 
     public void shipShot(SpaceShip spaceShip){
         if(!spaceShip.isShipShot()) {
-            Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - Dimension.BULLET_WIDTH /2,
+            Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - Dimensions.BULLET_WIDTH /2,
                     spaceShip.getY());
             spaceShip.setShipBullet(coordinate);
             spaceShip.setShipShot(true);
@@ -112,7 +111,7 @@ public class FieldManager {
                 invaderBullets.remove(bullet);
                 return;
             }
-            if (bullet.getY() >= Dimension.MAX_HEIGHT) {
+            if (bullet.getY() >= Dimensions.MAX_HEIGHT) {
                 invaderBullets.remove(bullet);
                 return;
             }
@@ -169,14 +168,14 @@ public class FieldManager {
                 maxY = invader.getY();
             }
         }
-        if((maxY + Dimension.INVADER_HEIGHT) >= (Dimension.MAX_HEIGHT - 7*Dimension.BRICK_HEIGHT)){
+        if((maxY + Dimensions.INVADER_HEIGHT) >= (Dimensions.MAX_HEIGHT - 7* Dimensions.BRICK_HEIGHT)){
             endReached = true;
         }
-        if(((maxX + Dimension.INVADER_WIDTH + Invader.HORIZONTAL_OFFSET) > Dimension.MAX_WIDTH) && !goDown){
+        if(((maxX + Dimensions.INVADER_WIDTH + Invader.HORIZONTAL_OFFSET) > Dimensions.MAX_WIDTH) && !goDown){
             goDown = true;
             return MovingDirections.DOWN;
 
-        } else if((minX - Invader.HORIZONTAL_OFFSET < Dimension.MIN_WIDTH) && !goDown) {
+        } else if((minX - Invader.HORIZONTAL_OFFSET < Dimensions.MIN_WIDTH) && !goDown) {
             goDown = true;
             return MovingDirections.DOWN;
         }
@@ -218,10 +217,10 @@ public class FieldManager {
         Random rand = new Random();
         int random = rand.nextInt(invaders.size());
         Coordinate coordinate = new Coordinate(invaders.get(random).getX() +
-                Dimension.INVADER_WIDTH / 2 - Dimension.BULLET_WIDTH /2,
-                invaders.get(random).getY() + Dimension.INVADER_HEIGHT /2);
+                Dimensions.INVADER_WIDTH / 2 - Dimensions.BULLET_WIDTH /2,
+                invaders.get(random).getY() + Dimensions.INVADER_HEIGHT /2);
 
-        invaderBullets.add(new InvaderBullet(coordinate, Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT));
+        invaderBullets.add(new InvaderBullet(coordinate, Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT));
     }
 
     public void setNewLevel(boolean value){

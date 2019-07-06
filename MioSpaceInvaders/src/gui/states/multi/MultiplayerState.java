@@ -7,7 +7,7 @@ import logic.environment.manager.field.MovingDirections;
 import logic.environment.manager.file.ReadXmlFile;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
-import main.Dimension;
+import main.Dimensions;
 import network.client.Client;
 import network.data.PacketHandler;
 import logic.environment.manager.game.Commands;
@@ -63,12 +63,12 @@ public class MultiplayerState extends BasicInvaderState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         background = new Image(ReadXmlFile.read("defaultBackground"));
         uniFontData = build(3 * gameContainer.getWidth() / 100f);
-        yShip = Dimension.MAX_HEIGHT - Dimension.SHIP_HEIGHT;
+        yShip = Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT;
     }
 
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) {
-        Coordinate coordinate = new Coordinate((Dimension.MAX_WIDTH / 2 - Dimension.SHIP_WIDTH / 2), yShip);
-        SpaceShip spaceShip = new SpaceShip(coordinate, Dimension.SHIP_WIDTH, Dimension.MAX_HEIGHT);
+        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2), yShip);
+        SpaceShip spaceShip = new SpaceShip(coordinate, Dimensions.SHIP_WIDTH, Dimensions.MAX_HEIGHT);
         shipManager = new ShipManager(spaceShip);
     }
 
@@ -132,13 +132,13 @@ public class MultiplayerState extends BasicInvaderState {
         for (String strings : rcvdata[1].split("\\t")) {
             if (!strings.equals("")) {
                 spriteDrawer.render(invaderImage, Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1]), Dimension.INVADER_WIDTH, Dimension.INVADER_HEIGHT);
+                        Float.parseFloat(strings.split("_")[1]), Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT);
             }
         }
         for (String strings : rcvdata[2].split("\\t")) {
             if (!strings.equals("")) {
                 spriteDrawer.render(bulletImage, Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1]), Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT);
+                        Float.parseFloat(strings.split("_")[1]), Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
             }
         }
         for (String strings : rcvdata[3].split("\\t")) {
@@ -146,24 +146,24 @@ public class MultiplayerState extends BasicInvaderState {
                 if (Integer.parseInt(strings.split("_")[2]) > 0) {
                     spriteDrawer.render(brickImages.get(4 - Integer.parseInt(strings.split("_")[2])),
                             Float.parseFloat(strings.split("_")[0]),
-                            Float.parseFloat(strings.split("_")[1]), Dimension.BRICK_WIDTH, Dimension.BRICK_HEIGHT);
+                            Float.parseFloat(strings.split("_")[1]), Dimensions.BRICK_WIDTH, Dimensions.BRICK_HEIGHT);
                 }
             }
         }
         for (String strings : rcvdata[4].split("\\t")) {
             if (!strings.equals("")) {
                 if (client.getID() == Integer.parseInt(strings.split("_")[0])) {
-                    spriteDrawer.render(spaceShipImage, shipManager.getX(), yShip, Dimension.SHIP_WIDTH,
-                            Dimension.SHIP_HEIGHT);
+                    spriteDrawer.render(spaceShipImage, shipManager.getX(), yShip, Dimensions.SHIP_WIDTH,
+                            Dimensions.SHIP_HEIGHT);
                     life = Integer.parseInt(strings.split("_")[2]);
                     checkIsDead = false;
                 }else {
                     spriteDrawer.render(spaceShipImage, Float.parseFloat(strings.split("_")[1]),
-                            yShip, Dimension.SHIP_WIDTH, Dimension.SHIP_HEIGHT);
+                            yShip, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
                 }
                 if(!strings.split("_")[3].equals(" ")) {
                     spriteDrawer.render(bulletImage, Float.parseFloat(strings.split("_")[3]),
-                            Float.parseFloat(strings.split("_")[4]), Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT);
+                            Float.parseFloat(strings.split("_")[4]), Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
                 }
                 if(checkIsDead){
                     life = 0;

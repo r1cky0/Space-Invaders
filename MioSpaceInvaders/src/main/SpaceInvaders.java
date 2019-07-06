@@ -5,7 +5,6 @@ import gui.states.menu.MenuState;
 import gui.states.menu.RankingState;
 import gui.states.menu.StartState;
 import gui.states.multi.NetworkState;
-import gui.states.multi.WaitingState;
 import gui.states.single.*;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
@@ -46,7 +45,7 @@ public class SpaceInvaders extends StateBasedGame {
             SCALE_Y = (float) screenSize.getHeight()/120;
             Menu menu = new Menu();
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
-            container.setDisplayMode((int) (main.Dimension.MAX_WIDTH*SCALE_X),(int) (main.Dimension.MAX_HEIGHT*SCALE_Y),
+            container.setDisplayMode((int) (Dimensions.MAX_WIDTH*SCALE_X),(int) (Dimensions.MAX_HEIGHT*SCALE_Y),
                     false);
             container.setSmoothDeltas(false);
             container.setShowFPS(false);

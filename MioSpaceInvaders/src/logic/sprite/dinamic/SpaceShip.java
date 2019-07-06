@@ -3,7 +3,7 @@ package logic.sprite.dinamic;
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
-import main.Dimension;
+import main.Dimensions;
 
 public class SpaceShip extends Sprite {
     private int life, currentScore;
@@ -20,8 +20,8 @@ public class SpaceShip extends Sprite {
     }
 
     public void init(){
-        Coordinate defaultCoordinate = new Coordinate(Dimension.MAX_WIDTH/2 - Dimension.SHIP_WIDTH /2,
-                Dimension.MAX_HEIGHT - Dimension.SHIP_WIDTH);
+        Coordinate defaultCoordinate = new Coordinate(Dimensions.MAX_WIDTH/2 - Dimensions.SHIP_WIDTH /2,
+                Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
         setCoordinate(defaultCoordinate);
         shipBullet = null;
         shipShot = false;
@@ -53,7 +53,7 @@ public class SpaceShip extends Sprite {
 
     public void setShipBullet(Coordinate coordinate){
         if(shipBullet == null){
-            shipBullet = new SpaceShipBullet(coordinate,Dimension.BULLET_WIDTH, Dimension.BULLET_HEIGHT);
+            shipBullet = new SpaceShipBullet(coordinate, Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
         }
         this.shipBullet.regenerate(coordinate);
     }
