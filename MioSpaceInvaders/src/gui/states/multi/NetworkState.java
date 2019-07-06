@@ -132,9 +132,15 @@ public class NetworkState extends BasicInvaderState implements ComponentListener
 
     public void setParameters(){
         String ip = ipField.getText();
-        String port = portField.getText();
-        if(!(ip.isEmpty() || port.isEmpty()) && Integer.parseInt(port) >= 0 || Integer.parseInt(port) < 9999) {
-            stateBasedGame.addState(new WaitingState(menu, ip, Integer.parseInt(port)));
+        int port = 0;
+        try {
+            port = Integer.parseInt(portField.getText());
+        }catch(NumberFormatException e){
+            errorFlag = true;
+            errorMessage = "Porta non valida";
+        }
+        if(!ip.isEmpty() && port > 0) {
+            stateBasedGame.addState(new WaitingState(menu, ip, port));
             stateBasedGame.enterState(IDStates.WAITING_STATE, new FadeOutTransition(), new FadeInTransition());
         } else {
             errorFlag = true;
