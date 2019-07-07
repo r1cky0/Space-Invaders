@@ -1,6 +1,7 @@
 package logic.environment.manager.game;
 
 import logic.environment.manager.field.FieldManager;
+import logic.environment.manager.file.ReadXmlFile;
 import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
@@ -36,7 +37,7 @@ public class Multiplayer{
         Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2),
                 (Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT));
         SpaceShip defaultShip = new SpaceShip(coordinate, Dimensions.SHIP_WIDTH, Dimensions.MAX_HEIGHT);
-        Player player = new Player(name[0], defaultShip);
+        Player player = new Player(name[0], defaultShip, ReadXmlFile.read("ship0"));
         team.addPlayer(ID, player);
         return player;
     }

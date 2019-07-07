@@ -1,10 +1,11 @@
 package logic.environment.manager.menu;
 
 import logic.environment.manager.field.FieldManager;
+import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.game.SinglePlayer;
 import logic.environment.manager.file.AddAccount;
 import logic.environment.manager.file.Login;
-import logic.environment.manager.file.SaveCustomization;
+import logic.environment.manager.file.FileModifier;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
@@ -38,7 +39,7 @@ public class Menu {
     }
 
     public void saveCustomization(String name, String shipType) {
-        SaveCustomization.saveCustomization(name, shipType);
+        FileModifier.modifyFile(name,player.getHighScore(), shipType);
     }
 
     /**
@@ -50,7 +51,8 @@ public class Menu {
      */
     public boolean newAccount(String name, String password){
         if(AddAccount.newAccount(name,password)){
-            this.player = new Player(name,defaultShip);
+            String deafultPath = ReadXmlFile.read("ship0");
+            this.player = new Player(name,defaultShip,deafultPath);
 
             customization.setCurrentShip("ship0");
 
@@ -65,7 +67,7 @@ public class Menu {
         String [] components = Login.login(name, password);
 
         if(components != null){
-            player = new Player(name, defaultShip);
+            player = new Player(name, defaultShip,components[3]);
             player.setHighScore(Integer.parseInt(components[2]));
 
             customization.setCurrentShip(components[3]);

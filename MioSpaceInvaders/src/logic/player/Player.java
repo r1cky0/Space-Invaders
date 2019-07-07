@@ -1,6 +1,6 @@
 package logic.player;
 
-import logic.environment.manager.file.AddHighScore;
+import logic.environment.manager.file.FileModifier;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 
@@ -8,11 +8,13 @@ public class Player {
     private String name;
     private int highScore;
     private SpaceShip spaceShip;
+    private String shipPath;
 
-    public Player(String name, SpaceShip spaceShip) {
+    public Player(String name, SpaceShip spaceShip,String shipPath) {
         this.name = name;
         this.spaceShip = spaceShip;
         this.highScore = 0;
+        this.shipPath = shipPath;
     }
 
     /**
@@ -22,7 +24,7 @@ public class Player {
     public boolean checkHighscore(){
         if(highScore < spaceShip.getCurrentScore()){
             highScore = getSpaceShip().getCurrentScore();
-            AddHighScore.saveHighscore(name, highScore);
+            FileModifier.modifyFile(name, highScore, shipPath);
             return true;
         }
         return false;
@@ -43,6 +45,8 @@ public class Player {
     public SpaceShip getSpaceShip() {
         return spaceShip;
     }
+
+    public String getShipPath(){return shipPath;}
 
     public SpaceShipBullet getSpaceShipBullet(){
         return spaceShip.getShipBullet();

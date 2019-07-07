@@ -2,10 +2,9 @@ package logic.environment.manager.file;
 
 import java.io.*;
 
+public class FileModifier {
 
-public class AddHighScore {
-
-    public static void saveHighscore(String name, int highscore){
+    public static void modifyFile(String name,int highScore, String shipTypePath) {
         try {
             String file = "res/players.txt";
             String oldLine = "";
@@ -22,14 +21,15 @@ public class AddHighScore {
                 line = in.readLine();
             }
             String[] componenti = oldLine.split("\\t");
-            componenti[2] = Integer.toString(highscore);
+            componenti[2] = Integer.toString(highScore);
+            componenti[3] = shipTypePath;
             String newLine = componenti[0] + "\t" + componenti[1] + "\t" + componenti[2] + "\t" + componenti[3];
             String newContent = oldContent.toString().replaceAll(oldLine, newLine);
             FileWriter out = new FileWriter(fileToBeModified);
             out.write(newContent);
             in.close();
             out.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
