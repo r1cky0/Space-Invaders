@@ -47,7 +47,7 @@ public class SinglePlayer {
         }
     }
 
-    public void update(int delta) {
+    public boolean update(int delta) {
         for (Bullet bullet : fieldManager.getInvaderBullets()) {
             bullet.move(delta);
         }
@@ -56,8 +56,9 @@ public class SinglePlayer {
             fieldManager.checkSpaceShipShotCollision(getSpaceShip());
         }
 
-        fieldManager.checkInvaderShotCollision(ship);
+        boolean collision = fieldManager.checkInvaderShotCollision(ship);
         threadManager();
+        return collision;
     }
 
     public States checkGameState(){

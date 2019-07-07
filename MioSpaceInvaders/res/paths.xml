@@ -6,6 +6,7 @@
         <ship2>res/images/SpaceShip2.png</ship2>
         <ship3>res/images/SpaceShip3.png</ship3>
         <ship4>res/images/SpaceShip4.png</ship4>
+        <shipHit>res/images/ShipHit.png</shipHit>
     </ship>
 
     <bullet>

@@ -33,8 +33,10 @@ public class SinglePlayerState extends BasicInvaderState {
     private Image background;
     private Image invaderImage;
     private Image spaceShipImage;
+    private Image spaceShipHit;
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
+    private boolean collision;
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
@@ -60,6 +62,7 @@ public class SinglePlayerState extends BasicInvaderState {
 
         singlePlayer = menu.getSinglePlayer();
         spaceShipImage = new Image(ReadXmlFile.read(menu.getCustomization().getCurrentShip()));
+        spaceShipHit = new Image(ReadXmlFile.read("shipHit"));
     }
 
     @Override
@@ -83,8 +86,14 @@ public class SinglePlayerState extends BasicInvaderState {
         uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Highscore: " + highscore, Color.green);
 
-        spriteDrawer.render(spaceShipImage,singlePlayer.getSpaceShip().getX(),
+        if(collision){
+            spriteDrawer.render(spaceShipHit,singlePlayer.getSpaceShip().getX(),
+                    singlePlayer.getSpaceShip().getY(), Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
+        }
+        else{
+            spriteDrawer.render(spaceShipImage,singlePlayer.getSpaceShip().getX(),
                 singlePlayer.getSpaceShip().getY(), Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
+        }
 
         if(singlePlayer.getSpaceShip().isShipShot()){
             spriteDrawer.render(bulletImage,singlePlayer.getSpaceShipBullet().getX(),
@@ -122,7 +131,8 @@ public class SinglePlayerState extends BasicInvaderState {
             singlePlayer.execCommand(Commands.EXIT, delta);
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
-        singlePlayer.update(delta);
+        collision = singlePlayer.update(delta);
+
 
         //STATO GIOCO
         States states = singlePlayer.checkGameState();

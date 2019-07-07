@@ -94,12 +94,12 @@ public class FieldManager {
      * brick) e poi rispetto alla ship. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
      * fine schermata(y maggiore)
      */
-    public void checkInvaderShotCollision(SpaceShip spaceShip) {
+    public boolean checkInvaderShotCollision(SpaceShip spaceShip) {
         for(Bullet bullet : invaderBullets){
             for (Bunker bunker : bunkers) {
                 if (bunker.checkBrickCollision(bullet)) {
                     invaderBullets.remove(bullet);
-                    return;
+                    return false;
                 }
             }
 
@@ -109,13 +109,14 @@ public class FieldManager {
                     gameOver = true;
                 }
                 invaderBullets.remove(bullet);
-                return;
+                return true;
             }
             if (bullet.getY() >= Dimensions.MAX_HEIGHT) {
                 invaderBullets.remove(bullet);
-                return;
+                return false;
             }
         }
+        return false;
     }
 
     /**
