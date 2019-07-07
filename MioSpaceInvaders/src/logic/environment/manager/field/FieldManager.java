@@ -38,7 +38,7 @@ public class FieldManager {
 
         bunkers = new ArrayList<>();
         invaderBullets = new CopyOnWriteArrayList<>();
-        invaders = new CopyOnWriteArrayList<>(  );
+        invaders = new CopyOnWriteArrayList<>();
         md = MovingDirections.RIGHT;
         goDown = false;
 

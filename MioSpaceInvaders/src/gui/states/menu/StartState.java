@@ -120,7 +120,12 @@ public class StartState extends BasicInvaderState implements ComponentListener {
         Input input = gameContainer.getInput();
 
         if (input.isKeyPressed(Input.KEY_TAB)) {
-            passwordField.setFocus(true);
+            if(nameField.hasFocus()) {
+                passwordField.setFocus(true);
+            }
+            else{
+                nameField.setFocus(true);
+            }
         }
         if(input.isKeyPressed(Input.KEY_ENTER)){
             String nickname = nameField.getText();

@@ -112,8 +112,17 @@ public class NetworkState extends BasicInvaderState implements ComponentListener
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
         Input input = gameContainer.getInput();
 
+        if(input.isKeyPressed(Input.KEY_ESCAPE)){
+            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
+        }
+
         if (input.isKeyPressed(Input.KEY_TAB)) {
-            portField.setFocus(true);
+            if(ipField.hasFocus()) {
+                portField.setFocus(true);
+            }
+            else{
+                ipField.setFocus(true);
+            }
         }
 
         if(input.isKeyPressed(Input.KEY_ENTER)){
