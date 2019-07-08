@@ -32,31 +32,33 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
     private String highscore;
 
     private Menu menu;
+    private ReadXmlFile readXmlFile;
 
     public NewHighscoreState(Menu menu) {
         this.menu = menu;
+        this.readXmlFile = menu.getReadXmlFile();
     }
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
-        background = new Image(ReadXmlFile.read("defaultBackground"));
+        background = new Image(readXmlFile.read("defaultBackground"));
         title = "NEW HIGHSCORE:";
 
-        newGame = new Image(ReadXmlFile.read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,
+        newGame = new Image(readXmlFile.read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
                 80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        homeImage = new Image(ReadXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(readXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
                 7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
                 this);
 
-        cupImage = new Image(ReadXmlFile.read("buttonRanking")).getScaledCopy(40*gameContainer.getWidth()/100,
+        cupImage = new Image(readXmlFile.read("buttonRanking")).getScaledCopy(40*gameContainer.getWidth()/100,
                 40*gameContainer.getHeight()/100);
 
         uniFontTitle = build(8*gameContainer.getWidth()/100f);

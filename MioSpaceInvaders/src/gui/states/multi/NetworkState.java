@@ -40,16 +40,18 @@ public class NetworkState extends BasicInvaderState implements ComponentListener
     private MouseOverArea multiplayerButton;
 
     private Menu menu;
+    private ReadXmlFile readXmlFile;
 
     public NetworkState(Menu menu) {
         this.menu = menu;
+        this.readXmlFile = menu.getReadXmlFile();
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.stateBasedGame = stateBasedGame;
 
-        background = new Image(ReadXmlFile.read("defaultBackground"));
+        background = new Image(readXmlFile.read("defaultBackground"));
         uniFontTitle = build(6*gameContainer.getWidth()/100f);
         uniFontMessage = build(3*gameContainer.getWidth()/100f);
 
@@ -73,7 +75,7 @@ public class NetworkState extends BasicInvaderState implements ComponentListener
         portField.setBackgroundColor(org.newdawn.slick.Color.white);
         portField.setTextColor(org.newdawn.slick.Color.black);
 
-        multiplayer = new Image(ReadXmlFile.read("buttonMultiplayer")).getScaledCopy(25*gameContainer.getWidth()/100,
+        multiplayer = new Image(readXmlFile.read("buttonMultiplayer")).getScaledCopy(25*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
 
         multiplayerButton = new MouseOverArea(gameContainer, multiplayer,(gameContainer.getWidth() - multiplayer.getWidth())/2,

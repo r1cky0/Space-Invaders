@@ -40,20 +40,22 @@ public class MultiplayerState extends BasicInvaderState {
     private Image spaceShipImage;
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
+    private ReadXmlFile readXmlFile;
 
     public MultiplayerState(Client client) {
         this.client = client;
+        this.readXmlFile = new ReadXmlFile();
 
         spriteDrawer = new SpriteDrawer();
         handler = new PacketHandler();
 
         try {
-            invaderImage = new Image(ReadXmlFile.read("defaultInvader"));
-            bulletImage = new Image(ReadXmlFile.read("defaultBullet"));
+            invaderImage = new Image(readXmlFile.read("defaultInvader"));
+            bulletImage = new Image(readXmlFile.read("defaultBullet"));
             for (int i = 0; i < 4; i++) {
-                brickImages.add(new Image(ReadXmlFile.read("brick" + i)));
+                brickImages.add(new Image(readXmlFile.read("brick" + i)));
             }
-            spaceShipImage = new Image(ReadXmlFile.read("ship0"));
+            spaceShipImage = new Image(readXmlFile.read("ship0"));
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -61,7 +63,7 @@ public class MultiplayerState extends BasicInvaderState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        background = new Image(ReadXmlFile.read("defaultBackground"));
+        background = new Image(readXmlFile.read("defaultBackground"));
         uniFontData = build(3 * gameContainer.getWidth() / 100f);
         yShip = Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT;
     }

@@ -10,7 +10,7 @@ import java.io.File;
 
 public class ReadXmlFile {
 
-    public static String read(String tag) {
+    public String read(String tag) {
 
         try {
             File file = new File("res/paths.xml");

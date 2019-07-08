@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 public class SinglePlayerState extends BasicInvaderState {
     private Menu menu;
+    private ReadXmlFile readXmlFile;
     private SpriteDrawer spriteDrawer;
 
     private SinglePlayer singlePlayer;
@@ -40,14 +41,14 @@ public class SinglePlayerState extends BasicInvaderState {
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
-
+        this.readXmlFile = menu.getReadXmlFile();
         spriteDrawer = new SpriteDrawer();
 
         try {
-            invaderImage = new Image(ReadXmlFile.read("defaultInvader"));
-            bulletImage = new Image(ReadXmlFile.read("defaultBullet"));
+            invaderImage = new Image(readXmlFile.read("defaultInvader"));
+            bulletImage = new Image(readXmlFile.read("defaultBullet"));
             for(int i=0; i<4; i++){
-                brickImages.add(new Image(ReadXmlFile.read("brick"+i)));
+                brickImages.add(new Image(readXmlFile.read("brick"+i)));
             }
         } catch (SlickException e) {
             e.printStackTrace();
@@ -56,13 +57,13 @@ public class SinglePlayerState extends BasicInvaderState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        background = new Image(ReadXmlFile.read("defaultBackground"));
+        background = new Image(readXmlFile.read("defaultBackground"));
 
         uniFontData = build(3*gameContainer.getWidth()/100f);
 
         singlePlayer = menu.getSinglePlayer();
-        spaceShipImage = new Image(ReadXmlFile.read(menu.getCustomization().getCurrentShip()));
-        spaceShipHit = new Image(ReadXmlFile.read("shipHit"));
+        spaceShipImage = new Image(readXmlFile.read(menu.getCustomization().getCurrentShip()));
+        spaceShipHit = new Image(readXmlFile.read("shipHit"));
     }
 
     @Override
@@ -81,7 +82,7 @@ public class SinglePlayerState extends BasicInvaderState {
 
         uniFontData.drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Lives: " + singlePlayer.getSpaceShip().getLife(), Color.red);
-        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: "))/2,
+        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: "))/2f,
                 2*gameContainer.getHeight()/100f,"Score: " + singlePlayer.getSpaceShip().getCurrentScore(), color);
         uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
                 "Highscore: " + highscore, Color.green);

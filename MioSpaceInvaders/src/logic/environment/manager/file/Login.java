@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Login {
 
-    public static String[] login(String name, String password){
+    public String[] tryLogin(String name, String password){
         try {
             BufferedReader in = new BufferedReader(new FileReader("res/players.txt"));
             String riga = in.readLine();

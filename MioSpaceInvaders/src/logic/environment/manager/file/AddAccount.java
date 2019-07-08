@@ -8,7 +8,7 @@ import java.nio.file.StandardOpenOption;
 
 public class AddAccount {
 
-    public static boolean newAccount(String name, String password){
+    public boolean newAccount(String name, String password){
         try {
             int baseScore = 0;
             String baseShip = "ship0";

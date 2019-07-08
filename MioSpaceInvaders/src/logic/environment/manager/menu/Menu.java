@@ -22,6 +22,9 @@ public class Menu {
     private SpaceShip defaultShip;
     private Player player;
     private FileModifier fileModifier;
+    private ReadXmlFile readXmlFile;
+    private AddAccount addAccount;
+    private Login login;
 
     public Menu(){
         customization = new Customization();
@@ -32,6 +35,9 @@ public class Menu {
         defaultShip = new SpaceShip(coordinate, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
 
         fileModifier = new FileModifier();
+        readXmlFile = new ReadXmlFile();
+        addAccount = new AddAccount();
+        login = new Login();
     }
 
     public void createRanking(){
@@ -54,8 +60,7 @@ public class Menu {
      * @return Segnala se aggiunta dell' acount é andata a buon fine
      */
     public boolean newAccount(String name, String password){
-        if(AddAccount.newAccount(name,password)){
-            String deafultPath = ReadXmlFile.read("ship0");
+        if(addAccount.newAccount(name,password)){
             this.player = new Player(name,defaultShip);
 
             customization.setCurrentShip("ship0");
@@ -68,7 +73,7 @@ public class Menu {
     }
 
     public boolean logIn(String name, String password){
-        String [] components = Login.login(name, password);
+        String [] components = login.tryLogin(name, password);
 
         if(components != null){
             player = new Player(name, defaultShip);
@@ -114,4 +119,6 @@ public class Menu {
     public Customization getCustomization() {
         return customization;
     }
+
+    public ReadXmlFile getReadXmlFile(){return readXmlFile;}
 }

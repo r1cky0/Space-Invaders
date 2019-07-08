@@ -37,9 +37,11 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
     private String title;
 
     private Menu menu;
+    private ReadXmlFile readXmlFile;
 
     public MenuState(Menu menu){
         this.menu = menu;
+        this.readXmlFile = menu.getReadXmlFile();
     }
 
     @Override
@@ -47,34 +49,34 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
-        this.background = new Image(ReadXmlFile.read("defaultBackground"));
+        this.background = new Image(readXmlFile.read("defaultBackground"));
         title = "SPACE INVADERS";
 
-        single = new Image(ReadXmlFile.read("buttonSinglePlayer")).getScaledCopy(30*gameContainer.getWidth()/100,
+        single = new Image(readXmlFile.read("buttonSinglePlayer")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         singleButton = new MouseOverArea(gameContainer, single,(gameContainer.getWidth() - single.getWidth())/2,
                 26*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        multi = new Image(ReadXmlFile.read("buttonMultiplayer")).getScaledCopy(30*gameContainer.getWidth()/100,
+        multi = new Image(readXmlFile.read("buttonMultiplayer")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         multiButton = new MouseOverArea(gameContainer, multi,(gameContainer.getWidth() - multi.getWidth())/2,
                 45*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        settings = new Image(ReadXmlFile.read("buttonSettings")).getScaledCopy(8*gameContainer.getWidth()/100,
+        settings = new Image(readXmlFile.read("buttonSettings")).getScaledCopy(8*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         customizationButton = new MouseOverArea(gameContainer, settings,35*gameContainer.getWidth()/100,
                 63*gameContainer.getHeight()/100,8*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        exit = new Image(ReadXmlFile.read("buttonExit")).getScaledCopy(15*gameContainer.getWidth()/100,
+        exit = new Image(readXmlFile.read("buttonExit")).getScaledCopy(15*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         exitButton = new MouseOverArea(gameContainer, exit,(gameContainer.getWidth() - exit.getWidth())/2,
                 80*gameContainer.getHeight()/100,15*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        ranking = new Image(ReadXmlFile.read("buttonRanking")).getScaledCopy(12*gameContainer.getWidth()/100,
+        ranking = new Image(readXmlFile.read("buttonRanking")).getScaledCopy(12*gameContainer.getWidth()/100,
                 12*gameContainer.getHeight()/100);
         rankingButton = new MouseOverArea(gameContainer, ranking,55*gameContainer.getWidth()/100,
                 63*gameContainer.getHeight()/100,12*gameContainer.getWidth()/100,12*gameContainer.getHeight()/100,

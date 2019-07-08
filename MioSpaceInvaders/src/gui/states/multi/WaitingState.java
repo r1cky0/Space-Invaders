@@ -23,6 +23,7 @@ public class WaitingState extends BasicInvaderState {
     private int[] duration = {500,500};
 
     private Menu menu;
+    private ReadXmlFile readXmlFile;
     private Client client;
     private PacketHandler handler;
 
@@ -31,6 +32,7 @@ public class WaitingState extends BasicInvaderState {
 
     public WaitingState(Menu menu,String ip, int port) {
         this.menu = menu;
+        this.readXmlFile = menu.getReadXmlFile();
         handler = new PacketHandler();
         this.ip = ip;
         this.port = port;
@@ -38,12 +40,12 @@ public class WaitingState extends BasicInvaderState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        background = new Image(ReadXmlFile.read("defaultBackground"));
+        background = new Image(readXmlFile.read("defaultBackground"));
         uniFontTitle = build(5 * gameContainer.getWidth() / 100f);
         title = "WAITING FOR CONNECTION...";
 
-        Image[] moving= {new Image(ReadXmlFile.read("defaultInvader")).getScaledCopy(20*gameContainer.getWidth()/100,
-                20*gameContainer.getHeight()/100), new Image(ReadXmlFile.read("defaultInvaderb")).
+        Image[] moving= {new Image(readXmlFile.read("defaultInvader")).getScaledCopy(20*gameContainer.getWidth()/100,
+                20*gameContainer.getHeight()/100), new Image(readXmlFile.read("defaultInvaderb")).
                 getScaledCopy(20*gameContainer.getWidth()/100,20*gameContainer.getHeight()/100)};
 
         movingAnimation = new Animation(moving, duration, true);

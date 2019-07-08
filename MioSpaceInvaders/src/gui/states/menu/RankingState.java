@@ -34,25 +34,27 @@ public class RankingState extends BasicInvaderState implements ComponentListener
     private MouseOverArea homeButton;
 
     private Menu menu;
+    private ReadXmlFile readXmlFile;
 
     public RankingState(Menu menu) {
         this.menu = menu;
+        this.readXmlFile = menu.getReadXmlFile();
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.stateBasedGame = stateBasedGame;
 
-        background = new Image(ReadXmlFile.read("defaultBackground"));
+        background = new Image(readXmlFile.read("defaultBackground"));
 
-        goldMedal = new Image(ReadXmlFile.read("medalGold")).getScaledCopy(6*gameContainer.getWidth()/100,
+        goldMedal = new Image(readXmlFile.read("medalGold")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        silverMedal = new Image(ReadXmlFile.read("medalSilver")).getScaledCopy(6*gameContainer.getWidth()/100,
+        silverMedal = new Image(readXmlFile.read("medalSilver")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        bronzeMedal = new Image(ReadXmlFile.read("medalBronze")).getScaledCopy(6*gameContainer.getWidth()/100,
+        bronzeMedal = new Image(readXmlFile.read("medalBronze")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
 
-        homeImage = new Image(ReadXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(readXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
                 7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,

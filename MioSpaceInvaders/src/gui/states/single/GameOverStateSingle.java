@@ -31,28 +31,30 @@ public class GameOverStateSingle extends BasicInvaderState implements ComponentL
     private String score;
 
     private Menu menu;
+    private ReadXmlFile readXmlFile;
 
     public GameOverStateSingle(Menu menu) {
         this.menu = menu;
+        this.readXmlFile = menu.getReadXmlFile();
     }
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
-        newGame = new Image(ReadXmlFile.read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,
+        newGame = new Image(readXmlFile.read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
                 80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        homeImage = new Image(ReadXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(readXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
                 7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
                 this);
 
-        gameOver = new Image(ReadXmlFile.read("gameoverBackground"));
+        gameOver = new Image(readXmlFile.read("gameoverBackground"));
 
         uniFontScore = build(9*gameContainer.getWidth()/100f);
     }

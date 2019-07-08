@@ -1,0 +1,9 @@
+-Provare a vedere se si possono aggiungere animazioni (almeno quando navicella viene colpita)
+
+-Aggiungere musica ed effetti sonori(esiste giá la classe per caricare i file audio)
+
+-Check di tutti i warning nel programma
+
+-Testare bene multiplayer
+
+-Sistemare documentazione

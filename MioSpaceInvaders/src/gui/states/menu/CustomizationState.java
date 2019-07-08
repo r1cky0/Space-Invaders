@@ -36,14 +36,16 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
     private ArrayList<MouseOverArea> shipButtons;
 
     private Menu menu;
+    private ReadXmlFile readXmlFile;
 
     public CustomizationState(Menu menu) {
         this.menu = menu;
+        readXmlFile = menu.getReadXmlFile();
         shipButtons = new ArrayList<>();
         ships = new ArrayList<>();
         try {
             for (String ship : menu.getCustomization().getSpaceShips()) {
-                ships.add(new Image(ReadXmlFile.read(ship)));
+                ships.add(new Image(readXmlFile.read(ship)));
             }
         } catch (SlickException e) {
             e.printStackTrace();
@@ -54,8 +56,8 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.stateBasedGame = stateBasedGame;
 
-        background = new Image(ReadXmlFile.read("defaultBackground"));
-        homeImage = new Image(ReadXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
+        background = new Image(readXmlFile.read("defaultBackground"));
+        homeImage = new Image(readXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
                 7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
