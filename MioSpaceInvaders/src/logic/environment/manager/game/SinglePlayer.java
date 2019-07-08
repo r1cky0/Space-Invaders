@@ -2,6 +2,8 @@ package logic.environment.manager.game;
 
 import logic.environment.manager.field.FieldManager;
 import logic.environment.manager.field.MovingDirections;
+import logic.environment.manager.file.FileModifier;
+import logic.environment.manager.menu.Customization;
 import logic.player.Player;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
@@ -61,11 +63,11 @@ public class SinglePlayer {
         return collision;
     }
 
-    public States checkGameState(){
+    public States checkGameState(FileModifier fileModifier, Customization customization){
         if (fieldManager.isGameOver() || fieldManager.isEndReached()) {
             threadInvader.stop();
 
-            if (player.checkHighscore()) {
+            if (player.checkHighscore(fileModifier,customization)) {
                 return States.NEWHIGHSCORE;
             }
             return States.GAMEOVER;

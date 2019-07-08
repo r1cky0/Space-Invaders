@@ -4,7 +4,7 @@ import java.io.*;
 
 public class FileModifier {
 
-    public static void modifyFile(String name,int highScore, String shipTypePath) {
+    public void modifyFile(String name,int highScore, String shipTypePath) {
         try {
             String file = "res/players.txt";
             String oldLine = "";

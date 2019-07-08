@@ -6,6 +6,7 @@ import logic.environment.manager.game.SinglePlayer;
 import logic.environment.manager.file.AddAccount;
 import logic.environment.manager.file.Login;
 import logic.environment.manager.file.FileModifier;
+import logic.environment.manager.game.States;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
@@ -20,6 +21,7 @@ public class Menu {
     private SinglePlayer singlePlayer;
     private SpaceShip defaultShip;
     private Player player;
+    private FileModifier fileModifier;
 
     public Menu(){
         customization = new Customization();
@@ -28,6 +30,8 @@ public class Menu {
         Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH/2 - Dimensions.SHIP_WIDTH /2),
                 (Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH));
         defaultShip = new SpaceShip(coordinate, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
+
+        fileModifier = new FileModifier();
     }
 
     public void createRanking(){
@@ -39,7 +43,7 @@ public class Menu {
     }
 
     public void saveCustomization(String name, String shipType) {
-        FileModifier.modifyFile(name,player.getHighScore(), shipType);
+        fileModifier.modifyFile(name,player.getHighScore(), shipType);
     }
 
     /**
@@ -52,7 +56,7 @@ public class Menu {
     public boolean newAccount(String name, String password){
         if(AddAccount.newAccount(name,password)){
             String deafultPath = ReadXmlFile.read("ship0");
-            this.player = new Player(name,defaultShip,deafultPath);
+            this.player = new Player(name,defaultShip);
 
             customization.setCurrentShip("ship0");
 
@@ -67,7 +71,7 @@ public class Menu {
         String [] components = Login.login(name, password);
 
         if(components != null){
-            player = new Player(name, defaultShip,components[3]);
+            player = new Player(name, defaultShip);
             player.setHighScore(Integer.parseInt(components[2]));
 
             customization.setCurrentShip(components[3]);
@@ -91,6 +95,10 @@ public class Menu {
     public void restartGame() {
         fieldManager = new FieldManager();
         singlePlayer = new SinglePlayer(player, fieldManager);
+    }
+
+    public States checkGameState(){
+        return singlePlayer.checkGameState(fileModifier,customization);
     }
 
     public SinglePlayer getSinglePlayer(){return singlePlayer;}

@@ -135,7 +135,7 @@ public class SinglePlayerState extends BasicInvaderState {
 
 
         //STATO GIOCO
-        States states = singlePlayer.checkGameState();
+        States states = menu.checkGameState();
 
         if (states == States.GAMEOVER) {
             stateBasedGame.enterState(IDStates.GAMEOVERSINGLE_STATE, new FadeOutTransition(), new FadeInTransition());

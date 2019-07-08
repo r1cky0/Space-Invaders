@@ -37,7 +37,7 @@ public class Multiplayer{
         Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2),
                 (Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT));
         SpaceShip defaultShip = new SpaceShip(coordinate, Dimensions.SHIP_WIDTH, Dimensions.MAX_HEIGHT);
-        Player player = new Player(name[0], defaultShip, ReadXmlFile.read("ship0"));
+        Player player = new Player(name[0], defaultShip);
         team.addPlayer(ID, player);
         return player;
     }

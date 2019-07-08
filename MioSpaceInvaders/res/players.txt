@@ -5,4 +5,4 @@ c	c	0	ship0
 f	f	0	ship0
 0s	d	0	ship0
 arr	osto	0	ship0
-l	l	20	ship2
+l	l	80	ship1
