@@ -8,16 +8,14 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThreadInvader implements Runnable {
-    private MessageBuilder messageBuilder;
     private FieldManager fieldManager;
     private Thread thread;
     private AtomicBoolean running;
     private int sleepInterval;
 
-    public ThreadInvader(int sleepInterval, FieldManager fieldManager, MessageBuilder messageBuilder) {
+    public ThreadInvader(int sleepInterval, FieldManager fieldManager) {
         this.sleepInterval = sleepInterval;
         this.fieldManager = fieldManager;
-        this.messageBuilder = messageBuilder;
         running = new AtomicBoolean(false);
     }
 
@@ -30,7 +28,6 @@ public class ThreadInvader implements Runnable {
         running.set(true);
         Random rand = new Random();
         while (running.get()) {
-            //messageBuilder.setInvaderInfos(fieldManager.getInvaders());
             fieldManager.invaderMovement(fieldManager.checkInvaderDirection());
             if(rand.nextInt(10) > 4){
                 fieldManager.invaderShot();

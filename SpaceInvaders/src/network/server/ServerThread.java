@@ -68,7 +68,6 @@ public class ServerThread implements Runnable{
                 }
             }
             data = infos.get(0);
-            System.out.println(Commands.valueOf(data[1]));
             infos.remove(0);
             exe(data);
         }

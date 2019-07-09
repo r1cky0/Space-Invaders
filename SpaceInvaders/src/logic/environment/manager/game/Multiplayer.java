@@ -51,7 +51,7 @@ public class Multiplayer{
 
     public void threadInvaderManager(){
         if (!threadRunning) {
-            threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager, messageBuilder);
+            threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
             threadInvader.start();
             threadRunning = true;
         }
