@@ -3,14 +3,18 @@ package logic.thread;
 import logic.environment.manager.game.States;
 import logic.environment.manager.game.Multiplayer;
 import logic.sprite.dinamic.bullets.InvaderBullet;
+import network.data.MessageBuilder;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThreadUpdate implements Runnable{
+    MessageBuilder messageBuilder;
     private Multiplayer multiplayer;
     private AtomicBoolean running;
 
-    public ThreadUpdate(Multiplayer multiplayer){
+    public ThreadUpdate(Multiplayer multiplayer, MessageBuilder messageBuilder){
         this.multiplayer = multiplayer;
+        this.messageBuilder = messageBuilder;
         running = new AtomicBoolean(false);
     }
 
@@ -25,6 +29,9 @@ public class ThreadUpdate implements Runnable{
             for (InvaderBullet bullet : multiplayer.getFieldManager().getInvaderBullets()) {
                 bullet.move(multiplayer.getDelta());
             }
+            messageBuilder.setInvaderInfos(multiplayer.getFieldManager().getInvaders());
+            messageBuilder.setInvaderBulletInfos(multiplayer.getFieldManager().getInvaderBullets());
+
             for (int ID : multiplayer.getPlayers().keySet()) {
                 if (multiplayer.getSpaceShip(ID).isShipShot()) {
                     multiplayer.getSpaceShipBullet(ID).move(multiplayer.getDelta());
@@ -37,8 +44,11 @@ public class ThreadUpdate implements Runnable{
                     multiplayer.getTeam().removePlayer(ID);
                 }
             }
+            messageBuilder.setBunkerInfos(multiplayer.getFieldManager().getBunkers());
+            messageBuilder.setShipInfos(multiplayer.getPlayers(), multiplayer.getTeam());
+
             if(multiplayer.getPlayers().isEmpty() || multiplayer.getFieldManager().isEndReached()){
-                multiplayer.setStates(States.GAMEOVER);
+                messageBuilder.setGameStateInfos(States.GAMEOVER);
             }
             multiplayer.threadInvaderManager();
             try {

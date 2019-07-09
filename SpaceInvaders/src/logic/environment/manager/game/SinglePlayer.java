@@ -77,7 +77,7 @@ public class SinglePlayer {
 
     private void threadManager(){
         if (!newThread) {
-            threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
+            //threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
             threadInvader.start();
             newThread = true;
         }

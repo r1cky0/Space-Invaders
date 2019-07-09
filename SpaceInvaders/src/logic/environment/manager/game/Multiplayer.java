@@ -14,13 +14,14 @@ import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
 import main.Dimensions;
 import logic.thread.ThreadUpdate;
+import network.data.MessageBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Multiplayer{
+    private MessageBuilder messageBuilder;
     private FieldManager fieldManager;
     private Team team;
-    private States states;
 
     private ThreadInvader threadInvader;
     private boolean threadRunning;
@@ -28,8 +29,9 @@ public class Multiplayer{
 
     private static int DELTA = 1;
 
-    public Multiplayer(){
+    public Multiplayer(MessageBuilder messageBuilder){
         team = new Team();
+        this.messageBuilder = messageBuilder;
         threadRunning = false;
     }
 
@@ -43,13 +45,13 @@ public class Multiplayer{
     }
 
     private void update() {
-        threadUpdate = new ThreadUpdate(this);
+        threadUpdate = new ThreadUpdate(this, messageBuilder);
         threadUpdate.start();
     }
 
     public void threadInvaderManager(){
         if (!threadRunning) {
-            threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
+            threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager, messageBuilder);
             threadInvader.start();
             threadRunning = true;
         }
@@ -64,7 +66,7 @@ public class Multiplayer{
     public void startGame(){
         fieldManager = new FieldManager();
         threadRunning = false;
-        states = States.START;
+        messageBuilder.setGameStateInfos(States.START);
         update();
     }
 
@@ -74,47 +76,6 @@ public class Multiplayer{
             threadUpdate.stop();
         }
         team.clear();
-    }
-
-    public void setStates(States states){
-        this.states = states;
-    }
-
-    public String getInfos(){
-
-        StringBuilder infos = new StringBuilder(states.toString() + "\n");
-
-        for(Invader invader : fieldManager.getInvaders()){
-            infos.append(invader.getX()).append("_").append(invader.getY()).append("\t");
-        }
-        infos.append("\n");
-
-        for(InvaderBullet invaderBullet : fieldManager.getInvaderBullets()){
-            infos.append(invaderBullet.getX()).append("_").append(invaderBullet.getY()).append("\t");
-        }
-        infos.append("\n");
-
-        for(Bunker bunker : fieldManager.getBunkers()){
-            for(Brick brick : bunker.getBricks()){
-                infos.append(brick.getX()).append("_").append(brick.getY()).append("_").append(brick.getLife()).append("\t");
-            }
-        }
-        infos.append("\n");
-
-        for(Integer ID : getPlayers().keySet()){
-            infos.append(ID).append("_").append(getSpaceShip(ID).getX()).append("_").append(getSpaceShip(ID).getLife()).append("_");
-            if(getSpaceShip(ID).isShipShot()) {
-                infos.append(getSpaceShipBullet(ID).getX()).append("_").append(getSpaceShipBullet(ID).getY()).append("\t");
-            }
-            else {
-                infos.append(" " + "_" + " " + "\t");
-            }
-        }
-        infos.append("\n");
-
-        infos.append(team.getTeamCurrentScore());
-
-        return infos.toString();
     }
 
     public FieldManager getFieldManager(){

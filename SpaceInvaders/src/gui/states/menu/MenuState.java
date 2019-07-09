@@ -117,11 +117,11 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
         }
         if (source == multiButton ) {
             try {
-                stateBasedGame.getState(IDStates.NETWORK_STATE).init(gameContainer,stateBasedGame);
+                stateBasedGame.getState(IDStates.WAITING_STATE).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(IDStates.NETWORK_STATE, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.WAITING_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == customizationButton) {
             try {

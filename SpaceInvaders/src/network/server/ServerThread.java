@@ -4,6 +4,7 @@ import logic.environment.manager.game.Commands;
 import logic.environment.manager.game.Multiplayer;
 import logic.player.Player;
 import network.data.Connection;
+import network.data.MessageBuilder;
 import network.data.PacketHandler;
 import java.io.IOException;
 import java.net.DatagramSocket;
@@ -15,17 +16,20 @@ public class ServerThread implements Runnable{
     private Player player;
     private Connection connection;
     private PacketHandler handler;
+    private MessageBuilder messageBuilder;
     private DatagramSocket socket;
 
     private CopyOnWriteArrayList<String[]> infos;
 
     private AtomicBoolean running;
 
-    public ServerThread(Player player, Multiplayer multiplayer, Connection connection, DatagramSocket socket) {
+    public ServerThread(Player player, Multiplayer multiplayer, Connection connection, DatagramSocket socket,
+                        MessageBuilder messageBuilder) {
         this.player = player;
         this.multiplayer = multiplayer;
         this.connection = connection;
         this.socket = socket;
+        this.messageBuilder = messageBuilder;
 
         infos = new CopyOnWriteArrayList<>();
         handler = new PacketHandler();
@@ -64,6 +68,7 @@ public class ServerThread implements Runnable{
                 }
             }
             data = infos.get(0);
+            System.out.println(Commands.valueOf(data[1]));
             infos.remove(0);
             exe(data);
         }
@@ -93,9 +98,10 @@ public class ServerThread implements Runnable{
      */
     public void sender() {
         Thread sender = new Thread(() -> {
+            String infos;
             running.set(true);
             while (running.get()) {
-                String infos = multiplayer.getInfos();
+                infos = messageBuilder.getInfos();
                 try {
                     socket.send(handler.build(infos, connection));
                 } catch (IOException e) {

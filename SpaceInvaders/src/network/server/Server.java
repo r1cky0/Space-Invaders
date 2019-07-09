@@ -4,6 +4,7 @@ import logic.environment.manager.game.States;
 import logic.environment.manager.game.Multiplayer;
 import logic.player.Player;
 import network.data.Connection;
+import network.data.MessageBuilder;
 import network.data.PacketHandler;
 
 import java.io.IOException;
@@ -19,19 +20,21 @@ public class Server implements Runnable {
     private Multiplayer multiplayer;
     private DatagramSocket socket;
     private PacketHandler handler;
+    private MessageBuilder messageBuilder;
 
     private ConcurrentHashMap<Integer, ServerThread> clients;
     private AtomicBoolean runningServer;
 
     private int port;
-    private int maxPlayers = 4;
+    private int maxPlayers = 1;
 
     Server(int port) {
         this.port = port;
         clients = new ConcurrentHashMap<>();
+        messageBuilder = new MessageBuilder();
         runningServer = new AtomicBoolean(false);
         handler = new PacketHandler();
-        multiplayer = new Multiplayer();
+        multiplayer = new Multiplayer(messageBuilder);
         try {
             this.init();
         } catch (SocketException e) {
@@ -80,7 +83,7 @@ public class Server implements Runnable {
             Connection connection = new Connection(packet.getAddress(), packet.getPort());
             int ID = clients.size();
             Player player = multiplayer.init(ID, handler.process(packet));
-            clients.put(ID, new ServerThread(player, multiplayer, connection, socket));
+            clients.put(ID, new ServerThread(player, multiplayer, connection, socket, messageBuilder));
             clients.get(ID).send(String.valueOf(ID));
             if (clients.size() == maxPlayers) {
                 broadcast(States.START.toString());

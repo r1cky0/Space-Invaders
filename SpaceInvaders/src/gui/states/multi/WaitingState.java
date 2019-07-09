@@ -27,15 +27,10 @@ public class WaitingState extends BasicInvaderState {
     private Client client;
     private PacketHandler handler;
 
-    private String ip;
-    private int port;
-
-    public WaitingState(Menu menu,String ip, int port) {
+    public WaitingState(Menu menu) {
         this.menu = menu;
         this.readXmlFile = menu.getReadXmlFile();
         handler = new PacketHandler();
-        this.ip = ip;
-        this.port = port;
     }
 
     @Override
@@ -52,7 +47,7 @@ public class WaitingState extends BasicInvaderState {
     }
 
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
-        client = new Client(menu.getPlayer(), ip, port);
+        client = new Client(menu.getPlayer(), "localhost", 9999);
         client.send(handler.build(client.getPlayer().getName(), client.getConnection()));
     }
 

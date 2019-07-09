@@ -4,7 +4,7 @@ import gui.states.menu.CustomizationState;
 import gui.states.menu.MenuState;
 import gui.states.menu.RankingState;
 import gui.states.menu.StartState;
-import gui.states.multi.NetworkState;
+import gui.states.multi.WaitingState;
 import gui.states.single.*;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
@@ -34,7 +34,7 @@ public class SpaceInvaders extends StateBasedGame {
         this.addState(new RankingState(menu));
         this.addState(new NewHighscoreState(menu));
         this.addState(new CustomizationState(menu));
-        this.addState(new NetworkState(menu));
+        this.addState(new WaitingState(menu));
         this.enterState(0);
     }
 
