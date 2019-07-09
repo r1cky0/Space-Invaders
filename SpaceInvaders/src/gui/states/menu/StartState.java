@@ -1,5 +1,6 @@
 package gui.states.menu;
 
+import gui.music.AudioPlayer;
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
 import logic.environment.manager.file.ReadXmlFile;
@@ -87,6 +88,8 @@ public class StartState extends BasicInvaderState implements ComponentListener {
         accountButton = new MouseOverArea(gameContainer, account, (gameContainer.getWidth() - account.getWidth())/2,
                 70*gameContainer.getHeight()/100,25*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100,this);
+
+        audioplayer.menu();
     }
 
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) {

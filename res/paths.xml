@@ -48,4 +48,12 @@
         <medalSilver>res/images/MedalSilver.png</medalSilver>
         <medalBronze>res/images/MedalBronze.png</medalBronze>
     </medal>
+
+    <music>
+        <musicMenu>res/sounds/menu.ogg</musicMenu>
+        <musicGame>res/sounds/game.ogg</musicGame>
+        <musicGameOver>res/sounds/gameover.ogg</musicGameOver>
+        <effectExplosion>res/sounds/explosion.ogg</effectExplosion>
+        <effectShot>res/sounds/shot.ogg</effectShot>
+    </music>
 </SpaceInvaders>

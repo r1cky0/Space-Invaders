@@ -1,44 +1,40 @@
 package gui.music;
 
+import logic.environment.manager.file.ReadXmlFile;
 import org.newdawn.slick.Music;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SlickException;
 
 public class AudioPlayer {
-    private Music gameMusic;
-    private Music gameOverMusic;
-    private Music menuMusic;
-    private Music shotEffect;
-    private Music explosionEffect;
+    private Music musicGame;
+    private Music musicGameOver;
+    private Music musicMenu;
+    private Sound effectShot;
+    private Sound effectExplosion;
+
+    private ReadXmlFile readXmlFile;
 
     public AudioPlayer() {
+
+        this.readXmlFile = new ReadXmlFile();
         try {
-            this.gameMusic = new Music("res/sounds/menu.ogg");
-            //this.gameOverMusic = new Music("res/Sounds/gameOverMusic.ogg");
-            this.menuMusic = new Music("res/sounds/explosion.ogg");
-            //this.shotEffect = new Music("res/sounds/shot.ogg");
-            //this.explosionEffect = new Music("res/Sounds/explosionEffect.ogg");
+            this.musicGame = new Music(readXmlFile.read("musicGame"));
+            this.musicGameOver = new Music(readXmlFile.read("musicGameOver"));
+            this.musicMenu = new Music(readXmlFile.read("musicMenu"));
+            this.effectShot = new Sound(readXmlFile.read("effectShot"));
+            this.effectExplosion = new Sound(readXmlFile.read("effectExplosion"));
         } catch (SlickException e) {
             e.printStackTrace();
         }
     }
 
-    public void game(){
-        gameMusic.play(1.0f,1.0f);
-    }
+    public void game(){ musicGame.play(1.0f,50.0f); }
 
-    public void gameOver(){
-        gameOverMusic.play(1.0f,1.0f);
-    }
+    public void gameOver(){ musicGameOver.play(1.0f,50.0f); }
 
-    public void menu(){
-        menuMusic.loop(1.0f,1.0f);
-    }
+    public void menu(){ musicMenu.loop(1.0f,50.0f); }
 
-    public void explosion(){
-        explosionEffect.play(1.0f, 1.0f);
-    }
+    public void explosion(){ effectExplosion.play(1.0f, 50.0f); }
 
-//    public void shot(){
-//        shotEffect.play(1.0f, 1.0f);
-//    }
+    public void shot(){ effectShot.play(1.0f, 50.0f); }
 }

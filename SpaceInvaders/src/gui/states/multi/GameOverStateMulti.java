@@ -67,6 +67,7 @@ public class GameOverStateMulti extends BasicInvaderState implements ComponentLi
     public void componentActivated(AbstractComponent source) {
         if (source == homeButton) {
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
+            audioplayer.menu();
         }
     }
 

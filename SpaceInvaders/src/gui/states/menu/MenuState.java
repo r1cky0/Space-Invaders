@@ -114,6 +114,7 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
                 e.printStackTrace();
             }
             stateBasedGame.enterState(IDStates.SINGLEPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
+            audioplayer.game();
         }
         if (source == multiButton ) {
             try {

@@ -79,6 +79,7 @@ public class WaitingState extends BasicInvaderState {
                 e.printStackTrace();
             }
             stateBasedGame.enterState(IDStates.MULTIPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
+            audioplayer.game();
         }else if(client.getGameState() == States.WAITING){
             title = "WAITING FOR OTHER PLAYERS...";
         }

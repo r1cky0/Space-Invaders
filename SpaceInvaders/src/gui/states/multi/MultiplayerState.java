@@ -101,6 +101,7 @@ public class MultiplayerState extends BasicInvaderState {
             client.send(handler.build(message, client.getConnection()));
             client.close();
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
+            audioplayer.menu();
         }
         if(input.isKeyDown(Input.KEY_RIGHT)){
             shipManager.shipMovement(MovingDirections.RIGHT, delta);
@@ -124,6 +125,7 @@ public class MultiplayerState extends BasicInvaderState {
             }
             stateBasedGame.enterState(IDStates.GAMEOVERMULTI_STATE, new FadeOutTransition(), new FadeInTransition());
             client.close();
+            audioplayer.gameOver();
         }
         checkIsDead = true;
     }

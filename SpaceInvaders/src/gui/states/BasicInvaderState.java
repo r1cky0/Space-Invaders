@@ -1,5 +1,6 @@
 package gui.states;
 
+import gui.music.AudioPlayer;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
@@ -10,6 +11,7 @@ import java.awt.*;
 public abstract class BasicInvaderState extends BasicGameState {
     private Font fontTitle;
     private UnicodeFont uniFontTitle;
+    protected AudioPlayer audioplayer = new AudioPlayer();
 
     /**
      * Metodo che esegue le operazioni di creazione font comuni a tutti gli stati

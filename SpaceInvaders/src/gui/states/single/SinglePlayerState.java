@@ -90,6 +90,7 @@ public class SinglePlayerState extends BasicInvaderState {
         if(collision){
             spriteDrawer.render(spaceShipHit,singlePlayer.getSpaceShip().getX(),
                     singlePlayer.getSpaceShip().getY(), Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
+            audioplayer.explosion();
         }
         else{
             spriteDrawer.render(spaceShipImage,singlePlayer.getSpaceShip().getX(),
@@ -126,23 +127,32 @@ public class SinglePlayerState extends BasicInvaderState {
             singlePlayer.execCommand(Commands.MOVE_LEFT, delta);
         }
         if(input.isKeyPressed(Input.KEY_SPACE)){
+            if(!singlePlayer.getSpaceShip().isShipShot()){
+                audioplayer.shot();
+            }
             singlePlayer.execCommand(Commands.SHOT, delta);
         }
         if (input.isKeyDown(Input.KEY_ESCAPE)){
             singlePlayer.execCommand(Commands.EXIT, delta);
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
+            audioplayer.menu();
         }
         collision = singlePlayer.update(delta);
-
 
         //STATO GIOCO
         States states = menu.checkGameState();
 
         if (states == States.GAMEOVER) {
             stateBasedGame.enterState(IDStates.GAMEOVERSINGLE_STATE, new FadeOutTransition(), new FadeInTransition());
+            collision = false;
+            audioplayer.explosion();
+            audioplayer.gameOver();
         }
         if (states == States.NEWHIGHSCORE) {
             stateBasedGame.enterState(IDStates.NEWHIGHSCORE_STATE, new FadeOutTransition(), new FadeInTransition());
+            collision = false;
+            audioplayer.explosion();
+            audioplayer.gameOver();
         }
     }
 
