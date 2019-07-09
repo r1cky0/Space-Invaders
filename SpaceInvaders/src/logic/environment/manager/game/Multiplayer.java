@@ -82,39 +82,39 @@ public class Multiplayer{
 
     public String getInfos(){
 
-        String infos = states.toString() + "\n";
+        StringBuilder infos = new StringBuilder(states.toString() + "\n");
 
         for(Invader invader : fieldManager.getInvaders()){
-            infos += invader.getX() + "_" + invader.getY() + "\t";
+            infos.append(invader.getX()).append("_").append(invader.getY()).append("\t");
         }
-        infos += "\n";
+        infos.append("\n");
 
         for(InvaderBullet invaderBullet : fieldManager.getInvaderBullets()){
-            infos += invaderBullet.getX() + "_" + invaderBullet.getY() + "\t";
+            infos.append(invaderBullet.getX()).append("_").append(invaderBullet.getY()).append("\t");
         }
-        infos += "\n";
+        infos.append("\n");
 
         for(Bunker bunker : fieldManager.getBunkers()){
             for(Brick brick : bunker.getBricks()){
-                infos += brick.getX() + "_" + brick.getY() + "_" + brick.getLife() + "\t";
+                infos.append(brick.getX()).append("_").append(brick.getY()).append("_").append(brick.getLife()).append("\t");
             }
         }
-        infos += "\n";
+        infos.append("\n");
 
         for(Integer ID : getPlayers().keySet()){
-            infos += ID + "_" + getSpaceShip(ID).getX() + "_" + getSpaceShip(ID).getLife() + "_";
+            infos.append(ID).append("_").append(getSpaceShip(ID).getX()).append("_").append(getSpaceShip(ID).getLife()).append("_");
             if(getSpaceShip(ID).isShipShot()) {
-                infos += getSpaceShipBullet(ID).getX() + "_" + getSpaceShipBullet(ID).getY() + "\t";
+                infos.append(getSpaceShipBullet(ID).getX()).append("_").append(getSpaceShipBullet(ID).getY()).append("\t");
             }
             else {
-                infos += " " + "_" + " " +"\t";
+                infos.append(" " + "_" + " " + "\t");
             }
         }
-        infos += "\n";
+        infos.append("\n");
 
-        infos += team.getTeamCurrentScore();
+        infos.append(team.getTeamCurrentScore());
 
-        return infos;
+        return infos.toString();
     }
 
     public FieldManager getFieldManager(){
