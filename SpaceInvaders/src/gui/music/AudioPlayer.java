@@ -6,11 +6,11 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.SlickException;
 
 public class AudioPlayer {
-    private Music musicGame;
-    private Music musicGameOver;
-    private Music musicMenu;
-    private Sound effectShot;
-    private Sound effectExplosion;
+    private Music gameMusic;
+    private Music gameOverMusic;
+    private Music menuMusic;
+    private Sound shotEffect;
+    private Sound explosionEffect;
 
     private ReadXmlFile readXmlFile;
 
@@ -18,23 +18,23 @@ public class AudioPlayer {
 
         this.readXmlFile = new ReadXmlFile();
         try {
-            this.musicGame = new Music(readXmlFile.read("musicGame"));
-            this.musicGameOver = new Music(readXmlFile.read("musicGameOver"));
-            this.musicMenu = new Music(readXmlFile.read("musicMenu"));
-            this.effectShot = new Sound(readXmlFile.read("effectShot"));
-            this.effectExplosion = new Sound(readXmlFile.read("effectExplosion"));
+            this.gameMusic = new Music(readXmlFile.read("gameMusic"));
+            this.gameOverMusic = new Music(readXmlFile.read("gameOverMusic"));
+            this.menuMusic = new Music(readXmlFile.read("menuMusic"));
+            this.shotEffect = new Sound(readXmlFile.read("shotEffect"));
+            this.explosionEffect = new Sound(readXmlFile.read("explosionEffect"));
         } catch (SlickException e) {
             e.printStackTrace();
         }
     }
 
-    public void game(){ musicGame.play(1.0f,50.0f); }
+    public void game(){ gameMusic.play(1.0f,50.0f); }
 
-    public void gameOver(){ musicGameOver.play(1.0f,50.0f); }
+    public void gameOver(){ gameOverMusic.play(1.0f,50.0f); }
 
-    public void menu(){ musicMenu.loop(1.0f,50.0f); }
+     public void menu(){ menuMusic.loop(1.0f,50.0f); }
 
-    public void explosion(){ effectExplosion.play(1.0f, 50.0f); }
+    public void explosion(){ explosionEffect.play(1.0f, 50.0f); }
 
-    public void shot(){ effectShot.play(1.0f, 50.0f); }
+    public void shot(){ shotEffect.play(1.0f, 50.0f); }
 }
