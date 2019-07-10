@@ -32,7 +32,7 @@ public class AudioPlayer {
 
     public void gameOver(){ gameOverMusic.play(1.0f,50.0f); }
 
-     public void menu(){ menuMusic.loop(1.0f,50.0f); }
+    public void menu(){ menuMusic.loop(1.0f,50.0f); }
 
     public void explosion(){ explosionEffect.play(1.0f, 50.0f); }
 
