@@ -1,5 +1,6 @@
 package main;
 
+import gui.states.BasicInvaderState;
 import gui.states.menu.CustomizationState;
 import gui.states.menu.MenuState;
 import gui.states.menu.RankingState;

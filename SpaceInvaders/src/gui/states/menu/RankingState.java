@@ -1,7 +1,6 @@
 package gui.states.menu;
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
-import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -34,27 +33,25 @@ public class RankingState extends BasicInvaderState implements ComponentListener
     private MouseOverArea homeButton;
 
     private Menu menu;
-    private ReadXmlFile readXmlFile;
 
     public RankingState(Menu menu) {
         this.menu = menu;
-        this.readXmlFile = menu.getReadXmlFile();
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.stateBasedGame = stateBasedGame;
 
-        background = new Image(readXmlFile.read("defaultBackground"));
+        background = new Image(readerXmlFile.read("defaultBackground"));
 
-        goldMedal = new Image(readXmlFile.read("medalGold")).getScaledCopy(6*gameContainer.getWidth()/100,
+        goldMedal = new Image(readerXmlFile.read("medalGold")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        silverMedal = new Image(readXmlFile.read("medalSilver")).getScaledCopy(6*gameContainer.getWidth()/100,
+        silverMedal = new Image(readerXmlFile.read("medalSilver")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        bronzeMedal = new Image(readXmlFile.read("medalBronze")).getScaledCopy(6*gameContainer.getWidth()/100,
+        bronzeMedal = new Image(readerXmlFile.read("medalBronze")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
 
-        homeImage = new Image(readXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
                 7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,

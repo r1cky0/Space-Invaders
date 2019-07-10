@@ -2,13 +2,11 @@ package gui.states.multi;
 
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
-import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.game.Commands;
 import logic.environment.manager.menu.Menu;
 import network.client.Client;
 import network.data.PacketHandler;
 import logic.environment.manager.game.States;
-import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -23,24 +21,22 @@ public class WaitingState extends BasicInvaderState {
     private int[] duration = {500,500};
 
     private Menu menu;
-    private ReadXmlFile readXmlFile;
     private Client client;
     private PacketHandler handler;
 
     public WaitingState(Menu menu) {
         this.menu = menu;
-        this.readXmlFile = menu.getReadXmlFile();
         handler = new PacketHandler();
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        background = new Image(readXmlFile.read("defaultBackground"));
+        background = new Image(readerXmlFile.read("defaultBackground"));
         uniFontTitle = build(5 * gameContainer.getWidth() / 100f);
         title = "WAITING FOR CONNECTION...";
 
-        Image[] moving= {new Image(readXmlFile.read("defaultInvader")).getScaledCopy(20*gameContainer.getWidth()/100,
-                20*gameContainer.getHeight()/100), new Image(readXmlFile.read("defaultInvaderb")).
+        Image[] moving= {new Image(readerXmlFile.read("defaultInvader")).getScaledCopy(20*gameContainer.getWidth()/100,
+                20*gameContainer.getHeight()/100), new Image(readerXmlFile.read("defaultInvaderb")).
                 getScaledCopy(20*gameContainer.getWidth()/100,20*gameContainer.getHeight()/100)};
 
         movingAnimation = new Animation(moving, duration, true);

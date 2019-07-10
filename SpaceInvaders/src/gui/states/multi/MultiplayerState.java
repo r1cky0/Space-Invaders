@@ -4,7 +4,6 @@ import gui.states.BasicInvaderState;
 import gui.states.IDStates;
 import gui.drawer.SpriteDrawer;
 import logic.environment.manager.field.MovingDirections;
-import logic.environment.manager.file.ReadXmlFile;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import main.Dimensions;
@@ -40,22 +39,20 @@ public class MultiplayerState extends BasicInvaderState {
     private Image spaceShipImage;
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
-    private ReadXmlFile readXmlFile;
 
     public MultiplayerState(Client client) {
         this.client = client;
-        this.readXmlFile = new ReadXmlFile();
 
         spriteDrawer = new SpriteDrawer();
         handler = new PacketHandler();
 
         try {
-            invaderImage = new Image(readXmlFile.read("defaultInvader"));
-            bulletImage = new Image(readXmlFile.read("defaultBullet"));
+            invaderImage = new Image(readerXmlFile.read("defaultInvader"));
+            bulletImage = new Image(readerXmlFile.read("defaultBullet"));
             for (int i = 0; i < 4; i++) {
-                brickImages.add(new Image(readXmlFile.read("brick" + i)));
+                brickImages.add(new Image(readerXmlFile.read("brick" + i)));
             }
-            spaceShipImage = new Image(readXmlFile.read("ship0"));
+            spaceShipImage = new Image(readerXmlFile.read("ship0"));
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -63,7 +60,7 @@ public class MultiplayerState extends BasicInvaderState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        background = new Image(readXmlFile.read("defaultBackground"));
+        background = new Image(readerXmlFile.read("defaultBackground"));
         uniFontData = build(3 * gameContainer.getWidth() / 100f);
         yShip = Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT;
     }
@@ -95,6 +92,7 @@ public class MultiplayerState extends BasicInvaderState {
         if(input.isKeyPressed(Input.KEY_SPACE)){
             message = client.getID() + "\n" + Commands.SHOT.toString();
             client.send(handler.build(message, client.getConnection()));
+            audioplayer.shot();
         }
         if (input.isKeyDown(Input.KEY_ESCAPE)) {
             message = client.getID() + "\n" + Commands.EXIT.toString();
@@ -159,6 +157,9 @@ public class MultiplayerState extends BasicInvaderState {
                 if (client.getID() == Integer.parseInt(strings.split("_")[0])) {
                     spriteDrawer.render(spaceShipImage, shipManager.getX(), yShip, Dimensions.SHIP_WIDTH,
                             Dimensions.SHIP_HEIGHT);
+                    if(life>Integer.parseInt(strings.split("_")[2])){
+                        audioplayer.explosion();
+                    }
                     life = Integer.parseInt(strings.split("_")[2]);
                     checkIsDead = false;
                 }else {

@@ -2,7 +2,6 @@ package gui.states.single;
 
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
-import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.game.SinglePlayer;
 import gui.drawer.SpriteDrawer;
 import logic.environment.manager.menu.Menu;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 
 public class SinglePlayerState extends BasicInvaderState {
     private Menu menu;
-    private ReadXmlFile readXmlFile;
     private SpriteDrawer spriteDrawer;
 
     private SinglePlayer singlePlayer;
@@ -41,14 +39,13 @@ public class SinglePlayerState extends BasicInvaderState {
 
     public SinglePlayerState(Menu menu){
         this.menu = menu;
-        this.readXmlFile = menu.getReadXmlFile();
         spriteDrawer = new SpriteDrawer();
 
         try {
-            invaderImage = new Image(readXmlFile.read("defaultInvader"));
-            bulletImage = new Image(readXmlFile.read("defaultBullet"));
+            invaderImage = new Image(readerXmlFile.read("defaultInvader"));
+            bulletImage = new Image(readerXmlFile.read("defaultBullet"));
             for(int i=0; i<4; i++){
-                brickImages.add(new Image(readXmlFile.read("brick"+i)));
+                brickImages.add(new Image(readerXmlFile.read("brick"+i)));
             }
         } catch (SlickException e) {
             e.printStackTrace();
@@ -57,13 +54,13 @@ public class SinglePlayerState extends BasicInvaderState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        background = new Image(readXmlFile.read("defaultBackground"));
+        background = new Image(readerXmlFile.read("defaultBackground"));
 
         uniFontData = build(3*gameContainer.getWidth()/100f);
 
         singlePlayer = menu.getSinglePlayer();
-        spaceShipImage = new Image(readXmlFile.read(menu.getCustomization().getCurrentShip()));
-        spaceShipHit = new Image(readXmlFile.read("shipHit"));
+        spaceShipImage = new Image(readerXmlFile.read(menu.getCustomization().getCurrentShip()));
+        spaceShipHit = new Image(readerXmlFile.read("shipHit"));
     }
 
     @Override

@@ -2,7 +2,6 @@ package gui.states.single;
 
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
-import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.game.SinglePlayer;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.*;
@@ -28,33 +27,30 @@ public class GameOverStateSingle extends BasicInvaderState implements ComponentL
     private MouseOverArea newGameButton;
 
     private UnicodeFont uniFontScore;
-    private String score;
 
     private Menu menu;
-    private ReadXmlFile readXmlFile;
 
     public GameOverStateSingle(Menu menu) {
         this.menu = menu;
-        this.readXmlFile = menu.getReadXmlFile();
     }
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
-        newGame = new Image(readXmlFile.read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,
+        newGame = new Image(readerXmlFile.read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100);
         newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
                 80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        homeImage = new Image(readXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
                 7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
                 this);
 
-        gameOver = new Image(readXmlFile.read("gameoverBackground"));
+        gameOver = new Image(readerXmlFile.read("gameoverBackground"));
 
         uniFontScore = build(9*gameContainer.getWidth()/100f);
     }
@@ -64,7 +60,7 @@ public class GameOverStateSingle extends BasicInvaderState implements ComponentL
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        score = "SCORE: " + singlePlayer.getPlayer().getSpaceShip().getCurrentScore();
+        String score = "SCORE: " + singlePlayer.getPlayer().getSpaceShip().getCurrentScore();
 
         gameOver.draw((gameContainer.getWidth() - gameOver.getWidth())/2f,
                 (gameContainer.getHeight() - gameOver.getHeight())/2f);

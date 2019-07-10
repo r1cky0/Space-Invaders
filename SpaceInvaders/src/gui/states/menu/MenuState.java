@@ -2,7 +2,6 @@ package gui.states.menu;
 
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
-import logic.environment.manager.file.ReadXmlFile;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -20,12 +19,7 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
     private GameContainer gameContainer;
     private StateBasedGame stateBasedGame;
 
-    private Image single;
-    private Image multi;
-    private Image exit;
-    private Image settings;
     private Image background;
-    private Image ranking;
 
     private MouseOverArea singleButton;
     private MouseOverArea multiButton;
@@ -37,11 +31,9 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
     private String title;
 
     private Menu menu;
-    private ReadXmlFile readXmlFile;
 
     public MenuState(Menu menu){
         this.menu = menu;
-        this.readXmlFile = menu.getReadXmlFile();
     }
 
     @Override
@@ -49,35 +41,35 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
-        this.background = new Image(readXmlFile.read("defaultBackground"));
+        this.background = new Image(readerXmlFile.read("defaultBackground"));
         title = "SPACE INVADERS";
 
-        single = new Image(readXmlFile.read("buttonSinglePlayer")).getScaledCopy(30*gameContainer.getWidth()/100,
-                10*gameContainer.getHeight()/100);
+        Image single = new Image(readerXmlFile.read("buttonSinglePlayer")).getScaledCopy(30 * gameContainer.getWidth() / 100,
+                10 * gameContainer.getHeight() / 100);
         singleButton = new MouseOverArea(gameContainer, single,(gameContainer.getWidth() - single.getWidth())/2,
                 26*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        multi = new Image(readXmlFile.read("buttonMultiplayer")).getScaledCopy(30*gameContainer.getWidth()/100,
-                10*gameContainer.getHeight()/100);
+        Image multi = new Image(readerXmlFile.read("buttonMultiplayer")).getScaledCopy(30 * gameContainer.getWidth() / 100,
+                10 * gameContainer.getHeight() / 100);
         multiButton = new MouseOverArea(gameContainer, multi,(gameContainer.getWidth() - multi.getWidth())/2,
                 45*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        settings = new Image(readXmlFile.read("buttonSettings")).getScaledCopy(8*gameContainer.getWidth()/100,
-                10*gameContainer.getHeight()/100);
+        Image settings = new Image(readerXmlFile.read("buttonSettings")).getScaledCopy(8 * gameContainer.getWidth() / 100,
+                10 * gameContainer.getHeight() / 100);
         customizationButton = new MouseOverArea(gameContainer, settings,35*gameContainer.getWidth()/100,
                 63*gameContainer.getHeight()/100,8*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        exit = new Image(readXmlFile.read("buttonExit")).getScaledCopy(15*gameContainer.getWidth()/100,
-                10*gameContainer.getHeight()/100);
+        Image exit = new Image(readerXmlFile.read("buttonExit")).getScaledCopy(15 * gameContainer.getWidth() / 100,
+                10 * gameContainer.getHeight() / 100);
         exitButton = new MouseOverArea(gameContainer, exit,(gameContainer.getWidth() - exit.getWidth())/2,
                 80*gameContainer.getHeight()/100,15*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        ranking = new Image(readXmlFile.read("buttonRanking")).getScaledCopy(12*gameContainer.getWidth()/100,
-                12*gameContainer.getHeight()/100);
+        Image ranking = new Image(readerXmlFile.read("buttonRanking")).getScaledCopy(12 * gameContainer.getWidth() / 100,
+                12 * gameContainer.getHeight() / 100);
         rankingButton = new MouseOverArea(gameContainer, ranking,55*gameContainer.getWidth()/100,
                 63*gameContainer.getHeight()/100,12*gameContainer.getWidth()/100,12*gameContainer.getHeight()/100,
                 this);

@@ -2,8 +2,6 @@ package gui.states.multi;
 
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
-import logic.environment.manager.file.FileModifier;
-import logic.environment.manager.file.ReadXmlFile;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
@@ -23,7 +21,6 @@ public class GameOverStateMulti extends BasicInvaderState implements ComponentLi
 
     private UnicodeFont uniFontScore;
     private String score;
-    private ReadXmlFile readXmlFile;
 
     public GameOverStateMulti(String score) {
         this.score = score;
@@ -32,15 +29,14 @@ public class GameOverStateMulti extends BasicInvaderState implements ComponentLi
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
-        this.readXmlFile = new ReadXmlFile();
 
-        homeImage = new Image(readXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
+        homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
         homeButton = new MouseOverArea(gameContainer, homeImage,(gameContainer.getWidth() - homeImage.getWidth())/2,
                 80 * gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
                 this);
 
-        gameOver = new Image(readXmlFile.read("gameoverBackground"));
+        gameOver = new Image(readerXmlFile.read("gameoverBackground"));
 
         uniFontScore = build(9 * gameContainer.getWidth() / 100f);
     }
