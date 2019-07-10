@@ -1,5 +1,6 @@
 package network.data;
 
+import logic.environment.manager.game.Multiplayer;
 import logic.environment.manager.game.States;
 import logic.player.Player;
 import logic.player.Team;
@@ -11,7 +12,6 @@ import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MessageBuilder {
 
@@ -29,7 +29,14 @@ public class MessageBuilder {
         stringBuilders[0] = gameStateInfos;
     }
 
-    public void setInvaderInfos(List<Invader> invaders){
+    public void setInfos(Multiplayer multiplayer){
+        setInvaderInfos(multiplayer.getFieldManager().getInvaders());
+        setInvaderBulletInfos(multiplayer.getFieldManager().getInvaderBullets());
+        setBunkerInfos(multiplayer.getFieldManager().getBunkers());
+        setShipInfos(multiplayer.getPlayers(), multiplayer.getTeam());
+    }
+
+    private void setInvaderInfos(List<Invader> invaders){
         String invaderInfos = "";
         for(Invader invader : invaders) {
             invaderInfos += invader.getX() + "_" + invader.getY() + "\t";
@@ -38,7 +45,7 @@ public class MessageBuilder {
         stringBuilders[1] = invaderInfos;
     }
 
-    public void setInvaderBulletInfos(List<InvaderBullet> invaderBullets){
+    private void setInvaderBulletInfos(List<InvaderBullet> invaderBullets){
         String invaderBulletInfos = "";
         for(InvaderBullet invaderBullet : invaderBullets){
             invaderBulletInfos += invaderBullet.getX() + "_" + invaderBullet.getY() + "\t";
@@ -47,7 +54,7 @@ public class MessageBuilder {
         stringBuilders[2] = invaderBulletInfos;
     }
 
-    public void setBunkerInfos(List<Bunker> bunkers){
+    private void setBunkerInfos(List<Bunker> bunkers){
         String bunkerInfos = "";
         for(Bunker bunker : bunkers) {
             for (Brick brick : bunker.getBricks()) {
@@ -58,7 +65,7 @@ public class MessageBuilder {
         stringBuilders[3] = bunkerInfos;
     }
 
-    public void setShipInfos(ConcurrentHashMap<Integer, Player> players, Team team){
+    private void setShipInfos(ConcurrentHashMap<Integer, Player> players, Team team){
         String shipInfos = "";
         for(Integer ID : players.keySet()){
             shipInfos += ID + "_" + getSpaceShip(players, ID).getX() + "_" + getSpaceShip(players, ID).getLife() + "_";

@@ -8,7 +8,7 @@ import network.data.MessageBuilder;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ThreadUpdate implements Runnable{
-    MessageBuilder messageBuilder;
+    private MessageBuilder messageBuilder;
     private Multiplayer multiplayer;
     private AtomicBoolean running;
 
@@ -20,6 +20,7 @@ public class ThreadUpdate implements Runnable{
 
     public void start() {
         Thread thread = new Thread(this);
+        messageBuilder.setGameStateInfos(States.START);
         thread.start();
     }
 
@@ -29,8 +30,7 @@ public class ThreadUpdate implements Runnable{
             for (InvaderBullet bullet : multiplayer.getFieldManager().getInvaderBullets()) {
                 bullet.move(multiplayer.getDelta());
             }
-            messageBuilder.setInvaderInfos(multiplayer.getFieldManager().getInvaders());
-            messageBuilder.setInvaderBulletInfos(multiplayer.getFieldManager().getInvaderBullets());
+
 
             for (int ID : multiplayer.getPlayers().keySet()) {
                 if (multiplayer.getSpaceShip(ID).isShipShot()) {
@@ -44,8 +44,7 @@ public class ThreadUpdate implements Runnable{
                     multiplayer.getTeam().removePlayer(ID);
                 }
             }
-            messageBuilder.setBunkerInfos(multiplayer.getFieldManager().getBunkers());
-            messageBuilder.setShipInfos(multiplayer.getPlayers(), multiplayer.getTeam());
+            messageBuilder.setInfos(multiplayer);
 
             if(multiplayer.getPlayers().isEmpty() || multiplayer.getFieldManager().isEndReached()){
                 messageBuilder.setGameStateInfos(States.GAMEOVER);
