@@ -36,6 +36,7 @@ public class MultiplayerState extends BasicInvaderState {
     //IMAGES
     private Image background;
     private Image invaderImage;
+    private Image bonusInvader;
     private Image spaceShipImage;
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
@@ -47,6 +48,7 @@ public class MultiplayerState extends BasicInvaderState {
         handler = new PacketHandler();
 
         try {
+            bonusInvader = new Image(readerXmlFile.read("bonusInvader"));
             invaderImage = new Image(readerXmlFile.read("defaultInvader"));
             bulletImage = new Image(readerXmlFile.read("defaultBullet"));
             for (int i = 0; i < 4; i++) {
@@ -138,14 +140,21 @@ public class MultiplayerState extends BasicInvaderState {
                         Dimensions.INVADER_HEIGHT);
             }
         }
-        for (String strings : rcvdata[2].split("\\t")) {
+
+        if(!rcvdata[2].equals("")){
+            spriteDrawer.render(bonusInvader, Float.parseFloat(rcvdata[2].split("_")[0]),
+                    Float.parseFloat(rcvdata[2].split("_")[1]), Dimensions.INVADER_WIDTH,
+                    Dimensions.INVADER_HEIGHT);
+        }
+
+        for (String strings : rcvdata[3].split("\\t")) {
             if (!strings.equals("")) {
                 spriteDrawer.render(bulletImage, Float.parseFloat(strings.split("_")[0]),
                         Float.parseFloat(strings.split("_")[1]), Dimensions.BULLET_WIDTH,
                         Dimensions.BULLET_HEIGHT);
             }
         }
-        for (String strings : rcvdata[3].split("\\t")) {
+        for (String strings : rcvdata[4].split("\\t")) {
             if (!strings.equals("")) {
                 if (Integer.parseInt(strings.split("_")[2]) > 0) {
                     spriteDrawer.render(brickImages.get(4 - Integer.parseInt(strings.split("_")[2])),
@@ -155,7 +164,7 @@ public class MultiplayerState extends BasicInvaderState {
                 }
             }
         }
-        for (String strings : rcvdata[4].split("\\t")) {
+        for (String strings : rcvdata[5].split("\\t")) {
             if (!strings.equals("")) {
                 if (client.getID() == Integer.parseInt(strings.split("_")[0])) {
                     spriteDrawer.render(spaceShipImage, shipManager.getX(), yShip, Dimensions.SHIP_WIDTH,
@@ -179,7 +188,7 @@ public class MultiplayerState extends BasicInvaderState {
                 }
             }
         }
-        score = rcvdata[5];
+        score = rcvdata[6];
     }
 
     @Override

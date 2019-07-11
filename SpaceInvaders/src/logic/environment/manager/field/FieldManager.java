@@ -154,6 +154,7 @@ public class FieldManager {
                 spaceShip.incrementCurrentScore(bonusInvader.getValue());
                 spaceShip.setShipShot(false);
                 bonus = false;
+                return true;
             }
         }
         if (spaceShip.getShipBullet().getY() <= 0) {

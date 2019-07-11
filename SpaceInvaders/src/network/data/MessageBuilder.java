@@ -39,6 +39,11 @@ public class MessageBuilder{
             invaderInfos += invader.getX() + "_" + invader.getY() + "\t";
         }
         invaderInfos += "\n";
+        if(multiplayer.getFieldManager().isBonusInvader()){
+            invaderInfos += multiplayer.getFieldManager().getBonusInvader().getX() + "_" +
+                    multiplayer.getFieldManager().getBonusInvader().getY();
+        }
+        invaderInfos += "\n";
         stringBuilders[1] = invaderInfos;
     }
 
