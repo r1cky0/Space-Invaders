@@ -111,7 +111,7 @@ public class ServerThread implements Runnable{
                     }
                 }
                 try {
-                    Thread.sleep(multiplayer.getDelta());
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
