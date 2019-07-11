@@ -6,7 +6,6 @@
         <ship2>res/images/SpaceShip2.png</ship2>
         <ship3>res/images/SpaceShip3.png</ship3>
         <ship4>res/images/SpaceShip4.png</ship4>
-        <shipHit>res/images/ShipHit.png</shipHit>
     </ship>
 
     <bullet>
@@ -14,8 +13,9 @@
     </bullet>
 
     <invader>
-        <defaultInvader>res/images/Alien0.png</defaultInvader>
-        <defaultInvaderb>res/images/Alien0b.png</defaultInvaderb>
+        <defaultInvader>res/images/Invader0.png</defaultInvader>
+        <defaultInvaderb>res/images/Invader0b.png</defaultInvaderb>
+        <bonusInvader>res/images/InvaderBonus.png</bonusInvader>
     </invader>
 
     <brick>

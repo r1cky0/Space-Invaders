@@ -5,13 +5,15 @@ import logic.environment.manager.field.MovingDirections;
 import logic.environment.manager.file.FileModifier;
 import logic.environment.manager.menu.Customization;
 import logic.player.Player;
-import logic.sprite.dinamic.Invader;
+import logic.sprite.dinamic.invaders.BonusInvader;
+import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
+import main.Dimensions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,10 @@ public class SinglePlayer {
         if (ship.isShipShot()) {
             ship.getShipBullet().move(delta);
             fieldManager.checkSpaceShipShotCollision(getSpaceShip());
+        }
+        if(isBonusInvader() &&
+                !(fieldManager.getBonusInvader().getX() + Dimensions.INVADER_WIDTH < Dimensions.MIN_WIDTH)){
+            fieldManager.getBonusInvader().moveLeft(delta);
         }
 
         boolean collision = fieldManager.checkInvaderShotCollision(ship);
@@ -110,6 +116,14 @@ public class SinglePlayer {
 
     public List<Invader> getInvaders(){
         return fieldManager.getInvaders();
+    }
+
+    public BonusInvader getSpecialInvader(){
+        return fieldManager.getBonusInvader();
+    }
+
+    public boolean isBonusInvader(){
+        return fieldManager.isBonusInvader();
     }
 
 }

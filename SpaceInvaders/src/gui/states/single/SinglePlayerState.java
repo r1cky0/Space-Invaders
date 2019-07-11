@@ -7,7 +7,7 @@ import gui.drawer.SpriteDrawer;
 import logic.environment.manager.menu.Menu;
 import logic.environment.manager.game.Commands;
 import logic.environment.manager.game.States;
-import logic.sprite.dinamic.Invader;
+import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
@@ -32,7 +32,7 @@ public class SinglePlayerState extends BasicInvaderState {
     private Image background;
     private Image invaderImage;
     private Image spaceShipImage;
-    private Image spaceShipHit;
+    private Image bonusInvader;
     private ArrayList<Image> brickImages = new ArrayList<>();
     private Image bulletImage;
     private boolean collision;
@@ -42,6 +42,7 @@ public class SinglePlayerState extends BasicInvaderState {
         spriteDrawer = new SpriteDrawer();
 
         try {
+            bonusInvader = new Image(readerXmlFile.read("bonusInvader"));
             invaderImage = new Image(readerXmlFile.read("defaultInvader"));
             bulletImage = new Image(readerXmlFile.read("defaultBullet"));
             for(int i=0; i<4; i++){
@@ -60,42 +61,42 @@ public class SinglePlayerState extends BasicInvaderState {
 
         singlePlayer = menu.getSinglePlayer();
         spaceShipImage = new Image(readerXmlFile.read(menu.getCustomization().getCurrentShip()));
-        spaceShipHit = new Image(readerXmlFile.read("shipHit"));
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        graphics.drawImage(background,0,0);
+        graphics.drawImage(background, 0, 0);
 
         Color color;
         int highscore;
-        if(singlePlayer.getPlayer().getHighScore() >= singlePlayer.getSpaceShip().getCurrentScore()){
+        if (singlePlayer.getPlayer().getHighScore() >= singlePlayer.getSpaceShip().getCurrentScore()) {
             color = Color.white;
             highscore = singlePlayer.getPlayer().getHighScore();
-        }else{
+        } else {
             color = Color.green;
             highscore = singlePlayer.getSpaceShip().getCurrentScore();
         }
 
-        uniFontData.drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
+        uniFontData.drawString(85 * gameContainer.getWidth() / 100f, 2 * gameContainer.getHeight() / 100f,
                 "Lives: " + singlePlayer.getSpaceShip().getLife(), Color.red);
-        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: "))/2f,
-                2*gameContainer.getHeight()/100f,"Score: " + singlePlayer.getSpaceShip().getCurrentScore(), color);
-        uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
+        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: ")) / 2f,
+                2 * gameContainer.getHeight() / 100f, "Score: " + singlePlayer.getSpaceShip().getCurrentScore(), color);
+        uniFontData.drawString(2 * gameContainer.getWidth() / 100f, 2 * gameContainer.getHeight() / 100f,
                 "Highscore: " + highscore, Color.green);
 
-        if(collision){
-            spriteDrawer.render(spaceShipHit,singlePlayer.getSpaceShip().getX(),
-                    singlePlayer.getSpaceShip().getY(), Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
+        if (collision) {
             audioplayer.explosion();
         }
-        else{
-            spriteDrawer.render(spaceShipImage,singlePlayer.getSpaceShip().getX(),
+        spriteDrawer.render(spaceShipImage, singlePlayer.getSpaceShip().getX(),
                 singlePlayer.getSpaceShip().getY(), Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
+
+        if (singlePlayer.isBonusInvader()) {
+            spriteDrawer.render(bonusInvader, singlePlayer.getSpecialInvader().getX(),
+                    singlePlayer.getSpecialInvader().getY(), Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT);
         }
 
-        if(singlePlayer.getSpaceShip().isShipShot()){
-            spriteDrawer.render(bulletImage,singlePlayer.getSpaceShipBullet().getX(),
+        if (singlePlayer.getSpaceShip().isShipShot()) {
+            spriteDrawer.render(bulletImage, singlePlayer.getSpaceShipBullet().getX(),
                     singlePlayer.getSpaceShipBullet().getY(), Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
         }
         for (Invader invader : singlePlayer.getInvaders()) {
@@ -103,12 +104,12 @@ public class SinglePlayerState extends BasicInvaderState {
                     Dimensions.INVADER_HEIGHT);
         }
         for (InvaderBullet invaderBullet : singlePlayer.getInvadersBullet()) {
-            spriteDrawer.render(bulletImage,invaderBullet.getX(),invaderBullet.getY(), Dimensions.BULLET_WIDTH,
+            spriteDrawer.render(bulletImage, invaderBullet.getX(), invaderBullet.getY(), Dimensions.BULLET_WIDTH,
                     Dimensions.BULLET_HEIGHT);
         }
-        for(Bunker bunker : singlePlayer.getBunkers()) {
-            for(Brick brick : bunker.getBricks()) {
-                spriteDrawer.render(brickImages.get(4 - brick.getLife()),brick.getX(),brick.getY(), Dimensions.BRICK_WIDTH,
+        for (Bunker bunker : singlePlayer.getBunkers()) {
+            for (Brick brick : bunker.getBricks()) {
+                spriteDrawer.render(brickImages.get(4 - brick.getLife()), brick.getX(), brick.getY(), Dimensions.BRICK_WIDTH,
                         Dimensions.BRICK_HEIGHT);
             }
         }

@@ -121,7 +121,7 @@ public class MultiplayerState extends BasicInvaderState {
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(IDStates.GAMEOVERMULTI_STATE, new FadeOutTransition(), new FadeInTransition());
+            stateBasedGame.enterState(IDStates.GAMEOVERMULTI_STATE,new FadeOutTransition(),new FadeInTransition());
             client.close();
             audioplayer.gameOver();
         }
@@ -134,13 +134,15 @@ public class MultiplayerState extends BasicInvaderState {
         for (String strings : rcvdata[1].split("\\t")) {
             if (!strings.equals("")) {
                 spriteDrawer.render(invaderImage, Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1]), Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT);
+                        Float.parseFloat(strings.split("_")[1]), Dimensions.INVADER_WIDTH,
+                        Dimensions.INVADER_HEIGHT);
             }
         }
         for (String strings : rcvdata[2].split("\\t")) {
             if (!strings.equals("")) {
                 spriteDrawer.render(bulletImage, Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1]), Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
+                        Float.parseFloat(strings.split("_")[1]), Dimensions.BULLET_WIDTH,
+                        Dimensions.BULLET_HEIGHT);
             }
         }
         for (String strings : rcvdata[3].split("\\t")) {
@@ -148,7 +150,8 @@ public class MultiplayerState extends BasicInvaderState {
                 if (Integer.parseInt(strings.split("_")[2]) > 0) {
                     spriteDrawer.render(brickImages.get(4 - Integer.parseInt(strings.split("_")[2])),
                             Float.parseFloat(strings.split("_")[0]),
-                            Float.parseFloat(strings.split("_")[1]), Dimensions.BRICK_WIDTH, Dimensions.BRICK_HEIGHT);
+                            Float.parseFloat(strings.split("_")[1]), Dimensions.BRICK_WIDTH,
+                            Dimensions.BRICK_HEIGHT);
                 }
             }
         }
@@ -156,19 +159,20 @@ public class MultiplayerState extends BasicInvaderState {
             if (!strings.equals("")) {
                 if (client.getID() == Integer.parseInt(strings.split("_")[0])) {
                     spriteDrawer.render(spaceShipImage, shipManager.getX(), yShip, Dimensions.SHIP_WIDTH,
-                            Dimensions.SHIP_HEIGHT,0.5f);
+                            Dimensions.SHIP_HEIGHT,1.0f);
                     if(life > Integer.parseInt(strings.split("_")[2])){
                         audioplayer.explosion();
                     }
                     life = Integer.parseInt(strings.split("_")[2]);
                     checkIsDead = false;
-                }else {
+                }else{
                     spriteDrawer.render(spaceShipImage, Float.parseFloat(strings.split("_")[1]),
-                            yShip, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT,1.0f);
+                            yShip, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT,0.5f);
                 }
                 if(!strings.split("_")[3].equals(" ")) {
                     spriteDrawer.render(bulletImage, Float.parseFloat(strings.split("_")[3]),
-                            Float.parseFloat(strings.split("_")[4]), Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
+                            Float.parseFloat(strings.split("_")[4]), Dimensions.BULLET_WIDTH,
+                            Dimensions.BULLET_HEIGHT);
                 }
                 if(checkIsDead){
                     life = 0;

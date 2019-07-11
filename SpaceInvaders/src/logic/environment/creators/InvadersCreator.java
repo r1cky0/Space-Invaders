@@ -1,7 +1,7 @@
 package logic.environment.creators;
 
 import logic.sprite.Coordinate;
-import logic.sprite.dinamic.Invader;
+import logic.sprite.dinamic.invaders.Invader;
 import main.Dimensions;
 
 import java.util.List;

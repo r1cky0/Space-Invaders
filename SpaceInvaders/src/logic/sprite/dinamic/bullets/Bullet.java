@@ -4,7 +4,7 @@ import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
 
 
-public abstract class Bullet extends Sprite implements Movable{
+public abstract class Bullet extends Sprite{
 
     public static float VERTICAL_OFFSET = 0.07f;
 

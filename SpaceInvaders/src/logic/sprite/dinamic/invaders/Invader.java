@@ -1,4 +1,4 @@
-package logic.sprite.dinamic;
+package logic.sprite.dinamic.invaders;
 
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
@@ -6,7 +6,6 @@ import logic.sprite.Sprite;
 public class Invader extends Sprite {
 
     private int value;
-    private static float VERTICAL_OFFSET = 8;
     public static float HORIZONTAL_OFFSET = 2;
 
     public Invader(Coordinate coordinate, float width, float height, int value) {
@@ -19,6 +18,7 @@ public class Invader extends Sprite {
     }
 
     public void moveDown() {
+        float VERTICAL_OFFSET = 8;
         super.setY(super.getY() + VERTICAL_OFFSET);
     }
 

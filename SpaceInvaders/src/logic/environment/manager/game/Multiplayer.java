@@ -1,16 +1,11 @@
 package logic.environment.manager.game;
 
 import logic.environment.manager.field.FieldManager;
-import logic.environment.manager.file.ReadXmlFile;
 import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
-import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
-import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
-import logic.sprite.unmovable.Brick;
-import logic.sprite.unmovable.Bunker;
 import logic.thread.ThreadInvader;
 import main.Dimensions;
 import logic.thread.ThreadUpdate;

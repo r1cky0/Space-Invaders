@@ -1,8 +1,6 @@
 package logic.thread;
 
 import logic.environment.manager.field.FieldManager;
-import logic.sprite.dinamic.Invader;
-import network.data.MessageBuilder;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -31,6 +29,9 @@ public class ThreadInvader implements Runnable {
             fieldManager.invaderMovement(fieldManager.checkInvaderDirection());
             if(rand.nextInt(10) > 4){
                 fieldManager.invaderShot();
+            }
+            if(rand.nextInt(100) > 95){
+                fieldManager.setBonusInvader();
             }
             try {
                 Thread.sleep(sleepInterval);

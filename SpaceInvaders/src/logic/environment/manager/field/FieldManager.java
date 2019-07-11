@@ -3,8 +3,9 @@ package logic.environment.manager.field;
 import logic.environment.creators.BunkersCreator;
 import logic.environment.creators.InvadersCreator;
 import logic.sprite.Coordinate;
-import logic.sprite.dinamic.Invader;
+import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.SpaceShip;
+import logic.sprite.dinamic.invaders.BonusInvader;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Bunker;
@@ -24,8 +25,11 @@ public class FieldManager {
     private boolean gameOver;
     private boolean endReached;
     private boolean newLevel;
+    private boolean bonus;
+    private boolean bonusInLevel;
 
     private List<Invader> invaders;
+    private BonusInvader bonusInvader;
     private ArrayList<Bunker> bunkers;
     private List<InvaderBullet> invaderBullets;
     private MovingDirections md;
@@ -44,6 +48,8 @@ public class FieldManager {
 
         difficulty = new Difficulty(); //millisecondi pausa sparo/movimento alieni
 
+        bonus = false;
+        bonusInLevel = false;
         endReached = false;
         gameOver = false;
         newLevel = false;
@@ -66,6 +72,7 @@ public class FieldManager {
         md = MovingDirections.RIGHT;
         invaders = invadersCreator.create();
         newLevel = true;
+        bonusInLevel = false;
     }
 
     public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
@@ -90,9 +97,9 @@ public class FieldManager {
     }
 
     /**
-     * Funzione per controllare la collisione dei proittili sparati dagli invaders: prima rispetto ai bunker(e i loro
-     * brick) e poi rispetto alla ship. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
-     * fine schermata(y maggiore)
+     * Funzione per controllare la collisione dei proittili sparati dagli invaders: prima rispetto ai bunker
+     * (e i loro brick) e poi rispetto alla ship. Eliminazione del bullet nel caso in cui non collida con
+     * niente e giunga a fine schermata(y maggiore)
      */
     public boolean checkInvaderShotCollision(SpaceShip spaceShip) {
         for(Bullet bullet : invaderBullets){
@@ -120,9 +127,9 @@ public class FieldManager {
     }
 
     /**
-     * Funzione per controllare la collisione dei proittili sparati dal giocatore: prima rispetto ai bunker(e i loro
-     * brick) e poi rispetto agli invaders. Eliminazione del bullet nel caso in cui non collida con niente e giunga a
-     * fine schermata(y minore)
+     * Funzione per controllare la collisione dei proittili sparati dal giocatore: prima rispetto ai bunker
+     * (e i loro brick) e poi rispetto agli invaders. Eliminazione del bullet nel caso in cui non collida
+     * con niente e giunga a fine schermata(y minore)
      */
     public boolean checkSpaceShipShotCollision(SpaceShip spaceShip) {
         for (Bunker bunker : bunkers) {
@@ -142,6 +149,13 @@ public class FieldManager {
                 return true;
             }
         }
+        if(bonus){
+            if (bonusInvader.collides(spaceShip.getShipBullet())) {
+                spaceShip.incrementCurrentScore(bonusInvader.getValue());
+                spaceShip.setShipShot(false);
+                bonus = false;
+            }
+        }
         if (spaceShip.getShipBullet().getY() <= 0) {
             spaceShip.setShipShot(false);
         }
@@ -149,9 +163,9 @@ public class FieldManager {
     }
 
     /**
-     * Gestione del movimento degli invaders. Se viene raggiunto il limite laterale rispetto alla direzione di movimento
-     * tutti gli invaders shiftano verso il basso e la direzione laterale di movimento viene invertita settando il
-     * corrispondendo Enum 'MovingDirections' fondamentale nella funzione successiva
+     * Gestione del movimento degli invaders. Se viene raggiunto il limite laterale rispetto alla direzione di
+     * movimento tutti gli invaders shiftano verso il basso e la direzione laterale di movimento viene invertita
+     * settando il corrispondendo Enum 'MovingDirections' fondamentale nella funzione successiva
      */
     public MovingDirections checkInvaderDirection() {
         double maxX = 0;
@@ -195,6 +209,21 @@ public class FieldManager {
         }
     }
 
+    public void setBonusInvader(){
+        double minY = Dimensions.MAX_HEIGHT;
+        for (Invader invader : invaders) {
+            if (minY > invader.getY()) {
+                minY = invader.getY();
+            }
+        }
+        if((minY >= Dimensions.MAX_HEIGHT/4) && (!bonusInLevel)){
+            bonusInvader = new BonusInvader(new Coordinate(Dimensions.MAX_WIDTH, Dimensions.MAX_HEIGHT/10),
+                    Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT, 100);
+            bonus = true;
+            bonusInLevel = true;
+        }
+    }
+
     /**
      * Funzione di movimento degli invaders. La direzione é inidicata dalla MovingDirections passata come parametro
      * @param md Enum che indica la direzione di movimento
@@ -216,8 +245,8 @@ public class FieldManager {
     }
 
     /**
-     * Funzione di sparo degli invaders. Lo sparo non é ordindato, ma viene scelto randomicamente quale alieno debba
-     * sparare
+     * Funzione di sparo degli invaders. Lo sparo non é ordindato, ma viene scelto randomicamente quale alieno
+     * debba sparare
      */
     public void invaderShot() {
         Random rand = new Random();
@@ -235,6 +264,10 @@ public class FieldManager {
 
     public List<Invader> getInvaders() {
         return invaders;
+    }
+
+    public BonusInvader getBonusInvader(){
+        return bonusInvader;
     }
 
     public ArrayList<Bunker> getBunkers() {
@@ -259,5 +292,9 @@ public class FieldManager {
 
     public int getDifficulty(){
         return difficulty.getDifficulty();
+    }
+
+    public boolean isBonusInvader(){
+        return bonus;
     }
 }
