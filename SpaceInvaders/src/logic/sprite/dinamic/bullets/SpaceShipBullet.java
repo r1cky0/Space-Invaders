@@ -12,8 +12,4 @@ public class SpaceShipBullet extends Bullet implements Movable{
         super.setY(super.getY() - VERTICAL_OFFSET*delta);
     }
 
-    public void regenerate(Coordinate coordinate){
-        super.setY(coordinate.getY());
-        super.setX(coordinate.getX());
-    }
 }

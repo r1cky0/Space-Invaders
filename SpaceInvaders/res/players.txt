@@ -1,4 +1,4 @@
-a	a	410	ship0
+a	a	2210	ship0
 b	b	80	ship4
 arrosto	dove	0	ship2
 c	c	0	ship0

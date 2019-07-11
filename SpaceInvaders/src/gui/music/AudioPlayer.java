@@ -28,9 +28,9 @@ public class AudioPlayer {
         }
     }
 
-    public void game(){ gameMusic.play(1.0f,50.0f); }
+    public void game(){ gameMusic.loop(1.0f,50.0f); }
 
-    public void gameOver(){ gameOverMusic.play(1.0f,50.0f); }
+    public void gameOver(){ gameOverMusic.loop(1.0f,50.0f); }
 
     public void menu(){ menuMusic.loop(1.0f,50.0f); }
 

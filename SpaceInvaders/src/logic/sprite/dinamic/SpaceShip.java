@@ -15,7 +15,6 @@ public class SpaceShip extends Sprite {
     public SpaceShip(Coordinate coordinate, float width, float height) {
         super(coordinate, width, height);
         init();
-        shipBullet = null;
         shipShot = false;
     }
 
@@ -51,11 +50,8 @@ public class SpaceShip extends Sprite {
         currentScore += value;
     }
 
-    public void setShipBullet(Coordinate coordinate){
-        if(shipBullet == null){
-            shipBullet = new SpaceShipBullet(coordinate, Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
-        }
-        this.shipBullet.regenerate(coordinate);
+    public void setShipBullet(Coordinate coordinate) {
+        shipBullet = new SpaceShipBullet(coordinate, Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
     }
 
     public void setShipShot(boolean value){
