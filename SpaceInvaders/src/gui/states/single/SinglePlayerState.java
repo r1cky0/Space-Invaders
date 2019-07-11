@@ -142,13 +142,11 @@ public class SinglePlayerState extends BasicInvaderState {
         if (states == States.GAMEOVER) {
             stateBasedGame.enterState(IDStates.GAMEOVERSINGLE_STATE, new FadeOutTransition(), new FadeInTransition());
             collision = false;
-            audioplayer.explosion();
             audioplayer.gameOver();
         }
         if (states == States.NEWHIGHSCORE) {
             stateBasedGame.enterState(IDStates.NEWHIGHSCORE_STATE, new FadeOutTransition(), new FadeInTransition());
             collision = false;
-            audioplayer.explosion();
             audioplayer.gameOver();
         }
     }

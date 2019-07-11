@@ -1,19 +1,16 @@
 package network.data;
 
+import logic.environment.manager.field.FieldManager;
 import logic.environment.manager.game.Multiplayer;
 import logic.environment.manager.game.States;
-import logic.player.Player;
-import logic.player.Team;
 import logic.sprite.dinamic.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class MessageBuilder {
+public class MessageBuilder{
 
     private String[] stringBuilders;
 
@@ -30,33 +27,33 @@ public class MessageBuilder {
     }
 
     public void setInfos(Multiplayer multiplayer){
-        setInvaderInfos(multiplayer.getFieldManager().getInvaders());
-        setInvaderBulletInfos(multiplayer.getFieldManager().getInvaderBullets());
-        setBunkerInfos(multiplayer.getFieldManager().getBunkers());
-        setShipInfos(multiplayer.getPlayers(), multiplayer.getTeam());
+        setInvaderInfos(multiplayer);
+        setInvaderBulletInfos(multiplayer);
+        setBunkerInfos(multiplayer);
+        setShipInfos(multiplayer);
     }
 
-    private void setInvaderInfos(List<Invader> invaders){
+    public void setInvaderInfos(Multiplayer multiplayer){
         String invaderInfos = "";
-        for(Invader invader : invaders) {
+        for(Invader invader : getFieldManager(multiplayer).getInvaders()) {
             invaderInfos += invader.getX() + "_" + invader.getY() + "\t";
         }
         invaderInfos += "\n";
         stringBuilders[1] = invaderInfos;
     }
 
-    private void setInvaderBulletInfos(List<InvaderBullet> invaderBullets){
+    public void setInvaderBulletInfos(Multiplayer multiplayer){
         String invaderBulletInfos = "";
-        for(InvaderBullet invaderBullet : invaderBullets){
+        for(InvaderBullet invaderBullet : getFieldManager(multiplayer).getInvaderBullets()){
             invaderBulletInfos += invaderBullet.getX() + "_" + invaderBullet.getY() + "\t";
         }
         invaderBulletInfos += "\n";
         stringBuilders[2] = invaderBulletInfos;
     }
 
-    private void setBunkerInfos(List<Bunker> bunkers){
+    private void setBunkerInfos(Multiplayer multiplayer){
         String bunkerInfos = "";
-        for(Bunker bunker : bunkers) {
+        for(Bunker bunker : getFieldManager(multiplayer).getBunkers()) {
             for (Brick brick : bunker.getBricks()) {
                 bunkerInfos += brick.getX() + "_" + brick.getY() + "_" + brick.getLife() + "\t";
             }
@@ -65,29 +62,29 @@ public class MessageBuilder {
         stringBuilders[3] = bunkerInfos;
     }
 
-    private void setShipInfos(ConcurrentHashMap<Integer, Player> players, Team team){
+    private void setShipInfos(Multiplayer multiplayer){
         String shipInfos = "";
-        for(Integer ID : players.keySet()){
-            shipInfos += ID + "_" + getSpaceShip(players, ID).getX() + "_" + getSpaceShip(players, ID).getLife() + "_";
+        for(Integer ID : multiplayer.getPlayers().keySet()){
+            shipInfos += ID + "_" + getSpaceShip(multiplayer, ID).getX() + "_" + getSpaceShip(multiplayer, ID).getLife() + "_";
 
-            if(getSpaceShip(players, ID).isShipShot()) {
-                shipInfos += getSpaceShipBullet(players, ID).getX() + "_" + getSpaceShipBullet(players, ID).getY()+ "\t";
+            if(getSpaceShip(multiplayer, ID).isShipShot()) {
+                shipInfos += getSpaceShipBullet(multiplayer, ID).getX() + "_" + getSpaceShipBullet(multiplayer, ID).getY()+ "\t";
             }
             else {
                 shipInfos += (" " + "_" + " " + "\t");
             }
         }
         shipInfos += "\n";
-        shipInfos += team.getTeamCurrentScore();
+        shipInfos += multiplayer.getTeam().getTeamCurrentScore();
         stringBuilders[4] = shipInfos;
     }
 
-    private SpaceShip getSpaceShip(ConcurrentHashMap<Integer, Player> players, int ID){
-        return players.get(ID).getSpaceShip();
+    private SpaceShip getSpaceShip(Multiplayer multiplayer, int ID){
+        return multiplayer.getPlayers().get(ID).getSpaceShip();
     }
 
-    private SpaceShipBullet getSpaceShipBullet(ConcurrentHashMap<Integer, Player> players, int ID){
-        return getSpaceShip(players, ID).getShipBullet();
+    private SpaceShipBullet getSpaceShipBullet(Multiplayer multiplayer, int ID){
+        return getSpaceShip(multiplayer, ID).getShipBullet();
     }
 
     public String getInfos(){
@@ -96,6 +93,10 @@ public class MessageBuilder {
             infos += stringBuilders[i];
         }
         return infos;
+    }
+
+    private FieldManager getFieldManager(Multiplayer multiplayer){
+        return multiplayer.getFieldManager();
     }
 
 }

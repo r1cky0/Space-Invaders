@@ -156,8 +156,6 @@ public class FieldManager {
     public MovingDirections checkInvaderDirection() {
         double maxX = 0;
         double minX = Invader.HORIZONTAL_OFFSET;
-        double maxY = 0;
-
         for (Invader invader : invaders) {
             if (maxX < invader.getX()) {
                 maxX = invader.getX();
@@ -165,13 +163,8 @@ public class FieldManager {
             if (minX > invader.getX()) {
                 minX = invader.getX();
             }
-            if (maxY < invader.getY()) {
-                maxY = invader.getY();
-            }
         }
-        if((maxY + Dimensions.INVADER_HEIGHT) >= (Dimensions.MAX_HEIGHT - 7* Dimensions.BRICK_HEIGHT)){
-            endReached = true;
-        }
+        checkEndReached();
         if(((maxX + Dimensions.INVADER_WIDTH + Invader.HORIZONTAL_OFFSET) > Dimensions.MAX_WIDTH) && !goDown){
             goDown = true;
             return MovingDirections.DOWN;
@@ -188,6 +181,18 @@ public class FieldManager {
             goDown = false;
         }
         return md;
+    }
+
+    private void checkEndReached(){
+        double maxY = 0;
+        for (Invader invader : invaders) {
+            if (maxY < invader.getY()) {
+                maxY = invader.getY();
+            }
+            if ((maxY + Dimensions.INVADER_HEIGHT) >= (Dimensions.MAX_HEIGHT - 7 * Dimensions.BRICK_HEIGHT)) {
+                endReached = true;
+            }
+        }
     }
 
     /**

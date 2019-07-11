@@ -6,6 +6,8 @@ import logic.player.Player;
 import network.data.Connection;
 import network.data.MessageBuilder;
 import network.data.PacketHandler;
+import org.lwjgl.Sys;
+
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -97,13 +99,20 @@ public class ServerThread implements Runnable{
      */
     public void sender() {
         Thread sender = new Thread(() -> {
-            String infos;
+            String infos="";
             running.set(true);
             while (running.get()) {
-                infos = messageBuilder.getInfos();
+                if(!infos.equals(messageBuilder.getInfos())) {
+                    infos = messageBuilder.getInfos();
+                    try {
+                        socket.send(handler.build(infos, connection));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 try {
-                    socket.send(handler.build(infos, connection));
-                } catch (IOException e) {
+                    Thread.sleep(multiplayer.getDelta());
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }

@@ -12,17 +12,14 @@ public class AudioPlayer {
     private Sound shotEffect;
     private Sound explosionEffect;
 
-    private ReadXmlFile readXmlFile;
-
     public AudioPlayer() {
-
-        this.readXmlFile = new ReadXmlFile();
+        ReadXmlFile readXmlFile = new ReadXmlFile();
         try {
-            this.gameMusic = new Music(readXmlFile.read("gameMusic"));
-            this.gameOverMusic = new Music(readXmlFile.read("gameOverMusic"));
-            this.menuMusic = new Music(readXmlFile.read("menuMusic"));
-            this.shotEffect = new Sound(readXmlFile.read("shotEffect"));
-            this.explosionEffect = new Sound(readXmlFile.read("explosionEffect"));
+            gameMusic = new Music(readXmlFile.read("gameMusic"));
+            gameOverMusic = new Music(readXmlFile.read("gameOverMusic"));
+            menuMusic = new Music(readXmlFile.read("menuMusic"));
+            shotEffect = new Sound(readXmlFile.read("shotEffect"));
+            explosionEffect = new Sound(readXmlFile.read("explosionEffect"));
         } catch (SlickException e) {
             e.printStackTrace();
         }

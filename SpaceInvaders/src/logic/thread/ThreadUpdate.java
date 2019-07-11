@@ -27,10 +27,10 @@ public class ThreadUpdate implements Runnable{
     public void run() {
         running.set(true);
         while(running.get()) {
+            messageBuilder.setInfos(multiplayer);
             for (InvaderBullet bullet : multiplayer.getFieldManager().getInvaderBullets()) {
                 bullet.move(multiplayer.getDelta());
             }
-
 
             for (int ID : multiplayer.getPlayers().keySet()) {
                 if (multiplayer.getSpaceShip(ID).isShipShot()) {
@@ -44,12 +44,12 @@ public class ThreadUpdate implements Runnable{
                     multiplayer.getTeam().removePlayer(ID);
                 }
             }
-            messageBuilder.setInfos(multiplayer);
 
             if(multiplayer.getPlayers().isEmpty() || multiplayer.getFieldManager().isEndReached()){
                 messageBuilder.setGameStateInfos(States.GAMEOVER);
             }
             multiplayer.threadInvaderManager();
+
             try {
                 Thread.sleep(multiplayer.getDelta());
             } catch (InterruptedException e) {

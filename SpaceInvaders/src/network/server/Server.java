@@ -88,6 +88,11 @@ public class Server implements Runnable {
             if (clients.size() == maxPlayers) {
                 broadcast(States.START.toString());
                 multiplayer.startGame();
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 for(int id : clients.keySet()){
                     clients.get(id).sender();
                 }
