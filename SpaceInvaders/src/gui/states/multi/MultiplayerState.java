@@ -1,5 +1,6 @@
 package gui.states.multi;
 
+import gui.states.BasicGameOver;
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
 import gui.drawer.SpriteDrawer;
@@ -118,7 +119,7 @@ public class MultiplayerState extends BasicInvaderState {
             message = client.getID() + "\n" + Commands.EXIT.toString();
             client.send(handler.build(message, client.getConnection()));
             try {
-                stateBasedGame.addState(new GameOverStateMulti(score));
+                stateBasedGame.addState(new GameOverSateteMulti(score));
                 stateBasedGame.getState(IDStates.GAMEOVERMULTI_STATE).init(gameContainer,stateBasedGame);
             } catch (SlickException e) {
                 e.printStackTrace();

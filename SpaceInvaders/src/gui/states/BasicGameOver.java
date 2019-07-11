@@ -1,4 +1,4 @@
-package gui.states.multi;
+package gui.states;
 
 import gui.states.BasicInvaderState;
 import gui.states.IDStates;
@@ -10,30 +10,28 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class GameOverStateMulti extends BasicInvaderState implements ComponentListener {
+public class BasicGameOver extends BasicInvaderState implements ComponentListener {
 
-    private GameContainer gameContainer;
-    private StateBasedGame stateBasedGame;
+    protected GameContainer gameContainer;
+    protected StateBasedGame stateBasedGame;
 
-    private Image gameOver;
-    private Image homeImage;
-    private MouseOverArea homeButton;
+    protected Image gameOver;
+    protected Image homeImage;
+    protected MouseOverArea homeButton;
 
-    private UnicodeFont uniFontScore;
-    private String score;
+    protected UnicodeFont uniFontScore;
 
-    public GameOverStateMulti(String score) {
-        this.score = score;
-    }
+    public BasicGameOver(){}
 
+    @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
         homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
-        homeButton = new MouseOverArea(gameContainer, homeImage,(gameContainer.getWidth() - homeImage.getWidth())/2,
-                80 * gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
+        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
+                7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
                 this);
 
         gameOver = new Image(readerXmlFile.read("gameoverBackground"));
@@ -41,17 +39,16 @@ public class GameOverStateMulti extends BasicInvaderState implements ComponentLi
         uniFontScore = build(9 * gameContainer.getWidth() / 100f);
     }
 
+    @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
-        String title = "SCORE: " + score;
         gameOver.draw((gameContainer.getWidth() - gameOver.getWidth())/2f,
                 (gameContainer.getHeight() - gameOver.getHeight())/2f);
         homeButton.render(gameContainer, graphics);
-
-        uniFontScore.drawString((this.gameContainer.getWidth() - uniFontScore.getWidth(title))/2f,
-                7*this.gameContainer.getHeight()/100f, title);
     }
 
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i){
+    @Override
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+
     }
 
     /**
@@ -69,7 +66,6 @@ public class GameOverStateMulti extends BasicInvaderState implements ComponentLi
 
     @Override
     public int getID() {
-        return IDStates.GAMEOVERMULTI_STATE;
+        return 15;
     }
-
 }

@@ -73,4 +73,8 @@ public class SpaceShip extends Sprite {
     public int getCurrentScore(){
         return currentScore;
     }
+
+    public String getStringScore(){
+        return "" + getCurrentScore();
+    }
 }
