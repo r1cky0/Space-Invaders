@@ -156,15 +156,15 @@ public class MultiplayerState extends BasicInvaderState {
             if (!strings.equals("")) {
                 if (client.getID() == Integer.parseInt(strings.split("_")[0])) {
                     spriteDrawer.render(spaceShipImage, shipManager.getX(), yShip, Dimensions.SHIP_WIDTH,
-                            Dimensions.SHIP_HEIGHT);
-                    if(life>Integer.parseInt(strings.split("_")[2])){
+                            Dimensions.SHIP_HEIGHT,0.5f);
+                    if(life > Integer.parseInt(strings.split("_")[2])){
                         audioplayer.explosion();
                     }
                     life = Integer.parseInt(strings.split("_")[2]);
                     checkIsDead = false;
                 }else {
                     spriteDrawer.render(spaceShipImage, Float.parseFloat(strings.split("_")[1]),
-                            yShip, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
+                            yShip, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT,1.0f);
                 }
                 if(!strings.split("_")[3].equals(" ")) {
                     spriteDrawer.render(bulletImage, Float.parseFloat(strings.split("_")[3]),

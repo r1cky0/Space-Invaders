@@ -9,4 +9,10 @@ public class SpriteDrawer implements Drawable {
         image.draw((x*SpaceInvaders.SCALE_X),(y*SpaceInvaders.SCALE_Y), (width*SpaceInvaders.SCALE_X),
                 (height*SpaceInvaders.SCALE_Y));
     }
+
+    public void render(Image image, float x, float y, float width, float height, float alpha){
+        image.draw((x*SpaceInvaders.SCALE_X),(y*SpaceInvaders.SCALE_Y), (width*SpaceInvaders.SCALE_X),
+                (height*SpaceInvaders.SCALE_Y));
+        image.setAlpha(alpha);
+    }
 }
