@@ -3,7 +3,7 @@ package network.data;
 import java.net.InetAddress;
 
 public class Connection {
-    //info destinatario
+
     private InetAddress destAddress;
     private int destPort;
 

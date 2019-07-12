@@ -73,6 +73,12 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Il server attende la connessione del numero di client necessari (e impostati a mano tra gli attributi) per
+     * l' inizio di una partita multiplayer. Istanzia per ognuno una nuova connessione
+     *
+     * @param packet datagramPacket
+     */
     private void addConnection(DatagramPacket packet) {
         if (clients.size() <= 4) {
             for (int ID : clients.keySet()) {
@@ -100,6 +106,9 @@ public class Server implements Runnable {
         }
     }
 
+    /**
+     * Rimozione dei client che hanno perso. Conclusione del gioco se la lista dei client é vuota
+     */
     public void checkClients() {
         for (int ID : clients.keySet()) {
             if (!clients.get(ID).isRunning().get()) {

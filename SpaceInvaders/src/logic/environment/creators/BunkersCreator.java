@@ -14,7 +14,7 @@ public class BunkersCreator implements Creator{
     }
 
     /**
-     * Inizializzazione della lista di bunker
+     * Inizializzazione della lista di bunker con dimensioni predefinite nel file di configurazione
      */
     public ArrayList<Bunker> create(){
         float baseX = (Dimensions.MAX_WIDTH - 35* Dimensions.BRICK_WIDTH)/2;

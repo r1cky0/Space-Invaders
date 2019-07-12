@@ -16,6 +16,9 @@ public class Customization {
         return spaceShips;
     }
 
+    /**
+     * Salvataggio dei tag con cui vengono identificati i path delle diverse ship nel file xml di configurazione
+     */
     private void initShips() {
         for(int i=0; i<5; i++){
             spaceShips.add("ship"+i);

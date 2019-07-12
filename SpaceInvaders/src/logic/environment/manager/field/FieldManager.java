@@ -87,6 +87,10 @@ public class FieldManager {
 
     }
 
+    /**
+     * Metodo di sparo della space ship
+     * @param spaceShip la nave che effettua lo sparo.
+     */
     public void shipShot(SpaceShip spaceShip){
         if(!spaceShip.isShipShot()) {
             Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - Dimensions.BULLET_WIDTH /2,
@@ -98,7 +102,8 @@ public class FieldManager {
 
     /**
      * Funzione per controllare la collisione dei proittili sparati dagli invaders: prima rispetto ai bunker
-     * (e i loro brick) e poi rispetto alla ship. Eliminazione del bullet nel caso in cui non collida con
+     * (e i loro brick) e poi rispetto alla ship.
+     * Eliminazione del bullet nel caso in cui non collida con
      * niente e giunga a fine schermata(y maggiore)
      */
     public boolean checkInvaderShotCollision(SpaceShip spaceShip) {
@@ -128,7 +133,8 @@ public class FieldManager {
 
     /**
      * Funzione per controllare la collisione dei proittili sparati dal giocatore: prima rispetto ai bunker
-     * (e i loro brick) e poi rispetto agli invaders. Eliminazione del bullet nel caso in cui non collida
+     * (e i loro brick) e poi rispetto agli invaders.
+     * Eliminazione del bullet nel caso in cui non collida
      * con niente e giunga a fine schermata(y minore)
      */
     public boolean checkSpaceShipShotCollision(SpaceShip spaceShip) {
@@ -164,7 +170,8 @@ public class FieldManager {
     }
 
     /**
-     * Gestione del movimento degli invaders. Se viene raggiunto il limite laterale rispetto alla direzione di
+     * Gestione del movimento degli invaders.
+     * Se viene raggiunto il limite laterale rispetto alla direzione di
      * movimento tutti gli invaders shiftano verso il basso e la direzione laterale di movimento viene invertita
      * settando il corrispondendo Enum 'MovingDirections' fondamentale nella funzione successiva
      */
@@ -198,6 +205,9 @@ public class FieldManager {
         return md;
     }
 
+    /**
+     * Funzione di controllo di raggiungimento di fine schermata del bullet
+     */
     private void checkEndReached(){
         double maxY = 0;
         for (Invader invader : invaders) {
@@ -210,6 +220,10 @@ public class FieldManager {
         }
     }
 
+    /**
+     * Funzione di creazione di un invader "Bonus" che passa orizontalmente durante un livello e, se colpito,
+     * fornisce punti extra al giocatore
+     */
     public void setBonusInvader(){
         double minY = Dimensions.MAX_HEIGHT;
         for (Invader invader : invaders) {

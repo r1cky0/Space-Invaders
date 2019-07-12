@@ -22,6 +22,10 @@ public class ThreadInvader implements Runnable {
         thread.start();
     }
 
+    /**
+     * Il thread gestisce il movimento e lo sparo(randomico) degli invaders.
+     * Inoltre, puó determinare la generazione di un invader "bonus" per punti extra
+     */
     public void run() {
         running.set(true);
         Random rand = new Random();

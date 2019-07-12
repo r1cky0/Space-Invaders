@@ -39,11 +39,17 @@ public class Multiplayer{
         return player;
     }
 
+    /**
+     * Attivazione thread di aggiornamento di tutti gli elementi presenti sul campo di gioco
+     */
     private void update() {
         threadUpdate = new ThreadUpdate(this, messageBuilder);
         threadUpdate.start();
     }
 
+    /**
+     *  Attivazione del thread di gestione degli invader (movimento e sparo) e check completamento livello
+     */
     public void threadInvaderManager(){
         if (!threadRunning) {
             threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);

@@ -4,6 +4,14 @@ import java.io.*;
 
 public class FileModifier {
 
+    /**
+     * Funzione per la sovrascittura del file degli account. Si utilizza per aggionrare l'highscore
+     * e per salvare quale sia lo spirte scelto per la spaceship
+     *
+     * @param name nome utente
+     * @param highScore punteggio record
+     * @param shipTypePath tag da confrontare con l'xml "paths.xml" da cui leggere i path delle immagini
+     */
     public void modifyFile(String name,int highScore, String shipTypePath) {
         try {
             String file = "res/players.txt";

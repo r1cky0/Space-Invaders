@@ -28,6 +28,11 @@ public class ThreadUpdate implements Runnable{
         thread.start();
     }
 
+    /**
+     * La funzione di run del thread genera il messaggio che verrá inviato ai client per la renderizzazione
+     * degli elementi di gioco.
+     * Inoltre gestisce l'aggiornamento dello stato e degli elementi di gioco
+     */
     public void run() {
         running.set(true);
         while(running.get()) {

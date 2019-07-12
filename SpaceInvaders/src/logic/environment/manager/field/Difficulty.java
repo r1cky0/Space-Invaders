@@ -9,6 +9,9 @@ public class Difficulty {
         this.difficulty = 900;
     }
 
+    /**
+     * Metodo richiamato ogni volta che si completa un livello. L' esito influenza i thread di aggiornamento
+     */
     public void incrementDifficulty(){
         if(difficulty >= 500){
             difficulty -= 100;

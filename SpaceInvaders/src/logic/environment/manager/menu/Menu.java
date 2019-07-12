@@ -53,8 +53,9 @@ public class Menu {
     }
 
     /**
-     * Funzione di creazione di un nuovo account attuata la quale viene inizializzato il fieldManager e il nuovo utente puó
-     * giocare senza effettuare nuovamente accesso
+     * Funzione di creazione di un nuovo account attuata la quale viene inizializzato il fieldManager e il nuovo utente
+     * effettua automaticamente l' accesso
+     *
      * @param name Nickname del giocatore
      * @param password Password del giocatore
      * @return Segnala se aggiunta dell' acount é andata a buon fine

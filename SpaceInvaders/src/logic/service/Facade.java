@@ -15,6 +15,7 @@ public abstract class Facade {
 
     /**
      * Sfrutta la funzione di slick collides per rilevare collisioni tra shape diverse
+     *
      * @param shape La forma con cui fare il check della collisione
      * @return Ritorna un booleano settato a true se collisione avvenuta
      */

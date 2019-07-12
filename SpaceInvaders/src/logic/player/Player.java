@@ -18,7 +18,7 @@ public class Player {
 
     /**
      * Check di eventuale nuovo highscore.
-     * Se il player batte il proprio highscore, questo viene aggiornato nel file
+     * Se il player batte il proprio highscore, questo viene aggiornato nel file di salvataggio
      */
     public boolean checkHighscore(FileModifier fileModifier, Customization customization){
         if(highScore < spaceShip.getCurrentScore()){

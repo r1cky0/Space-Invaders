@@ -8,6 +8,10 @@ public class BonusInvader extends Invader {
         super(coordinate, width, height, value);
     }
 
+    /**
+     * A differenza degli altri invaders, quello bonus si sposta solo orizzontalmente
+     * @param delta tempo di aggionramento della grafica
+     */
     public void moveLeft(int delta){
         float HORIZONTAL_OFFSET = 0.02f;
         super.setX(super.getX() - HORIZONTAL_OFFSET * delta);

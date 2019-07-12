@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * Classe listener UDP
- */
 public class Client implements Runnable {
     private Connection connection;
     private DatagramSocket socket;
@@ -45,9 +42,6 @@ public class Client implements Runnable {
         listener.start();
     }
 
-    /**
-     * Invio dati dal listener
-     */
     public void send(DatagramPacket packet) {
         try {
             socket.send(packet);
@@ -87,9 +81,6 @@ public class Client implements Runnable {
         }
     }
 
-    /**
-     * Chiusura connessione del listener
-     */
     public void close() {
         running.set(false);
         socket.close();

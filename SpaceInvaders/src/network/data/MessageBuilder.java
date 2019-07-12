@@ -21,6 +21,10 @@ public class MessageBuilder{
         }
     }
 
+    /**
+     * Primo componente del messaggio da inviare ai client é lo stato di gioco
+     * @param gameState stato di gioco
+     */
     public void setGameStateInfos(States gameState){
         String gameStateInfos = gameState.toString() + "\n";
         stringBuilders[0] = gameStateInfos;
@@ -33,6 +37,11 @@ public class MessageBuilder{
         setShipInfos(multiplayer);
     }
 
+    /**
+     * Otteniamo tutte le info sulla posizione degli invaders (classici e bonus)
+     *
+     * @param multiplayer gestore di gioco da cui ottenere le info
+     */
     public void setInvaderInfos(Multiplayer multiplayer){
         String invaderInfos = "";
         for(Invader invader : getFieldManager(multiplayer).getInvaders()) {
@@ -47,6 +56,11 @@ public class MessageBuilder{
         stringBuilders[1] = invaderInfos;
     }
 
+    /**
+     * Otteniamo le informazioni sui bullet sparati dagli invaders
+     *
+     * @param multiplayer gestore di gioco da cui ottenere le info
+     */
     public void setInvaderBulletInfos(Multiplayer multiplayer){
         String invaderBulletInfos = "";
         for(InvaderBullet invaderBullet : getFieldManager(multiplayer).getInvaderBullets()){
@@ -56,6 +70,11 @@ public class MessageBuilder{
         stringBuilders[2] = invaderBulletInfos;
     }
 
+    /**
+     * Otteniamo le informazioni sui bunker e i rispettivi brick
+     *
+     * @param multiplayer gestore di gioco da cui ottenere le info
+     */
     private void setBunkerInfos(Multiplayer multiplayer){
         String bunkerInfos = "";
         for(Bunker bunker : getFieldManager(multiplayer).getBunkers()) {
@@ -67,6 +86,12 @@ public class MessageBuilder{
         stringBuilders[3] = bunkerInfos;
     }
 
+    /**
+     * Otteniamo informazioni riguardo la posizione delle space ship, la loro vita e, eventualmente, il bullet
+     * sparato
+     *
+     * @param multiplayer gestore di gioco da cui ottenere le info
+     */
     private void setShipInfos(Multiplayer multiplayer){
         String shipInfos = "";
         for(Integer ID : multiplayer.getPlayers().keySet()){
@@ -92,6 +117,10 @@ public class MessageBuilder{
         return getSpaceShip(multiplayer, ID).getShipBullet();
     }
 
+    /**
+     * Costruzione del messaggio completo da inviare
+     * @return messaggio con le info necessarie
+     */
     public String getInfos(){
         String infos = "";
         for(int i=0;i<5;i++){

@@ -81,6 +81,9 @@ public class SinglePlayer {
         return null;
     }
 
+    /**
+     * Attivaziome thread di aggiornamento degli invader (movimento e sparo) e check di completamento del livello
+     */
     private void threadManager(){
         if (!newThread) {
             threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
