@@ -142,7 +142,6 @@ public class StartState extends BasicInvaderState implements ComponentListener {
 
     /**
      * Funzione che setta i gestori degli eventi di click sui bottoni
-     *
      * @param source Il tasto di cui dobbiamo settare il comportamento
      */
     public void componentActivated(AbstractComponent source) {

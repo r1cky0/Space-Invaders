@@ -64,7 +64,9 @@ public class FieldManager {
     }
 
     /**
-     * Reinizializzazione degli invaders e incremento life ship al nuovo livello
+     * Reinizializzazione degli invaders e incremento life ship al nuovo livello.
+     *
+     * @param spaceShip: ship di cui va incrementata la vita
      */
     private void nextLevel(SpaceShip spaceShip){
         difficulty.incrementDifficulty();
@@ -89,7 +91,8 @@ public class FieldManager {
 
     /**
      * Metodo di sparo della space ship
-     * @param spaceShip la nave che effettua lo sparo.
+     *
+     * @param spaceShip: ship che effettua lo sparo.
      */
     public void shipShot(SpaceShip spaceShip){
         if(!spaceShip.isShipShot()) {
@@ -105,6 +108,8 @@ public class FieldManager {
      * (e i loro brick) e poi rispetto alla ship.
      * Eliminazione del bullet nel caso in cui non collida con
      * niente e giunga a fine schermata(y maggiore)
+     *
+     * @param spaceShip: ship con cui controllare collisione.
      */
     public boolean checkInvaderShotCollision(SpaceShip spaceShip) {
         for(Bullet bullet : invaderBullets){
@@ -136,6 +141,8 @@ public class FieldManager {
      * (e i loro brick) e poi rispetto agli invaders.
      * Eliminazione del bullet nel caso in cui non collida
      * con niente e giunga a fine schermata(y minore)
+     *
+     * @param spaceShip: ship che effettua lo sparo.
      */
     public boolean checkSpaceShipShotCollision(SpaceShip spaceShip) {
         for (Bunker bunker : bunkers) {
@@ -173,7 +180,7 @@ public class FieldManager {
      * Gestione del movimento degli invaders.
      * Se viene raggiunto il limite laterale rispetto alla direzione di
      * movimento tutti gli invaders shiftano verso il basso e la direzione laterale di movimento viene invertita
-     * settando il corrispondendo Enum 'MovingDirections' fondamentale nella funzione successiva
+     * settando il corrispondendo Enum 'MovingDirections'
      */
     public MovingDirections checkInvaderDirection() {
         double maxX = 0;
@@ -206,41 +213,8 @@ public class FieldManager {
     }
 
     /**
-     * Funzione di controllo di raggiungimento di fine schermata del bullet
-     */
-    private void checkEndReached(){
-        double maxY = 0;
-        for (Invader invader : invaders) {
-            if (maxY < invader.getY()) {
-                maxY = invader.getY();
-            }
-            if ((maxY + Dimensions.INVADER_HEIGHT) >= (Dimensions.MAX_HEIGHT - 7 * Dimensions.BRICK_HEIGHT)) {
-                endReached = true;
-            }
-        }
-    }
-
-    /**
-     * Funzione di creazione di un invader "Bonus" che passa orizontalmente durante un livello e, se colpito,
-     * fornisce punti extra al giocatore
-     */
-    public void setBonusInvader(){
-        double minY = Dimensions.MAX_HEIGHT;
-        for (Invader invader : invaders) {
-            if (minY > invader.getY()) {
-                minY = invader.getY();
-            }
-        }
-        if((minY >= Dimensions.MAX_HEIGHT/4) && (!bonusInLevel)){
-            bonusInvader = new BonusInvader(new Coordinate(Dimensions.MAX_WIDTH, Dimensions.MAX_HEIGHT/10),
-                    Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT, 100);
-            bonus = true;
-            bonusInLevel = true;
-        }
-    }
-
-    /**
      * Funzione di movimento degli invaders. La direzione é inidicata dalla MovingDirections passata come parametro
+     *
      * @param md Enum che indica la direzione di movimento
      */
     public void invaderMovement(MovingDirections md){
@@ -256,6 +230,40 @@ public class FieldManager {
                     invader.moveDown();
                     break;
             }
+        }
+    }
+
+    /**
+     * Funzione di controllo di raggiungimento del livello dei bunker da parte degli alieni che implica il gameOver
+     */
+    private void checkEndReached(){
+        double maxY = 0;
+        for (Invader invader : invaders) {
+            if (maxY < invader.getY()) {
+                maxY = invader.getY();
+            }
+            if ((maxY + Dimensions.INVADER_HEIGHT) >= (Dimensions.MAX_HEIGHT - 7 * Dimensions.BRICK_HEIGHT)) {
+                endReached = true;
+            }
+        }
+    }
+
+    /**
+     * Funzione di creazione di una navicella invader "Bonus" che passa orizontalmente durante un livello e, se colpito,
+     * fornisce punti extra al giocatore
+     */
+    public void setBonusInvader(){
+        double minY = Dimensions.MAX_HEIGHT;
+        for (Invader invader : invaders) {
+            if (minY > invader.getY()) {
+                minY = invader.getY();
+            }
+        }
+        if((minY >= Dimensions.MAX_HEIGHT/4) && (!bonusInLevel)){
+            bonusInvader = new BonusInvader(new Coordinate(Dimensions.MAX_WIDTH, Dimensions.MAX_HEIGHT/10),
+                    Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT, 100);
+            bonus = true;
+            bonusInLevel = true;
         }
     }
 

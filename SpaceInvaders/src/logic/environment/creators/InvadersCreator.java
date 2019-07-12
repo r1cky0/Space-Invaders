@@ -16,8 +16,8 @@ public class InvadersCreator implements Creator{
     }
 
     /**
-     * Inizializzazione degli invaders, posti inizialmente in alto a sinistra nella schermata di gioco.
-     * Le dimemensioni predefinite vengono lette dal file di configurazione
+     * Inizializzazione della lista degli invaders.
+     *
      */
     public List<Invader> create(){
         final float HORIZONTAL_OFFSET = Dimensions.MAX_WIDTH/32;

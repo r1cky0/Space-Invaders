@@ -19,7 +19,7 @@ public abstract class Facade {
      * @param shape La forma con cui fare il check della collisione
      * @return Ritorna un booleano settato a true se collisione avvenuta
      */
-    public boolean collides(Shape shape){
+    protected boolean collides(Shape shape){
         return this.shape.intersects(shape);
     }
 

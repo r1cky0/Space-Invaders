@@ -26,8 +26,7 @@ public class AudioPlayer {
     }
 
     /**
-     * I seguenti metodi servono per attivare la riproduzione dei file audio in modo ripetuto (metodo loop)
-     * o singolo (metodo play)
+     * Riproduzione dei file audio in modo ripetuto (metodo loop) o singolo (metodo play)
      */
     public void game(){ gameMusic.loop(1.0f,50.0f); }
 

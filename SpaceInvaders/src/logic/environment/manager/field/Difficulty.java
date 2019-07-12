@@ -1,24 +1,26 @@
 package logic.environment.manager.field;
 
-public class Difficulty {
+class Difficulty {
 
     private int difficulty;
 
-    public Difficulty(){
+    Difficulty(){
         //millisecondi di sleep thread alieni
         this.difficulty = 900;
     }
 
     /**
-     * Metodo richiamato ogni volta che si completa un livello. L' esito influenza i thread di aggiornamento
+     * Metodo richiamato ogni volta che si completa un livello.
+     * L'aumento della difficoltà si traduce in uno sleep più lento del thread invader e quindi
+     * un movimento e sparo più veloce degli stessi.
      */
-    public void incrementDifficulty(){
+    void incrementDifficulty(){
         if(difficulty >= 500){
             difficulty -= 100;
         }
     }
 
-    public int getDifficulty() {
+    int getDifficulty() {
         return difficulty;
     }
 }

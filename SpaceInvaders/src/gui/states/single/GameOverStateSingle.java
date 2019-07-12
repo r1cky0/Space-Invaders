@@ -52,9 +52,6 @@ public class GameOverStateSingle extends BasicGameOver implements ComponentListe
                 7* this.gameContainer.getHeight()/100f, score);
     }
 
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
-    }
-
     /**
      * Funzione che setta i gestori degli eventi di click sui bottoni
      * @param source Il tasto di cui dobbiamo settare il comportamento

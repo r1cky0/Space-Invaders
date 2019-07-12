@@ -10,7 +10,7 @@ public class FileModifier {
      *
      * @param name nome utente
      * @param highScore punteggio record
-     * @param shipTypePath tag da confrontare con l'xml "paths.xml" da cui leggere i path delle immagini
+     * @param shipTypePath tag ship
      */
     public void modifyFile(String name,int highScore, String shipTypePath) {
         try {

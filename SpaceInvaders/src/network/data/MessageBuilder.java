@@ -10,6 +10,21 @@ import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 
+/**
+ * Composizione messaggio da inviare a client per renderizzazione:
+ * - STATO GIOCO
+ * - INVADER (posX_posY)
+ * - INVADER BULLET (posX_posY)
+ * - BUNKER (posX_posY_life)
+ * - SHIP E SHIP BULLET (posXShip_life_posXBullet_posYBullet)
+ * - TEAM SCORE
+ *
+ * Ogni informazione dello stesso gruppo è separata da carattere '\t'
+ * I gruppi sono separati dal carattere '\n'
+ * Fine messaggio indicata dal carattere '\r'
+ *
+ */
+
 public class MessageBuilder{
 
     private String[] stringBuilders;
@@ -23,6 +38,7 @@ public class MessageBuilder{
 
     /**
      * Primo componente del messaggio da inviare ai client é lo stato di gioco
+     *
      * @param gameState stato di gioco
      */
     public void setGameStateInfos(States gameState){
@@ -42,7 +58,7 @@ public class MessageBuilder{
      *
      * @param multiplayer gestore di gioco da cui ottenere le info
      */
-    public void setInvaderInfos(Multiplayer multiplayer){
+    private void setInvaderInfos(Multiplayer multiplayer){
         String invaderInfos = "";
         for(Invader invader : getFieldManager(multiplayer).getInvaders()) {
             invaderInfos += invader.getX() + "_" + invader.getY() + "\t";
@@ -61,7 +77,7 @@ public class MessageBuilder{
      *
      * @param multiplayer gestore di gioco da cui ottenere le info
      */
-    public void setInvaderBulletInfos(Multiplayer multiplayer){
+    private void setInvaderBulletInfos(Multiplayer multiplayer){
         String invaderBulletInfos = "";
         for(InvaderBullet invaderBullet : getFieldManager(multiplayer).getInvaderBullets()){
             invaderBulletInfos += invaderBullet.getX() + "_" + invaderBullet.getY() + "\t";
