@@ -6,7 +6,7 @@ public class Customization {
     private String currentShip;
     private ArrayList<String> spaceShips;
 
-    public Customization() {
+    Customization() {
         spaceShips = new ArrayList<>();
         currentShip = "ship0";
         initShips();
@@ -29,15 +29,15 @@ public class Customization {
         return spaceShips.indexOf(currentShip);
     }
 
-    public String getCurrentShip() {
-        return currentShip;
+    public void setCurrentShip(String ship) {
+        currentShip = ship;
     }
 
     public void setCurrentShip(int index) {
-        this.currentShip = spaceShips.get(index);
+        currentShip = spaceShips.get(index);
     }
 
-    public void setCurrentShip(String currentShip) {
-        this.currentShip = currentShip;
+    public String getCurrentShip() {
+        return currentShip;
     }
 }

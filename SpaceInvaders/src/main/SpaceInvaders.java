@@ -1,19 +1,20 @@
 package main;
 
-import gui.states.BasicInvaderState;
 import gui.states.menu.CustomizationState;
 import gui.states.menu.MenuState;
 import gui.states.menu.RankingState;
 import gui.states.menu.StartState;
 import gui.states.multi.WaitingState;
-import gui.states.single.*;
+import gui.states.single.GameOverStateSingle;
+import gui.states.single.NewHighscoreState;
+import gui.states.single.SinglePlayerState;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
 import java.awt.*;
-import java.awt.Dimension;
 
 
 public class SpaceInvaders extends StateBasedGame {
@@ -28,15 +29,15 @@ public class SpaceInvaders extends StateBasedGame {
     }
 
     public void initStatesList(GameContainer gameContainer) {
-        this.addState(new StartState(menu));
-        this.addState(new MenuState(menu));
-        this.addState(new SinglePlayerState(menu));
-        this.addState(new GameOverStateSingle(menu));
-        this.addState(new RankingState(menu));
-        this.addState(new NewHighscoreState(menu));
-        this.addState(new CustomizationState(menu));
-        this.addState(new WaitingState(menu));
-        this.enterState(0);
+        addState(new StartState(menu));
+        addState(new MenuState(menu));
+        addState(new SinglePlayerState(menu));
+        addState(new WaitingState(menu));
+        addState(new CustomizationState(menu));
+        addState(new RankingState(menu));
+        addState(new GameOverStateSingle(menu));
+        addState(new NewHighscoreState(menu));
+        enterState(0);
     }
 
     public static void main(String[] args) {
@@ -48,6 +49,7 @@ public class SpaceInvaders extends StateBasedGame {
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
             container.setDisplayMode((int) (Dimensions.MAX_WIDTH*SCALE_X),(int) (Dimensions.MAX_HEIGHT*SCALE_Y),
                     false);
+            container.setTargetFrameRate(240);
             container.setSmoothDeltas(false);
             container.setShowFPS(false);
             container.setVSync(false);

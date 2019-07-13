@@ -252,7 +252,7 @@ public class FieldManager {
      * Funzione di creazione di una navicella invader "Bonus" che passa orizontalmente durante un livello e, se colpito,
      * fornisce punti extra al giocatore
      */
-    public void setBonusInvader(){
+    public void createBonusInvader(){
         double minY = Dimensions.MAX_HEIGHT;
         for (Invader invader : invaders) {
             if (minY > invader.getY()) {
@@ -319,5 +319,9 @@ public class FieldManager {
 
     public boolean isBonusInvader(){
         return bonus;
+    }
+
+    public void setBonusInvader(boolean value){
+        bonus = value;
     }
 }

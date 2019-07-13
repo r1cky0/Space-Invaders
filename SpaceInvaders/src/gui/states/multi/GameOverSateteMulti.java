@@ -1,12 +1,12 @@
 package gui.states.multi;
 
-import gui.states.BasicGameOver;
+import gui.states.GameOverState;
 import gui.states.IDStates;
 import org.newdawn.slick.*;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class GameOverSateteMulti extends BasicGameOver implements ComponentListener {
+public class GameOverSateteMulti extends GameOverState implements ComponentListener {
     private String score;
 
     private UnicodeFont uniFontScore;

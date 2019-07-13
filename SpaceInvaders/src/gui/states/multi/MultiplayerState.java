@@ -1,12 +1,15 @@
 package gui.states.multi;
 
-import gui.states.BasicGameOver;
-import gui.states.BasicInvaderState;
+import gui.elements.GraphicShip;
+import gui.states.BasicState;
+import gui.states.GameOverState;
+import gui.states.GameState;
 import gui.states.IDStates;
 import gui.drawer.SpriteDrawer;
 import logic.environment.manager.field.MovingDirections;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
+import logic.sprite.dinamic.invaders.Invader;
 import main.Dimensions;
 import network.client.Client;
 import network.data.PacketHandler;
@@ -19,12 +22,10 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.ArrayList;
 
-public class MultiplayerState extends BasicInvaderState {
+public class MultiplayerState extends GameState {
     private States states;
-    private String message;
     private UnicodeFont uniFontData;
 
-    private SpriteDrawer spriteDrawer;
     private ShipManager shipManager;
     private String score;
     private int life;
@@ -36,29 +37,10 @@ public class MultiplayerState extends BasicInvaderState {
 
     //IMAGES
     private Image background;
-    private Image invaderImage;
-    private Image bonusInvader;
-    private Image spaceShipImage;
-    private ArrayList<Image> brickImages = new ArrayList<>();
-    private Image bulletImage;
 
     public MultiplayerState(Client client) {
         this.client = client;
-
-        spriteDrawer = new SpriteDrawer();
         handler = new PacketHandler();
-
-        try {
-            bonusInvader = new Image(readerXmlFile.read("bonusInvader"));
-            invaderImage = new Image(readerXmlFile.read("defaultInvader"));
-            bulletImage = new Image(readerXmlFile.read("defaultBullet"));
-            for (int i = 0; i < 4; i++) {
-                brickImages.add(new Image(readerXmlFile.read("brick" + i)));
-            }
-            spaceShipImage = new Image(readerXmlFile.read("ship0"));
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -68,10 +50,11 @@ public class MultiplayerState extends BasicInvaderState {
         yShip = Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT;
     }
 
-    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) {
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException{
         Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2), yShip);
         SpaceShip spaceShip = new SpaceShip(coordinate, Dimensions.SHIP_WIDTH, Dimensions.MAX_HEIGHT);
         shipManager = new ShipManager(spaceShip);
+        graphicShip = new GraphicShip(new Image(readerXmlFile.read("ship0")));
     }
 
     @Override
@@ -92,6 +75,7 @@ public class MultiplayerState extends BasicInvaderState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
         Input input = gameContainer.getInput();
 
+        String message;
         if(input.isKeyPressed(Input.KEY_SPACE)){
             message = client.getID() + "\n" + Commands.SHOT.toString();
             client.send(handler.build(message, client.getConnection()));
@@ -136,53 +120,45 @@ public class MultiplayerState extends BasicInvaderState {
 
         for (String strings : rcvdata[1].split("\\t")) {
             if (!strings.equals("")) {
-                spriteDrawer.render(invaderImage, Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1]), Dimensions.INVADER_WIDTH,
-                        Dimensions.INVADER_HEIGHT);
+                graphicInvader.render(Float.parseFloat(strings.split("_")[0]),
+                        Float.parseFloat(strings.split("_")[1]));
             }
         }
 
         if(!rcvdata[2].equals("")){
-            spriteDrawer.render(bonusInvader, Float.parseFloat(rcvdata[2].split("_")[0]),
-                    Float.parseFloat(rcvdata[2].split("_")[1]), Dimensions.INVADER_WIDTH,
-                    Dimensions.INVADER_HEIGHT);
+            graphicBonusInvader.render(Float.parseFloat(rcvdata[2].split("_")[0]),
+                    Float.parseFloat(rcvdata[2].split("_")[1]));
         }
 
         for (String strings : rcvdata[3].split("\\t")) {
             if (!strings.equals("")) {
-                spriteDrawer.render(bulletImage, Float.parseFloat(strings.split("_")[0]),
-                        Float.parseFloat(strings.split("_")[1]), Dimensions.BULLET_WIDTH,
-                        Dimensions.BULLET_HEIGHT);
+                graphicBullet.render(Float.parseFloat(strings.split("_")[0]),
+                        Float.parseFloat(strings.split("_")[1]));
             }
         }
         for (String strings : rcvdata[4].split("\\t")) {
             if (!strings.equals("")) {
                 if (Integer.parseInt(strings.split("_")[2]) > 0) {
-                    spriteDrawer.render(brickImages.get(4 - Integer.parseInt(strings.split("_")[2])),
-                            Float.parseFloat(strings.split("_")[0]),
-                            Float.parseFloat(strings.split("_")[1]), Dimensions.BRICK_WIDTH,
-                            Dimensions.BRICK_HEIGHT);
+                    graphicBrick.render(Integer.parseInt(strings.split("_")[2]),
+                            Float.parseFloat(strings.split("_")[0]), Float.parseFloat(strings.split("_")[1]));
                 }
             }
         }
         for (String strings : rcvdata[5].split("\\t")) {
             if (!strings.equals("")) {
                 if (client.getID() == Integer.parseInt(strings.split("_")[0])) {
-                    spriteDrawer.render(spaceShipImage, shipManager.getX(), yShip, Dimensions.SHIP_WIDTH,
-                            Dimensions.SHIP_HEIGHT,1.0f);
+                    graphicShip.render(shipManager.getX(), yShip);
                     if(life > Integer.parseInt(strings.split("_")[2])){
                         audioplayer.explosion();
                     }
                     life = Integer.parseInt(strings.split("_")[2]);
                     checkIsDead = false;
                 }else{
-                    spriteDrawer.render(spaceShipImage, Float.parseFloat(strings.split("_")[1]),
-                            yShip, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT,0.5f);
+                    graphicShip.render(Float.parseFloat(strings.split("_")[1]), yShip);
                 }
                 if(!strings.split("_")[3].equals(" ")) {
-                    spriteDrawer.render(bulletImage, Float.parseFloat(strings.split("_")[3]),
-                            Float.parseFloat(strings.split("_")[4]), Dimensions.BULLET_WIDTH,
-                            Dimensions.BULLET_HEIGHT);
+                    graphicBullet.render(Float.parseFloat(strings.split("_")[3]),
+                            Float.parseFloat(strings.split("_")[4]));
                 }
                 if(checkIsDead){
                     life = 0;

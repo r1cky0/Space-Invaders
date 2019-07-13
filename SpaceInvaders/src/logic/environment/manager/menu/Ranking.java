@@ -9,7 +9,7 @@ public class Ranking {
 
     private HashMap<String,Integer> rank;
 
-    public Ranking(){
+    Ranking(){
         rank = new HashMap<>();
     }
 
@@ -17,16 +17,20 @@ public class Ranking {
         return rank;
     }
 
-    public void createRanking() throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader("res/players.txt"));
-        String riga = in.readLine();
-        while (riga != null) {
-            String[] componenti = riga.split("\\t");
-            rank.put(componenti[0], Integer.parseInt(componenti[2]));
-            riga = in.readLine();
+    public void createRanking() {
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("res/players.txt"));
+            String riga = in.readLine();
+            while (riga != null) {
+                String[] componenti = riga.split("\\t");
+                rank.put(componenti[0], Integer.parseInt(componenti[2]));
+                riga = in.readLine();
+            }
+            sortRanking();
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        in.close();
-        sortRanking();
     }
 
     /**

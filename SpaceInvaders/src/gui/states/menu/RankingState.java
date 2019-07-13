@@ -1,7 +1,8 @@
 package gui.states.menu;
-import gui.states.BasicInvaderState;
+import gui.states.BasicState;
 import gui.states.IDStates;
 import logic.environment.manager.menu.Menu;
+import logic.environment.manager.menu.Ranking;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -14,8 +15,9 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.*;
 
-public class RankingState extends BasicInvaderState implements ComponentListener {
+public class RankingState extends BasicState implements ComponentListener {
     private StateBasedGame stateBasedGame;
+    private Ranking ranking;
 
     private String title;
     private String nameString;
@@ -28,14 +30,11 @@ public class RankingState extends BasicInvaderState implements ComponentListener
     private Image silverMedal;
     private Image bronzeMedal;
     private Image background;
-    private Image homeImage;
 
     private MouseOverArea homeButton;
 
-    private Menu menu;
-
-    public RankingState(Menu menu) {
-        this.menu = menu;
+    public RankingState(Menu menu){
+        this.ranking = menu.getRanking();
     }
 
     @Override
@@ -51,8 +50,8 @@ public class RankingState extends BasicInvaderState implements ComponentListener
         bronzeMedal = new Image(readerXmlFile.read("medalBronze")).getScaledCopy(6*gameContainer.getWidth()/100,
                 6*gameContainer.getWidth()/100);
 
-        homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
-                6*gameContainer.getWidth()/100);
+        Image homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6 * gameContainer.getWidth() / 100,
+                6 * gameContainer.getWidth() / 100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
                 7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
                 this);
@@ -64,7 +63,7 @@ public class RankingState extends BasicInvaderState implements ComponentListener
         uniFontTitle = build(8*gameContainer.getWidth()/100f);
         uniFontData = build(4*gameContainer.getWidth()/100f);
 
-        menu.createRanking();
+        ranking.createRanking();
     }
 
     @Override
@@ -73,13 +72,15 @@ public class RankingState extends BasicInvaderState implements ComponentListener
 
         int offset = 0;
         int numPlayer = 0;
-        Iterator rankIter = menu.getRanking().getRank().entrySet().iterator();
+        Iterator rankIter = ranking.getRank().entrySet().iterator();
         while (rankIter.hasNext() && numPlayer<10) {
             Map.Entry pair = (Map.Entry) rankIter.next();
+
             uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(nameString))/4f,
                     28*gameContainer.getHeight()/100f + offset, (String) pair.getKey());
             uniFontData.drawString(65*gameContainer.getWidth()/100f, 28*gameContainer.getHeight()/100f + offset,
                     Integer.toString((int) pair.getValue()));
+
             if(numPlayer>2){
                 offset += gameContainer.getHeight()/15;
             }else {

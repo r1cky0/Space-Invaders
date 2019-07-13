@@ -18,15 +18,11 @@ public class Player {
 
     /**
      * Check di eventuale nuovo highscore.
-     * Se il player batte il proprio highscore, questo viene aggiornato nel file di salvataggio
      *
-     * @param fileModifier modificatore del file
-     * @param customization customizzazione corrente del player
      */
-    public boolean checkHighscore(FileModifier fileModifier, Customization customization){
+    public boolean checkHighscore(){
         if(highScore < spaceShip.getCurrentScore()){
             highScore = getSpaceShip().getCurrentScore();
-            fileModifier.modifyFile(name, highScore,customization.getCurrentShip());
             return true;
         }
         return false;

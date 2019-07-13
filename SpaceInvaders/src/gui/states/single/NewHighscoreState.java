@@ -1,6 +1,6 @@
 package gui.states.single;
 
-import gui.states.BasicInvaderState;
+import gui.states.BasicState;
 import gui.states.IDStates;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.*;
@@ -13,22 +13,18 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class NewHighscoreState extends BasicInvaderState implements ComponentListener {
+public class NewHighscoreState extends BasicState implements ComponentListener {
 
-    private GameContainer gameContainer;
     private StateBasedGame stateBasedGame;
 
     private Image cupImage;
     private Image background;
-    private Image newGame;
-    private Image homeImage;
 
     private MouseOverArea newGameButton;
     private MouseOverArea homeButton;
 
     private UnicodeFont uniFontTitle;
     private String title;
-    private String highscore;
 
     private Menu menu;
 
@@ -37,20 +33,19 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
     }
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
         background = new Image(readerXmlFile.read("defaultBackground"));
         title = "NEW HIGHSCORE:";
 
-        newGame = new Image(readerXmlFile.read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,
-                10*gameContainer.getHeight()/100);
+        Image newGame = new Image(readerXmlFile.read("buttonNewGame")).getScaledCopy(30 * gameContainer.getWidth() / 100,
+                10 * gameContainer.getHeight() / 100);
         newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
                 80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
 
-        homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
-                6*gameContainer.getWidth()/100);
+        Image homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6 * gameContainer.getWidth() / 100,
+                6 * gameContainer.getWidth() / 100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
                 7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
                 this);
@@ -64,7 +59,7 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background,0,0);
 
-        highscore = Integer.toString(menu.getPlayer().getHighScore());
+        String highscore = Integer.toString(menu.getPlayer().getHighScore());
         cupImage.draw((gameContainer.getWidth() - cupImage.getWidth())/2f,
                 (gameContainer.getHeight() - cupImage.getHeight())/2f);
 
@@ -83,12 +78,6 @@ public class NewHighscoreState extends BasicInvaderState implements ComponentLis
     @Override
     public void componentActivated(AbstractComponent source) {
         if (source == newGameButton) {
-            try {
-                menu.restartGame();
-                stateBasedGame.getState(IDStates.SINGLEPLAYER_STATE).init(gameContainer, stateBasedGame);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
             stateBasedGame.enterState(IDStates.SINGLEPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
             audioplayer.game();
         }

@@ -1,6 +1,6 @@
 package gui.states.single;
 
-import gui.states.BasicGameOver;
+import gui.states.GameOverState;
 import gui.states.IDStates;
 import logic.environment.manager.game.SinglePlayer;
 import logic.environment.manager.menu.Menu;
@@ -14,14 +14,11 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class GameOverStateSingle extends BasicGameOver implements ComponentListener {
+public class GameOverStateSingle extends GameOverState implements ComponentListener {
 
     private SinglePlayer singlePlayer;
-
-    private Image newGame;
-    private MouseOverArea newGameButton;
-
     private Menu menu;
+    private MouseOverArea newGameButton;
 
     public GameOverStateSingle(Menu menu) {
         this.menu = menu;
@@ -30,8 +27,8 @@ public class GameOverStateSingle extends BasicGameOver implements ComponentListe
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         super.init(gameContainer,stateBasedGame);
 
-        newGame = new Image(readerXmlFile.read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,
-                10*gameContainer.getHeight()/100);
+        Image newGame = new Image(readerXmlFile.read("buttonNewGame")).getScaledCopy(30 * gameContainer.getWidth() / 100,
+                10 * gameContainer.getHeight() / 100);
         newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
                 80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
                 this);
@@ -59,14 +56,7 @@ public class GameOverStateSingle extends BasicGameOver implements ComponentListe
     @Override
     public void componentActivated(AbstractComponent source) {
         super.componentActivated(source);
-
         if (source == newGameButton) {
-            try {
-                menu.restartGame();
-                stateBasedGame.getState(IDStates.SINGLEPLAYER_STATE).init(gameContainer, stateBasedGame);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
             stateBasedGame.enterState(IDStates.SINGLEPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
             audioplayer.game();
         }

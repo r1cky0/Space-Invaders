@@ -35,7 +35,7 @@ public class ThreadInvader implements Runnable {
                 fieldManager.invaderShot();
             }
             if(rand.nextInt(100) > 95){
-                fieldManager.setBonusInvader();
+                fieldManager.createBonusInvader();
             }
             try {
                 Thread.sleep(sleepInterval);

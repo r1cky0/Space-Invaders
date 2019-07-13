@@ -1,7 +1,9 @@
 package gui.states.menu;
 
-import gui.states.BasicInvaderState;
+import gui.states.BasicState;
 import gui.states.IDStates;
+import gui.states.multi.WaitingState;
+import gui.states.single.SinglePlayerState;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
@@ -14,12 +16,10 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class MenuState extends BasicInvaderState implements ComponentListener {
+public class MenuState extends BasicState implements ComponentListener {
 
     private GameContainer gameContainer;
     private StateBasedGame stateBasedGame;
-
-    private Image background;
 
     private MouseOverArea singleButton;
     private MouseOverArea multiButton;
@@ -29,6 +29,7 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
 
     private UnicodeFont uniFontTitle;
     private String title;
+    private Image background;
 
     private Menu menu;
 
@@ -41,7 +42,7 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
         this.gameContainer = gameContainer;
         this.stateBasedGame = stateBasedGame;
 
-        this.background = new Image(readerXmlFile.read("defaultBackground"));
+        background = new Image(readerXmlFile.read("defaultBackground"));
         title = "SPACE INVADERS";
 
         Image single = new Image(readerXmlFile.read("buttonSinglePlayer")).getScaledCopy(30 * gameContainer.getWidth() / 100,
@@ -78,6 +79,11 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
     }
 
     @Override
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException{
+        menu.saveToFile();
+    }
+
+    @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         graphics.drawImage(background,0,0);
         singleButton.render(gameContainer, graphics);
@@ -99,41 +105,19 @@ public class MenuState extends BasicInvaderState implements ComponentListener {
      */
     public void componentActivated(AbstractComponent source) {
         if (source == singleButton ) {
-            try {
-                menu.restartGame();
-                stateBasedGame.getState(IDStates.SINGLEPLAYER_STATE).init(gameContainer,stateBasedGame);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
             stateBasedGame.enterState(IDStates.SINGLEPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
             audioplayer.game();
         }
         if (source == multiButton ) {
-            try {
-                stateBasedGame.getState(IDStates.WAITING_STATE).init(gameContainer,stateBasedGame);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
             stateBasedGame.enterState(IDStates.WAITING_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == customizationButton) {
-            try {
-                stateBasedGame.getState(IDStates.CUSTOMIZATION_STATE).init(gameContainer, stateBasedGame);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
             stateBasedGame.enterState(IDStates.CUSTOMIZATION_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == rankingButton ) {
-            try {
-                stateBasedGame.getState(IDStates.RANKING_STATE).init(gameContainer, stateBasedGame);
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
             stateBasedGame.enterState(IDStates.RANKING_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if(source == exitButton){
-            menu.logOut();
             stateBasedGame.enterState(IDStates.START_STATE, new FadeOutTransition(), new FadeInTransition());
         }
     }

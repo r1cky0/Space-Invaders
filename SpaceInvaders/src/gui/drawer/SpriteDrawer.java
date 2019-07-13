@@ -1,9 +1,10 @@
 package gui.drawer;
 
+import gui.elements.Drawable;
 import main.SpaceInvaders;
 import org.newdawn.slick.Image;
 
-public class SpriteDrawer implements Drawable {
+public class SpriteDrawer {
 
     /**
      * Metodo di renderizzazione degli sprite SENZA trasparenza manuale

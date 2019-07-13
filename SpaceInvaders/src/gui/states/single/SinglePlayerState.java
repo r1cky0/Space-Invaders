@@ -1,17 +1,16 @@
 package gui.states.single;
 
-import gui.states.BasicInvaderState;
+import gui.elements.GraphicShip;
+import gui.states.GameState;
 import gui.states.IDStates;
 import logic.environment.manager.game.SinglePlayer;
-import gui.drawer.SpriteDrawer;
-import logic.environment.manager.menu.Menu;
 import logic.environment.manager.game.Commands;
 import logic.environment.manager.game.States;
+import logic.environment.manager.menu.Menu;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
-import main.Dimensions;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -19,48 +18,36 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-import java.util.ArrayList;
 
-public class SinglePlayerState extends BasicInvaderState {
+public class SinglePlayerState extends GameState {
+    private StateBasedGame stateBasedGame;
+    private GameContainer gameContainer;
+
     private Menu menu;
-    private SpriteDrawer spriteDrawer;
-
     private SinglePlayer singlePlayer;
     private UnicodeFont uniFontData;
 
     //IMAGES
     private Image background;
-    private Image invaderImage;
-    private Image spaceShipImage;
-    private Image bonusInvader;
-    private ArrayList<Image> brickImages = new ArrayList<>();
-    private Image bulletImage;
     private boolean collision;
 
-    public SinglePlayerState(Menu menu){
+    public SinglePlayerState(Menu menu) {
         this.menu = menu;
-        spriteDrawer = new SpriteDrawer();
-
-        try {
-            bonusInvader = new Image(readerXmlFile.read("bonusInvader"));
-            invaderImage = new Image(readerXmlFile.read("defaultInvader"));
-            bulletImage = new Image(readerXmlFile.read("defaultBullet"));
-            for(int i=0; i<4; i++){
-                brickImages.add(new Image(readerXmlFile.read("brick"+i)));
-            }
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        this.stateBasedGame = stateBasedGame;
+        this.gameContainer = gameContainer;
         background = new Image(readerXmlFile.read("defaultBackground"));
-
         uniFontData = build(3*gameContainer.getWidth()/100f);
+    }
 
+    @Override
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         singlePlayer = menu.getSinglePlayer();
-        spaceShipImage = new Image(readerXmlFile.read(menu.getCustomization().getCurrentShip()));
+        singlePlayer.startGame();
+        graphicShip = new GraphicShip(new Image(readerXmlFile.read(menu.getCustomization().getCurrentShip())));
     }
 
     @Override
@@ -80,42 +67,36 @@ public class SinglePlayerState extends BasicInvaderState {
         uniFontData.drawString(85 * gameContainer.getWidth() / 100f, 2 * gameContainer.getHeight() / 100f,
                 "Lives: " + singlePlayer.getSpaceShip().getLife(), Color.red);
         uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: ")) / 2f,
-                2 * gameContainer.getHeight() / 100f, "Score: " + singlePlayer.getSpaceShip().getCurrentScore(), color);
+                2 * gameContainer.getHeight() / 100f, "Score: " + singlePlayer.getSpaceShip().getCurrentScore(),
+                color);
         uniFontData.drawString(2 * gameContainer.getWidth() / 100f, 2 * gameContainer.getHeight() / 100f,
                 "Highscore: " + highscore, Color.green);
 
-        if (collision) {
-            audioplayer.explosion();
-        }
-        spriteDrawer.render(spaceShipImage, singlePlayer.getSpaceShip().getX(),
-                singlePlayer.getSpaceShip().getY(), Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
+        graphicShip.render(singlePlayer.getSpaceShip());
 
         if (singlePlayer.isBonusInvader()) {
-            spriteDrawer.render(bonusInvader, singlePlayer.getSpecialInvader().getX(),
-                    singlePlayer.getSpecialInvader().getY(), Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT);
+            graphicBonusInvader.render(singlePlayer.getBonusInvader());
         }
-
         if (singlePlayer.getSpaceShip().isShipShot()) {
-            spriteDrawer.render(bulletImage, singlePlayer.getSpaceShipBullet().getX(),
-                    singlePlayer.getSpaceShipBullet().getY(), Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
+            graphicBullet.render(singlePlayer.getSpaceShipBullet());
         }
         for (Invader invader : singlePlayer.getInvaders()) {
-            spriteDrawer.render(invaderImage, invader.getX(), invader.getY(), Dimensions.INVADER_WIDTH,
-                    Dimensions.INVADER_HEIGHT);
+            graphicInvader.render(invader);
         }
         for (InvaderBullet invaderBullet : singlePlayer.getInvadersBullet()) {
-            spriteDrawer.render(bulletImage, invaderBullet.getX(), invaderBullet.getY(), Dimensions.BULLET_WIDTH,
-                    Dimensions.BULLET_HEIGHT);
+            graphicBullet.render(invaderBullet);
         }
         for (Bunker bunker : singlePlayer.getBunkers()) {
             for (Brick brick : bunker.getBricks()) {
-                spriteDrawer.render(brickImages.get(4 - brick.getLife()), brick.getX(), brick.getY(), Dimensions.BRICK_WIDTH,
-                        Dimensions.BRICK_HEIGHT);
+                graphicBrick.render(brick);
             }
+        }
+        if (collision) {
+            audioplayer.explosion();
         }
     }
 
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
         Input input = gameContainer.getInput();
 
         if(input.isKeyDown(Input.KEY_RIGHT)){
@@ -138,7 +119,7 @@ public class SinglePlayerState extends BasicInvaderState {
         collision = singlePlayer.update(delta);
 
         //STATO GIOCO
-        States states = menu.checkGameState();
+        States states = singlePlayer.checkGameState();
 
         if (states == States.GAMEOVER) {
             stateBasedGame.enterState(IDStates.GAMEOVERSINGLE_STATE, new FadeOutTransition(), new FadeInTransition());

@@ -56,4 +56,8 @@
         <explosionEffect>res/sounds/explosion.ogg</explosionEffect>
         <shotEffect>res/sounds/shot.ogg</shotEffect>
     </music>
+
+    <font>
+        <titleFont>res/font/invaders_font.ttf</titleFont>
+    </font>
 </SpaceInvaders>

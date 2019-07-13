@@ -1,7 +1,8 @@
 package gui.states.menu;
 
-import gui.states.BasicInvaderState;
+import gui.states.BasicState;
 import gui.states.IDStates;
+import logic.environment.manager.menu.Customization;
 import logic.environment.manager.menu.Menu;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -20,11 +21,12 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.ArrayList;
 
-public class CustomizationState extends BasicInvaderState implements ComponentListener {
+public class CustomizationState extends BasicState implements ComponentListener {
     private StateBasedGame stateBasedGame;
+    private Menu menu;
+    private Customization customization;
 
     private Image background;
-    private Image homeImage;
     private MouseOverArea homeButton;
     private Shape cornice;
 
@@ -34,14 +36,12 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
     private ArrayList<Image> ships;
     private ArrayList<MouseOverArea> shipButtons;
 
-    private Menu menu;
-
     public CustomizationState(Menu menu) {
-        this.menu = menu;
         shipButtons = new ArrayList<>();
         ships = new ArrayList<>();
+        customization = menu.getCustomization();
         try {
-            for (String ship : menu.getCustomization().getSpaceShips()) {
+            for (String ship : customization.getSpaceShips()) {
                 ships.add(new Image(readerXmlFile.read(ship)));
             }
         } catch (SlickException e) {
@@ -54,12 +54,14 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
         this.stateBasedGame = stateBasedGame;
 
         background = new Image(readerXmlFile.read("defaultBackground"));
-        homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6*gameContainer.getWidth()/100,
-                6*gameContainer.getWidth()/100);
+        Image homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6 * gameContainer.getWidth() / 100,
+                6 * gameContainer.getWidth() / 100);
         homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
                 7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
                 this);
         title = "SET YOUR SHIP!";
+
+
 
         int offset = 17*gameContainer.getWidth()/100;
         int i = 0;
@@ -67,15 +69,20 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
             img = img.getScaledCopy(10*gameContainer.getWidth()/100,10*gameContainer.getWidth()/100);
             shipButtons.add(new MouseOverArea(gameContainer, img,5*gameContainer.getScreenWidth()/100 + offset*i,
                     45*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,
-                    6*gameContainer.getHeight()/100,this ));
+                    6*gameContainer.getHeight()/100,this));
             i++;
         }
 
         uniFontTitle = build(8*gameContainer.getWidth()/100f);
-
-        cornice = new Rectangle(shipButtons.get(menu.getCustomization().indexOfCurrentShip()).getX()
+        cornice = new Rectangle(shipButtons.get(customization.indexOfCurrentShip()).getX()
                 - 42*gameContainer.getWidth()/1000f,40*gameContainer.getHeight()/100f,
                 14*gameContainer.getWidth()/100f,12*gameContainer.getWidth()/100f);
+
+    }
+
+    @Override
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
+
     }
 
     @Override
@@ -101,29 +108,24 @@ public class CustomizationState extends BasicInvaderState implements ComponentLi
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (source == shipButtons.get(0)) {
-            menu.getCustomization().setCurrentShip(0);
+            customization.setCurrentShip(0);
             cornice.setX(shipButtons.get(0).getX() - 30*cornice.getWidth()/100);
-            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());
         }
         if (source == shipButtons.get(1)) {
-            menu.getCustomization().setCurrentShip(1);
+            customization.setCurrentShip(1);
             cornice.setX(shipButtons.get(1).getX() - 30*cornice.getWidth()/100);
-            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());
         }
         if (source == shipButtons.get(2)) {
-            menu.getCustomization().setCurrentShip(2);
+            customization.setCurrentShip(2);
             cornice.setX(shipButtons.get(2).getX() - 30*cornice.getWidth()/100);
-            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());
         }
         if (source == shipButtons.get(3)) {
-            menu.getCustomization().setCurrentShip(3);
+            customization.setCurrentShip(3);
             cornice.setX(shipButtons.get(3).getX() - 30*cornice.getWidth()/100);
-            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());
         }
         if (source == shipButtons.get(4)) {
-            menu.getCustomization().setCurrentShip(4);
+            customization.setCurrentShip(4);
             cornice.setX(shipButtons.get(4).getX() - 30*cornice.getWidth()/100);
-            menu.saveCustomization(menu.getPlayer().getName(), menu.getCustomization().getCurrentShip());
         }
     }
 

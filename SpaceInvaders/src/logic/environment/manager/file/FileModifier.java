@@ -10,9 +10,9 @@ public class FileModifier {
      *
      * @param name nome utente
      * @param highScore punteggio record
-     * @param shipTypePath tag ship
+     * @param shipType tag ship
      */
-    public void modifyFile(String name,int highScore, String shipTypePath) {
+    public void modifyFile(String name, int highScore, String shipType) {
         try {
             String file = "res/players.txt";
             String oldLine = "";
@@ -30,7 +30,7 @@ public class FileModifier {
             }
             String[] componenti = oldLine.split("\\t");
             componenti[2] = Integer.toString(highScore);
-            componenti[3] = shipTypePath;
+            componenti[3] = shipType;
             String newLine = componenti[0] + "\t" + componenti[1] + "\t" + componenti[2] + "\t" + componenti[3];
             String newContent = oldContent.toString().replaceAll(oldLine, newLine);
             FileWriter out = new FileWriter(fileToBeModified);

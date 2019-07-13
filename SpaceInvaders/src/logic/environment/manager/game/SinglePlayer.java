@@ -26,12 +26,22 @@ public class SinglePlayer {
     private ThreadInvader threadInvader;
     private boolean newThread;
 
-    public SinglePlayer(Player player, FieldManager fieldManager) {
+    public SinglePlayer(Player player) {
         this.player = player;
-        this.ship = getSpaceShip();
-        this.fieldManager = fieldManager;
+        ship = getSpaceShip();
+    }
+
+    private void init(){
         player.getSpaceShip().init();
         newThread = false;
+    }
+
+    /**
+     * Funzione necessaria per reinizializzare il sistema dopo un checkHighscore
+     */
+    public void startGame(){
+        fieldManager = new FieldManager();
+        init();
     }
 
     public void execCommand(Commands commands, int delta){
@@ -59,9 +69,12 @@ public class SinglePlayer {
             ship.getShipBullet().move(delta);
             fieldManager.checkSpaceShipShotCollision(getSpaceShip());
         }
-        if(isBonusInvader() &&
-                !(fieldManager.getBonusInvader().getX() + Dimensions.INVADER_WIDTH < Dimensions.MIN_WIDTH)){
-            fieldManager.getBonusInvader().moveLeft(delta);
+        if(isBonusInvader()) {
+            if (fieldManager.getBonusInvader().getX() + Dimensions.BONUSINVADER_WIDTH < Dimensions.MIN_WIDTH) {
+                fieldManager.setBonusInvader(false);
+            } else {
+                fieldManager.getBonusInvader().moveLeft(delta);
+            }
         }
 
         boolean collision = fieldManager.checkInvaderShotCollision(ship);
@@ -69,11 +82,10 @@ public class SinglePlayer {
         return collision;
     }
 
-    public States checkGameState(FileModifier fileModifier, Customization customization){
+    public States checkGameState(){
         if (fieldManager.isGameOver() || fieldManager.isEndReached()) {
             threadInvader.stop();
-
-            if (player.checkHighscore(fileModifier,customization)) {
+            if (player.checkHighscore()) {
                 return States.NEWHIGHSCORE;
             }
             return States.GAMEOVER;
@@ -121,8 +133,12 @@ public class SinglePlayer {
         return fieldManager.getInvaders();
     }
 
-    public BonusInvader getSpecialInvader(){
+    public BonusInvader getBonusInvader(){
         return fieldManager.getBonusInvader();
+    }
+
+    public int getCurrentScore(){
+        return getSpaceShip().getCurrentScore();
     }
 
     public boolean isBonusInvader(){

@@ -8,7 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public abstract class BasicGameOver extends BasicInvaderState implements ComponentListener {
+public abstract class GameOverState extends BasicState implements ComponentListener {
 
     protected GameContainer gameContainer;
     protected StateBasedGame stateBasedGame;

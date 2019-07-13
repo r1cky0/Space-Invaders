@@ -1,9 +1,10 @@
 package gui.states.multi;
 
-import gui.states.BasicInvaderState;
+import gui.states.BasicState;
 import gui.states.IDStates;
 import logic.environment.manager.game.Commands;
 import logic.environment.manager.menu.Menu;
+import logic.player.Player;
 import network.client.Client;
 import network.data.PacketHandler;
 import logic.environment.manager.game.States;
@@ -12,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class WaitingState extends BasicInvaderState {
+public class WaitingState extends BasicState {
     private UnicodeFont uniFontTitle;
     private String title;
 
