@@ -2,12 +2,11 @@ package gui.states.multi;
 
 import gui.states.BasicState;
 import gui.states.IDStates;
-import logic.environment.manager.game.Commands;
-import logic.environment.manager.menu.Menu;
-import logic.player.Player;
+import logic.manager.game.Commands;
+import logic.manager.menu.Menu;
 import network.client.Client;
 import network.data.PacketHandler;
-import logic.environment.manager.game.States;
+import logic.manager.game.States;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;

@@ -1,8 +1,8 @@
 package network.data;
 
-import logic.environment.manager.field.FieldManager;
-import logic.environment.manager.game.Multiplayer;
-import logic.environment.manager.game.States;
+import logic.manager.field.FieldManager;
+import logic.manager.game.Multiplayer;
+import logic.manager.game.States;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.InvaderBullet;

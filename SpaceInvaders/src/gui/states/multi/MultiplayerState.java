@@ -1,26 +1,20 @@
 package gui.states.multi;
 
 import gui.elements.GraphicShip;
-import gui.states.BasicState;
-import gui.states.GameOverState;
 import gui.states.GameState;
 import gui.states.IDStates;
-import gui.drawer.SpriteDrawer;
-import logic.environment.manager.field.MovingDirections;
+import logic.manager.field.MovingDirections;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
-import logic.sprite.dinamic.invaders.Invader;
 import main.Dimensions;
 import network.client.Client;
 import network.data.PacketHandler;
-import logic.environment.manager.game.Commands;
-import logic.environment.manager.game.States;
+import logic.manager.game.Commands;
+import logic.manager.game.States;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-
-import java.util.ArrayList;
 
 public class MultiplayerState extends GameState {
     private States states;
@@ -110,7 +104,6 @@ public class MultiplayerState extends GameState {
             }
             stateBasedGame.enterState(IDStates.GAMEOVERMULTI_STATE,new FadeOutTransition(),new FadeInTransition());
             client.close();
-            audioplayer.gameOver();
         }
         checkIsDead = true;
     }

@@ -1,4 +1,4 @@
-package logic.environment.manager.file;
+package logic.manager.file;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

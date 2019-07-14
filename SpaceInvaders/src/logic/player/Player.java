@@ -1,7 +1,5 @@
 package logic.player;
 
-import logic.environment.manager.file.FileModifier;
-import logic.environment.manager.menu.Customization;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 

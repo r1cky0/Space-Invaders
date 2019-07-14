@@ -2,9 +2,7 @@ package gui.states.menu;
 
 import gui.states.BasicState;
 import gui.states.IDStates;
-import gui.states.multi.WaitingState;
-import gui.states.single.SinglePlayerState;
-import logic.environment.manager.menu.Menu;
+import logic.manager.menu.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -81,6 +79,7 @@ public class MenuState extends BasicState implements ComponentListener {
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException{
         menu.saveToFile();
+        audioplayer.menu();
     }
 
     @Override

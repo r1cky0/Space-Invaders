@@ -1,6 +1,6 @@
 package logic.thread;
 
-import logic.environment.manager.field.FieldManager;
+import logic.manager.field.FieldManager;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;

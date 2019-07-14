@@ -1,4 +1,4 @@
-package logic.environment.manager.menu;
+package logic.manager.menu;
 
 import java.util.ArrayList;
 

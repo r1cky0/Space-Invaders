@@ -1,7 +1,7 @@
 package test;
 
-import logic.environment.manager.field.FieldManager;
-import logic.environment.manager.field.MovingDirections;
+import logic.manager.field.FieldManager;
+import logic.manager.field.MovingDirections;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.InvaderBullet;

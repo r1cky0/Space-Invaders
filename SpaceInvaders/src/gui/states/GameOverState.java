@@ -35,6 +35,11 @@ public abstract class GameOverState extends BasicState implements ComponentListe
     }
 
     @Override
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
+        audioplayer.gameOver();
+    }
+
+    @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
     }
 

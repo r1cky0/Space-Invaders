@@ -1,6 +1,6 @@
 package gui.states.multi;
 
-import logic.environment.manager.field.MovingDirections;
+import logic.manager.field.MovingDirections;
 import logic.sprite.dinamic.SpaceShip;
 import main.Dimensions;
 

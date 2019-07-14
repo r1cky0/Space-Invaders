@@ -1,7 +1,7 @@
-package logic.environment.manager.field;
+package logic.manager.field;
 
-import logic.environment.creators.BunkersCreator;
-import logic.environment.creators.InvadersCreator;
+import logic.manager.creators.BunkersCreator;
+import logic.manager.creators.InvadersCreator;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.SpaceShip;
@@ -17,12 +17,10 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FieldManager {
-
     private InvadersCreator invadersCreator;
     private BunkersCreator bunkersCreator;
 
     //STATE
-    private boolean gameOver;
     private boolean endReached;
     private boolean newLevel;
     private boolean bonus;
@@ -51,7 +49,6 @@ public class FieldManager {
         bonus = false;
         bonusInLevel = false;
         endReached = false;
-        gameOver = false;
         newLevel = false;
 
         initComponents();
@@ -119,12 +116,8 @@ public class FieldManager {
                     return false;
                 }
             }
-
             if (spaceShip.collides(bullet)) {
                 spaceShip.decreaseLife();
-                if(spaceShip.getLife() == 0){
-                    gameOver = true;
-                }
                 invaderBullets.remove(bullet);
                 return true;
             }
@@ -299,10 +292,6 @@ public class FieldManager {
 
     public List<InvaderBullet> getInvaderBullets(){
         return invaderBullets;
-    }
-
-    public boolean isGameOver(){
-        return gameOver;
     }
 
     public boolean isEndReached(){

@@ -2,8 +2,8 @@ package gui.states.menu;
 
 import gui.states.BasicState;
 import gui.states.IDStates;
-import logic.environment.manager.menu.Customization;
-import logic.environment.manager.menu.Menu;
+import logic.manager.menu.Customization;
+import logic.manager.menu.Menu;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;

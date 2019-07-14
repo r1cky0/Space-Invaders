@@ -1,7 +1,7 @@
 package network.server;
 
-import logic.environment.manager.game.States;
-import logic.environment.manager.game.Multiplayer;
+import logic.manager.game.States;
+import logic.manager.game.Multiplayer;
 import logic.player.Player;
 import network.data.Connection;
 import network.data.MessageBuilder;

@@ -2,7 +2,7 @@ package gui.states.single;
 
 import gui.states.BasicState;
 import gui.states.IDStates;
-import logic.environment.manager.menu.Menu;
+import logic.manager.menu.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;

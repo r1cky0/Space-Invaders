@@ -1,8 +1,8 @@
 package logic.thread;
 
-import logic.environment.manager.field.FieldManager;
-import logic.environment.manager.game.States;
-import logic.environment.manager.game.Multiplayer;
+import logic.manager.field.FieldManager;
+import logic.manager.game.States;
+import logic.manager.game.Multiplayer;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import main.Dimensions;
 import network.data.MessageBuilder;
@@ -14,11 +14,13 @@ public class ThreadUpdate implements Runnable{
     private Multiplayer multiplayer;
     private FieldManager fieldManager;
     private AtomicBoolean running;
+    private int delta;
 
-    public ThreadUpdate(Multiplayer multiplayer, MessageBuilder messageBuilder){
+    public ThreadUpdate(Multiplayer multiplayer, MessageBuilder messageBuilder, int delta){
         this.multiplayer = multiplayer;
-        fieldManager = multiplayer.getFieldManager();
         this.messageBuilder = messageBuilder;
+        this.delta = delta;
+        fieldManager = multiplayer.getFieldManager();
         running = new AtomicBoolean(false);
     }
 
@@ -38,16 +40,16 @@ public class ThreadUpdate implements Runnable{
         while(running.get()) {
             messageBuilder.setInfos(multiplayer);
             for (InvaderBullet bullet : fieldManager.getInvaderBullets()) {
-                bullet.move(multiplayer.getDelta());
+                bullet.move(delta);
             }
             if(fieldManager.isBonusInvader() &&
                     !(fieldManager.getBonusInvader().getX() + Dimensions.INVADER_WIDTH < Dimensions.MIN_WIDTH)){
-                fieldManager.getBonusInvader().moveLeft(multiplayer.getDelta());
+                fieldManager.getBonusInvader().moveLeft(delta);
             }
 
             for (int ID : multiplayer.getPlayers().keySet()) {
                 if (multiplayer.getSpaceShip(ID).isShipShot()) {
-                    multiplayer.getSpaceShipBullet(ID).move(multiplayer.getDelta());
+                    multiplayer.getSpaceShipBullet(ID).move(delta);
                     if(fieldManager.checkSpaceShipShotCollision(multiplayer.getSpaceShip(ID))){
                         multiplayer.getTeam().calculateTeamCurrentScore();
                     }
@@ -61,10 +63,13 @@ public class ThreadUpdate implements Runnable{
             if(multiplayer.getPlayers().isEmpty() || fieldManager.isEndReached()){
                 messageBuilder.setGameStateInfos(States.GAMEOVER);
             }
+            if(fieldManager.isNewLevel()){
+                multiplayer.getTeam().incrementLife();
+            }
             multiplayer.threadInvaderManager();
 
             try {
-                Thread.sleep(multiplayer.getDelta());
+                Thread.sleep(delta);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

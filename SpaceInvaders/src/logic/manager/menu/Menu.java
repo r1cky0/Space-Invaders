@@ -1,9 +1,9 @@
-package logic.environment.manager.menu;
+package logic.manager.menu;
 
-import logic.environment.manager.file.FileModifier;
-import logic.environment.manager.game.SinglePlayer;
-import logic.environment.manager.file.AddAccount;
-import logic.environment.manager.file.Login;
+import logic.manager.file.FileModifier;
+import logic.manager.game.SinglePlayer;
+import logic.manager.file.AddAccount;
+import logic.manager.file.Login;
 import logic.sprite.Coordinate;
 import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;

@@ -2,8 +2,8 @@ package gui.states.single;
 
 import gui.states.GameOverState;
 import gui.states.IDStates;
-import logic.environment.manager.game.SinglePlayer;
-import logic.environment.manager.menu.Menu;
+import logic.manager.game.SinglePlayer;
+import logic.manager.menu.Menu;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -35,6 +35,7 @@ public class GameOverStateSingle extends GameOverState implements ComponentListe
     }
 
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
+        super.enter(gameContainer, stateBasedGame);
         singlePlayer = menu.getSinglePlayer();
     }
 

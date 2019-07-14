@@ -11,17 +11,8 @@ public class Team {
         teamCurrentScore = 0;
     }
 
-    public void incrementLife(){
-        for(Player player : players.values()){
-            player.getSpaceShip().incrementLife();
-        }
-    }
-
-    public void calculateTeamCurrentScore(){
-        teamCurrentScore = 0;
-        for(Player player : players.values()){
-            teamCurrentScore += player.getSpaceShip().getCurrentScore();
-        }
+    public void addPlayer(int ID, Player player){
+        players.put(ID, player);
     }
 
     public void removePlayer(int ID){
@@ -33,8 +24,17 @@ public class Team {
         teamCurrentScore = 0;
     }
 
-    public void addPlayer(int ID, Player player){
-        players.put(ID, player);
+    public void incrementLife(){
+        for(Player player : players.values()){
+            player.getSpaceShip().incrementLife();
+        }
+    }
+
+    public void calculateTeamCurrentScore(){
+        teamCurrentScore = 0;
+        for(Player player : players.values()){
+            teamCurrentScore += player.getSpaceShip().getCurrentScore();
+        }
     }
 
     public int getTeamCurrentScore(){

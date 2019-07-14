@@ -1,33 +1,26 @@
-package logic.environment.manager.game;
+package logic.manager.game;
 
-import logic.environment.manager.field.FieldManager;
 import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
-import logic.thread.ThreadInvader;
 import main.Dimensions;
 import logic.thread.ThreadUpdate;
 import network.data.MessageBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Multiplayer{
+public class Multiplayer extends Game{
     private MessageBuilder messageBuilder;
-    private FieldManager fieldManager;
     private Team team;
 
-    private ThreadInvader threadInvader;
-    private boolean threadRunning;
     private ThreadUpdate threadUpdate;
-
     private static int DELTA = 1;
 
     public Multiplayer(MessageBuilder messageBuilder){
-        team = new Team();
         this.messageBuilder = messageBuilder;
-        threadRunning = false;
+        team = new Team();
     }
 
     public Player init(int ID, String[] name){
@@ -39,48 +32,26 @@ public class Multiplayer{
         return player;
     }
 
-    /**
-     * Attivazione thread di aggiornamento di tutti gli elementi presenti sul campo di gioco
-     */
-    private void update() {
-        threadUpdate = new ThreadUpdate(this, messageBuilder);
-        threadUpdate.start();
-    }
-
-    /**
-     *  Attivazione del thread di gestione degli invader (movimento e sparo) e check completamento livello
-     */
-    public void threadInvaderManager(){
-        if (!threadRunning) {
-            threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
-            threadInvader.start();
-            threadRunning = true;
-        }
-        if (fieldManager.isNewLevel()) {
-            threadInvader.stop();
-            team.incrementLife();
-            fieldManager.setNewLevel(false);
-            threadRunning = false;
-        }
-    }
-
     public void startGame(){
-        fieldManager = new FieldManager();
-        threadRunning = false;
+        super.startGame();
         messageBuilder.setGameStateInfos(States.START);
-        update();
+        update(DELTA);
     }
 
     public void stopGame() {
-        if(threadRunning) {
-            threadInvader.stop();
+        super.stopGame();
+        if(isThreadRunning()) {
             threadUpdate.stop();
         }
         team.clear();
     }
 
-    public FieldManager getFieldManager(){
-        return fieldManager;
+    /**
+     * Attivazione thread di aggiornamento di tutti gli elementi presenti sul campo di gioco
+     */
+    public void update(int delta) {
+        threadUpdate = new ThreadUpdate(this, messageBuilder, delta);
+        threadUpdate.start();
     }
 
     public Team getTeam(){
@@ -99,7 +70,4 @@ public class Multiplayer{
         return getSpaceShip(ID).getShipBullet();
     }
 
-    public int getDelta(){
-        return DELTA;
-    }
 }

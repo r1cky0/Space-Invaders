@@ -1,7 +1,7 @@
 package gui.states;
 
 import gui.music.AudioPlayer;
-import logic.environment.manager.file.ReadXmlFile;
+import logic.manager.file.ReadXmlFile;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;

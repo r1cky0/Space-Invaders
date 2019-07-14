@@ -1,4 +1,4 @@
-package logic.environment.manager.field;
+package logic.manager.field;
 
 class Difficulty {
 

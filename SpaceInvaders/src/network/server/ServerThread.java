@@ -1,12 +1,11 @@
 package network.server;
 
-import logic.environment.manager.game.Commands;
-import logic.environment.manager.game.Multiplayer;
+import logic.manager.game.Commands;
+import logic.manager.game.Multiplayer;
 import logic.player.Player;
 import network.data.Connection;
 import network.data.MessageBuilder;
 import network.data.PacketHandler;
-import org.lwjgl.Sys;
 
 import java.io.IOException;
 import java.net.DatagramSocket;

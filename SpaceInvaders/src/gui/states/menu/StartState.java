@@ -2,8 +2,7 @@ package gui.states.menu;
 
 import gui.states.BasicState;
 import gui.states.IDStates;
-import logic.environment.manager.game.States;
-import logic.environment.manager.menu.Menu;
+import logic.manager.menu.Menu;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -17,7 +16,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.awt.Font;
-import java.text.NumberFormat;
 
 public class StartState extends BasicState implements ComponentListener {
     private StateBasedGame stateBasedGame;
@@ -82,8 +80,7 @@ public class StartState extends BasicState implements ComponentListener {
         accountButton = new MouseOverArea(gameContainer, account, (gameContainer.getWidth() - account.getWidth())/2,
                 70*gameContainer.getHeight()/100,25*gameContainer.getWidth()/100,
                 10*gameContainer.getHeight()/100,this);
-
-        audioplayer.menu();
+        
     }
 
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) {

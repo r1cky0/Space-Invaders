@@ -1,4 +1,4 @@
-package logic.environment.creators;
+package logic.manager.creators;
 
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.invaders.Invader;

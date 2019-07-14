@@ -3,10 +3,10 @@ package gui.states.single;
 import gui.elements.GraphicShip;
 import gui.states.GameState;
 import gui.states.IDStates;
-import logic.environment.manager.game.SinglePlayer;
-import logic.environment.manager.game.Commands;
-import logic.environment.manager.game.States;
-import logic.environment.manager.menu.Menu;
+import logic.manager.game.SinglePlayer;
+import logic.manager.game.Commands;
+import logic.manager.game.States;
+import logic.manager.menu.Menu;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Brick;
@@ -116,20 +116,13 @@ public class SinglePlayerState extends GameState {
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
             audioplayer.menu();
         }
-        collision = singlePlayer.update(delta);
+        singlePlayer.update(delta);
 
         //STATO GIOCO
-        States states = singlePlayer.checkGameState();
-
-        if (states == States.GAMEOVER) {
+        if (singlePlayer.getGameState() == States.GAMEOVER) {
             stateBasedGame.enterState(IDStates.GAMEOVERSINGLE_STATE, new FadeOutTransition(), new FadeInTransition());
-            collision = false;
-            audioplayer.gameOver();
-        }
-        if (states == States.NEWHIGHSCORE) {
+        }else if(singlePlayer.getGameState() == States.NEWHIGHSCORE) {
             stateBasedGame.enterState(IDStates.NEWHIGHSCORE_STATE, new FadeOutTransition(), new FadeInTransition());
-            collision = false;
-            audioplayer.gameOver();
         }
     }
 

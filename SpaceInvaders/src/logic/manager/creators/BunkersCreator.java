@@ -1,4 +1,4 @@
-package logic.environment.creators;
+package logic.manager.creators;
 
 import logic.sprite.unmovable.Bunker;
 import main.Dimensions;

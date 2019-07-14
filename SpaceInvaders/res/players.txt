@@ -1,5 +1,5 @@
 a	a	2210	ship0
-b	b	200	ship4
+b	b	240	ship4
 arrosto	dove	0	ship2
 c	c	50	ship0
 f	f	0	ship0

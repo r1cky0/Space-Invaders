@@ -8,7 +8,7 @@ import gui.states.multi.WaitingState;
 import gui.states.single.GameOverStateSingle;
 import gui.states.single.NewHighscoreState;
 import gui.states.single.SinglePlayerState;
-import logic.environment.manager.menu.Menu;
+import logic.manager.menu.Menu;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;

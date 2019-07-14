@@ -1,6 +1,6 @@
 package gui.music;
 
-import logic.environment.manager.file.ReadXmlFile;
+import logic.manager.file.ReadXmlFile;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SlickException;

@@ -3,7 +3,7 @@ package network.client;
 import logic.player.Player;
 import network.data.Connection;
 import network.data.PacketHandler;
-import logic.environment.manager.game.States;
+import logic.manager.game.States;
 
 import java.io.IOException;
 import java.net.*;
