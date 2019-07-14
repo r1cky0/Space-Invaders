@@ -16,10 +16,6 @@ public class Bunker {
         createBunker(indexX, indexY);
     }
 
-    public CopyOnWriteArrayList<Brick> getBricks() {
-        return bricks;
-    }
-
     /**
      * Creazione bunker da lettura file in cui è presente la struttura da creare. Il file, chiamato bunker.txt e
      * inserito nella directry res, é costituito da alternanza di asterischi e spazi
@@ -31,7 +27,6 @@ public class Bunker {
         bricks = new CopyOnWriteArrayList<>(  );
         float indX = indexX;
         float indY = indexY;
-
         try {
             BufferedReader in = new BufferedReader(new FileReader("res/bunker.txt"));
             String riga = in.readLine();
@@ -39,7 +34,7 @@ public class Bunker {
                 for (int i = 0; i < riga.length(); i++) {
                     if (riga.charAt(i) == '*') {
                         Coordinate coordinate = new Coordinate(indX, indY);
-                        Brick brick = new Brick(coordinate, Dimensions.BRICK_WIDTH, Dimensions.BRICK_HEIGHT);
+                        Brick brick = new Brick(coordinate);
                         bricks.add(brick);
                         indX += Dimensions.BRICK_WIDTH;
                     } else {
@@ -72,5 +67,9 @@ public class Bunker {
             }
         }
         return false;
+    }
+
+    public CopyOnWriteArrayList<Brick> getBricks() {
+        return bricks;
     }
 }

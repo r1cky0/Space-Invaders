@@ -12,25 +12,27 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class WaitingState extends BasicState {
     private UnicodeFont uniFontTitle;
     private String title;
-
+    private LocalMultiManger localMultiManger;
     private Image background;
     private Animation movingAnimation;
     private int[] duration = {500,500};
 
-    private Menu menu;
-    private Client client;
-    private PacketHandler handler;
+    private ConnectionTimer connectionTimer;
+    private boolean first;
 
-    public WaitingState(Menu menu) {
-        this.menu = menu;
-        handler = new PacketHandler();
+    public WaitingState(){
+        localMultiManger = new LocalMultiManger();
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        connectionTimer = new ConnectionTimer(stateBasedGame,localMultiManger);
         background = new Image(readerXmlFile.read("defaultBackground"));
         uniFontTitle = build(5 * gameContainer.getWidth() / 100f);
         title = "WAITING FOR CONNECTION...";
@@ -43,8 +45,9 @@ public class WaitingState extends BasicState {
     }
 
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
-        client = new Client(menu.getPlayer(), "localhost", 9999);
-        client.send(handler.build(client.getPlayer().getName(), client.getConnection()));
+        localMultiManger.init();
+        connectionTimer.startTimer();
+        first = true;
     }
 
     @Override
@@ -60,24 +63,25 @@ public class WaitingState extends BasicState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
         Input input = gameContainer.getInput();
+        localMultiManger.checkConnection();
 
         if(input.isKeyDown(Input.KEY_ESCAPE)){
-            String message = client.getID() + "\n" + Commands.EXIT.toString();
-            client.send(handler.build(message, client.getConnection()));
-            client.close();
+            localMultiManger.exit();
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
-        if(client.getGameState() == States.START){
+        if(localMultiManger.getGameState().equals(States.START)){
             try {
-                stateBasedGame.addState(new MultiplayerState(client));
+                stateBasedGame.addState(new MultiplayerState(localMultiManger));
                 stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer,stateBasedGame);
+                stateBasedGame.enterState(IDStates.MULTIPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
+                audioplayer.game();
             } catch (SlickException e) {
                 e.printStackTrace();
             }
-            stateBasedGame.enterState(IDStates.MULTIPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
-            audioplayer.game();
-        }else if(client.getGameState() == States.WAITING){
+        }else if((localMultiManger.getGameState().equals(States.WAITING)) && (first)){
+            connectionTimer.restart();
             title = "WAITING FOR OTHER PLAYERS...";
+            first = false;
         }
     }
 

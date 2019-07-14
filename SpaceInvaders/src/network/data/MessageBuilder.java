@@ -3,10 +3,9 @@ package network.data;
 import logic.manager.field.FieldManager;
 import logic.manager.game.Multiplayer;
 import logic.manager.game.States;
+import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.SpaceShip;
-import logic.sprite.dinamic.bullets.InvaderBullet;
-import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Brick;
 import logic.sprite.unmovable.Bunker;
 
@@ -16,7 +15,8 @@ import logic.sprite.unmovable.Bunker;
  * - INVADER (posX_posY)
  * - INVADER BULLET (posX_posY)
  * - BUNKER (posX_posY_life)
- * - SHIP E SHIP BULLET (posXShip_life_posXBullet_posYBullet)
+ * - SHIP (posX_posY_life)
+ * - SHIP BULLET (posX_posY)
  * - TEAM SCORE
  *
  * Ogni informazione dello stesso gruppo è separata da carattere '\t'
@@ -30,8 +30,8 @@ public class MessageBuilder{
     private String[] stringBuilders;
 
     public MessageBuilder(){
-        stringBuilders = new String[5];
-        for(int i=0;i<5;i++){
+        stringBuilders = new String[8];
+        for(int i=0;i<8;i++){
             stringBuilders[i] = "";
         }
     }
@@ -41,16 +41,18 @@ public class MessageBuilder{
      *
      * @param gameState stato di gioco
      */
-    public void setGameStateInfos(States gameState){
-        String gameStateInfos = gameState.toString() + "\n";
-        stringBuilders[0] = gameStateInfos;
+    public void setGameStateInfo(States gameState){
+        stringBuilders[0] = gameState.toString() + "\n";
     }
 
-    public void setInfos(Multiplayer multiplayer){
-        setInvaderInfos(multiplayer);
-        setInvaderBulletInfos(multiplayer);
-        setBunkerInfos(multiplayer);
-        setShipInfos(multiplayer);
+    public void setInfo(Multiplayer multiplayer){
+        setInvaderInfo(multiplayer);
+        setInvaderBonusInfo(multiplayer);
+        setInvaderBulletInfo(multiplayer);
+        setBunkerInfo(multiplayer);
+        setShipInfo(multiplayer);
+        setShipBulletInfo(multiplayer);
+        setTeamCurrentScore(multiplayer);
     }
 
     /**
@@ -58,18 +60,23 @@ public class MessageBuilder{
      *
      * @param multiplayer gestore di gioco da cui ottenere le info
      */
-    private void setInvaderInfos(Multiplayer multiplayer){
-        String invaderInfos = "";
+    private void setInvaderInfo(Multiplayer multiplayer){
+        String invaderInfo = "";
         for(Invader invader : getFieldManager(multiplayer).getInvaders()) {
-            invaderInfos += invader.getX() + "_" + invader.getY() + "\t";
+            invaderInfo += invader.getX() + "_" + invader.getY() + "\t";
         }
-        invaderInfos += "\n";
+        invaderInfo += "\n";
+        stringBuilders[1] = invaderInfo;
+    }
+
+    private void setInvaderBonusInfo(Multiplayer multiplayer){
+        String invaderBonusInfo = "";
         if(multiplayer.getFieldManager().isBonusInvader()){
-            invaderInfos += multiplayer.getFieldManager().getBonusInvader().getX() + "_" +
+            invaderBonusInfo += multiplayer.getFieldManager().getBonusInvader().getX() + "_" +
                     multiplayer.getFieldManager().getBonusInvader().getY();
         }
-        invaderInfos += "\n";
-        stringBuilders[1] = invaderInfos;
+        invaderBonusInfo += "\n";
+        stringBuilders[2] = invaderBonusInfo;
     }
 
     /**
@@ -77,13 +84,13 @@ public class MessageBuilder{
      *
      * @param multiplayer gestore di gioco da cui ottenere le info
      */
-    private void setInvaderBulletInfos(Multiplayer multiplayer){
-        String invaderBulletInfos = "";
-        for(InvaderBullet invaderBullet : getFieldManager(multiplayer).getInvaderBullets()){
-            invaderBulletInfos += invaderBullet.getX() + "_" + invaderBullet.getY() + "\t";
+    private void setInvaderBulletInfo(Multiplayer multiplayer){
+        String invaderBulletInfo = "";
+        for(Bullet invaderBullet : getFieldManager(multiplayer).getInvaderBullets()){
+            invaderBulletInfo += invaderBullet.getX() + "_" + invaderBullet.getY() + "\t";
         }
-        invaderBulletInfos += "\n";
-        stringBuilders[2] = invaderBulletInfos;
+        invaderBulletInfo += "\n";
+        stringBuilders[3] = invaderBulletInfo;
     }
 
     /**
@@ -91,15 +98,15 @@ public class MessageBuilder{
      *
      * @param multiplayer gestore di gioco da cui ottenere le info
      */
-    private void setBunkerInfos(Multiplayer multiplayer){
-        String bunkerInfos = "";
+    private void setBunkerInfo(Multiplayer multiplayer){
+        String bunkerInfo = "";
         for(Bunker bunker : getFieldManager(multiplayer).getBunkers()) {
             for (Brick brick : bunker.getBricks()) {
-                bunkerInfos += brick.getX() + "_" + brick.getY() + "_" + brick.getLife() + "\t";
+                bunkerInfo += brick.getX() + "_" + brick.getY() + "_" + brick.getLife() + "\t";
             }
         }
-        bunkerInfos += "\n";
-        stringBuilders[3] = bunkerInfos;
+        bunkerInfo += "\n";
+        stringBuilders[4] = bunkerInfo;
     }
 
     /**
@@ -108,28 +115,37 @@ public class MessageBuilder{
      *
      * @param multiplayer gestore di gioco da cui ottenere le info
      */
-    private void setShipInfos(Multiplayer multiplayer){
-        String shipInfos = "";
+    private void setShipInfo(Multiplayer multiplayer){
+        String shipInfo = "";
         for(Integer ID : multiplayer.getPlayers().keySet()){
-            shipInfos += ID + "_" + getSpaceShip(multiplayer, ID).getX() + "_" + getSpaceShip(multiplayer, ID).getLife() + "_";
+            shipInfo += ID + "_" + getSpaceShip(multiplayer, ID).getX() + "_" + getSpaceShip(multiplayer, ID).getY() +
+                    "_" + getSpaceShip(multiplayer, ID).getLife() + "\t";
+        }
+        shipInfo += "\n";
+        stringBuilders[5] = shipInfo;
+    }
 
-            if(getSpaceShip(multiplayer, ID).isShipShot()) {
-                shipInfos += getSpaceShipBullet(multiplayer, ID).getX() + "_" + getSpaceShipBullet(multiplayer, ID).getY()+ "\t";
-            }
-            else {
-                shipInfos += (" " + "_" + " " + "\t");
+    private void setShipBulletInfo(Multiplayer multiplayer){
+        String shipBulletInfo = "";
+        for(Integer ID : multiplayer.getPlayers().keySet()) {
+            if (getSpaceShip(multiplayer, ID).isShipShot()) {
+                shipBulletInfo += getSpaceShipBullet(multiplayer, ID).getX() + "_" +
+                        getSpaceShipBullet(multiplayer, ID).getY() + "\t";
             }
         }
-        shipInfos += "\n";
-        shipInfos += multiplayer.getTeam().getTeamCurrentScore();
-        stringBuilders[4] = shipInfos;
+        shipBulletInfo += "\n";
+        stringBuilders[6] = shipBulletInfo;
+    }
+
+    private void setTeamCurrentScore(Multiplayer multiplayer){
+        stringBuilders[7] = Integer.toString(multiplayer.getTeam().getTeamCurrentScore());
     }
 
     private SpaceShip getSpaceShip(Multiplayer multiplayer, int ID){
         return multiplayer.getPlayers().get(ID).getSpaceShip();
     }
 
-    private SpaceShipBullet getSpaceShipBullet(Multiplayer multiplayer, int ID){
+    private Bullet getSpaceShipBullet(Multiplayer multiplayer, int ID){
         return getSpaceShip(multiplayer, ID).getShipBullet();
     }
 
@@ -137,11 +153,12 @@ public class MessageBuilder{
      * Costruzione del messaggio completo da inviare
      * @return messaggio con le info necessarie
      */
-    public String getInfos(){
+    public String getInfo(){
         String infos = "";
-        for(int i=0;i<5;i++){
+        for(int i=0;i<8;i++){
             infos += stringBuilders[i];
         }
+        System.out.println(stringBuilders[0]);
         return infos;
     }
 

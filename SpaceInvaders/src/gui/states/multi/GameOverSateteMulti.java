@@ -7,11 +7,11 @@ import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class GameOverSateteMulti extends GameOverState implements ComponentListener {
-    private String score;
+    private int score;
 
     private UnicodeFont uniFontScore;
 
-    public GameOverSateteMulti(String score){this.score = score;}
+    public GameOverSateteMulti(int score){this.score = score;}
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {

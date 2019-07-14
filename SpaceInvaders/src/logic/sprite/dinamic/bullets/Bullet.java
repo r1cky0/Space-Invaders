@@ -2,14 +2,15 @@ package logic.sprite.dinamic.bullets;
 
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
+import main.Dimensions;
 
 
 public abstract class Bullet extends Sprite{
 
-    public static float VERTICAL_OFFSET = 0.07f;
+    static float VERTICAL_OFFSET = 0.07f;
 
-    public Bullet(Coordinate coordinate, float width, float height) {
-        super(coordinate, width, height);
+    Bullet(Coordinate coordinate) {
+        super(coordinate, Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT);
     }
 
     public abstract void move(int delta);

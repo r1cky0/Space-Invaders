@@ -28,4 +28,7 @@ public class ShipManager {
         return spaceShip.getX();
     }
 
+    public SpaceShip getSpaceShip() {
+        return spaceShip;
+    }
 }

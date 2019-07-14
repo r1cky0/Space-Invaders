@@ -26,7 +26,7 @@ public class Server implements Runnable {
     private AtomicBoolean runningServer;
 
     private int port;
-    private int maxPlayers = 1;
+    private int maxPlayers = 2;
 
     Server(int port) {
         this.port = port;
@@ -61,11 +61,10 @@ public class Server implements Runnable {
             try {
                 socket.receive(packet);
                 String[] infos = handler.process(packet);
-                try{
-                    Integer.parseInt(infos[0]);
-                    clients.get(Integer.parseInt(infos[0])).setInfos(infos);
-                }catch (NumberFormatException e){
+                if(infos[0].equals("Hello")) {
                     addConnection(packet);
+                }else {
+                    clients.get(Integer.parseInt(infos[0])).setInfos(infos);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

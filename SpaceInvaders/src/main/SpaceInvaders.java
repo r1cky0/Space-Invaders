@@ -32,7 +32,7 @@ public class SpaceInvaders extends StateBasedGame {
         addState(new StartState(menu));
         addState(new MenuState(menu));
         addState(new SinglePlayerState(menu));
-        addState(new WaitingState(menu));
+        addState(new WaitingState());
         addState(new CustomizationState(menu));
         addState(new RankingState(menu));
         addState(new GameOverStateSingle(menu));
@@ -49,7 +49,6 @@ public class SpaceInvaders extends StateBasedGame {
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
             container.setDisplayMode((int) (Dimensions.MAX_WIDTH*SCALE_X),(int) (Dimensions.MAX_HEIGHT*SCALE_Y),
                     false);
-            container.setTargetFrameRate(240);
             container.setSmoothDeltas(false);
             container.setShowFPS(false);
             container.setVSync(false);

@@ -4,7 +4,7 @@ import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
-import logic.sprite.dinamic.bullets.SpaceShipBullet;
+import logic.sprite.dinamic.bullets.Bullet;
 import main.Dimensions;
 import logic.thread.ThreadUpdate;
 import network.data.MessageBuilder;
@@ -26,15 +26,15 @@ public class Multiplayer extends Game{
     public Player init(int ID, String[] name){
         Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2),
                 (Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT));
-        SpaceShip defaultShip = new SpaceShip(coordinate, Dimensions.SHIP_WIDTH, Dimensions.MAX_HEIGHT);
-        Player player = new Player(name[0], defaultShip);
+        SpaceShip defaultShip = new SpaceShip(coordinate);
+        Player player = new Player(Integer.toString(ID), defaultShip);
         team.addPlayer(ID, player);
         return player;
     }
 
     public void startGame(){
         super.startGame();
-        messageBuilder.setGameStateInfos(States.START);
+        messageBuilder.setGameStateInfo(States.START);
         update(DELTA);
     }
 
@@ -66,7 +66,7 @@ public class Multiplayer extends Game{
         return getPlayers().get(ID).getSpaceShip();
     }
 
-    public SpaceShipBullet getSpaceShipBullet(int ID){
+    public Bullet getSpaceShipBullet(int ID){
         return getSpaceShip(ID).getShipBullet();
     }
 

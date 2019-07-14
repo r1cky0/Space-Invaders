@@ -29,7 +29,7 @@ public class InvadersCreator implements Creator{
             x = Invader.HORIZONTAL_OFFSET;
             for(int j=0; j<8; j++){
                 Coordinate coordinate = new Coordinate(x,baseY);
-                Invader invader = new Invader(coordinate, Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT, 10);
+                Invader invader = new Invader(coordinate);
                 invaders.add(invader);
                 x+= Dimensions.INVADER_WIDTH + HORIZONTAL_OFFSET;
             }
@@ -37,4 +37,5 @@ public class InvadersCreator implements Creator{
         }
         return invaders;
     }
+
 }

@@ -4,27 +4,23 @@ import logic.service.Facade;
 
 public class Sprite extends Facade {
     private Coordinate coordinate;
+    private float width;
+    private float height;
 
     public Sprite(Coordinate coordinate, float width, float height) {
-        super(coordinate,width, height);
+        super(coordinate, width, height);
         this.coordinate = coordinate;
+        this.width = width;
+        this.height = height;
     }
 
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public boolean collides(Sprite sprite) {
+        return super.collides(sprite.getShape());
     }
 
     public void setCoordinate(Coordinate coordinate) {
         super.setCoordinate(coordinate);
         this.coordinate = coordinate;
-    }
-
-    public float getX() {
-        return coordinate.getX();
-    }
-
-    public float getY() {
-        return coordinate.getY();
     }
 
     public void setX(float x) {
@@ -37,8 +33,23 @@ public class Sprite extends Facade {
         super.setCoordinate(coordinate);
     }
 
-    public boolean collides(Sprite sprite) {
-        return super.collides(sprite.getShape());
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
+    public float getX() {
+        return coordinate.getX();
+    }
+
+    public float getY() {
+        return coordinate.getY();
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
 }

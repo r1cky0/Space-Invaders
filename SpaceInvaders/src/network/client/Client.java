@@ -1,10 +1,8 @@
 package network.client;
 
-import logic.player.Player;
 import network.data.Connection;
 import network.data.PacketHandler;
 import logic.manager.game.States;
-
 import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,19 +11,13 @@ public class Client implements Runnable {
     private Connection connection;
     private DatagramSocket socket;
     private PacketHandler handler;
-    private Player player;
-
     private AtomicBoolean running;
     private int ID;
     private String[] rcvdata;
-    private States gameState;
 
-    public Client(Player player, String destAddress, int destPort) {
-        this.player = player;
+    public Client(String destAddress, int destPort) {
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
-
-        gameState = States.INITIALIZATION;
         ID = -1; //fintanto che il server non comunica un id al listener è settato a -1
         try {
             //aggiunta connessione verso il server
@@ -63,17 +55,10 @@ public class Client implements Runnable {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
-                switch (gameState){
-                    case INITIALIZATION:
-                        ID = Integer.parseInt(handler.process(packet)[0]);
-                        gameState = States.WAITING;
-                        break;
-                    case WAITING:
-                        gameState = States.valueOf(handler.process(packet)[0]);
-                        break;
-                    case START:
-                        rcvdata = handler.process(packet); //rcvdata contiene dati ricevuti che client deve renderizzare
-                        break;
+                if(ID == -1){
+                    ID = Integer.parseInt(handler.process(packet)[0]);
+                }else {
+                    rcvdata = handler.process(packet);
                 }
             } catch (IOException e) {
                 close();
@@ -84,10 +69,6 @@ public class Client implements Runnable {
     public void close() {
         running.set(false);
         socket.close();
-    }
-
-    public States getGameState(){
-        return gameState;
     }
 
     public String[] getRcvdata(){
@@ -102,7 +83,5 @@ public class Client implements Runnable {
         return connection;
     }
 
-    public Player getPlayer(){
-        return player;
-    }
+
 }

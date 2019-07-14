@@ -2,15 +2,15 @@ package logic.sprite.dinamic.invaders;
 
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
+import main.Dimensions;
 
 public class Invader extends Sprite {
 
-    private int value;
+    private final int value = 10;
     public static float HORIZONTAL_OFFSET = 2;
 
-    public Invader(Coordinate coordinate, float width, float height, int value) {
-        super(coordinate, width, height);
-        this.value = value;
+    public Invader(Coordinate coordinate) {
+        super(coordinate, Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT);
     }
 
     public int getValue() {

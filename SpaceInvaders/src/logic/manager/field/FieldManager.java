@@ -29,7 +29,7 @@ public class FieldManager {
     private List<Invader> invaders;
     private BonusInvader bonusInvader;
     private ArrayList<Bunker> bunkers;
-    private List<InvaderBullet> invaderBullets;
+    private List<Bullet> invaderBullets;
     private MovingDirections md;
     private boolean goDown;
     private Difficulty difficulty;
@@ -253,8 +253,7 @@ public class FieldManager {
             }
         }
         if((minY >= Dimensions.MAX_HEIGHT/4) && (!bonusInLevel)){
-            bonusInvader = new BonusInvader(new Coordinate(Dimensions.MAX_WIDTH, Dimensions.MAX_HEIGHT/10),
-                    Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT, 100);
+            bonusInvader = new BonusInvader(new Coordinate(Dimensions.MAX_WIDTH, Dimensions.MAX_HEIGHT/10));
             bonus = true;
             bonusInLevel = true;
         }
@@ -271,7 +270,7 @@ public class FieldManager {
                 Dimensions.INVADER_WIDTH / 2 - Dimensions.BULLET_WIDTH /2,
                 invaders.get(random).getY() + Dimensions.INVADER_HEIGHT /2);
 
-        invaderBullets.add(new InvaderBullet(coordinate, Dimensions.BULLET_WIDTH, Dimensions.BULLET_HEIGHT));
+        invaderBullets.add(new InvaderBullet(coordinate));
     }
 
     public void setNewLevel(boolean value){
@@ -290,7 +289,7 @@ public class FieldManager {
         return bunkers;
     }
 
-    public List<InvaderBullet> getInvaderBullets(){
+    public List<Bullet> getInvaderBullets(){
         return invaderBullets;
     }
 

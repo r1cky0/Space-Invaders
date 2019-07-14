@@ -4,6 +4,7 @@ import logic.manager.field.FieldManager;
 import logic.manager.field.MovingDirections;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
+import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import main.Dimensions;
 import org.junit.jupiter.api.Test;
@@ -26,9 +27,9 @@ class FieldManagerTest {
     void checkInvaderShotCollision() {
         FieldManager fieldManager = new FieldManager();
         Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH/32,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
-        SpaceShip spaceShip = new SpaceShip(coordinate,Dimensions.SHIP_WIDTH,Dimensions.SHIP_HEIGHT);
+        SpaceShip spaceShip = new SpaceShip(coordinate);
         fieldManager.invaderShot();
-        List<InvaderBullet> invaderBullets = fieldManager.getInvaderBullets();
+        List<Bullet> invaderBullets = fieldManager.getInvaderBullets();
 
         //Necessario per spostare la ship in corrispondenza dell' invaderBullet
         if(spaceShip.getX() < invaderBullets.get(0).getX()){
@@ -56,7 +57,7 @@ class FieldManagerTest {
     void checkSpaceShipShotCollision() {
         FieldManager fieldManager = new FieldManager();
         Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH/32,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
-        SpaceShip spaceShip = new SpaceShip(coordinate,Dimensions.SHIP_WIDTH,Dimensions.SHIP_HEIGHT);
+        SpaceShip spaceShip = new SpaceShip(coordinate);
 
         //Includiamo nel test anche la funzione di movimento della ship per verificarne il funzionamento
         //Il valore del delta, impostato manualmente a 1, é verosimile e verificato attraverso diverse prove

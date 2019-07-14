@@ -4,8 +4,8 @@ import logic.sprite.Coordinate;
 
 public class InvaderBullet extends Bullet{
 
-    public InvaderBullet(Coordinate coordinate, float width, float height) {
-        super(coordinate, width, height);
+    public InvaderBullet(Coordinate coordinate) {
+        super(coordinate);
     }
 
     public void move(int delta) {

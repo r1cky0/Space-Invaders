@@ -84,11 +84,11 @@ public class SinglePlayer extends Game{
         return player.getSpaceShip();
     }
 
-    public SpaceShipBullet getSpaceShipBullet(){
+    public Bullet getSpaceShipBullet(){
         return getSpaceShip().getShipBullet();
     }
 
-    public List<InvaderBullet> getInvadersBullet(){
+    public List<Bullet> getInvadersBullet(){
         return fieldManager.getInvaderBullets();
     }
 

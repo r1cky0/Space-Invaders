@@ -29,7 +29,7 @@ public class Menu {
 
         Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH/2 - Dimensions.SHIP_WIDTH /2),
                 (Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH));
-        defaultShip = new SpaceShip(coordinate, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
+        defaultShip = new SpaceShip(coordinate);
     }
 
     /**

@@ -1,4 +1,4 @@
-package gui.elements;
+package gui.drawer;
 
 import logic.sprite.Sprite;
 

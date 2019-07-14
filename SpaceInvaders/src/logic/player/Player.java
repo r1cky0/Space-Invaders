@@ -1,6 +1,7 @@
 package logic.player;
 
 import logic.sprite.dinamic.SpaceShip;
+import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 
 public class Player {
@@ -42,7 +43,7 @@ public class Player {
         return spaceShip;
     }
 
-    public SpaceShipBullet getSpaceShipBullet(){
+    public Bullet getSpaceShipBullet(){
         return spaceShip.getShipBullet();
     }
 

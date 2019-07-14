@@ -3,7 +3,7 @@ package logic.thread;
 import logic.manager.field.FieldManager;
 import logic.manager.game.States;
 import logic.manager.game.Multiplayer;
-import logic.sprite.dinamic.bullets.InvaderBullet;
+import logic.sprite.dinamic.bullets.Bullet;
 import main.Dimensions;
 import network.data.MessageBuilder;
 
@@ -26,7 +26,7 @@ public class ThreadUpdate implements Runnable{
 
     public void start() {
         Thread thread = new Thread(this);
-        messageBuilder.setGameStateInfos(States.START);
+        messageBuilder.setGameStateInfo(States.START);
         thread.start();
     }
 
@@ -38,8 +38,8 @@ public class ThreadUpdate implements Runnable{
     public void run() {
         running.set(true);
         while(running.get()) {
-            messageBuilder.setInfos(multiplayer);
-            for (InvaderBullet bullet : fieldManager.getInvaderBullets()) {
+            messageBuilder.setInfo(multiplayer);
+            for (Bullet bullet : fieldManager.getInvaderBullets()) {
                 bullet.move(delta);
             }
             if(fieldManager.isBonusInvader() &&
@@ -59,9 +59,8 @@ public class ThreadUpdate implements Runnable{
                     multiplayer.getTeam().removePlayer(ID);
                 }
             }
-
             if(multiplayer.getPlayers().isEmpty() || fieldManager.isEndReached()){
-                messageBuilder.setGameStateInfos(States.GAMEOVER);
+                messageBuilder.setGameStateInfo(States.GAMEOVER);
             }
             if(fieldManager.isNewLevel()){
                 multiplayer.getTeam().incrementLife();
