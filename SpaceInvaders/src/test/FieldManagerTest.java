@@ -5,13 +5,9 @@ import logic.environment.manager.field.MovingDirections;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.InvaderBullet;
-import logic.sprite.dinamic.invaders.Invader;
 import main.Dimensions;
 import org.junit.jupiter.api.Test;
-import org.lwjgl.Sys;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class FieldManagerTest {
@@ -63,8 +59,8 @@ class FieldManagerTest {
         SpaceShip spaceShip = new SpaceShip(coordinate,Dimensions.SHIP_WIDTH,Dimensions.SHIP_HEIGHT);
 
         //Includiamo nel test anche la funzione di movimento della ship per verificarne il funzionamento
-        //Il valore del delta, impostato manualmente a 2, é verosimile e verificato attraverso diverse prove
-        fieldManager.shipMovement(spaceShip,MovingDirections.RIGHT,2);
+        //Il valore del delta, impostato manualmente a 1, é verosimile e verificato attraverso diverse prove
+        fieldManager.shipMovement(spaceShip,MovingDirections.RIGHT,1);
 
         fieldManager.shipShot(spaceShip);
         spaceShip.getShipBullet().setY(Dimensions.MAX_HEIGHT/10 + Dimensions.MAX_HEIGHT/100);
