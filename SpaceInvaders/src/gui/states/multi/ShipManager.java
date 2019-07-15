@@ -1,6 +1,7 @@
 package gui.states.multi;
 
 import logic.manager.field.MovingDirections;
+import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import main.Dimensions;
 
@@ -24,8 +25,8 @@ public class ShipManager {
 
     }
 
-    public float getX(){
-        return spaceShip.getX();
+    public Coordinate getCoordinate(){
+        return spaceShip.getCoordinate();
     }
 
     public SpaceShip getSpaceShip() {
