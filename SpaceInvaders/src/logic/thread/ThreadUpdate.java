@@ -17,18 +17,18 @@ public class ThreadUpdate implements Runnable{
     private AtomicBoolean running;
     private int delta;
 
-    public ThreadUpdate(Multiplayer multiplayer, int delta){
+    public ThreadUpdate(Multiplayer multiplayer, MessageBuilder messageBuilder, int delta){
         this.multiplayer = multiplayer;
         this.delta = delta;
-        messageBuilder = new MessageBuilder(multiplayer);
+        this.messageBuilder = messageBuilder;
         fieldManager = multiplayer.getFieldManager();
         running = new AtomicBoolean(false);
     }
 
     public void start() {
         Thread thread = new Thread(this);
-        createInfo();
         thread.start();
+        createInfo();
     }
 
     /**
@@ -84,16 +84,17 @@ public class ThreadUpdate implements Runnable{
     }
 
     public void createInfo(){
-        Thread thread = new Thread(() -> {
+        Thread threadMessageCreator = new Thread(() -> {
+            running.set(true);
             while (running.get())
-            messageBuilder.setInfo();
+            messageBuilder.setInfo(multiplayer);
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
-        thread.start();
+        threadMessageCreator.start();
     }
 
     public void stop() {

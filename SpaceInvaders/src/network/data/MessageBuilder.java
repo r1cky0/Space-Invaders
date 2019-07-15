@@ -31,8 +31,7 @@ public class MessageBuilder{
     private Multiplayer multiplayer;
     private String[] stringBuilders;
 
-    public MessageBuilder(Multiplayer multiplayer){
-        this.multiplayer = multiplayer;
+    public MessageBuilder(){
         stringBuilders = new String[8];
         for(int i=0;i<8;i++){
             stringBuilders[i] = "";
@@ -47,7 +46,8 @@ public class MessageBuilder{
         stringBuilders[0] = multiplayer.getGameState().toString() + "\n";
     }
 
-    public void setInfo(){
+    public void setInfo(Multiplayer multiplayer){
+        this.multiplayer = multiplayer;
         setGameStateInfo();
         setInvaderInfo();
         setInvaderBonusInfo();

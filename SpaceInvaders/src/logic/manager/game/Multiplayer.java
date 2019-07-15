@@ -7,22 +7,26 @@ import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
 import main.Dimensions;
 import logic.thread.ThreadUpdate;
+import network.data.MessageBuilder;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Multiplayer extends Game{
     private Team team;
     private States gameState;
     private ThreadUpdate threadUpdate;
+    private MessageBuilder messageBuilder;
     private static int DELTA = 1;
 
-    public Multiplayer(){
+    public Multiplayer(MessageBuilder messageBuilder){
+        this.messageBuilder = messageBuilder;
         team = new Team();
     }
 
     public Player init(int ID, String[] name){
-        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2),
-                (Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT));
+        Coordinate coordinate = new Coordinate(0,0);
         SpaceShip defaultShip = new SpaceShip(coordinate);
+        defaultShip.init();
         Player player = new Player(Integer.toString(ID), defaultShip);
         team.addPlayer(ID, player);
         return player;
@@ -46,7 +50,7 @@ public class Multiplayer extends Game{
      * Attivazione thread di aggiornamento di tutti gli elementi presenti sul campo di gioco
      */
     public void update(int delta) {
-        threadUpdate = new ThreadUpdate(this, delta);
+        threadUpdate = new ThreadUpdate(this, messageBuilder, delta);
         threadUpdate.start();
     }
 

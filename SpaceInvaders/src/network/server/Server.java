@@ -31,8 +31,8 @@ public class Server implements Runnable {
     Server(int port) {
         this.port = port;
         clients = new ConcurrentHashMap<>();
-        multiplayer = new Multiplayer();
-        messageBuilder = new MessageBuilder(multiplayer);
+        messageBuilder = new MessageBuilder();
+        multiplayer = new Multiplayer(messageBuilder);
         runningServer = new AtomicBoolean(false);
         handler = new PacketHandler();
         try {
