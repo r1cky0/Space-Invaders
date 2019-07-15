@@ -6,8 +6,12 @@ import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.InvaderBullet;
+import logic.sprite.unmovable.Brick;
+import logic.sprite.unmovable.Bunker;
 import main.Dimensions;
 import org.junit.jupiter.api.Test;
+import org.lwjgl.Sys;
+
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +28,7 @@ class FieldManagerTest {
      * istantaneo anche se nel sistema avviene in tempo reale)
      */
     @Test
-    void checkInvaderShotCollision() {
+    void checkTrueInvaderShotCollision() {
         FieldManager fieldManager = new FieldManager();
         Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH/32,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
         SpaceShip spaceShip = new SpaceShip(coordinate);
@@ -48,13 +52,29 @@ class FieldManagerTest {
     }
 
     /**
+     *Creiamo una spaceShip che viene posizionata all' estremo destro del campo di gioco.
+     *In questo modo, facendo sparare subito uno degli invaders(creati,invece, a partire dall' estremo sinistro),
+     *non dovrebbe esserci collisione
+     */
+    @Test
+    void checkFalseInvaderShotCollision(){
+        FieldManager fieldManager = new FieldManager();
+        Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH - Dimensions.SHIP_WIDTH,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
+        SpaceShip spaceShip = new SpaceShip(coordinate);
+        fieldManager.invaderShot();
+        List<Bullet> invaderBullets = fieldManager.getInvaderBullets();
+        invaderBullets.get(0).setY(Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH/2);
+        assertFalse(fieldManager.checkInvaderShotCollision(spaceShip));
+    }
+
+    /**
      *Simuliamo sparo e spostamento del shipBullet in verticale
      *Fatto in modo istantaneo, nel sistema in realtá sale in tempo reale,
      *ma a noi interessa solo testare che venga individuata la collisione
      *Settiamo quindi la y del proiettile appena sopra l' altezza della prima fila di invaders
      */
     @Test
-    void checkSpaceShipShotCollision() {
+    void checkTrueSpaceShipShotCollision() {
         FieldManager fieldManager = new FieldManager();
         Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH/32,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
         SpaceShip spaceShip = new SpaceShip(coordinate);
@@ -67,5 +87,25 @@ class FieldManagerTest {
         spaceShip.getShipBullet().setY(Dimensions.MAX_HEIGHT/10 + Dimensions.MAX_HEIGHT/100);
 
         assertTrue(fieldManager.checkSpaceShipShotCollision(spaceShip));
+    }
+
+    /**
+     *Creiamo una spaceShip che viene posizionata all' estremo destro del campo di gioco.
+     *In questo modo, facendola sparare, nessuno degli invaders(creati,invece, a partire dall' estremo sinistro)
+     *dovrebbe essere colpito
+     */
+    @Test
+    void checkFalseSpaceShipShotCollision(){
+        FieldManager fieldManager = new FieldManager();
+        Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH/32,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
+        SpaceShip spaceShip = new SpaceShip(coordinate);
+        while(spaceShip.getX() < Dimensions.MAX_WIDTH - Dimensions.SHIP_WIDTH) {
+            fieldManager.shipMovement(spaceShip, MovingDirections.RIGHT, 1);
+        }
+
+        fieldManager.shipShot(spaceShip);
+        spaceShip.getShipBullet().setY(Dimensions.MAX_HEIGHT/10 + Dimensions.MAX_HEIGHT/100);
+
+        assertFalse(fieldManager.checkSpaceShipShotCollision(spaceShip));
     }
 }
