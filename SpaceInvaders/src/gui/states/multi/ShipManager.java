@@ -29,6 +29,10 @@ public class ShipManager {
         return spaceShip.getCoordinate();
     }
 
+    public float getX(){
+        return spaceShip.getX();
+    }
+
     public SpaceShip getSpaceShip() {
         return spaceShip;
     }

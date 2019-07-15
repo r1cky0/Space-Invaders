@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class LocalMultiManger {
     private ShipManager shipManager;
-    private SpriteDrawer spriteDrawer;
     private Client client;
     private String message;
     private PacketHandler handler;
@@ -28,7 +27,6 @@ public class LocalMultiManger {
     private LocalMultiRender localMultiRender;
 
     public LocalMultiManger(){
-        spriteDrawer = new SpriteDrawer();
         gameState = States.INITIALIZATION;
         handler = new PacketHandler();
         Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2),
@@ -38,7 +36,7 @@ public class LocalMultiManger {
     }
 
     public void init(){
-        client = new Client("192.168.43.89", 9999);
+        client = new Client("localhost", 9999);
         client.send(handler.build("Hello", client.getConnection()));
     }
 
@@ -48,6 +46,7 @@ public class LocalMultiManger {
             if(client.getRcvdata() != null) {
                 if (States.valueOf(client.getRcvdata()[0]) == States.START) {
                     gameState = States.START;
+                    localMultiRender = new LocalMultiRender(client.getID(), shipManager);
                 }
             }
         }
@@ -78,7 +77,7 @@ public class LocalMultiManger {
     public void render(){
         String[] rcvdata = client.getRcvdata();
         if(rcvdata != null) {
-            gameState = localMultiRender.getState();
+            gameState = localMultiRender.getGameState();
             localMultiRender.draw(rcvdata);
         }
     }

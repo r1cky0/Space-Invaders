@@ -1,5 +1,6 @@
 package gui.states.multi;
 
+import gui.drawer.SpriteDrawer;
 import logic.manager.game.States;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
@@ -14,77 +15,76 @@ import java.util.ArrayList;
 public class LocalMultiRender {
 
     private LocalMultiMessageHandler localMultiMessageHandler;
+    private SpriteDrawer spriteDrawer;
     private int score;
+    private States gameState;
+    private int ID;
+    private ShipManager shipManager;
 
-    public LocalMultiRender(){
+    public LocalMultiRender(int ID, ShipManager shipManager){
         localMultiMessageHandler = new LocalMultiMessageHandler();
-        score = 0;
+        spriteDrawer = new SpriteDrawer();
+        this.ID = ID;
+        this.shipManager = shipManager;
     }
 
     public void draw(String[] rcvdata){
-        gameState = States.valueOf(rcvdata[0]);
+        setGameState(rcvdata[0]);
         invaderDrawer(rcvdata[1]);
         bonusInvaderDrawer(rcvdata[2]);
         invaderBulletDrawer(rcvdata[3]);
         bunkerDrawer(rcvdata[4]);
         shipDrawer(rcvdata[5]);
         shipBulletDrawer(rcvdata[6]);
-        score = Integer.parseInt(rcvdata[7]);
+        setScore(rcvdata[7]);
     }
 
     private void invaderDrawer(String data) {
-        ArrayList<Invader> invaders = new ArrayList<>();
-        for (String strings : data.split("\\t")) {
-            invaders.add(new Invader());
+        for (Invader invader : localMultiMessageHandler.invaderCreator(data)) {
+            spriteDrawer.render(invader);
         }
     }
 
     private void bonusInvaderDrawer(String data){
-        if(!data.equals("")){
-            spriteDrawer.render(new BonusInvader(converter(data)));
+        BonusInvader bonusInvader = localMultiMessageHandler.bonusInvaderCreator(data);
+        if(bonusInvader != null){
+            spriteDrawer.render(bonusInvader);
         }
     }
 
     private void invaderBulletDrawer(String data) {
-        for (String strings : data.split("\\t")) {
-            if(!strings.equals("")) {
-                spriteDrawer.render(new InvaderBullet(converter(strings)));
-            }
+        for (InvaderBullet invaderBullet : localMultiMessageHandler.invaderBulletCreator(data)) {
+            spriteDrawer.render(invaderBullet);
         }
     }
 
     private void bunkerDrawer(String data) {
-        for (String strings : data.split("\\t")) {
-            Brick brick = new Brick(converter(strings));
-            brick.setLife(Integer.parseInt(strings.split("_")[2]));
+        for (Brick brick : localMultiMessageHandler.bunkerCreator(data)) {
             spriteDrawer.render(brick);
         }
     }
 
     private void shipDrawer(String data) {
-        for (String strings : data.split("\\t")) {
-            if (!strings.equals("")) {
-                if (client.getID() == Integer.parseInt(strings.split("_")[0])) {
-                    spriteDrawer.render(shipManager.getSpaceShip());
-                    shipManager.getSpaceShip().setLife(Integer.parseInt(strings.split("_")[3]));
-                } else {
-                    spriteDrawer.render(new SpaceShip(converter(strings)));
-                }
-            }
+        for(SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, ID, shipManager)){
+            spriteDrawer.render(spaceShip);
         }
     }
 
     private void shipBulletDrawer(String data){
-        for (String strings : data.split("\\t")) {
-            if(!strings.equals("")) {
-                spriteDrawer.render(new SpaceShipBullet(converter(strings)));
-            }
+        for (SpaceShipBullet spaceShipBullet : localMultiMessageHandler.shipBulletCreator(data)) {
+            spriteDrawer.render(spaceShipBullet);
         }
     }
 
-    public int getScore(){
-        return score;
+    public void setScore(String data){
+        score = localMultiMessageHandler.getScore(data);
     }
 
-    public States getState(){return localMultiMessageHandler.getGameState();}
+    public void setGameState(String data){
+        gameState = localMultiMessageHandler.getGameState(data);
+    }
+
+    public States getGameState(){return gameState;}
+
+    public int getScore(){return score;}
 }

@@ -13,9 +13,12 @@ import java.util.ArrayList;
 
 public class LocalMultiMessageHandler {
 
-    public void draw(String[] rcvdata){
-        gameState = States.valueOf(rcvdata[0]);
-        score = Integer.parseInt(rcvdata[7]);
+    public States getGameState(String data){
+        return States.valueOf(data);
+    }
+
+    public int getScore(String data){
+        return Integer.parseInt(data);
     }
 
     public ArrayList<Invader> invaderCreator(String data) {
@@ -58,7 +61,7 @@ public class LocalMultiMessageHandler {
         for (String strings : data.split("\\t")) {
             if (!strings.equals("")) {
                 if (ID == Integer.parseInt(strings.split("_")[0])) {
-                    spaceShips.add(new SpaceShip(shipManager.getCoordinate()));
+                    spaceShips.add(shipManager.getSpaceShip());
                     shipManager.getSpaceShip().setLife(Integer.parseInt(strings.split("_")[3]));
                 } else {
                     spaceShips.add(new SpaceShip(converter(strings)));
