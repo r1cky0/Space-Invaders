@@ -1,36 +1,56 @@
 package logic.sprite;
 
 import logic.service.Facade;
+import org.newdawn.slick.geom.Shape;
 
-public class Sprite extends Facade {
+public class Sprite {
     private Coordinate coordinate;
+    private Facade facade;
     private float width;
     private float height;
+    private Target target;
 
-    public Sprite(Coordinate coordinate, float width, float height) {
-        super(coordinate, width, height);
+    public Sprite(Coordinate coordinate, float width, float height, Target target) {
+        facade = new Facade(coordinate, width, height);
         this.coordinate = coordinate;
         this.width = width;
         this.height = height;
+        this.target = target;
     }
 
     public boolean collides(Sprite sprite) {
-        return super.collides(sprite.getShape());
+        return facade.collides(sprite.getShape());
     }
 
     public void setCoordinate(Coordinate coordinate) {
-        super.setCoordinate(coordinate);
+        facade.setCoordinate(coordinate);
         this.coordinate = coordinate;
     }
 
     public void setX(float x) {
         coordinate.setX(x);
-        super.setCoordinate(coordinate);
+        facade.setCoordinate(coordinate);
     }
 
     public void setY(float y) {
         coordinate.setY(y);
-        super.setCoordinate(coordinate);
+        facade.setCoordinate(coordinate);
+    }
+
+    public void setTarget(Target target){
+        this.target = target;
+    }
+
+    public Target getTarget(){
+        return target;
+    }
+
+    public Facade getFacade(){
+        return facade;
+    }
+
+    public Shape getShape(){
+        return facade.getShape();
     }
 
     public Coordinate getCoordinate() {

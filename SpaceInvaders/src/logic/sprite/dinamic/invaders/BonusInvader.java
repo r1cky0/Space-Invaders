@@ -2,6 +2,7 @@ package logic.sprite.dinamic.invaders;
 
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
+import logic.sprite.Target;
 import main.Dimensions;
 
 public class BonusInvader extends Sprite {
@@ -9,7 +10,7 @@ public class BonusInvader extends Sprite {
     private final int value = 100;
 
     public BonusInvader(Coordinate coordinate){
-        super(coordinate, Dimensions.BONUSINVADER_WIDTH, Dimensions.BONUSINVADER_HEIGHT);
+        super(coordinate, Dimensions.BONUSINVADER_WIDTH, Dimensions.BONUSINVADER_HEIGHT, Target.BONUS_INVADER);
     }
 
     /**

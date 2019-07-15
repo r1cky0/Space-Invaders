@@ -49,9 +49,11 @@ public class LocalMultiMessageHandler {
     public ArrayList<Brick> bunkerCreator(String data) {
         ArrayList<Brick> bricks = new ArrayList<>();
         for (String strings : data.split("\\t")) {
-            Brick brick = new Brick(converter(strings));
-            brick.setLife(Integer.parseInt(strings.split("_")[2]));
-            bricks.add(brick);
+            if(!strings.equals("")) {
+                Brick brick = new Brick(converter(strings));
+                brick.setLife(Integer.parseInt(strings.split("_")[2]));
+                bricks.add(brick);
+            }
         }
         return bricks;
     }

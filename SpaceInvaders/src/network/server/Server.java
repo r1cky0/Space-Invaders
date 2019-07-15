@@ -36,14 +36,14 @@ public class Server implements Runnable {
         handler = new PacketHandler();
         multiplayer = new Multiplayer(messageBuilder);
         try {
-            this.init();
+            init();
         } catch (SocketException e) {
             e.printStackTrace();
         }
     }
 
     public void init() throws SocketException {
-        this.socket = new DatagramSocket(this.port);
+        this.socket = new DatagramSocket(port);
         Thread server = new Thread(this);
         server.start();
     }
@@ -93,11 +93,6 @@ public class Server implements Runnable {
             if (clients.size() == maxPlayers) {
                 broadcast(States.START.toString());
                 multiplayer.startGame();
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 for(int id : clients.keySet()){
                     clients.get(id).sender();
                 }

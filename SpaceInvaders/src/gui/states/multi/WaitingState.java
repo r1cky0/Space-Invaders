@@ -74,7 +74,7 @@ public class WaitingState extends BasicState {
                 connectionTimer.stopTimer();
                 stateBasedGame.addState(new MultiplayerState(localMultiManger));
                 stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer,stateBasedGame);
-                stateBasedGame.enterState(IDStates.MULTIPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
+                stateBasedGame.enterState(IDStates.MULTIPLAYER_STATE);
                 audioplayer.game();
             } catch (SlickException e) {
                 e.printStackTrace();

@@ -2,6 +2,7 @@ package logic.sprite.dinamic.invaders;
 
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
+import logic.sprite.Target;
 import main.Dimensions;
 
 public class Invader extends Sprite {
@@ -10,7 +11,7 @@ public class Invader extends Sprite {
     public static float HORIZONTAL_OFFSET = 2;
 
     public Invader(Coordinate coordinate) {
-        super(coordinate, Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT);
+        super(coordinate, Dimensions.INVADER_WIDTH, Dimensions.INVADER_HEIGHT, Target.INVADER);
     }
 
     public int getValue() {

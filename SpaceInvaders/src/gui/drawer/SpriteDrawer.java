@@ -2,6 +2,7 @@ package gui.drawer;
 
 import logic.manager.file.ReadXmlFile;
 import logic.sprite.Sprite;
+import logic.sprite.Target;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.invaders.BonusInvader;
@@ -11,64 +12,39 @@ import main.SpaceInvaders;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SpriteDrawer {
     private ReadXmlFile readerXmlFile;
-    private Image invaderImage;
-    private Image invaderBonusImage;
-    private Image bulletImage;
-    private Image shipImage;
-    private ArrayList<Image> brickImages;
+    private HashMap<Target, Image> images;
 
     public SpriteDrawer() {
         readerXmlFile = new ReadXmlFile();
-        brickImages = new ArrayList<>();
+        images = new HashMap<>();
         try {
-            invaderImage = new Image(readerXmlFile.read("defaultInvader"));
-            invaderBonusImage = new Image(readerXmlFile.read("bonusInvader"));
-            bulletImage = new Image(readerXmlFile.read("defaultBullet"));
-            shipImage = new Image(readerXmlFile.read("ship0"));
+            images.put(Target.INVADER, new Image(readerXmlFile.read("defaultInvader")));
+            images.put(Target.BONUS_INVADER, new Image(readerXmlFile.read("bonusInvader")));
+            images.put(Target.BULLET, new Image(readerXmlFile.read("defaultBullet")));
+            images.put(Target.SHIP, new Image(readerXmlFile.read("ship0")));
+            String target = "BRICK";
             for (int i = 0; i < 4; i++) {
-                brickImages.add(new Image(readerXmlFile.read("brick" + i)));
+                images.put(Target.valueOf(target + i), new Image(readerXmlFile.read("brick" + i)));
             }
-
         } catch (SlickException e) {
             e.printStackTrace();
         }
     }
 
     public void addShipImage(String shipType) throws SlickException {
-        shipImage = new Image(readerXmlFile.read(shipType));
+        images.replace(Target.SHIP, new Image(readerXmlFile.read(shipType)));
     }
 
-    private void draw(Image image, Sprite sprite){
+    public void render(Sprite sprite){
         float x = sprite.getX() * SpaceInvaders.SCALE_X;
         float y = sprite.getY() * SpaceInvaders.SCALE_Y;
         float width = sprite.getWidth() * SpaceInvaders.SCALE_X;
         float height = sprite.getHeight() * SpaceInvaders.SCALE_Y;
-        image.draw(x, y, width, height);
-    }
-
-    public void render(Invader invader){
-        draw(invaderImage, invader);
-    }
-
-    public void render(BonusInvader bonusInvader){
-        draw(invaderBonusImage, bonusInvader);
-    }
-
-    public void render(Bullet bullet){
-        draw(bulletImage, bullet);
-    }
-
-    public void render(Brick brick){
-        if(brick.getLife() > 0) {
-            draw(brickImages.get(4 - brick.getLife()), brick);
-        }
-    }
-
-    public void render(SpaceShip spaceShip) {
-        draw(shipImage, spaceShip);
+        images.get(sprite.getTarget()).draw(x, y, width, height);
     }
 
 }

@@ -6,8 +6,6 @@ import logic.sprite.dinamic.invaders.BonusInvader;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
-import logic.sprite.dinamic.bullets.InvaderBullet;
-import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.unmovable.Bunker;
 import main.Dimensions;
 
@@ -36,7 +34,7 @@ public class SinglePlayer extends Game{
                 fieldManager.shipShot(spaceShip);
                 break;
             case EXIT:
-                super.stopGame();
+                super.stopThreadInvader();
                 break;
         }
     }
@@ -61,13 +59,17 @@ public class SinglePlayer extends Game{
                 gameState = States.GAMEOVER;
             }
         }
-        super.threadInvaderManager();
+        if(fieldManager.isNewLevel()){
+            super.stopThreadInvader();
+            super.startThreadInvader();
+            fieldManager.setNewLevel(false);
+        }
         checkGameState();
     }
 
     private void checkGameState(){
         if (gameState == States.GAMEOVER || fieldManager.isEndReached()) {
-            super.stopGame();
+            super.stopThreadInvader();
             if (player.checkHighscore()) {
                 gameState = States.NEWHIGHSCORE;
             }else {

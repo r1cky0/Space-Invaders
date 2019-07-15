@@ -39,7 +39,7 @@ public class Multiplayer extends Game{
     }
 
     public void stopGame() {
-        super.stopGame();
+        super.stopThreadInvader();
         if(isThreadRunning()) {
             threadUpdate.stop();
         }

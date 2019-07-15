@@ -2,6 +2,7 @@ package logic.thread;
 
 import logic.manager.field.FieldManager;
 
+import java.awt.font.TextHitInfo;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 

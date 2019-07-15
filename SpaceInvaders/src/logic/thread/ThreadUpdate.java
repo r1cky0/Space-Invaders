@@ -28,6 +28,7 @@ public class ThreadUpdate implements Runnable{
         Thread thread = new Thread(this);
         messageBuilder.setGameStateInfo(States.START);
         thread.start();
+        createInfo();
     }
 
     /**
@@ -38,41 +39,61 @@ public class ThreadUpdate implements Runnable{
     public void run() {
         running.set(true);
         while(running.get()) {
-            messageBuilder.setInfo(multiplayer);
             for (Bullet bullet : fieldManager.getInvaderBullets()) {
                 bullet.move(delta);
             }
             if(fieldManager.isBonusInvader() &&
-                    !(fieldManager.getBonusInvader().getX() + Dimensions.INVADER_WIDTH < Dimensions.MIN_WIDTH)){
+                    !(fieldManager.getBonusInvader().getX() + Dimensions.BONUSINVADER_WIDTH < Dimensions.MIN_WIDTH)){
                 fieldManager.getBonusInvader().moveLeft(delta);
             }
-
             for (int ID : multiplayer.getPlayers().keySet()) {
-                if (multiplayer.getSpaceShip(ID).isShipShot()) {
-                    multiplayer.getSpaceShipBullet(ID).move(delta);
-                    if(fieldManager.checkSpaceShipShotCollision(multiplayer.getSpaceShip(ID))){
-                        multiplayer.getTeam().calculateTeamCurrentScore();
-                    }
-                }
-                fieldManager.checkInvaderShotCollision(multiplayer.getSpaceShip(ID));
-                if(multiplayer.getSpaceShip(ID).getLife() == 0){
-                    multiplayer.getTeam().removePlayer(ID);
-                }
+                checkCollision(ID);
             }
-            if(multiplayer.getPlayers().isEmpty() || fieldManager.isEndReached()){
-                messageBuilder.setGameStateInfo(States.GAMEOVER);
-            }
-            if(fieldManager.isNewLevel()){
-                multiplayer.getTeam().incrementLife();
-            }
-            multiplayer.threadInvaderManager();
-
+            checkGameState();
             try {
                 Thread.sleep(delta);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void checkCollision(int ID){
+        if (multiplayer.getSpaceShip(ID).isShipShot()) {
+            multiplayer.getSpaceShipBullet(ID).move(delta);
+            if(fieldManager.checkSpaceShipShotCollision(multiplayer.getSpaceShip(ID))){
+                multiplayer.getTeam().calculateTeamCurrentScore();
+            }
+        }
+        fieldManager.checkInvaderShotCollision(multiplayer.getSpaceShip(ID));
+        if(multiplayer.getSpaceShip(ID).getLife() == 0){
+            multiplayer.getTeam().removePlayer(ID);
+        }
+    }
+
+    private void checkGameState(){
+        if(multiplayer.getPlayers().isEmpty() || fieldManager.isEndReached()){
+            messageBuilder.setGameStateInfo(States.GAMEOVER);
+        }
+        if(fieldManager.isNewLevel()){
+            multiplayer.getTeam().incrementLife();
+            multiplayer.stopThreadInvader();
+            multiplayer.startThreadInvader();
+            multiplayer.getFieldManager().setNewLevel(false);
+        }
+    }
+
+    public void createInfo(){
+        Thread thread = new Thread(() -> {
+            while (running.get())
+            messageBuilder.setInfo(multiplayer);
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 
     public void stop() {

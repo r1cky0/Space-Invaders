@@ -1,12 +1,11 @@
 package logic.service;
 
-
 import logic.sprite.Coordinate;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public abstract class Facade {
+public class Facade {
     private Shape shape;
 
     public Facade(Coordinate coordinate, float width, float height) {
@@ -19,7 +18,7 @@ public abstract class Facade {
      * @param shape La forma con cui fare il check della collisione
      * @return Ritorna un booleano settato a true se collisione avvenuta
      */
-    protected boolean collides(Shape shape){
+    public boolean collides(Shape shape){
         return this.shape.intersects(shape);
     }
 

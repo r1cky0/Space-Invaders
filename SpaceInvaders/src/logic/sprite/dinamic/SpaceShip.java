@@ -2,6 +2,7 @@ package logic.sprite.dinamic;
 
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
+import logic.sprite.Target;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import main.Dimensions;
@@ -14,7 +15,7 @@ public class SpaceShip extends Sprite {
     private boolean shipShot;
 
     public SpaceShip(Coordinate coordinate) {
-        super(coordinate, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT);
+        super(coordinate, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT, Target.SHIP);
         init();
         shipShot = false;
     }

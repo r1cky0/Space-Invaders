@@ -15,30 +15,20 @@ public abstract class Game {
 
     public void startGame(){
         fieldManager = new FieldManager();
-        threadRunning = false;
         gameState = States.START;
+        startThreadInvader();
     }
 
-    public void stopGame() {
+    public void stopThreadInvader() {
         if(threadRunning) {
             threadInvader.stop();
         }
     }
 
-    /**
-     *  Attivazione del thread di gestione degli invader (movimento e sparo) e check completamento livello
-     */
-    public void threadInvaderManager(){
-        if (!threadRunning) {
-            threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
-            threadInvader.start();
-            threadRunning = true;
-        }
-        if (fieldManager.isNewLevel()) {
-            threadInvader.stop();
-            fieldManager.setNewLevel(false);
-            threadRunning = false;
-        }
+    public void startThreadInvader(){
+        threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);
+        threadInvader.start();
+        threadRunning = true;
     }
 
     public abstract void update(int delta);

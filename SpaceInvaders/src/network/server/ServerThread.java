@@ -101,6 +101,7 @@ public class ServerThread implements Runnable{
             String infos="";
             running.set(true);
             while (running.get()) {
+                messageBuilder.setInfo(multiplayer);
                 if(!infos.equals(messageBuilder.getInfo())) {
                     infos = messageBuilder.getInfo();
                     try {
@@ -110,7 +111,7 @@ public class ServerThread implements Runnable{
                     }
                 }
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
