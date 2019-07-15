@@ -18,6 +18,7 @@ public class Client implements Runnable {
     public Client(String destAddress, int destPort) {
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
+        rcvdata = new String[7];
         ID = -1; //fintanto che il server non comunica un id al listener è settato a -1
         try {
             //aggiunta connessione verso il server
