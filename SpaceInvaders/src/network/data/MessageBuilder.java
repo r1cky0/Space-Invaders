@@ -13,8 +13,9 @@ import logic.sprite.unmovable.Bunker;
  * Composizione messaggio da inviare a client per renderizzazione:
  * - STATO GIOCO
  * - INVADER (posX_posY)
+ * - BONUSINVADER (posX_posY)
  * - INVADER BULLET (posX_posY)
- * - BUNKER (posX_posY_life)
+ * - BRICK (posX_posY_life)
  * - SHIP (posX_posY_life)
  * - SHIP BULLET (posX_posY)
  * - TEAM SCORE
