@@ -3,6 +3,8 @@ package network.client;
 import network.data.Connection;
 import network.data.PacketHandler;
 import logic.manager.game.States;
+
+import javax.swing.plaf.nimbus.State;
 import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,12 +15,13 @@ public class Client implements Runnable {
     private PacketHandler handler;
     private AtomicBoolean running;
     private int ID;
+    private boolean gameStarted;
     private String[] rcvdata;
 
     public Client(String destAddress, int destPort) {
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
-        rcvdata = new String[7];
+        gameStarted = false;
         ID = -1; //fintanto che il server non comunica un id al listener è settato a -1
         try {
             //aggiunta connessione verso il server
@@ -51,14 +54,18 @@ public class Client implements Runnable {
     @Override
     public void run() {
         running.set(true);
-        while(running.get()) {
+        while (running.get()) {
             byte[] buffer = new byte[3000];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
-                if(ID == -1){
+                if (ID == -1) {
                     ID = Integer.parseInt(handler.process(packet)[0]);
-                }else {
+                } else if (!gameStarted) {
+                    if (States.valueOf(handler.process(packet)[0]) == States.START) {
+                        gameStarted = true;
+                    }
+                } else {
                     rcvdata = handler.process(packet);
                 }
             } catch (IOException e) {
@@ -73,15 +80,11 @@ public class Client implements Runnable {
     }
 
     public String[] getRcvdata(){
-        String[] rcvdata = this.rcvdata;
-        clearBuffer();
         return rcvdata;
     }
 
-    public void clearBuffer(){
-        for(int i=0; i<rcvdata.length;i++){
-            rcvdata[i] = "";
-        }
+    public boolean isGameStarted(){
+        return gameStarted;
     }
 
     public int getID(){

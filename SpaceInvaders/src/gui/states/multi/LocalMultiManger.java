@@ -44,7 +44,7 @@ public class LocalMultiManger {
         if (client.getID() != -1) {
             gameState = States.WAITING;
             if(client.getRcvdata() != null) {
-                if (States.valueOf(client.getRcvdata()[0]) == States.START) {
+                if (client.isGameStarted()){
                     gameState = States.START;
                     localMultiRender = new LocalMultiRender(client.getID(), shipManager);
                 }
