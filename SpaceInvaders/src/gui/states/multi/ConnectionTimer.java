@@ -41,7 +41,7 @@ public class ConnectionTimer {
         startTimer();
     }
 
-    private void stopTimer(){
+    public void stopTimer(){
         timer.cancel();
         timerStarted = false;
     }

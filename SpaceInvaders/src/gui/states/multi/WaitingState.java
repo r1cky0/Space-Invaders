@@ -71,6 +71,7 @@ public class WaitingState extends BasicState {
         }
         if(localMultiManger.getGameState().equals(States.START)){
             try {
+                connectionTimer.stopTimer();
                 stateBasedGame.addState(new MultiplayerState(localMultiManger));
                 stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer,stateBasedGame);
                 stateBasedGame.enterState(IDStates.MULTIPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());

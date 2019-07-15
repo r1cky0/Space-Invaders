@@ -50,6 +50,7 @@ public class MultiplayerState extends BasicState {
         }
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
             localMultiManger.exit();
+            stateBasedGame.enterState(IDStates.MENU_STATE,new FadeOutTransition(),new FadeInTransition());
         }
         if(localMultiManger.getGameState() == States.GAMEOVER){
             localMultiManger.exit();
