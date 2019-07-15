@@ -43,14 +43,13 @@ public class LocalMultiManger {
     public void checkConnection() {
         if (client.getID() != -1) {
             gameState = States.WAITING;
-            if(client.getRcvdata() != null) {
-                if (client.isGameStarted()){
-                    gameState = States.START;
-                    localMultiRender = new LocalMultiRender(client.getID(), shipManager);
-                }
-            }
+        }
+        if (client.isGameStarted()) {
+            gameState = States.START;
+            localMultiRender = new LocalMultiRender(client.getID(), shipManager);
         }
     }
+
 
     public void exit() {
         message = client.getID() + "\n" + Commands.EXIT.toString();

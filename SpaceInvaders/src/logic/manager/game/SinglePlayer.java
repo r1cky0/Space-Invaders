@@ -19,6 +19,10 @@ public class SinglePlayer extends Game{
     public SinglePlayer(Player player) {
         this.player = player;
         spaceShip = getSpaceShip();
+    }
+
+    public void startGame(){
+        super.startGame();
         spaceShip.init();
     }
 

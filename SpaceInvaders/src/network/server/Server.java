@@ -26,7 +26,7 @@ public class Server implements Runnable {
     private AtomicBoolean runningServer;
 
     private int port;
-    private int maxPlayers = 2;
+    private int maxPlayers = 1;
 
     Server(int port) {
         this.port = port;

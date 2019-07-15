@@ -16,7 +16,6 @@ public class SpaceShip extends Sprite {
 
     public SpaceShip(Coordinate coordinate) {
         super(coordinate, Dimensions.SHIP_WIDTH, Dimensions.SHIP_HEIGHT, Target.SHIP);
-        init();
         shipShot = false;
     }
 
@@ -24,7 +23,6 @@ public class SpaceShip extends Sprite {
         Coordinate defaultCoordinate = new Coordinate(Dimensions.MAX_WIDTH/2 - Dimensions.SHIP_WIDTH /2,
                 Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
         setCoordinate(defaultCoordinate);
-        shipBullet = null;
         shipShot = false;
         currentScore = 0;
         life = 3;

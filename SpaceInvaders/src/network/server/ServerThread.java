@@ -98,7 +98,7 @@ public class ServerThread implements Runnable{
      */
     public void sender() {
         Thread sender = new Thread(() -> {
-            String infos="";
+            String infos = "";
             running.set(true);
             while (running.get()) {
                 if(!infos.equals(messageBuilder.getInfo())) {
