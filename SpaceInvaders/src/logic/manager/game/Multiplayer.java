@@ -7,19 +7,15 @@ import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
 import main.Dimensions;
 import logic.thread.ThreadUpdate;
-import network.data.MessageBuilder;
-
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Multiplayer extends Game{
-    private MessageBuilder messageBuilder;
     private Team team;
-
+    private States gameState;
     private ThreadUpdate threadUpdate;
     private static int DELTA = 1;
 
-    public Multiplayer(MessageBuilder messageBuilder){
-        this.messageBuilder = messageBuilder;
+    public Multiplayer(){
         team = new Team();
     }
 
@@ -34,7 +30,7 @@ public class Multiplayer extends Game{
 
     public void startGame(){
         super.startGame();
-        messageBuilder.setGameStateInfo(States.START);
+        gameState = States.START;
         update(DELTA);
     }
 
@@ -50,12 +46,20 @@ public class Multiplayer extends Game{
      * Attivazione thread di aggiornamento di tutti gli elementi presenti sul campo di gioco
      */
     public void update(int delta) {
-        threadUpdate = new ThreadUpdate(this, messageBuilder, delta);
+        threadUpdate = new ThreadUpdate(this, delta);
         threadUpdate.start();
+    }
+
+    public void setGameState(States gameState){
+        this.gameState = gameState;
     }
 
     public Team getTeam(){
         return team;
+    }
+
+    public States getGameState(){
+        return gameState;
     }
 
     public ConcurrentHashMap<Integer, Player> getPlayers(){

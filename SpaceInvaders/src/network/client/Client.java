@@ -72,7 +72,15 @@ public class Client implements Runnable {
     }
 
     public String[] getRcvdata(){
+        String[] rcvdata = this.rcvdata;
+        clearBuffer();
         return rcvdata;
+    }
+
+    public void clearBuffer(){
+        for(int i=0; i<rcvdata.length;i++){
+            rcvdata[i] = "";
+        }
     }
 
     public int getID(){

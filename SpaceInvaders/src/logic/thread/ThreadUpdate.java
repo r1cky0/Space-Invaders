@@ -6,6 +6,7 @@ import logic.manager.game.Multiplayer;
 import logic.sprite.dinamic.bullets.Bullet;
 import main.Dimensions;
 import network.data.MessageBuilder;
+import org.newdawn.slick.state.GameState;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -16,19 +17,18 @@ public class ThreadUpdate implements Runnable{
     private AtomicBoolean running;
     private int delta;
 
-    public ThreadUpdate(Multiplayer multiplayer, MessageBuilder messageBuilder, int delta){
+    public ThreadUpdate(Multiplayer multiplayer, int delta){
         this.multiplayer = multiplayer;
-        this.messageBuilder = messageBuilder;
         this.delta = delta;
+        messageBuilder = new MessageBuilder(multiplayer);
         fieldManager = multiplayer.getFieldManager();
         running = new AtomicBoolean(false);
     }
 
     public void start() {
         Thread thread = new Thread(this);
-        messageBuilder.setGameStateInfo(States.START);
-        thread.start();
         createInfo();
+        thread.start();
     }
 
     /**
@@ -73,7 +73,7 @@ public class ThreadUpdate implements Runnable{
 
     private void checkGameState(){
         if(multiplayer.getPlayers().isEmpty() || fieldManager.isEndReached()){
-            messageBuilder.setGameStateInfo(States.GAMEOVER);
+            multiplayer.setGameState(States.GAMEOVER);
         }
         if(fieldManager.isNewLevel()){
             multiplayer.getTeam().incrementLife();
@@ -86,9 +86,9 @@ public class ThreadUpdate implements Runnable{
     public void createInfo(){
         Thread thread = new Thread(() -> {
             while (running.get())
-            messageBuilder.setInfo(multiplayer);
+            messageBuilder.setInfo();
             try {
-                Thread.sleep(30);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

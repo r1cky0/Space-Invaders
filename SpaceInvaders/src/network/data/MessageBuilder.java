@@ -28,9 +28,11 @@ import logic.sprite.unmovable.Bunker;
 
 public class MessageBuilder{
 
+    private Multiplayer multiplayer;
     private String[] stringBuilders;
 
-    public MessageBuilder(){
+    public MessageBuilder(Multiplayer multiplayer){
+        this.multiplayer = multiplayer;
         stringBuilders = new String[8];
         for(int i=0;i<8;i++){
             stringBuilders[i] = "";
@@ -40,28 +42,27 @@ public class MessageBuilder{
     /**
      * Primo componente del messaggio da inviare ai client é lo stato di gioco
      *
-     * @param gameState stato di gioco
      */
-    public void setGameStateInfo(States gameState){
-        stringBuilders[0] = gameState.toString() + "\n";
+    private void setGameStateInfo(){
+        stringBuilders[0] = multiplayer.getGameState().toString() + "\n";
     }
 
-    public void setInfo(Multiplayer multiplayer){
-        setInvaderInfo(multiplayer);
-        setInvaderBonusInfo(multiplayer);
-        setInvaderBulletInfo(multiplayer);
-        setBunkerInfo(multiplayer);
-        setShipInfo(multiplayer);
-        setShipBulletInfo(multiplayer);
-        setTeamCurrentScore(multiplayer);
+    public void setInfo(){
+        setGameStateInfo();
+        setInvaderInfo();
+        setInvaderBonusInfo();
+        setInvaderBulletInfo();
+        setBunkerInfo();
+        setShipInfo();
+        setShipBulletInfo();
+        setTeamCurrentScore();
     }
 
     /**
      * Otteniamo tutte le info sulla posizione degli invaders (classici e bonus)
      *
-     * @param multiplayer gestore di gioco da cui ottenere le info
      */
-    private void setInvaderInfo(Multiplayer multiplayer){
+    private void setInvaderInfo(){
         String invaderInfo = "";
         for(Invader invader : getFieldManager(multiplayer).getInvaders()) {
             invaderInfo += invader.getX() + "_" + invader.getY() + "\t";
@@ -70,7 +71,7 @@ public class MessageBuilder{
         stringBuilders[1] = invaderInfo;
     }
 
-    private void setInvaderBonusInfo(Multiplayer multiplayer){
+    private void setInvaderBonusInfo(){
         String invaderBonusInfo = "";
         if(multiplayer.getFieldManager().isBonusInvader()){
             invaderBonusInfo += multiplayer.getFieldManager().getBonusInvader().getX() + "_" +
@@ -83,9 +84,8 @@ public class MessageBuilder{
     /**
      * Otteniamo le informazioni sui bullet sparati dagli invaders
      *
-     * @param multiplayer gestore di gioco da cui ottenere le info
      */
-    private void setInvaderBulletInfo(Multiplayer multiplayer){
+    private void setInvaderBulletInfo(){
         String invaderBulletInfo = "";
         for(Bullet invaderBullet : getFieldManager(multiplayer).getInvaderBullets()){
             invaderBulletInfo += invaderBullet.getX() + "_" + invaderBullet.getY() + "\t";
@@ -97,9 +97,8 @@ public class MessageBuilder{
     /**
      * Otteniamo le informazioni sui bunker e i rispettivi brick
      *
-     * @param multiplayer gestore di gioco da cui ottenere le info
-     */
-    private void setBunkerInfo(Multiplayer multiplayer){
+     **/
+    private void setBunkerInfo(){
         String bunkerInfo = "";
         for(Bunker bunker : getFieldManager(multiplayer).getBunkers()) {
             for (Brick brick : bunker.getBricks()) {
@@ -114,40 +113,39 @@ public class MessageBuilder{
      * Otteniamo informazioni riguardo la posizione delle space ship, la loro vita e, eventualmente, il bullet
      * sparato
      *
-     * @param multiplayer gestore di gioco da cui ottenere le info
      */
-    private void setShipInfo(Multiplayer multiplayer){
+    private void setShipInfo(){
         String shipInfo = "";
         for(Integer ID : multiplayer.getPlayers().keySet()){
-            shipInfo += ID + "_" + getSpaceShip(multiplayer, ID).getX() + "_" + getSpaceShip(multiplayer, ID).getY() +
-                    "_" + getSpaceShip(multiplayer, ID).getLife() + "\t";
+            shipInfo += ID + "_" + getSpaceShip(ID).getX() + "_" + getSpaceShip(ID).getY() +
+                    "_" + getSpaceShip(ID).getLife() + "\t";
         }
         shipInfo += "\n";
         stringBuilders[5] = shipInfo;
     }
 
-    private void setShipBulletInfo(Multiplayer multiplayer){
+    private void setShipBulletInfo(){
         String shipBulletInfo = "";
         for(Integer ID : multiplayer.getPlayers().keySet()) {
-            if (getSpaceShip(multiplayer, ID).isShipShot()) {
-                shipBulletInfo += getSpaceShipBullet(multiplayer, ID).getX() + "_" +
-                        getSpaceShipBullet(multiplayer, ID).getY() + "\t";
+            if (getSpaceShip(ID).isShipShot()) {
+                shipBulletInfo += getSpaceShipBullet(ID).getX() + "_" +
+                        getSpaceShipBullet(ID).getY() + "\t";
             }
         }
         shipBulletInfo += "\n";
         stringBuilders[6] = shipBulletInfo;
     }
 
-    private void setTeamCurrentScore(Multiplayer multiplayer){
+    private void setTeamCurrentScore(){
         stringBuilders[7] = Integer.toString(multiplayer.getTeam().getTeamCurrentScore());
     }
 
-    private SpaceShip getSpaceShip(Multiplayer multiplayer, int ID){
+    private SpaceShip getSpaceShip(int ID){
         return multiplayer.getPlayers().get(ID).getSpaceShip();
     }
 
-    private Bullet getSpaceShipBullet(Multiplayer multiplayer, int ID){
-        return getSpaceShip(multiplayer, ID).getShipBullet();
+    private Bullet getSpaceShipBullet(int ID){
+        return getSpaceShip(ID).getShipBullet();
     }
 
     /**
@@ -159,7 +157,6 @@ public class MessageBuilder{
         for(int i=0;i<8;i++){
             infos += stringBuilders[i];
         }
-        System.out.println(stringBuilders[0]);
         return infos;
     }
 

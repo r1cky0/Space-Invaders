@@ -26,15 +26,15 @@ public class Server implements Runnable {
     private AtomicBoolean runningServer;
 
     private int port;
-    private int maxPlayers = 1;
+    private int maxPlayers = 2;
 
     Server(int port) {
         this.port = port;
         clients = new ConcurrentHashMap<>();
-        messageBuilder = new MessageBuilder();
+        multiplayer = new Multiplayer();
+        messageBuilder = new MessageBuilder(multiplayer);
         runningServer = new AtomicBoolean(false);
         handler = new PacketHandler();
-        multiplayer = new Multiplayer(messageBuilder);
         try {
             init();
         } catch (SocketException e) {

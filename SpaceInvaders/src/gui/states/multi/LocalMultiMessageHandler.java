@@ -24,7 +24,9 @@ public class LocalMultiMessageHandler {
     public ArrayList<Invader> invaderCreator(String data) {
         ArrayList<Invader> invaders = new ArrayList<>();
         for (String strings : data.split("\\t")) {
-            invaders.add(new Invader(converter(strings)));
+            if(!strings.equals("")) {
+                invaders.add(new Invader(converter(strings)));
+            }
         }
         return invaders;
     }
