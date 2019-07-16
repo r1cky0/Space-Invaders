@@ -12,4 +12,5 @@ public class IDStates {
     public static final int RANKING_STATE = 7;
     public static final int CUSTOMIZATION_STATE = 8;
     public static final int GAMEOVERMULTI_STATE = 9;
+    public static final int COUNTDOWN_STATE = 10;
 }
