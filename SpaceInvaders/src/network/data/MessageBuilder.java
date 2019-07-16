@@ -117,8 +117,8 @@ public class MessageBuilder{
     private void setShipInfo(){
         String shipInfo = "";
         for(Integer ID : multiplayer.getPlayers().keySet()){
-            shipInfo += ID + "_" + getSpaceShip(ID).getX() + "_" + getSpaceShip(ID).getY() +
-                    "_" + getSpaceShip(ID).getLife() + "\t";
+            shipInfo += getSpaceShip(ID).getX() + "_" + getSpaceShip(ID).getY() +
+                    "_" + getSpaceShip(ID).getLife() + "_" + ID + "\t";
         }
         shipInfo += "\n";
         stringBuilders[5] = shipInfo;

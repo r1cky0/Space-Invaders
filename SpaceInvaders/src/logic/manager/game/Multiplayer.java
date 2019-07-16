@@ -5,7 +5,6 @@ import logic.player.Team;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
-import main.Dimensions;
 import logic.thread.ThreadUpdate;
 import network.data.MessageBuilder;
 

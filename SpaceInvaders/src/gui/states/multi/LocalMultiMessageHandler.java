@@ -64,9 +64,9 @@ public class LocalMultiMessageHandler {
         ArrayList<SpaceShip> spaceShips = new ArrayList<>();
         for (String strings : data.split("\\t")) {
             if (!strings.equals("")) {
-                if (ID == Integer.parseInt(strings.split("_")[0])) {
+                if (ID == Integer.parseInt(strings.split("_")[3])) {
                     spaceShips.add(shipManager.getSpaceShip());
-                    shipManager.getSpaceShip().setLife(Integer.parseInt(strings.split("_")[3]));
+                    shipManager.getSpaceShip().setLife(Integer.parseInt(strings.split("_")[2]));
                 } else {
                     spaceShips.add(new SpaceShip(converter(strings)));
                 }
