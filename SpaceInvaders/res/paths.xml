@@ -1,61 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SpaceInvaders>
-    <images>
-        <ship>
-            <ship0>res/images/SpaceShip0.png</ship0>
-            <ship1>res/images/SpaceShip1.png</ship1>
-            <ship2>res/images/SpaceShip2.png</ship2>
-            <ship3>res/images/SpaceShip3.png</ship3>
-            <ship4>res/images/SpaceShip4.png</ship4>
-        </ship>
+    <ship>
+        <ship0>res/images/SpaceShip0.png</ship0>
+        <ship1>res/images/SpaceShip1.png</ship1>
+        <ship2>res/images/SpaceShip2.png</ship2>
+        <ship3>res/images/SpaceShip3.png</ship3>
+        <ship4>res/images/SpaceShip4.png</ship4>
+    </ship>
 
-        <bullet>
-            <defaultBullet>res/images/Shot.png</defaultBullet>
-        </bullet>
+    <bullet>
+        <defaultBullet>res/images/Shot.png</defaultBullet>
+    </bullet>
 
-        <invader>
-            <defaultInvader0>res/images/Invader0.png</defaultInvader0>
-            <defaultInvader1>res/images/Invader1.png</defaultInvader1>
-            <bonusInvader>res/images/InvaderBonus.png</bonusInvader>
-        </invader>
+    <invader>
+        <defaultInvader>res/images/Invader0.png</defaultInvader>
+        <defaultInvaderb>res/images/Invader0b.png</defaultInvaderb>
+        <bonusInvader>res/images/InvaderBonus.png</bonusInvader>
+    </invader>
 
-        <brick>
-            <brick0>res/images/Brick0.png</brick0>
-            <brick1>res/images/Brick1.png</brick1>
-            <brick2>res/images/Brick2.png</brick2>
-            <brick3>res/images/Brick3.png</brick3>
-        </brick>
+    <brick>
+        <brick0>res/images/Brick0.png</brick0>
+        <brick1>res/images/Brick1.png</brick1>
+        <brick2>res/images/Brick2.png</brick2>
+        <brick3>res/images/Brick3.png</brick3>
+    </brick>
 
-        <background>
-            <defaultBackground>res/images/BackgroundSpace.png</defaultBackground>
-            <gameoverBackground>res/images/BackgroundGameOver.png</gameoverBackground>
-        </background>
+    <background>
+        <defaultBackground>res/images/BackgroundSpace.png</defaultBackground>
+        <gameoverBackground>res/images/BackgroundGameOver.png</gameoverBackground>
+    </background>
 
-        <button>
-            <buttonAccount>res/images/ButtonAccount.png</buttonAccount>
-            <buttonExit>res/images/ButtonExit.png</buttonExit>
-            <buttonLogin>res/images/ButtonLogin.png</buttonLogin>
-            <buttonMenu>res/images/ButtonMenu.png</buttonMenu>
-            <buttonMultiplayer>res/images/ButtonMultiplayer.png</buttonMultiplayer>
-            <buttonNewGame>res/images/ButtonNewGame.png</buttonNewGame>
-            <buttonSinglePlayer>res/images/ButtonSinglePlayer.png</buttonSinglePlayer>
-            <buttonHome>res/images/Home.png</buttonHome>
-            <buttonSettings>res/images/Settings.png</buttonSettings>
-            <buttonRanking>res/images/Cup.png</buttonRanking>
-        </button>
+    <button>
+        <buttonAccount>res/images/ButtonAccount.png</buttonAccount>
+        <buttonExit>res/images/ButtonExit.png</buttonExit>
+        <buttonLogin>res/images/ButtonLogin.png</buttonLogin>
+        <buttonMenu>res/images/ButtonMenu.png</buttonMenu>
+        <buttonMultiplayer>res/images/ButtonMultiplayer.png</buttonMultiplayer>
+        <buttonNewGame>res/images/ButtonNewGame.png</buttonNewGame>
+        <buttonSinglePlayer>res/images/ButtonSinglePlayer.png</buttonSinglePlayer>
+        <buttonHome>res/images/Home.png</buttonHome>
+        <buttonSettings>res/images/Settings.png</buttonSettings>
+        <buttonRanking>res/images/Cup.png</buttonRanking>        
+    </button>
 
-        <medal>
-            <medalGold>res/images/MedalGold.png</medalGold>
-            <medalSilver>res/images/MedalSilver.png</medalSilver>
-            <medalBronze>res/images/MedalBronze.png</medalBronze>
-        </medal>
-
-        <countdown>
-            <number1>res/images/1.png</number1>
-            <number2>res/images/2.png</number2>
-            <number3>res/images/3.png</number3>
-        </countdown>
-    </images>
+    <medal>
+        <medalGold>res/images/MedalGold.png</medalGold>
+        <medalSilver>res/images/MedalSilver.png</medalSilver>
+        <medalBronze>res/images/MedalBronze.png</medalBronze>
+    </medal>
 
     <music>
         <menuMusic>res/sounds/menu.ogg</menuMusic>
@@ -66,6 +58,6 @@
     </music>
 
     <font>
-        <font>res/font/invaders_font.ttf</font>
+        <titleFont>res/font/invaders_font.ttf</titleFont>
     </font>
 </SpaceInvaders>
