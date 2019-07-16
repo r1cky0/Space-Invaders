@@ -2,8 +2,7 @@ package gui.states.multi;
 
 import gui.states.BasicState;
 import gui.states.IDStates;
-import main.Dimensions;
-import logic.manager.game.Commands;
+import logic.manager.game.multi.LocalMultiManger;
 import logic.manager.game.States;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -11,11 +10,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class MultiplayerState extends BasicState {
-    private UnicodeFont uniFontData;
     private LocalMultiManger localMultiManger;
-
-    //IMAGES
-    private Image background;
 
     public MultiplayerState(LocalMultiManger localMultiManger) {
         this.localMultiManger = localMultiManger;
@@ -23,17 +18,19 @@ public class MultiplayerState extends BasicState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        background = new Image(readerXmlFile.read("defaultBackground"));
-        uniFontData = build(3 * gameContainer.getWidth() / 100f);
+        super.init(gameContainer, stateBasedGame);
+    }
+
+    @Override
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
+        gameContainer.getInput().clearKeyPressedRecord();
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        graphics.drawImage(background, 0, 0);
-        uniFontData.drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
-                "Lives: " + localMultiManger.getLife(), Color.red);
-        uniFontData.drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,
-                "Score: " + localMultiManger.getScore(), Color.white);
+        super.render(gameContainer, stateBasedGame, graphics);
+        getDataFont().drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,"Lives: " + localMultiManger.getLife(), Color.red);
+        getDataFont().drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,"Score: " + localMultiManger.getScore(), Color.white);
         localMultiManger.render();
     }
 

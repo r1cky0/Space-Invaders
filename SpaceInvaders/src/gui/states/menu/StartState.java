@@ -2,41 +2,29 @@ package gui.states.menu;
 
 import gui.states.BasicState;
 import gui.states.IDStates;
+import gui.states.buttons.Button;
 import logic.manager.menu.Menu;
+import logic.sprite.Coordinate;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
-import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-
 import java.awt.Font;
 
 public class StartState extends BasicState implements ComponentListener {
-    private StateBasedGame stateBasedGame;
-    private GameContainer gameContainer;
     private Menu menu;
 
     private TextField nameField;
     private TextField passwordField;
-
-    private String title;
-    private String nameString;
-    private String passwordString;
+    private Button loginButton;
+    private Button accountButton;
     private String errorMessage;
-
-    private UnicodeFont uniFontTitle;
-    private UnicodeFont uniFontMessage;
-
-    private Image background;
-
-    private MouseOverArea loginButton;
-    private MouseOverArea accountButton;
 
     public StartState(Menu menu){
         this.menu = menu;
@@ -44,45 +32,12 @@ public class StartState extends BasicState implements ComponentListener {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.stateBasedGame = stateBasedGame;
-        this.gameContainer = gameContainer;
-
-        background = new Image(readerXmlFile.read("defaultBackground"));
-        uniFontTitle = build(5*gameContainer.getWidth()/100f);
-        uniFontMessage = build(3*gameContainer.getWidth()/100f);
-
-        title = "LOGIN AND ADD ACCOUNT";
-        nameString = "NICKNAME:";
-        passwordString = "PASSWORD:";
-
-        Font font = new Font("Verdana", Font.BOLD, 3*gameContainer.getWidth()/100);
-        TrueTypeFont ttf = new TrueTypeFont(font, true);
-
-        nameField = new TextField(gameContainer, ttf,43*gameContainer.getWidth()/100,24*gameContainer.getHeight()/100,
-                gameContainer.getWidth()/3, gameContainer.getHeight()/18);
-
-        passwordField = new TextField(gameContainer, ttf,43*gameContainer.getWidth()/100,32*gameContainer.getHeight()/100,
-                gameContainer.getWidth()/3,gameContainer.getHeight()/18);
-
-        nameField.setBackgroundColor(Color.white);
-        nameField.setTextColor(Color.black);
-        passwordField.setBackgroundColor(Color.white);
-        passwordField.setTextColor(Color.black);
-
-        Image login = new Image(readerXmlFile.read("buttonLogin")).getScaledCopy(25 * gameContainer.getWidth() / 100,
-                10 * gameContainer.getHeight() / 100);
-        Image account = new Image(readerXmlFile.read("buttonAccount")).getScaledCopy(25 * gameContainer.getWidth() / 100,
-                10 * gameContainer.getHeight() / 100);
-
-        loginButton = new MouseOverArea(gameContainer, login,(gameContainer.getWidth() - login.getWidth())/2,
-                55*gameContainer.getHeight()/100,25*gameContainer.getWidth()/100,
-                10*gameContainer.getHeight()/100,this);
-        accountButton = new MouseOverArea(gameContainer, account, (gameContainer.getWidth() - account.getWidth())/2,
-                70*gameContainer.getHeight()/100,25*gameContainer.getWidth()/100,
-                10*gameContainer.getHeight()/100,this);
-        
+        super.init(gameContainer,stateBasedGame);
+        createTextField();
+        createButton();
     }
 
+    @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) {
         errorMessage = "";
         nameField.setText("");
@@ -92,23 +47,20 @@ public class StartState extends BasicState implements ComponentListener {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        graphics.drawImage(background, 0, 0);
+        super.render(gameContainer, stateBasedGame, graphics);
+        String title = "LOGIN";
+        String nameString = "NICKNAME:";
+        String passwordString = "PASSWORD:";
 
         nameField.render(gameContainer, graphics);
         passwordField.render(gameContainer, graphics);
+        loginButton.render(graphics);
+        accountButton.render(graphics);
 
-        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title)) / 2f,
-                7 * gameContainer.getHeight() / 100f, title);
-        uniFontMessage.drawString(23 * gameContainer.getWidth() / 100f, 25 * gameContainer.getHeight() / 100f, nameString);
-        uniFontMessage.drawString(23 * gameContainer.getWidth() / 100f, 33 * gameContainer.getHeight() / 100f, passwordString);
-
-
-        uniFontMessage.drawString((gameContainer.getWidth() - uniFontMessage.getWidth(errorMessage)) / 2f,
-                45 * gameContainer.getHeight() / 100f, errorMessage, Color.red);
-
-
-        loginButton.render(gameContainer, graphics);
-        accountButton.render(gameContainer, graphics);
+        getTitleFont().drawString((gameContainer.getWidth() - getTitleFont().getWidth(title))/2f,7*gameContainer.getHeight()/100f, title);
+        getDataFont().drawString(23*gameContainer.getWidth()/100f,25*gameContainer.getHeight()/100f, nameString);
+        getDataFont().drawString(23*gameContainer.getWidth()/100f,33*gameContainer.getHeight()/100f, passwordString);
+        getDataFont().drawString((gameContainer.getWidth() - getDataFont().getWidth(errorMessage))/2f,45*gameContainer.getHeight()/100f, errorMessage, Color.red);
     }
 
     @Override
@@ -123,37 +75,61 @@ public class StartState extends BasicState implements ComponentListener {
             }
         }
         if(input.isKeyPressed(Input.KEY_ENTER)){
-            componentActivated(loginButton);
+            componentActivated(loginButton.getMouseOverArea());
         }
     }
 
     /**
-     * Funzione che setta i gestori degli eventi di click sui bottoni
-     * @param source Il tasto di cui dobbiamo settare il comportamento
+     * Funzione che si attiva quando si clicca su un bottone
+     * Esegue login o add account.
+     * @param source bottone premuto
      */
     public void componentActivated(AbstractComponent source) {
         String nickname = nameField.getText();
         String password = passwordField.getText();
 
-        if (source == loginButton) {
-            if (menu.logIn(nickname, password)) {
-                stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
-            } else {
-                errorMessage = "Nickname o password errati";
-            }
-        }
-        if ((source == accountButton) && !(nickname.isEmpty() || password.isEmpty())) {
-            try {
-                Integer.parseInt(nickname);
-                errorMessage = "Nickname non valido";
-            } catch (NumberFormatException e) {
-                if (menu.newAccount(nickname, password)) {
-                    stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
-                } else {
+        if (!(nickname.isEmpty() || password.isEmpty())) {
+            if (source == loginButton.getMouseOverArea()) {
+                if (!menu.logIn(nickname, password)) {
+                    errorMessage = "Nickname o password errati";
+                    return;
+                }
+            } else if (source == accountButton.getMouseOverArea()) {
+                if (!menu.newAccount(nickname, password)) {
                     errorMessage = "Account già esistente";
+                    return;
                 }
             }
+            getStateBasedGame().enterState(accountButton.getIdState(), new FadeOutTransition(), new FadeInTransition());
+        } else {
+            errorMessage = "Inserire dati";
         }
+    }
+
+    private void createTextField(){
+        Font font = new Font("Verdana", Font.BOLD,3*getGameContainer().getWidth()/100);
+        TrueTypeFont ttf = new TrueTypeFont(font,true);
+        int fieldWidth = getGameContainer().getWidth()/3;
+        int fieldHeight = getGameContainer().getHeight()/18;
+        nameField = new TextField(getGameContainer(), ttf,43*getGameContainer().getWidth()/100,24*getGameContainer().getHeight()/100, fieldWidth, fieldHeight);
+        nameField.setBackgroundColor(Color.white);
+        nameField.setTextColor(Color.black);
+        passwordField= new TextField(getGameContainer(), ttf,43*getGameContainer().getWidth()/100,32*getGameContainer().getHeight()/100, fieldWidth, fieldHeight);
+        passwordField.setBackgroundColor(Color.white);
+        passwordField.setTextColor(Color.black);
+    }
+
+    private void createButton() throws SlickException {
+        int width = 25*getGameContainer().getWidth()/100;
+        int height = 10*getGameContainer().getHeight()/100;
+
+        Image login = new Image(getReaderXmlFile().read("buttonLogin")).getScaledCopy(width, height);
+        Coordinate posLogin = new Coordinate((getGameContainer().getWidth() - login.getWidth())/2,55*getGameContainer().getHeight()/100);
+        loginButton = new Button(getGameContainer(), login, posLogin, IDStates.MENU_STATE, this);
+
+        Image account = new Image(getReaderXmlFile().read("buttonAccount")).getScaledCopy(width, height);
+        Coordinate posAccount = new Coordinate((getGameContainer().getWidth() - account.getWidth())/2,70*getGameContainer().getHeight()/100);
+        accountButton = new Button(getGameContainer(), account, posAccount, IDStates.MENU_STATE, this);
     }
 
     @Override

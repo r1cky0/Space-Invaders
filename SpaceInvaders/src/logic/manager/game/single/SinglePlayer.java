@@ -1,6 +1,9 @@
-package logic.manager.game;
+package logic.manager.game.single;
 
 import logic.manager.field.MovingDirections;
+import logic.manager.game.Commands;
+import logic.manager.game.Game;
+import logic.manager.game.States;
 import logic.player.Player;
 import logic.sprite.dinamic.invaders.BonusInvader;
 import logic.sprite.dinamic.invaders.Invader;
@@ -12,7 +15,7 @@ import main.Dimensions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SinglePlayer extends Game{
+public class SinglePlayer extends Game {
     private Player player;
     private SpaceShip spaceShip;
 
@@ -29,13 +32,13 @@ public class SinglePlayer extends Game{
     public void execCommand(Commands commands, int delta){
         switch (commands){
             case MOVE_LEFT:
-                fieldManager.shipMovement(spaceShip, MovingDirections.LEFT, delta);
+                getFieldManager().shipMovement(spaceShip, MovingDirections.LEFT, delta);
                 break;
             case MOVE_RIGHT:
-                fieldManager.shipMovement(spaceShip,MovingDirections.RIGHT, delta);
+                getFieldManager().shipMovement(spaceShip,MovingDirections.RIGHT, delta);
                 break;
             case SHOT:
-                fieldManager.shipShot(spaceShip);
+                getFieldManager().shipShot(spaceShip);
                 break;
             case EXIT:
                 super.stopThreadInvader();
@@ -44,40 +47,40 @@ public class SinglePlayer extends Game{
     }
 
     public void update(int delta) {
-        for (Bullet bullet : fieldManager.getInvaderBullets()) {
+        for (Bullet bullet : getFieldManager().getInvaderBullets()) {
             bullet.move(delta);
         }
         if (spaceShip.isShipShot()) {
             spaceShip.getShipBullet().move(delta);
-            fieldManager.checkSpaceShipShotCollision(getSpaceShip());
+            getFieldManager().checkSpaceShipShotCollision(getSpaceShip());
         }
         if(isBonusInvader()) {
-            if (fieldManager.getBonusInvader().getX() + Dimensions.BONUSINVADER_WIDTH < Dimensions.MIN_WIDTH) {
-                fieldManager.setBonusInvader(false);
+            if (getFieldManager().getBonusInvader().getX() + Dimensions.BONUSINVADER_WIDTH < Dimensions.MIN_WIDTH) {
+                getFieldManager().setBonusInvader(false);
             } else {
-                fieldManager.getBonusInvader().moveLeft(delta);
+                getFieldManager().getBonusInvader().moveLeft(delta);
             }
         }
-        if(fieldManager.checkInvaderShotCollision(spaceShip)){
+        if(getFieldManager().checkInvaderShotCollision(spaceShip)){
             if(spaceShip.getLife() == 0){
-                gameState = States.GAMEOVER;
+                setGameState(States.GAMEOVER);
             }
         }
-        if(fieldManager.isNewLevel()){
+        if(getFieldManager().isNewLevel()){
             super.stopThreadInvader();
             super.startThreadInvader();
-            fieldManager.setNewLevel(false);
+            getFieldManager().setNewLevel(false);
         }
         checkGameState();
     }
 
     private void checkGameState(){
-        if (gameState == States.GAMEOVER || fieldManager.isEndReached()) {
+        if (getGameState() == States.GAMEOVER || getFieldManager().isEndReached()) {
             super.stopThreadInvader();
             if (player.checkHighscore()) {
-                gameState = States.NEWHIGHSCORE;
+                setGameState(States.NEWHIGHSCORE);
             }else {
-                gameState = States.GAMEOVER;
+                setGameState(States.GAMEOVER);
             }
         }
     }
@@ -95,23 +98,23 @@ public class SinglePlayer extends Game{
     }
 
     public List<Bullet> getInvadersBullet(){
-        return fieldManager.getInvaderBullets();
+        return getFieldManager().getInvaderBullets();
     }
 
     public ArrayList<Bunker> getBunkers(){
-        return fieldManager.getBunkers();
+        return getFieldManager().getBunkers();
     }
 
     public List<Invader> getInvaders(){
-        return fieldManager.getInvaders();
+        return getFieldManager().getInvaders();
     }
 
     public BonusInvader getBonusInvader(){
-        return fieldManager.getBonusInvader();
+        return getFieldManager().getBonusInvader();
     }
 
     public boolean isBonusInvader(){
-        return fieldManager.isBonusInvader();
+        return getFieldManager().isBonusInvader();
     }
 
 }

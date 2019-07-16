@@ -1,6 +1,7 @@
-package gui.states.multi;
+package gui.states.Timer;
 
 import gui.states.IDStates;
+import logic.manager.game.multi.LocalMultiManger;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -8,12 +9,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ConnectionTimer {
-
     private StateBasedGame stateBasedGame;
     private LocalMultiManger localMultiManger;
     private Timer timer;
     private TimerTask timerTask;
-    private final int delayTime = 10000; //millis oltre il quale esco da waiting state multiplayer
+    private final int delayTime = 30000; //millis oltre il quale esco da waiting state multiplayer
     private boolean timerStarted;
 
     public ConnectionTimer(StateBasedGame stateBasedGame, LocalMultiManger localMultiManger){

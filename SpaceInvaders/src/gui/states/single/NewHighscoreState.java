@@ -2,7 +2,9 @@ package gui.states.single;
 
 import gui.states.BasicState;
 import gui.states.IDStates;
+import gui.states.buttons.Button;
 import logic.manager.menu.Menu;
+import logic.sprite.Coordinate;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,75 +17,45 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class NewHighscoreState extends BasicState implements ComponentListener {
 
-    private StateBasedGame stateBasedGame;
-
-    private Image cupImage;
-    private Image background;
-
-    private MouseOverArea newGameButton;
-    private MouseOverArea homeButton;
-
-    private UnicodeFont uniFontTitle;
-    private String title;
-
     private Menu menu;
+    private Image cupImage;
+    private Button newGameButton;
 
     public NewHighscoreState(Menu menu) {
         this.menu = menu;
     }
 
+    @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.stateBasedGame = stateBasedGame;
-
-        background = new Image(readerXmlFile.read("defaultBackground"));
-        title = "NEW HIGHSCORE:";
-
-        Image newGame = new Image(readerXmlFile.read("buttonNewGame")).getScaledCopy(30 * gameContainer.getWidth() / 100,
-                10 * gameContainer.getHeight() / 100);
-        newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
-                80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
-                this);
-
-        Image homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6 * gameContainer.getWidth() / 100,
-                6 * gameContainer.getWidth() / 100);
-        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
-                7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
-                this);
-
-        cupImage = new Image(readerXmlFile.read("buttonRanking")).getScaledCopy(40*gameContainer.getWidth()/100,
-                40*gameContainer.getHeight()/100);
-
-        uniFontTitle = build(8*gameContainer.getWidth()/100f);
+        super.init(gameContainer, stateBasedGame);
+        Image newGame = new Image(getReaderXmlFile().read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100);
+        Coordinate posNewGame = new Coordinate((gameContainer.getWidth() - newGame.getWidth())/2,80*gameContainer.getHeight()/100);
+        newGameButton = new Button(gameContainer, newGame, posNewGame, IDStates.SINGLEPLAYER_STATE, this);
+        cupImage = new Image(getReaderXmlFile().read("buttonRanking")).getScaledCopy(40*gameContainer.getWidth()/100,40*gameContainer.getHeight()/100);
     }
 
+    @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        graphics.drawImage(background,0,0);
-
+        super.render(gameContainer, stateBasedGame, graphics);
+        String title = "NEW HIGHSCORE!";
         String highscore = Integer.toString(menu.getPlayer().getHighScore());
-        cupImage.draw((gameContainer.getWidth() - cupImage.getWidth())/2f,
-                (gameContainer.getHeight() - cupImage.getHeight())/2f);
+        getTitleFont().drawString((gameContainer.getWidth() - getTitleFont().getWidth(title))/2f,7*gameContainer.getHeight()/100f, title);
+        getTitleFont().drawString((gameContainer.getWidth() - getTitleFont().getWidth(highscore))/2f,20*gameContainer.getHeight()/100f, highscore);
+        cupImage.draw((gameContainer.getWidth() - cupImage.getWidth())/2f,(gameContainer.getHeight() - cupImage.getHeight())/2f);
 
-        newGameButton.render(gameContainer, graphics);
-        homeButton.render(gameContainer,graphics);
-
-        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
-                7*gameContainer.getHeight()/100f, title);
-        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(highscore))/2f,
-                20*gameContainer.getHeight()/100f, highscore);
+        newGameButton.render(graphics);
+        getHomeButton().render(graphics);
     }
 
+    @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
     }
 
     @Override
     public void componentActivated(AbstractComponent source) {
-        if (source == newGameButton) {
-            stateBasedGame.enterState(IDStates.SINGLEPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
-            audioplayer.game();
-        }
-        if (source == homeButton) {
-            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
-            audioplayer.menu();
+        super.componentActivated(source);
+        if (source == newGameButton.getMouseOverArea()) {
+            getStateBasedGame().enterState(newGameButton.getIdState(), new FadeOutTransition(), new FadeInTransition());
         }
     }
 

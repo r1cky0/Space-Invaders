@@ -1,5 +1,7 @@
-package logic.manager.game;
+package network.server;
 
+import logic.manager.game.Game;
+import logic.manager.game.States;
 import logic.player.Player;
 import logic.player.Team;
 import logic.sprite.Coordinate;
@@ -10,7 +12,7 @@ import network.data.MessageBuilder;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Multiplayer extends Game{
+public class Multiplayer extends Game {
     private Team team;
     private States gameState;
     private ThreadUpdate threadUpdate;

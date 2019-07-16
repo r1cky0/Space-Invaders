@@ -3,11 +3,10 @@ package gui.states.single;
 import gui.drawer.SpriteDrawer;
 import gui.states.BasicState;
 import gui.states.IDStates;
-import logic.manager.game.SinglePlayer;
+import logic.manager.game.single.SinglePlayer;
 import logic.manager.game.Commands;
 import logic.manager.game.States;
 import logic.manager.menu.Menu;
-import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.unmovable.Brick;
@@ -21,16 +20,10 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class SinglePlayerState extends BasicState {
-    private StateBasedGame stateBasedGame;
-    private GameContainer gameContainer;
     private SpriteDrawer spriteDrawer;
     private Menu menu;
     private SinglePlayer singlePlayer;
-    private UnicodeFont uniFontData;
     private int life;
-
-    //IMAGES
-    private Image background;
 
     public SinglePlayerState(Menu menu) {
         this.menu = menu;
@@ -39,23 +32,20 @@ public class SinglePlayerState extends BasicState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.stateBasedGame = stateBasedGame;
-        this.gameContainer = gameContainer;
-        background = new Image(readerXmlFile.read("defaultBackground"));
-        uniFontData = build(3*gameContainer.getWidth()/100f);
+        super.init(gameContainer, stateBasedGame);
     }
 
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         singlePlayer = menu.getSinglePlayer();
         singlePlayer.startGame();
-        life = 3;
         spriteDrawer.addShipImage(menu.getCustomization().getCurrentShip());
+        life = 3;
     }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
-        graphics.drawImage(background, 0, 0);
+        super.render(gameContainer, stateBasedGame, graphics);
         Color color;
         int highscore;
         if (singlePlayer.getPlayer().getHighScore() >= singlePlayer.getSpaceShip().getCurrentScore()) {
@@ -65,17 +55,52 @@ public class SinglePlayerState extends BasicState {
             color = Color.green;
             highscore = singlePlayer.getSpaceShip().getCurrentScore();
         }
+        String textScore = "Score: " + singlePlayer.getSpaceShip().getCurrentScore();
+        String textLives = "Lives: " + life;
+        String textHighscore = "Highscore: " + highscore;
+        getDataFont().drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f, textLives, Color.red);
+        getDataFont().drawString((gameContainer.getWidth() - getDataFont().getWidth(textScore))/2f,2*gameContainer.getHeight()/100f, textScore, color);
+        getDataFont().drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f, textHighscore, Color.green);
 
-        uniFontData.drawString(85 * gameContainer.getWidth() / 100f, 2 * gameContainer.getHeight() / 100f,
-                "Lives: " + life, Color.red);
-        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth("Score: ")) / 2f,
-                2 * gameContainer.getHeight() / 100f, "Score: " + singlePlayer.getSpaceShip().getCurrentScore(),
-                color);
-        uniFontData.drawString(2 * gameContainer.getWidth() / 100f, 2 * gameContainer.getHeight() / 100f,
-                "Highscore: " + highscore, Color.green);
+        spriteRender();
+    }
 
+    @Override
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+        Input input = gameContainer.getInput();
+
+        if(input.isKeyDown(Input.KEY_RIGHT)){
+            singlePlayer.execCommand(Commands.MOVE_RIGHT, delta);
+        }
+        if(input.isKeyDown(Input.KEY_LEFT)){
+            singlePlayer.execCommand(Commands.MOVE_LEFT, delta);
+        }
+        if(input.isKeyPressed(Input.KEY_SPACE)){
+            if(!singlePlayer.getSpaceShip().isShipShot()){
+                getAudioplayer().shot();
+            }
+            singlePlayer.execCommand(Commands.SHOT, delta);
+        }
+        if (input.isKeyDown(Input.KEY_ESCAPE)){
+            singlePlayer.execCommand(Commands.EXIT, delta);
+            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
+        }
+        singlePlayer.update(delta);
+        if(life > singlePlayer.getSpaceShip().getLife()){
+            getAudioplayer().explosion();
+        }
+        life = singlePlayer.getSpaceShip().getLife();
+
+        //STATO GIOCO
+        if (singlePlayer.getGameState() == States.GAMEOVER) {
+            stateBasedGame.enterState(IDStates.GAMEOVERSINGLE_STATE, new FadeOutTransition(), new FadeInTransition());
+        }else if(singlePlayer.getGameState() == States.NEWHIGHSCORE) {
+            stateBasedGame.enterState(IDStates.NEWHIGHSCORE_STATE, new FadeOutTransition(), new FadeInTransition());
+        }
+    }
+
+    private void spriteRender(){
         spriteDrawer.render(singlePlayer.getSpaceShip());
-
         if (singlePlayer.isBonusInvader()) {
             spriteDrawer.render(singlePlayer.getBonusInvader());
         }
@@ -93,40 +118,7 @@ public class SinglePlayerState extends BasicState {
                 spriteDrawer.render(brick);
             }
         }
-    }
-
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-        Input input = gameContainer.getInput();
-
-        if(input.isKeyDown(Input.KEY_RIGHT)){
-            singlePlayer.execCommand(Commands.MOVE_RIGHT, delta);
-        }
-        if(input.isKeyDown(Input.KEY_LEFT)){
-            singlePlayer.execCommand(Commands.MOVE_LEFT, delta);
-        }
-        if(input.isKeyPressed(Input.KEY_SPACE)){
-            if(!singlePlayer.getSpaceShip().isShipShot()){
-                audioplayer.shot();
-            }
-            singlePlayer.execCommand(Commands.SHOT, delta);
-        }
-        if (input.isKeyDown(Input.KEY_ESCAPE)){
-            singlePlayer.execCommand(Commands.EXIT, delta);
-            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
-            audioplayer.menu();
-        }
-        singlePlayer.update(delta);
-        if(life > singlePlayer.getSpaceShip().getLife()){
-            audioplayer.explosion();
-        }
         life = singlePlayer.getSpaceShip().getLife();
-
-        //STATO GIOCO
-        if (singlePlayer.getGameState() == States.GAMEOVER) {
-            stateBasedGame.enterState(IDStates.GAMEOVERSINGLE_STATE, new FadeOutTransition(), new FadeInTransition());
-        }else if(singlePlayer.getGameState() == States.NEWHIGHSCORE) {
-            stateBasedGame.enterState(IDStates.NEWHIGHSCORE_STATE, new FadeOutTransition(), new FadeInTransition());
-        }
     }
 
      @Override

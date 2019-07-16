@@ -1,7 +1,6 @@
 package gui.states;
 
 public class IDStates {
-
     public static final int START_STATE = 0;
     public static final int MENU_STATE = 1;
     public static final int SINGLEPLAYER_STATE = 2;

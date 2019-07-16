@@ -1,7 +1,6 @@
 package network.server;
 
 import logic.manager.game.Commands;
-import logic.manager.game.Multiplayer;
 import logic.player.Player;
 import network.data.Connection;
 import network.data.MessageBuilder;

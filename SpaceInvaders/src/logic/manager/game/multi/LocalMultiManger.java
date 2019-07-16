@@ -1,22 +1,14 @@
-package gui.states.multi;
+package logic.manager.game.multi;
 
-import gui.drawer.SpriteDrawer;
 import logic.manager.field.MovingDirections;
 import logic.manager.game.Commands;
 import logic.manager.game.States;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
-import logic.sprite.dinamic.bullets.InvaderBullet;
-import logic.sprite.dinamic.bullets.SpaceShipBullet;
-import logic.sprite.dinamic.invaders.BonusInvader;
-import logic.sprite.dinamic.invaders.Invader;
-import logic.sprite.unmovable.Brick;
 import main.Dimensions;
 import network.client.Client;
 import network.data.PacketHandler;
 import org.newdawn.slick.Input;
-
-import java.util.ArrayList;
 
 public class LocalMultiManger {
     private ShipManager shipManager;
@@ -29,15 +21,15 @@ public class LocalMultiManger {
     public LocalMultiManger(){
         gameState = States.INITIALIZATION;
         handler = new PacketHandler();
-        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2),
-                (Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT));
-        SpaceShip defaultShip = new SpaceShip(coordinate);
-        shipManager = new ShipManager(defaultShip);
     }
 
     public void init(){
         client = new Client("localhost", 9999);
         client.send(handler.build("Hello", client.getConnection()));
+        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2),
+                (Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT));
+        SpaceShip defaultShip = new SpaceShip(coordinate);
+        shipManager = new ShipManager(defaultShip);
     }
 
     public void checkConnection() {
@@ -46,7 +38,7 @@ public class LocalMultiManger {
         }
         if (client.isGameStarted()) {
             gameState = States.START;
-            localMultiRender = new LocalMultiRender(client.getID(), shipManager);
+            localMultiRender = new LocalMultiRender(client, shipManager);
         }
     }
 

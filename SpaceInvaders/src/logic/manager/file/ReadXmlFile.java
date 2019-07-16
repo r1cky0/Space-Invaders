@@ -9,7 +9,6 @@ import java.io.File;
 public class ReadXmlFile {
 
     public String read(String tag) {
-
         try {
             File file = new File("res/paths.xml");
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();

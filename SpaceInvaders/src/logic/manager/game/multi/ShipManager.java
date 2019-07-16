@@ -1,4 +1,4 @@
-package gui.states.multi;
+package logic.manager.game.multi;
 
 import logic.manager.field.MovingDirections;
 import logic.sprite.Coordinate;

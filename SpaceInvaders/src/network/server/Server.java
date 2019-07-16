@@ -1,7 +1,5 @@
 package network.server;
 
-import logic.manager.game.States;
-import logic.manager.game.Multiplayer;
 import logic.player.Player;
 import network.data.Connection;
 import network.data.MessageBuilder;
@@ -26,7 +24,7 @@ public class Server implements Runnable {
     private AtomicBoolean runningServer;
 
     private int port;
-    private int maxPlayers = 1;
+    private int maxPlayers = 2;
 
     Server(int port) {
         this.port = port;
@@ -91,7 +89,6 @@ public class Server implements Runnable {
             clients.put(ID, new ServerThread(player, multiplayer, connection, socket, messageBuilder));
             clients.get(ID).send(String.valueOf(ID));
             if (clients.size() == maxPlayers) {
-                broadcast(States.START.toString());
                 multiplayer.startGame();
                 for(int id : clients.keySet()){
                     clients.get(id).sender();
@@ -111,12 +108,6 @@ public class Server implements Runnable {
                     multiplayer.stopGame();
                 }
             }
-        }
-    }
-
-    private void broadcast(String mex){
-        for(int ID : clients.keySet()) {
-            clients.get(ID).send(mex);
         }
     }
 

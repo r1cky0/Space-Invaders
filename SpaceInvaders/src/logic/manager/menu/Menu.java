@@ -1,7 +1,7 @@
 package logic.manager.menu;
 
 import logic.manager.file.FileModifier;
-import logic.manager.game.SinglePlayer;
+import logic.manager.game.single.SinglePlayer;
 import logic.manager.file.AddAccount;
 import logic.manager.file.Login;
 import logic.sprite.Coordinate;
@@ -26,7 +26,6 @@ public class Menu {
         addAccount = new AddAccount();
         login = new Login();
         fileModifier = new FileModifier();
-
         Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH/2 - Dimensions.SHIP_WIDTH /2),
                 (Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH));
         defaultShip = new SpaceShip(coordinate);

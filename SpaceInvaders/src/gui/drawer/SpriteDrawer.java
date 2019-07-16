@@ -22,7 +22,7 @@ public class SpriteDrawer {
         readerXmlFile = new ReadXmlFile();
         images = new HashMap<>();
         try {
-            images.put(Target.INVADER, new Image(readerXmlFile.read("defaultInvader")));
+            images.put(Target.INVADER, new Image(readerXmlFile.read("defaultInvader0")));
             images.put(Target.BONUS_INVADER, new Image(readerXmlFile.read("bonusInvader")));
             images.put(Target.BULLET, new Image(readerXmlFile.read("defaultBullet")));
             images.put(Target.SHIP, new Image(readerXmlFile.read("ship0")));

@@ -2,8 +2,10 @@ package gui.states.single;
 
 import gui.states.GameOverState;
 import gui.states.IDStates;
-import logic.manager.game.SinglePlayer;
+import gui.states.buttons.Button;
+import logic.manager.game.single.SinglePlayer;
 import logic.manager.menu.Menu;
+import logic.sprite.Coordinate;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,10 +17,9 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class GameOverStateSingle extends GameOverState implements ComponentListener {
-
     private SinglePlayer singlePlayer;
     private Menu menu;
-    private MouseOverArea newGameButton;
+    private Button newGameButton;
 
     public GameOverStateSingle(Menu menu) {
         this.menu = menu;
@@ -26,12 +27,9 @@ public class GameOverStateSingle extends GameOverState implements ComponentListe
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         super.init(gameContainer,stateBasedGame);
-
-        Image newGame = new Image(readerXmlFile.read("buttonNewGame")).getScaledCopy(30 * gameContainer.getWidth() / 100,
-                10 * gameContainer.getHeight() / 100);
-        newGameButton = new MouseOverArea(gameContainer, newGame,(gameContainer.getWidth() - newGame.getWidth())/2,
-                80*gameContainer.getHeight()/100,30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100,
-                this);
+        Image newGame = new Image(getReaderXmlFile().read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100);
+        Coordinate posNewGame = new Coordinate((gameContainer.getWidth() - newGame.getWidth())/2,80*gameContainer.getHeight()/100);
+        newGameButton = new Button(gameContainer, newGame, posNewGame, IDStates.SINGLEPLAYER_STATE, this);
     }
 
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
@@ -41,25 +39,25 @@ public class GameOverStateSingle extends GameOverState implements ComponentListe
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         super.render(gameContainer,stateBasedGame,graphics);
-
         String score = "SCORE: " + singlePlayer.getPlayer().getSpaceShip().getCurrentScore();
+        newGameButton.render(graphics);
+        getTitleFont().drawString((gameContainer.getWidth() - getTitleFont().getWidth(score))/2f,7*gameContainer.getHeight()/100f, score);
+    }
 
-        newGameButton.render(gameContainer, graphics);
-
-        uniFontScore.drawString((this.gameContainer.getWidth() - uniFontScore.getWidth(score))/2f,
-                7* this.gameContainer.getHeight()/100f, score);
+    @Override
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+        super.update(gameContainer, stateBasedGame, delta);
     }
 
     /**
-     * Funzione che setta i gestori degli eventi di click sui bottoni
-     * @param source Il tasto di cui dobbiamo settare il comportamento
+     * Funzione che si attiva quando si clicca su un bottone
+     * @param source bottone premuto
      */
     @Override
     public void componentActivated(AbstractComponent source) {
         super.componentActivated(source);
-        if (source == newGameButton) {
-            stateBasedGame.enterState(IDStates.SINGLEPLAYER_STATE, new FadeOutTransition(), new FadeInTransition());
-            audioplayer.game();
+        if (source == newGameButton.getMouseOverArea()) {
+            getStateBasedGame().enterState(newGameButton.getIdState(), new FadeOutTransition(), new FadeInTransition());
         }
     }
 

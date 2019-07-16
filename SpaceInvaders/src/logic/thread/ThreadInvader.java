@@ -31,17 +31,17 @@ public class ThreadInvader implements Runnable {
         running.set(true);
         Random rand = new Random();
         while (running.get()) {
+            try {
+                Thread.sleep(sleepInterval);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             fieldManager.invaderMovement(fieldManager.checkInvaderDirection());
             if(rand.nextInt(10) > 4){
                 fieldManager.invaderShot();
             }
             if(rand.nextInt(100) > 95){
                 fieldManager.createBonusInvader();
-            }
-            try {
-                Thread.sleep(sleepInterval);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }

@@ -2,11 +2,10 @@ package logic.thread;
 
 import logic.manager.field.FieldManager;
 import logic.manager.game.States;
-import logic.manager.game.Multiplayer;
+import network.server.Multiplayer;
 import logic.sprite.dinamic.bullets.Bullet;
 import main.Dimensions;
 import network.data.MessageBuilder;
-import org.newdawn.slick.state.GameState;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -38,6 +37,11 @@ public class ThreadUpdate implements Runnable{
      */
     public void run() {
         running.set(true);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         while(running.get()) {
             for (Bullet bullet : fieldManager.getInvaderBullets()) {
                 bullet.move(delta);

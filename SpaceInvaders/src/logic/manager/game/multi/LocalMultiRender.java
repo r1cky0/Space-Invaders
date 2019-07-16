@@ -1,16 +1,14 @@
-package gui.states.multi;
+package logic.manager.game.multi;
 
 import gui.drawer.SpriteDrawer;
 import logic.manager.game.States;
-import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.dinamic.invaders.BonusInvader;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.unmovable.Brick;
-
-import java.util.ArrayList;
+import network.client.Client;
 
 public class LocalMultiRender {
 
@@ -18,13 +16,13 @@ public class LocalMultiRender {
     private SpriteDrawer spriteDrawer;
     private int score;
     private States gameState;
-    private int ID;
+    private Client client;
     private ShipManager shipManager;
 
-    public LocalMultiRender(int ID, ShipManager shipManager){
+    public LocalMultiRender(Client client, ShipManager shipManager){
         localMultiMessageHandler = new LocalMultiMessageHandler();
         spriteDrawer = new SpriteDrawer();
-        this.ID = ID;
+        this.client = client;
         this.shipManager = shipManager;
     }
 
@@ -65,7 +63,7 @@ public class LocalMultiRender {
     }
 
     private void shipDrawer(String data) {
-        for(SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, ID, shipManager)){
+        for(SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, client.getID(), shipManager)){
             spriteDrawer.render(spaceShip);
         }
     }

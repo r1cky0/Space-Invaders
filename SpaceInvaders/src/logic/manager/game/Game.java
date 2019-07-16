@@ -4,12 +4,12 @@ import logic.manager.field.FieldManager;
 import logic.thread.ThreadInvader;
 
 public abstract class Game {
-    FieldManager fieldManager;
-    States gameState;
+    private FieldManager fieldManager;
+    private States gameState;
     private ThreadInvader threadInvader;
     private boolean threadRunning;
 
-    Game(){
+    public Game(){
         threadRunning = false;
     }
 
@@ -33,6 +33,10 @@ public abstract class Game {
 
     public abstract void update(int delta);
 
+    public void setGameState(States gameState){
+        this.gameState = gameState;
+    }
+
     public FieldManager getFieldManager(){
         return fieldManager;
     }
@@ -41,7 +45,7 @@ public abstract class Game {
         return gameState;
     }
 
-    boolean isThreadRunning(){
+    public boolean isThreadRunning(){
         return threadRunning;
     }
 }
