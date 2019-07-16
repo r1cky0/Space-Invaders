@@ -40,7 +40,8 @@
         <buttonSinglePlayer>res/images/ButtonSinglePlayer.png</buttonSinglePlayer>
         <buttonHome>res/images/Home.png</buttonHome>
         <buttonSettings>res/images/Settings.png</buttonSettings>
-        <buttonRanking>res/images/Cup.png</buttonRanking>        
+        <buttonRanking>res/images/Cup.png</buttonRanking>
+        <buttonTutorial>res/images/Tutorial.png</buttonTutorial>
     </button>
 
     <medal>
@@ -48,6 +49,12 @@
         <medalSilver>res/images/MedalSilver.png</medalSilver>
         <medalBronze>res/images/MedalBronze.png</medalBronze>
     </medal>
+
+    <tutorial>
+        <left>res/images/Left_Keyboard.png</left>
+        <right>res/images/Right_Keyboard.png</right>
+        <spacebar>res/images/Spacebar.png</spacebar>
+    </tutorial>
 
     <music>
         <menuMusic>res/sounds/menu.ogg</menuMusic>

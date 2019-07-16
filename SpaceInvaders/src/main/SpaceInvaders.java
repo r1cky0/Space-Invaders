@@ -1,9 +1,7 @@
 package main;
 
-import gui.states.menu.CustomizationState;
-import gui.states.menu.MenuState;
-import gui.states.menu.RankingState;
-import gui.states.menu.StartState;
+import gui.states.IDStates;
+import gui.states.menu.*;
 import gui.states.multi.WaitingState;
 import gui.states.single.GameOverStateSingle;
 import gui.states.single.NewHighscoreState;
@@ -37,7 +35,8 @@ public class SpaceInvaders extends StateBasedGame {
         addState(new RankingState(menu));
         addState(new GameOverStateSingle(menu));
         addState(new NewHighscoreState(menu));
-        enterState(0);
+        addState(new TutorialState());
+        enterState(IDStates.START_STATE);
     }
 
     public static void main(String[] args) {
