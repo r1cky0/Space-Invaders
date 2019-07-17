@@ -7,9 +7,9 @@ public class PacketHandler{
     public String[] process(DatagramPacket packet) {
         String data = new String(packet.getData());
         //split fine messaggio
-        String[] infos = data.split("\\r");
+        String[] info = data.split("\\r");
         //split informazioni
-        return infos[0].split("\\n");
+        return info[0].split("\\n");
     }
 
     public DatagramPacket build(String data, Connection connection){

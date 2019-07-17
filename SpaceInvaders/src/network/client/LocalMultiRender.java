@@ -34,48 +34,64 @@ public class LocalMultiRender {
     }
 
     private void invaderDrawer(String data) {
-        for (Invader invader : localMultiMessageHandler.invaderCreator(data)) {
-            spriteDrawer.render(invader);
+        if(!data.equals(" ")) {
+            for (Invader invader : localMultiMessageHandler.invaderCreator(data)) {
+                spriteDrawer.render(invader);
+            }
         }
     }
 
     private void bonusInvaderDrawer(String data) {
-        BonusInvader bonusInvader = localMultiMessageHandler.bonusInvaderCreator(data);
-        if (bonusInvader != null) {
-            spriteDrawer.render(bonusInvader);
+        if(!data.equals(" ")) {
+            BonusInvader bonusInvader = localMultiMessageHandler.bonusInvaderCreator(data);
+            if (bonusInvader != null) {
+                spriteDrawer.render(bonusInvader);
+            }
         }
     }
 
     private void invaderBulletDrawer(String data) {
-        for (InvaderBullet invaderBullet : localMultiMessageHandler.invaderBulletCreator(data)) {
-            spriteDrawer.render(invaderBullet);
+        if(!data.equals(" ")) {
+            for (InvaderBullet invaderBullet : localMultiMessageHandler.invaderBulletCreator(data)) {
+                spriteDrawer.render(invaderBullet);
+            }
         }
     }
 
     private void bunkerDrawer(String data) {
-        for (Brick brick : localMultiMessageHandler.bunkerCreator(data)) {
-            spriteDrawer.render(brick);
+        if(!data.equals(" ")) {
+            for (Brick brick : localMultiMessageHandler.bunkerCreator(data)) {
+                spriteDrawer.render(brick);
+            }
         }
     }
 
     private void shipDrawer(String data, int ID) {
-        for (SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, ID, shipManager)) {
-            spriteDrawer.render(spaceShip);
+        if(!data.equals(" ")) {
+            for (SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, ID, shipManager)) {
+                spriteDrawer.render(spaceShip);
+            }
         }
     }
 
     private void shipBulletDrawer(String data) {
-        for (SpaceShipBullet spaceShipBullet : localMultiMessageHandler.shipBulletCreator(data)) {
-            spriteDrawer.render(spaceShipBullet);
+        if(!data.equals(" ")) {
+            for (SpaceShipBullet spaceShipBullet : localMultiMessageHandler.shipBulletCreator(data)) {
+                spriteDrawer.render(spaceShipBullet);
+            }
         }
     }
 
     private void setScore(String data){
-        score = localMultiMessageHandler.getScore(data);
+        if(!data.equals(" ")) {
+            score = localMultiMessageHandler.getScore(data);
+        }
     }
 
     private void setGameState(String data){
-        gameState = localMultiMessageHandler.getGameState(data);
+        if(!data.equals(" ")) {
+            gameState = localMultiMessageHandler.getGameState(data);
+        }
     }
 
     public States getGameState(){return gameState;}

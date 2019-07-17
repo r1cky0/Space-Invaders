@@ -63,11 +63,9 @@ public class FieldManager {
     /**
      * Reinizializzazione degli invaders e incremento life ship al nuovo livello.
      *
-     * @param spaceShip: ship di cui va incrementata la vita
      */
-    private void nextLevel(SpaceShip spaceShip){
+    private void nextLevel(){
         difficulty.incrementDifficulty();
-        spaceShip.incrementLife();
         md = MovingDirections.RIGHT;
         invaders = invadersCreator.create();
         newLevel = true;
@@ -150,7 +148,7 @@ public class FieldManager {
                 invaders.remove(invader);
                 spaceShip.setShipShot(false);
                 if (invaders.isEmpty()) {
-                    nextLevel(spaceShip);
+                    nextLevel();
                 }
                 return true;
             }

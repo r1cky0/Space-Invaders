@@ -23,7 +23,6 @@ public class WaitingState extends BasicState {
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         super.init(gameContainer, stateBasedGame);
-        title = "CONNECTION...";
         connectionTimer = new ConnectionTimer(stateBasedGame, localMultiManger);
         int[] duration = {500,500};
         int invaderSide = 20*gameContainer.getHeight()/100;
@@ -36,6 +35,7 @@ public class WaitingState extends BasicState {
 
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        title = "CONNECTION...";
         localMultiManger.init();
         stateBasedGame.addState(new MultiplayerState(localMultiManger));
         stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer, stateBasedGame);
@@ -57,10 +57,10 @@ public class WaitingState extends BasicState {
             localMultiManger.exit();
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
-        if (localMultiManger.getGameState().equals(States.COUNTDOWN)) {
+        if (localMultiManger.getConnectionState().equals(States.COUNTDOWN)) {
             connectionTimer.stopTimer();
             stateBasedGame.enterState(IDStates.COUNTDOWN_STATE);
-        } else if (localMultiManger.getGameState().equals(States.WAITING)) {
+        } else if (localMultiManger.getConnectionState().equals(States.WAITING)) {
             title = " WAITING FOR\nOTHER PLAYERS...";
         }
     }

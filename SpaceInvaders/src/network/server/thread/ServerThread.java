@@ -80,7 +80,7 @@ public class ServerThread implements Runnable{
         }
     }
 
-    public void exe(String[] data){
+    private void exe(String[] data){
         switch (Commands.valueOf(data[1])) {
             case MOVE_LEFT:
             case MOVE_RIGHT:

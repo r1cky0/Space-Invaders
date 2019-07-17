@@ -70,6 +70,7 @@ public class SinglePlayer extends Game {
             super.stopThreadInvader();
             super.startThreadInvader();
             getFieldManager().setNewLevel(false);
+            spaceShip.incrementLife();
         }
         checkGameState();
     }

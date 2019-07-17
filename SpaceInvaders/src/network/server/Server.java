@@ -86,7 +86,7 @@ public class Server implements Runnable {
      * @param packet datagramPacket
      */
     private void addConnection(DatagramPacket packet) {
-        if (clients.size() <= 4 && !multiplayer.getGameState().equals(States.START)) {
+        if (clients.size() <= maxPlayers && !multiplayer.getGameState().equals(States.START)) {
             for (int ID : clients.keySet()) {
                 if (clients.get(ID).getConnection().getDestAddress().equals(packet.getAddress())) {
                     return;
@@ -137,6 +137,10 @@ public class Server implements Runnable {
                     multiplayer.stopGame();
                 }
             }
+        }
+        if(multiplayer.getGameState() == States.GAMEOVER){
+            clients.clear();
+            multiplayer.stopGame();
         }
     }
 

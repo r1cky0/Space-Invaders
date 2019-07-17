@@ -16,7 +16,7 @@ public class Multiplayer extends Game {
     private States gameState;
     private ThreadUpdate threadUpdate;
     private MessageBuilder messageBuilder;
-    private static int DELTA = 1;
+    private static int DELTA = 1; //tempo aggiornamento update
 
     public Multiplayer(MessageBuilder messageBuilder){
         this.messageBuilder = messageBuilder;
@@ -45,6 +45,7 @@ public class Multiplayer extends Game {
             threadUpdate.stop();
         }
         team.clear();
+        gameState = States.WAITING;
     }
 
     /**

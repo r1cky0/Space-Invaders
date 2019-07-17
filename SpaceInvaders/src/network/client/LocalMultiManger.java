@@ -5,7 +5,6 @@ import logic.manager.game.Commands;
 import logic.manager.game.States;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
-import main.Dimensions;
 import network.data.PacketHandler;
 import org.newdawn.slick.Input;
 
@@ -14,11 +13,11 @@ public class LocalMultiManger {
     private Client client;
     private String message;
     private PacketHandler handler;
-    private States gameState;
+    private States connectionState;
 
     public LocalMultiManger() {
         handler = new PacketHandler();
-        gameState = States.INITIALIZATION;
+        connectionState = States.INITIALIZATION;
     }
 
     public void init() {
@@ -28,15 +27,15 @@ public class LocalMultiManger {
         SpaceShip defaultShip = new SpaceShip(coordinate);
         defaultShip.init();
         shipManager = new ShipManager(defaultShip);
-        gameState = States.INITIALIZATION;
+        connectionState = States.INITIALIZATION;
     }
 
     public void checkConnection() {
         if (client.getID() != -1) {
-            gameState = States.WAITING;
+            connectionState = States.WAITING;
         }
         if (client.isGameStarted()) {
-            gameState = States.COUNTDOWN;
+            connectionState = States.COUNTDOWN;
         }
     }
 
@@ -66,8 +65,8 @@ public class LocalMultiManger {
         return client.getRcvdata();
     }
 
-    public States getGameState() {
-        return gameState;
+    public States getConnectionState() {
+        return connectionState;
     }
 
     public ShipManager getShipManager(){
