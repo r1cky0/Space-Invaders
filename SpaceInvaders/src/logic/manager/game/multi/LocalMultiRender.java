@@ -18,7 +18,7 @@ public class LocalMultiRender {
     private Client client;
     private ShipManager shipManager;
 
-    public LocalMultiRender(Client client, ShipManager shipManager){
+    LocalMultiRender(Client client, ShipManager shipManager){
         localMultiMessageHandler = new LocalMultiMessageHandler();
         spriteDrawer = new SpriteDrawer();
         this.client = client;
@@ -73,15 +73,15 @@ public class LocalMultiRender {
         }
     }
 
-    public void setScore(String data){
+    private void setScore(String data){
         score = localMultiMessageHandler.getScore(data);
     }
 
-    public void setGameState(String data){
+    private void setGameState(String data){
         gameState = localMultiMessageHandler.getGameState(data);
     }
 
     public States getGameState(){return gameState;}
 
-    public int getScore(){return score;}
+    int getScore(){return score;}
 }
