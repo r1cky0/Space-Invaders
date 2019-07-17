@@ -1,10 +1,9 @@
 package gui.states.multi;
 
 import gui.states.Timer.ConnectionTimer;
-import gui.states.Timer.CountdownState;
 import gui.states.BasicState;
 import gui.states.IDStates;
-import logic.manager.game.multi.LocalMultiManger;
+import network.client.LocalMultiManger;
 import logic.manager.game.States;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -37,9 +36,9 @@ public class WaitingState extends BasicState {
 
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        localMultiManger.init();
         stateBasedGame.addState(new MultiplayerState(localMultiManger));
         stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer, stateBasedGame);
-        localMultiManger.init();
         connectionTimer.startTimer();
     }
 

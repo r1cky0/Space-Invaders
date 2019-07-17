@@ -41,7 +41,7 @@ public class TutorialState extends BasicState implements ComponentListener {
         float offset = gameContainer.getHeight()/4f;
         leftImage.draw(baseX, baseY);
         rightImage.draw(baseX,baseY + offset);
-        shotImage.draw(10*gameContainer.getWidth()/100f,baseY + 2*offset + 60);
+        shotImage.draw(11*gameContainer.getWidth()/100f,baseY + 2*offset + 60);
         getHomeButton().render(graphics);
     }
 

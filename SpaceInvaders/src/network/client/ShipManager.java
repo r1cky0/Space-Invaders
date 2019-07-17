@@ -1,4 +1,4 @@
-package logic.manager.game.multi;
+package network.client;
 
 import logic.manager.field.MovingDirections;
 import logic.sprite.Coordinate;

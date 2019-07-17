@@ -1,4 +1,4 @@
-package logic.manager.game.multi;
+package network.client;
 
 import gui.drawer.SpriteDrawer;
 import logic.manager.game.States;
@@ -8,30 +8,27 @@ import logic.sprite.dinamic.bullets.SpaceShipBullet;
 import logic.sprite.dinamic.invaders.BonusInvader;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.unmovable.Brick;
-import network.client.Client;
 
 public class LocalMultiRender {
     private LocalMultiMessageHandler localMultiMessageHandler;
     private SpriteDrawer spriteDrawer;
     private int score;
     private States gameState;
-    private Client client;
     private ShipManager shipManager;
 
-    LocalMultiRender(Client client, ShipManager shipManager){
+    public LocalMultiRender(ShipManager shipManager){
+        this.shipManager = shipManager;
         localMultiMessageHandler = new LocalMultiMessageHandler();
         spriteDrawer = new SpriteDrawer();
-        this.client = client;
-        this.shipManager = shipManager;
     }
 
-    public void draw(String[] rcvdata){
+    public void draw(String[] rcvdata, int ID){
         setGameState(rcvdata[0]);
         invaderDrawer(rcvdata[1]);
         bonusInvaderDrawer(rcvdata[2]);
         invaderBulletDrawer(rcvdata[3]);
         bunkerDrawer(rcvdata[4]);
-        shipDrawer(rcvdata[5]);
+        shipDrawer(rcvdata[5], ID);
         shipBulletDrawer(rcvdata[6]);
         setScore(rcvdata[7]);
     }
@@ -61,8 +58,8 @@ public class LocalMultiRender {
         }
     }
 
-    private void shipDrawer(String data) {
-        for (SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, client.getID(), shipManager)) {
+    private void shipDrawer(String data, int ID) {
+        for (SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, ID, shipManager)) {
             spriteDrawer.render(spaceShip);
         }
     }
@@ -83,5 +80,9 @@ public class LocalMultiRender {
 
     public States getGameState(){return gameState;}
 
-    int getScore(){return score;}
+    public int getScore(){return score;}
+
+    public int getLife(){
+        return shipManager.getSpaceShip().getLife();
+    }
 }

@@ -1,4 +1,4 @@
-package logic.manager.game.multi;
+package network.client;
 
 import logic.manager.game.States;
 import logic.sprite.Coordinate;
@@ -11,17 +11,17 @@ import logic.sprite.unmovable.Brick;
 
 import java.util.ArrayList;
 
-public class LocalMultiMessageHandler {
+class LocalMultiMessageHandler {
 
-    public States getGameState(String data){
+    States getGameState(String data){
         return States.valueOf(data);
     }
 
-    public int getScore(String data){
+    int getScore(String data){
         return Integer.parseInt(data);
     }
 
-    public ArrayList<Invader> invaderCreator(String data) {
+    ArrayList<Invader> invaderCreator(String data) {
         ArrayList<Invader> invaders = new ArrayList<>();
         for (String strings : data.split("\\t")) {
             if(!strings.isEmpty()) {
@@ -31,14 +31,14 @@ public class LocalMultiMessageHandler {
         return invaders;
     }
 
-    public BonusInvader bonusInvaderCreator(String data){
+    BonusInvader bonusInvaderCreator(String data){
         if(!data.isEmpty()) {
             return new BonusInvader(converter(data));
         }
         return null;
     }
 
-    public ArrayList<InvaderBullet> invaderBulletCreator(String data) {
+    ArrayList<InvaderBullet> invaderBulletCreator(String data) {
         ArrayList<InvaderBullet> invaderBullets = new ArrayList<>();
         for (String strings : data.split("\\t")) {
             if(!strings.isEmpty()) {
@@ -48,7 +48,7 @@ public class LocalMultiMessageHandler {
         return invaderBullets;
     }
 
-    public ArrayList<Brick> bunkerCreator(String data) {
+    ArrayList<Brick> bunkerCreator(String data) {
         ArrayList<Brick> bricks = new ArrayList<>();
         for (String strings : data.split("\\t")) {
             if(!strings.isEmpty()) {
@@ -60,7 +60,7 @@ public class LocalMultiMessageHandler {
         return bricks;
     }
 
-    public ArrayList<SpaceShip> shipCreator(String data, int ID, ShipManager shipManager) {
+    ArrayList<SpaceShip> shipCreator(String data, int ID, ShipManager shipManager) {
         ArrayList<SpaceShip> spaceShips = new ArrayList<>();
         for (String strings : data.split("\\t")) {
             if (!strings.isEmpty()) {
@@ -75,7 +75,7 @@ public class LocalMultiMessageHandler {
         return spaceShips;
     }
 
-    public ArrayList<SpaceShipBullet> shipBulletCreator(String data){
+    ArrayList<SpaceShipBullet> shipBulletCreator(String data){
         ArrayList<SpaceShipBullet> spaceShipBullets = new ArrayList<>();
         for (String strings : data.split("\\t")) {
             if(!strings.isEmpty()) {
@@ -85,7 +85,7 @@ public class LocalMultiMessageHandler {
         return spaceShipBullets;
     }
 
-    public Coordinate converter(String data){
+    private Coordinate converter(String data){
         return new Coordinate(Float.parseFloat(data.split("_")[0]),
                 Float.parseFloat(data.split("_")[1]));
     }

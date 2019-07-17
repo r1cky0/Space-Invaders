@@ -1,7 +1,7 @@
 package gui.states.Timer;
 
 import gui.states.IDStates;
-import logic.manager.game.multi.LocalMultiManger;
+import network.client.LocalMultiManger;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;

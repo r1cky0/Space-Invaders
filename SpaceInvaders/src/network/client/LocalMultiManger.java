@@ -1,4 +1,4 @@
-package logic.manager.game.multi;
+package network.client;
 
 import logic.manager.field.MovingDirections;
 import logic.manager.game.Commands;
@@ -6,7 +6,6 @@ import logic.manager.game.States;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import main.Dimensions;
-import network.client.Client;
 import network.data.PacketHandler;
 import org.newdawn.slick.Input;
 
@@ -16,19 +15,18 @@ public class LocalMultiManger {
     private String message;
     private PacketHandler handler;
     private States gameState;
-    private LocalMultiRender localMultiRender;
 
-    public LocalMultiManger(){
+    public LocalMultiManger() {
         handler = new PacketHandler();
         gameState = States.INITIALIZATION;
     }
 
-    public void init(){
+    public void init() {
         client = new Client("localhost", 9999);
         client.send(handler.build("Hello", client.getConnection()));
-        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH / 2 - Dimensions.SHIP_WIDTH / 2),
-                (Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT));
+        Coordinate coordinate = new Coordinate(0,0);
         SpaceShip defaultShip = new SpaceShip(coordinate);
+        defaultShip.init();
         shipManager = new ShipManager(defaultShip);
         gameState = States.INITIALIZATION;
     }
@@ -39,10 +37,8 @@ public class LocalMultiManger {
         }
         if (client.isGameStarted()) {
             gameState = States.COUNTDOWN;
-            localMultiRender = new LocalMultiRender(client, shipManager);
         }
     }
-
 
     public void exit() {
         message = client.getID() + "\n" + Commands.EXIT.toString();
@@ -50,40 +46,36 @@ public class LocalMultiManger {
         client.close();
     }
 
-    public void execCommand(int inputButton, int delta){
+    public void execCommand(int inputButton, int delta) {
         message = client.getID() + "\n";
-        if(inputButton == Input.KEY_RIGHT){
+        if (inputButton == Input.KEY_RIGHT) {
             shipManager.shipMovement(MovingDirections.RIGHT, delta);
             message += Commands.MOVE_RIGHT.toString() + "\n" + shipManager.getX();
         }
-        if(inputButton == Input.KEY_LEFT){
+        if (inputButton == Input.KEY_LEFT) {
             shipManager.shipMovement(MovingDirections.LEFT, delta);
             message += Commands.MOVE_LEFT.toString() + "\n" + shipManager.getX();
         }
-        if(inputButton == Input.KEY_SPACE){
+        if (inputButton == Input.KEY_SPACE) {
             message += Commands.SHOT.toString();
         }
         client.send(handler.build(message, client.getConnection()));
     }
 
-    public void render(){
-        String[] rcvdata = client.getRcvdata();
-        if(rcvdata != null) {
-            gameState = localMultiRender.getGameState();
-            localMultiRender.draw(rcvdata);
-        }
+    public String[] getRcvdata() {
+        return client.getRcvdata();
     }
 
-    public States getGameState(){
+    public States getGameState() {
         return gameState;
     }
 
-    public int getScore(){
-        return localMultiRender.getScore();
+    public ShipManager getShipManager(){
+        return shipManager;
     }
 
-    public int getLife(){
-        return shipManager.getSpaceShip().getLife();
+    public int getID(){
+        return client.getID();
     }
 
 }
