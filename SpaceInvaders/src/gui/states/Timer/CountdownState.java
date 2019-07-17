@@ -23,7 +23,7 @@ public class CountdownState extends BasicState {
         int imageSide = 30*gameContainer.getWidth()/100;
         int number;
         for(int i=0;i<3;i++){
-            number = i+1;
+            number = 3-i;
             moving[i] = new Image(getReaderXmlFile().read("number" + number)).getScaledCopy(imageSide, imageSide);
         }
     }
