@@ -56,7 +56,7 @@ public class SpaceInvaders extends StateBasedGame {
             AppGameContainer container = new AppGameContainer(new SpaceInvaders(menu));
             container.setDisplayMode((int) (Dimensions.MAX_WIDTH*SCALE_X),(int) (Dimensions.MAX_HEIGHT*SCALE_Y),false);
             container.setSmoothDeltas(false);
-            container.setTargetFrameRate(200);
+            //container.setTargetFrameRate(200);
             container.setShowFPS(false);
             container.setVSync(false);
             container.start();

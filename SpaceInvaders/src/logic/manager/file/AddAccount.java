@@ -20,16 +20,16 @@ public class AddAccount {
      * @return valore che indica se operazione è andata a buon fine
      */
     public boolean newAccount(String name, String password){
+        ReadXmlFile readXmlFile = new ReadXmlFile();
         try {
+            String file = readXmlFile.read("filePlayers");
             int baseScore = 0;
             String baseShip = "ship0";
-            String file = "res/players.txt";
-
             BufferedReader in = new BufferedReader(new FileReader(file));
             String riga = in.readLine();
             while (riga != null) {
-                String[] componenti = riga.split("\\t");
-                if (componenti[0].equals(name)) {
+                String[] components = riga.split("\\t");
+                if (components[0].equals(name)) {
                     in.close();
                     return false;
                 }

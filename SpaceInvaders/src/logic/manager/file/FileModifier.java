@@ -16,16 +16,17 @@ public class FileModifier {
      * @param shipType tag ship
      */
     public void modifyFile(String name, int highScore, String shipType) {
+        ReadXmlFile readXmlFile = new ReadXmlFile();
         try {
-            String file = "res/players.txt";
+            String file = readXmlFile.read("filePlayers");
             String oldLine = "";
             File fileToBeModified = new File(file);
             StringBuilder oldContent = new StringBuilder();
             BufferedReader in = new BufferedReader(new FileReader(fileToBeModified));
             String line = in.readLine();
             while (line != null) {
-                String[] componenti = line.split("\\t");
-                if (componenti[0].equals(name)) {
+                String[] components = line.split("\\t");
+                if (components[0].equals(name)) {
                     oldLine = line;
                 }
                 oldContent.append(line).append(System.lineSeparator());

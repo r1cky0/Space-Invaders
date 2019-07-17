@@ -32,6 +32,10 @@ public class RankingState extends BasicState implements ComponentListener {
         goldMedal = new Image(getReaderXmlFile().read("medalGold")).getScaledCopy(medalSide, medalSide);
         silverMedal = new Image(getReaderXmlFile().read("medalSilver")).getScaledCopy(medalSide, medalSide);
         bronzeMedal = new Image(getReaderXmlFile().read("medalBronze")).getScaledCopy(medalSide, medalSide);
+    }
+
+    @Override
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
         ranking.createRanking();
     }
 

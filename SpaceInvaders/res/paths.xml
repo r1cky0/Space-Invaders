@@ -7,7 +7,7 @@
             <ship2>res/images/SpaceShip2.png</ship2>
             <ship3>res/images/SpaceShip3.png</ship3>
             <ship4>res/images/SpaceShip4.png</ship4>
-            <transparent>res/images/TransparentShip.png</transparent>
+            <shipMulti>res/images/ShipMulti.png</shipMulti>
         </ship>
 
         <bullet>
@@ -76,4 +76,6 @@
     <font>
         <title>res/font/invaders_font.ttf</title>
     </font>
+
+    <filePlayers>res/players.txt</filePlayers>
 </SpaceInvaders>

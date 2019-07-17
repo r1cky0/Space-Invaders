@@ -18,8 +18,10 @@ public class Login {
      * @return vettore informazioni giocatore
      */
     public String[] tryLogin(String name, String password){
+        ReadXmlFile readXmlFile = new ReadXmlFile();
         try {
-            BufferedReader in = new BufferedReader(new FileReader("res/players.txt"));
+            String file = readXmlFile.read("filePlayers");
+            BufferedReader in = new BufferedReader(new FileReader(file));
             String riga = in.readLine();
             while (riga != null) {
                 String[] components = riga.split("\\t");

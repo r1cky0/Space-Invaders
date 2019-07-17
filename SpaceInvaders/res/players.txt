@@ -10,3 +10,6 @@ g1g	g	0	ship0
 sacas	aca	1080	ship0
 basd	b	0	ship0
 xx	xx	190	ship0
+cioa	ciao	0	ship2
+aaa	aaa	70	ship0
+ccc	ccc	20	ship0

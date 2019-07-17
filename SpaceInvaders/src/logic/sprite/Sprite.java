@@ -46,7 +46,7 @@ public class Sprite {
         facade.setCoordinate(coordinate);
     }
 
-    protected void setTarget(Target target){
+    public void setTarget(Target target){
         this.target = target;
     }
 

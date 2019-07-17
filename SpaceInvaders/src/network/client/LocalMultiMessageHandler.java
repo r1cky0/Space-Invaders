@@ -2,6 +2,7 @@ package network.client;
 
 import logic.manager.game.States;
 import logic.sprite.Coordinate;
+import logic.sprite.Target;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
@@ -88,15 +89,22 @@ class LocalMultiMessageHandler {
      */
     ArrayList<SpaceShip> shipCreator(String data, int ID, ShipManager shipManager) {
         ArrayList<SpaceShip> spaceShips = new ArrayList<>();
+        boolean isLive = false;
         for (String strings : data.split("\\t")) {
             if (!strings.isEmpty()) {
                 if (ID == Integer.parseInt(strings.split("_")[3])) {
                     spaceShips.add(shipManager.getSpaceShip());
                     shipManager.getSpaceShip().setLife(Integer.parseInt(strings.split("_")[2]));
+                    isLive = true;
                 } else {
-                    spaceShips.add(new SpaceShip(converter(strings)));
+                    SpaceShip partnerShip = new SpaceShip(converter(strings));
+                    partnerShip.setTarget(Target.SHIPMULTI);
+                    spaceShips.add(partnerShip);
                 }
             }
+        }
+        if(!isLive){
+            shipManager.getSpaceShip().setLife(0);
         }
         return spaceShips;
     }

@@ -30,6 +30,7 @@ public class SpriteDrawer {
             images.put(Target.BONUS_INVADER, new Image(readerXmlFile.read("bonusInvader")));
             images.put(Target.BULLET, new Image(readerXmlFile.read("defaultBullet")));
             images.put(Target.SHIP, new Image(readerXmlFile.read("ship0")));
+            images.put(Target.SHIPMULTI, new Image(readerXmlFile.read("shipMulti")));
             String target = "BRICK";
             for (int i = 0; i < 4; i++) {
                 images.put(Target.valueOf(target + i), new Image(readerXmlFile.read("brick" + i)));
