@@ -3,8 +3,6 @@ package network.client;
 import network.data.Connection;
 import network.data.PacketHandler;
 import logic.manager.game.States;
-
-import javax.swing.plaf.nimbus.State;
 import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -62,7 +60,7 @@ public class Client implements Runnable {
                 if (ID == -1) {
                     ID = Integer.parseInt(handler.process(packet)[0]);
                 } else if (!gameStarted) {
-                    if (States.valueOf(handler.process(packet)[0]) == States.START) {
+                    if (States.valueOf(handler.process(packet)[0]) == States.COUNTDOWN) {
                         gameStarted = true;
                     }
                 } else {

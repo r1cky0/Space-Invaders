@@ -19,8 +19,8 @@ public class LocalMultiManger {
     private LocalMultiRender localMultiRender;
 
     public LocalMultiManger(){
-        gameState = States.INITIALIZATION;
         handler = new PacketHandler();
+        gameState = States.INITIALIZATION;
     }
 
     public void init(){
@@ -30,6 +30,7 @@ public class LocalMultiManger {
                 (Dimensions.MAX_HEIGHT - Dimensions.SHIP_HEIGHT));
         SpaceShip defaultShip = new SpaceShip(coordinate);
         shipManager = new ShipManager(defaultShip);
+        gameState = States.INITIALIZATION;
     }
 
     public void checkConnection() {
@@ -37,7 +38,7 @@ public class LocalMultiManger {
             gameState = States.WAITING;
         }
         if (client.isGameStarted()) {
-            gameState = States.START;
+            gameState = States.COUNTDOWN;
             localMultiRender = new LocalMultiRender(client, shipManager);
         }
     }

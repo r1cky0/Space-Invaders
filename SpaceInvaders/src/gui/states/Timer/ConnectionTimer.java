@@ -36,11 +36,6 @@ public class ConnectionTimer {
         }
     }
 
-    public void restart(){
-        stopTimer();
-        startTimer();
-    }
-
     public void stopTimer(){
         timer.cancel();
         timerStarted = false;

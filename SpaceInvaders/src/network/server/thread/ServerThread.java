@@ -1,16 +1,23 @@
-package network.server;
+package network.server.thread;
 
 import logic.manager.game.Commands;
+import logic.manager.game.States;
 import logic.player.Player;
 import network.data.Connection;
 import network.data.MessageBuilder;
 import network.data.PacketHandler;
+import network.server.game.manager.Multiplayer;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Thread che gestisce un client.
+ * Si occupa di eseguire un comando quando gli viene passato nel buffer dal server e con un secondo
+ * thread di inviare le informazioni di renderizzazione al client.
+ */
 public class ServerThread implements Runnable{
     private Multiplayer multiplayer;
     private Player player;
@@ -19,7 +26,7 @@ public class ServerThread implements Runnable{
     private MessageBuilder messageBuilder;
     private DatagramSocket socket;
 
-    private CopyOnWriteArrayList<String[]> infos;
+    private CopyOnWriteArrayList<String[]> commands;
 
     private AtomicBoolean running;
 
@@ -30,8 +37,7 @@ public class ServerThread implements Runnable{
         this.connection = connection;
         this.socket = socket;
         this.messageBuilder = messageBuilder;
-
-        infos = new CopyOnWriteArrayList<>();
+        commands = new CopyOnWriteArrayList<>();
         handler = new PacketHandler();
         running = new AtomicBoolean(true);
         start();
@@ -40,6 +46,7 @@ public class ServerThread implements Runnable{
     public void send(String mex) {
         try {
             //INVIO AL CLIENT IL SUO ID = POSIZIONE NELL'ARRAYLIST DI THREAD
+            //E POI L'INIZIO DEL COUNTDOWN
             socket.send(handler.build(String.valueOf(mex), connection));
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,8 +58,8 @@ public class ServerThread implements Runnable{
         listener.start();
     }
 
-    public synchronized void setInfos(String[] data){
-        infos.add(data);
+    public synchronized void setCommands(String[] data){
+        commands.add(data);
         notifyAll();
     }
 
@@ -60,15 +67,15 @@ public class ServerThread implements Runnable{
         String[] data;
         running.set(true);
         while(running.get()) {
-            if(infos.isEmpty()){
+            if(commands.isEmpty()){
                 try {
                     wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            data = infos.get(0);
-            infos.remove(0);
+            data = commands.get(0);
+            commands.remove(0);
             exe(data);
         }
     }
@@ -97,24 +104,23 @@ public class ServerThread implements Runnable{
      */
     public void sender() {
         Thread sender = new Thread(() -> {
-            String infos = "";
+            String info;
             running.set(true);
             while (running.get()) {
-                if(!infos.equals(messageBuilder.getInfo())) {
-                    infos = messageBuilder.getInfo();
-                    try {
-                        socket.send(handler.build(infos, connection));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
                 try {
+                    info = messageBuilder.getInfo();
+                    socket.send(handler.build(info, connection));
                     Thread.sleep(10);
-                } catch (InterruptedException e) {
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         sender.start();
     }
 

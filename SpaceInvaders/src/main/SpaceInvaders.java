@@ -1,6 +1,7 @@
 package main;
 
 import gui.states.IDStates;
+import gui.states.Timer.CountdownState;
 import gui.states.menu.*;
 import gui.states.multi.WaitingState;
 import gui.states.single.GameOverStateSingle;
@@ -34,6 +35,7 @@ public class SpaceInvaders extends StateBasedGame {
         addState(new RankingState(menu));
         addState(new GameOverStateSingle(menu));
         addState(new NewHighscoreState(menu));
+        addState(new CountdownState());
         addState(new TutorialState());
         enterState(IDStates.START_STATE);
     }

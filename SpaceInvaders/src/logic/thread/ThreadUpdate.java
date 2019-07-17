@@ -2,7 +2,7 @@ package logic.thread;
 
 import logic.manager.field.FieldManager;
 import logic.manager.game.States;
-import network.server.Multiplayer;
+import network.server.game.manager.Multiplayer;
 import logic.sprite.dinamic.bullets.Bullet;
 import main.Dimensions;
 import network.data.MessageBuilder;
@@ -37,11 +37,6 @@ public class ThreadUpdate implements Runnable{
      */
     public void run() {
         running.set(true);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         while(running.get()) {
             for (Bullet bullet : fieldManager.getInvaderBullets()) {
                 bullet.move(delta);
@@ -87,7 +82,7 @@ public class ThreadUpdate implements Runnable{
         }
     }
 
-    public void createInfo(){
+    private void createInfo(){
         Thread threadMessageCreator = new Thread(() -> {
             running.set(true);
             while (running.get())

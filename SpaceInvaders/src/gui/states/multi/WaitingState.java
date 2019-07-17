@@ -16,7 +16,6 @@ public class WaitingState extends BasicState {
     private Animation movingAnimation;
     private ConnectionTimer connectionTimer;
     private String title;
-    private boolean first;
 
     public WaitingState(){
         localMultiManger = new LocalMultiManger();
@@ -40,11 +39,8 @@ public class WaitingState extends BasicState {
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         stateBasedGame.addState(new MultiplayerState(localMultiManger));
         stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer, stateBasedGame);
-        stateBasedGame.addState(new CountdownState(IDStates.MULTIPLAYER_STATE));
-        stateBasedGame.getState(IDStates.COUNTDOWN_STATE).init(gameContainer,stateBasedGame);
         localMultiManger.init();
         connectionTimer.startTimer();
-        first = true;
     }
 
     @Override
@@ -62,13 +58,11 @@ public class WaitingState extends BasicState {
             localMultiManger.exit();
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
-        if (localMultiManger.getGameState().equals(States.START)) {
+        if (localMultiManger.getGameState().equals(States.COUNTDOWN)) {
             connectionTimer.stopTimer();
-                stateBasedGame.enterState(IDStates.COUNTDOWN_STATE);
-        } else if ((localMultiManger.getGameState().equals(States.WAITING)) && (first)) {
-            connectionTimer.restart();
+            stateBasedGame.enterState(IDStates.COUNTDOWN_STATE);
+        } else if (localMultiManger.getGameState().equals(States.WAITING)) {
             title = " WAITING FOR\nOTHER PLAYERS...";
-            first = false;
         }
     }
 

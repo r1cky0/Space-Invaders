@@ -1,4 +1,4 @@
-package network.server;
+package network.server.game.manager;
 
 import logic.manager.game.Game;
 import logic.manager.game.States;
@@ -9,7 +9,6 @@ import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.thread.ThreadUpdate;
 import network.data.MessageBuilder;
-
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Multiplayer extends Game {
@@ -22,9 +21,10 @@ public class Multiplayer extends Game {
     public Multiplayer(MessageBuilder messageBuilder){
         this.messageBuilder = messageBuilder;
         team = new Team();
+        gameState = States.WAITING;
     }
 
-    public Player init(int ID, String[] name){
+    public Player init(int ID){
         Coordinate coordinate = new Coordinate(0,0);
         SpaceShip defaultShip = new SpaceShip(coordinate);
         defaultShip.init();

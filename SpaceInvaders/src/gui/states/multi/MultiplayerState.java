@@ -12,12 +12,13 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 public class MultiplayerState extends BasicState {
     private LocalMultiManger localMultiManger;
 
-    public MultiplayerState(LocalMultiManger localMultiManger) {
+    MultiplayerState(LocalMultiManger localMultiManger) {
         this.localMultiManger = localMultiManger;
     }
 
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
+        getAudioplayer().game();
         gameContainer.getInput().clearKeyPressedRecord();
     }
 

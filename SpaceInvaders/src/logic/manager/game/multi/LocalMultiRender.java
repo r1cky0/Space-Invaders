@@ -11,7 +11,6 @@ import logic.sprite.unmovable.Brick;
 import network.client.Client;
 
 public class LocalMultiRender {
-
     private LocalMultiMessageHandler localMultiMessageHandler;
     private SpriteDrawer spriteDrawer;
     private int score;
@@ -43,9 +42,9 @@ public class LocalMultiRender {
         }
     }
 
-    private void bonusInvaderDrawer(String data){
+    private void bonusInvaderDrawer(String data) {
         BonusInvader bonusInvader = localMultiMessageHandler.bonusInvaderCreator(data);
-        if(bonusInvader != null){
+        if (bonusInvader != null) {
             spriteDrawer.render(bonusInvader);
         }
     }
@@ -63,12 +62,12 @@ public class LocalMultiRender {
     }
 
     private void shipDrawer(String data) {
-        for(SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, client.getID(), shipManager)){
+        for (SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, client.getID(), shipManager)) {
             spriteDrawer.render(spaceShip);
         }
     }
 
-    private void shipBulletDrawer(String data){
+    private void shipBulletDrawer(String data) {
         for (SpaceShipBullet spaceShipBullet : localMultiMessageHandler.shipBulletCreator(data)) {
             spriteDrawer.render(spaceShipBullet);
         }

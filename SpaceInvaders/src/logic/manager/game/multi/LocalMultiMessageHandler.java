@@ -24,7 +24,7 @@ public class LocalMultiMessageHandler {
     public ArrayList<Invader> invaderCreator(String data) {
         ArrayList<Invader> invaders = new ArrayList<>();
         for (String strings : data.split("\\t")) {
-            if(!strings.equals("")) {
+            if(!strings.isEmpty()) {
                 invaders.add(new Invader(converter(strings)));
             }
         }
@@ -32,7 +32,7 @@ public class LocalMultiMessageHandler {
     }
 
     public BonusInvader bonusInvaderCreator(String data){
-        if(!data.equals("")){
+        if(!data.isEmpty()) {
             return new BonusInvader(converter(data));
         }
         return null;
@@ -41,7 +41,7 @@ public class LocalMultiMessageHandler {
     public ArrayList<InvaderBullet> invaderBulletCreator(String data) {
         ArrayList<InvaderBullet> invaderBullets = new ArrayList<>();
         for (String strings : data.split("\\t")) {
-            if(!strings.equals("")) {
+            if(!strings.isEmpty()) {
                 invaderBullets.add(new InvaderBullet(converter(strings)));
             }
         }
@@ -51,7 +51,7 @@ public class LocalMultiMessageHandler {
     public ArrayList<Brick> bunkerCreator(String data) {
         ArrayList<Brick> bricks = new ArrayList<>();
         for (String strings : data.split("\\t")) {
-            if(!strings.equals("")) {
+            if(!strings.isEmpty()) {
                 Brick brick = new Brick(converter(strings));
                 brick.setLife(Integer.parseInt(strings.split("_")[2]));
                 bricks.add(brick);
@@ -63,7 +63,7 @@ public class LocalMultiMessageHandler {
     public ArrayList<SpaceShip> shipCreator(String data, int ID, ShipManager shipManager) {
         ArrayList<SpaceShip> spaceShips = new ArrayList<>();
         for (String strings : data.split("\\t")) {
-            if (!strings.equals("")) {
+            if (!strings.isEmpty()) {
                 if (ID == Integer.parseInt(strings.split("_")[3])) {
                     spaceShips.add(shipManager.getSpaceShip());
                     shipManager.getSpaceShip().setLife(Integer.parseInt(strings.split("_")[2]));
@@ -78,7 +78,7 @@ public class LocalMultiMessageHandler {
     public ArrayList<SpaceShipBullet> shipBulletCreator(String data){
         ArrayList<SpaceShipBullet> spaceShipBullets = new ArrayList<>();
         for (String strings : data.split("\\t")) {
-            if(!strings.equals("")) {
+            if(!strings.isEmpty()) {
                 spaceShipBullets.add(new SpaceShipBullet(converter(strings)));
             }
         }

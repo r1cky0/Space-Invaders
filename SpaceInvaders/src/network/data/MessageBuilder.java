@@ -1,7 +1,7 @@
 package network.data;
 
 import logic.manager.field.FieldManager;
-import network.server.Multiplayer;
+import network.server.game.manager.Multiplayer;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.SpaceShip;
@@ -24,16 +24,14 @@ import logic.sprite.unmovable.Bunker;
  * Fine messaggio indicata dal carattere '\r'
  *
  */
-
 public class MessageBuilder{
-
     private Multiplayer multiplayer;
     private String[] stringBuilders;
 
     public MessageBuilder(){
         stringBuilders = new String[8];
         for(int i=0;i<8;i++){
-            stringBuilders[i] = "";
+            stringBuilders[i] = " \n";
         }
     }
 
