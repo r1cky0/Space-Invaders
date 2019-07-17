@@ -25,6 +25,7 @@ public class GameOverStateSingle extends GameOverState implements ComponentListe
         this.menu = menu;
     }
 
+    @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         super.init(gameContainer,stateBasedGame);
         Image newGame = new Image(getReaderXmlFile().read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100);
@@ -32,21 +33,18 @@ public class GameOverStateSingle extends GameOverState implements ComponentListe
         newGameButton = new Button(gameContainer, newGame, posNewGame, IDStates.SINGLEPLAYER_STATE, this);
     }
 
+    @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
         super.enter(gameContainer, stateBasedGame);
         singlePlayer = menu.getSinglePlayer();
     }
 
+    @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         super.render(gameContainer,stateBasedGame,graphics);
         String score = "SCORE: " + singlePlayer.getPlayer().getSpaceShip().getCurrentScore();
         newGameButton.render(graphics);
         getTitleFont().drawString((gameContainer.getWidth() - getTitleFont().getWidth(score))/2f,7*gameContainer.getHeight()/100f, score);
-    }
-
-    @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-        super.update(gameContainer, stateBasedGame, delta);
     }
 
     /**

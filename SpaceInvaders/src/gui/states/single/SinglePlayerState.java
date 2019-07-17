@@ -37,6 +37,7 @@ public class SinglePlayerState extends BasicState {
 
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        getAudioplayer().game();
         singlePlayer = menu.getSinglePlayer();
         singlePlayer.startGame();
         spriteDrawer.addShipImage(menu.getCustomization().getCurrentShip());

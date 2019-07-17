@@ -1,6 +1,7 @@
 package gui.states.single;
 
 import gui.states.BasicState;
+import gui.states.GameOverState;
 import gui.states.IDStates;
 import gui.states.buttons.Button;
 import logic.manager.menu.Menu;
@@ -10,13 +11,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
-import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class NewHighscoreState extends BasicState implements ComponentListener {
-
     private Menu menu;
     private Image cupImage;
     private Button newGameButton;
@@ -31,7 +30,12 @@ public class NewHighscoreState extends BasicState implements ComponentListener {
         Image newGame = new Image(getReaderXmlFile().read("buttonNewGame")).getScaledCopy(30*gameContainer.getWidth()/100,10*gameContainer.getHeight()/100);
         Coordinate posNewGame = new Coordinate((gameContainer.getWidth() - newGame.getWidth())/2,80*gameContainer.getHeight()/100);
         newGameButton = new Button(gameContainer, newGame, posNewGame, IDStates.SINGLEPLAYER_STATE, this);
-        cupImage = new Image(getReaderXmlFile().read("buttonRanking")).getScaledCopy(40*gameContainer.getWidth()/100,40*gameContainer.getHeight()/100);
+        cupImage = new Image(getReaderXmlFile().read("buttonRanking")).getScaledCopy(35*gameContainer.getWidth()/100,35*gameContainer.getHeight()/100);
+    }
+
+    @Override
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
+        getAudioplayer().gameOver();
     }
 
     @Override
@@ -45,10 +49,6 @@ public class NewHighscoreState extends BasicState implements ComponentListener {
 
         newGameButton.render(graphics);
         getHomeButton().render(graphics);
-    }
-
-    @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
     }
 
     @Override

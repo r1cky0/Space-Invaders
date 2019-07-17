@@ -46,16 +46,6 @@ public class TutorialState extends BasicState implements ComponentListener {
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-        super.update(gameContainer, stateBasedGame, delta);
-    }
-
-    @Override
-    public void componentActivated(AbstractComponent source) {
-        super.componentActivated(source);
-    }
-
-    @Override
     public int getID() {
         return IDStates.TUTORIAL_STATE;
     }

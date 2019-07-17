@@ -45,11 +45,6 @@ public class RankingState extends BasicState implements ComponentListener {
         rankingRender();
     }
 
-    @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-        super.update(gameContainer, stateBasedGame, delta);
-    }
-
     private void rankingRender(){
         int offset = 0;
         int numPlayer = 0;

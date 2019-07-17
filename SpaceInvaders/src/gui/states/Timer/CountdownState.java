@@ -41,10 +41,6 @@ public class CountdownState extends BasicState {
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) {
-    }
-
-    @Override
     public int getID(){
         return IDStates.COUNTDOWN_STATE;
     }

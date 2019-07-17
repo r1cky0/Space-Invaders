@@ -17,11 +17,6 @@ public class MultiplayerState extends BasicState {
     }
 
     @Override
-    public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        super.init(gameContainer, stateBasedGame);
-    }
-
-    @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
         gameContainer.getInput().clearKeyPressedRecord();
     }

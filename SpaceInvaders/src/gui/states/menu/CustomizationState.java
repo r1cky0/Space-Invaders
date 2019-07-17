@@ -71,12 +71,7 @@ public class CustomizationState extends BasicState implements ComponentListener 
         }
         graphics.draw(cornice);
     }
-
-    @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-        super.update(gameContainer, stateBasedGame, delta);
-    }
-
+    
     @Override
     public void componentActivated(AbstractComponent source) {
         super.componentActivated(source);
