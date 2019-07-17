@@ -1,15 +1,19 @@
 package network.server.thread;
 
-import logic.manager.game.Commands;
-import logic.manager.game.States;
+import logic.manager.game.commands.CommandType;
 import logic.player.Player;
 import network.data.Connection;
 import network.data.MessageBuilder;
 import network.data.PacketHandler;
+import logic.manager.game.commands.Command;
+import logic.manager.game.commands.MoveLeft;
+import logic.manager.game.commands.MoveRight;
+import logic.manager.game.commands.Shot;
 import network.server.game.manager.Multiplayer;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -25,7 +29,8 @@ public class ServerThread implements Runnable{
     private PacketHandler handler;
     private MessageBuilder messageBuilder;
     private DatagramSocket socket;
-    private CopyOnWriteArrayList<String[]> commands;
+    private CopyOnWriteArrayList<String[]> clientCommands;
+    private HashMap<CommandType, Command> commands;
     private AtomicBoolean running;
 
     public ServerThread(Player player, Multiplayer multiplayer, Connection connection, DatagramSocket socket,
@@ -35,10 +40,21 @@ public class ServerThread implements Runnable{
         this.connection = connection;
         this.socket = socket;
         this.messageBuilder = messageBuilder;
-        commands = new CopyOnWriteArrayList<>();
+        clientCommands = new CopyOnWriteArrayList<>();
         handler = new PacketHandler();
         running = new AtomicBoolean(true);
+        initCommands();
         start();
+    }
+
+    /**
+     * Metodo che inizializza l'arrayList dei comandi.
+     */
+    private void initCommands(){
+        commands = new HashMap<>();
+        commands.put(CommandType.MOVE_LEFT, new MoveLeft());
+        commands.put(CommandType.MOVE_RIGHT, new MoveRight());
+        commands.put(CommandType.SHOT, new Shot());
     }
 
     /**
@@ -68,8 +84,8 @@ public class ServerThread implements Runnable{
      *
      * @param data comando
      */
-    public synchronized void setCommands(String[] data){
-        commands.add(data);
+    public synchronized void setClientCommands(String[] data){
+        clientCommands.add(data);
         notifyAll();
     }
 
@@ -81,15 +97,15 @@ public class ServerThread implements Runnable{
         String[] data;
         running.set(true);
         while(running.get()) {
-            if(commands.isEmpty()){
+            if(clientCommands.isEmpty()){
                 try {
                     wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            data = commands.get(0);
-            commands.remove(0);
+            data = clientCommands.get(0);
+            clientCommands.remove(0);
             exe(data);
         }
     }
@@ -100,19 +116,12 @@ public class ServerThread implements Runnable{
      * @param data comando da eseguire
      */
     private void exe(String[] data){
-        switch (Commands.valueOf(data[1])) {
-            case MOVE_LEFT:
-            case MOVE_RIGHT:
-                player.getSpaceShip().setX(Float.parseFloat(data[2]));
-                break;
-            case SHOT:
-                multiplayer.getFieldManager().shipShot(player.getSpaceShip());
-                break;
-            case EXIT:
-                multiplayer.getTeam().removePlayer(Integer.parseInt(data[0]));
-                stop();
-            default:
-                break;
+        CommandType command = CommandType.valueOf(data[1]);
+        if(command == CommandType.EXIT){
+            multiplayer.getTeam().removePlayer(Integer.parseInt(data[0]));
+            stop();
+        }else{
+            commands.get(command).exe(multiplayer.getFieldManager(), player.getSpaceShip(), Multiplayer.DELTA);
         }
     }
 

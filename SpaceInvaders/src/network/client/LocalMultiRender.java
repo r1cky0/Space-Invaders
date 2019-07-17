@@ -19,10 +19,8 @@ public class LocalMultiRender {
     private SpriteDrawer spriteDrawer;
     private int score;
     private States gameState;
-    private ShipManager shipManager;
 
-    public LocalMultiRender(ShipManager shipManager){
-        this.shipManager = shipManager;
+    public LocalMultiRender(){
         localMultiMessageHandler = new LocalMultiMessageHandler();
         spriteDrawer = new SpriteDrawer();
     }
@@ -104,7 +102,7 @@ public class LocalMultiRender {
      */
     private void shipDrawer(String data, int ID) {
         if(!data.equals(" ")) {
-            for (SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, ID, shipManager)) {
+            for (SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, ID)) {
                 spriteDrawer.render(spaceShip);
             }
         }
@@ -150,6 +148,6 @@ public class LocalMultiRender {
     public int getScore(){return score;}
 
     public int getLife(){
-        return shipManager.getSpaceShip().getLife();
+        return localMultiMessageHandler.getLife();
     }
 }

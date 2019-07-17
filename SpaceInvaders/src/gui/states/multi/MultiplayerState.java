@@ -20,14 +20,14 @@ public class MultiplayerState extends BasicState {
 
     MultiplayerState(LocalMultiManger localMultiManger) {
         this.localMultiManger = localMultiManger;
-        localMultiRender = new LocalMultiRender(localMultiManger.getShipManager());
+        life = 3;
     }
 
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame){
+        localMultiRender = new LocalMultiRender();
         getAudioplayer().game();
         gameContainer.getInput().clearKeyPressedRecord();
-        life = 3;
     }
 
     @Override
@@ -43,13 +43,13 @@ public class MultiplayerState extends BasicState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
         Input input = gameContainer.getInput();
         if(input.isKeyPressed(Input.KEY_SPACE)){
-            localMultiManger.execCommand(Input.KEY_SPACE, delta);
+            localMultiManger.execCommand(Input.KEY_SPACE);
         }
         if(input.isKeyDown(Input.KEY_RIGHT)){
-            localMultiManger.execCommand(Input.KEY_RIGHT, delta);
+            localMultiManger.execCommand(Input.KEY_RIGHT);
         }
         if(input.isKeyDown(Input.KEY_LEFT)){
-            localMultiManger.execCommand(Input.KEY_LEFT, delta);
+            localMultiManger.execCommand(Input.KEY_LEFT);
         }
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
             localMultiManger.exit();

@@ -1,7 +1,6 @@
 package logic.manager.game.single;
 
-import logic.manager.field.MovingDirections;
-import logic.manager.game.Commands;
+import logic.manager.game.commands.CommandType;
 import logic.manager.game.Game;
 import logic.manager.game.States;
 import logic.player.Player;
@@ -11,8 +10,12 @@ import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.unmovable.Bunker;
 import main.Dimensions;
-
+import logic.manager.game.commands.Command;
+import logic.manager.game.commands.MoveLeft;
+import logic.manager.game.commands.MoveRight;
+import logic.manager.game.commands.Shot;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,10 +27,22 @@ import java.util.List;
 public class SinglePlayer extends Game {
     private Player player;
     private SpaceShip spaceShip;
+    private HashMap<CommandType, Command> commands;
 
     public SinglePlayer(Player player) {
         this.player = player;
         spaceShip = getSpaceShip();
+        initCommands();
+    }
+
+    /**
+     * Metodo che inizializza l'arrayList dei comandi.
+     */
+    private void initCommands(){
+        commands = new HashMap<>();
+        commands.put(CommandType.MOVE_LEFT, new MoveLeft());
+        commands.put(CommandType.MOVE_RIGHT, new MoveRight());
+        commands.put(CommandType.SHOT, new Shot());
     }
 
     /**
@@ -41,23 +56,14 @@ public class SinglePlayer extends Game {
     /**
      * Metodo che si occupa dell'esecuzione dei comandi dell'utente in base al tasto premuto.
      *
-     * @param commands comando da eseguire
+     * @param commandType comando da eseguire
      * @param delta velocità
      */
-    public void execCommand(Commands commands, int delta){
-        switch (commands){
-            case MOVE_LEFT:
-                getFieldManager().shipMovement(spaceShip, MovingDirections.LEFT, delta);
-                break;
-            case MOVE_RIGHT:
-                getFieldManager().shipMovement(spaceShip,MovingDirections.RIGHT, delta);
-                break;
-            case SHOT:
-                getFieldManager().shipShot(spaceShip);
-                break;
-            case EXIT:
-                super.stopThreadInvader();
-                break;
+    public void execCommand(CommandType commandType, int delta){
+        if(commandType == CommandType.EXIT){
+            super.stopThreadInvader();
+        }else{
+            commands.get(commandType).exe(getFieldManager(), player.getSpaceShip(), delta);
         }
     }
 

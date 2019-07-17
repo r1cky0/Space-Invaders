@@ -4,7 +4,7 @@ import gui.drawer.SpriteDrawer;
 import gui.states.BasicState;
 import gui.states.IDStates;
 import logic.manager.game.single.SinglePlayer;
-import logic.manager.game.Commands;
+import logic.manager.game.commands.CommandType;
 import logic.manager.game.States;
 import logic.manager.menu.Menu;
 import logic.sprite.dinamic.bullets.Bullet;
@@ -14,7 +14,6 @@ import logic.sprite.unmovable.Bunker;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -74,19 +73,19 @@ public class SinglePlayerState extends BasicState {
         Input input = gameContainer.getInput();
 
         if(input.isKeyDown(Input.KEY_RIGHT)){
-            singlePlayer.execCommand(Commands.MOVE_RIGHT, delta);
+            singlePlayer.execCommand(CommandType.MOVE_RIGHT, delta);
         }
         if(input.isKeyDown(Input.KEY_LEFT)){
-            singlePlayer.execCommand(Commands.MOVE_LEFT, delta);
+            singlePlayer.execCommand(CommandType.MOVE_LEFT, delta);
         }
         if(input.isKeyPressed(Input.KEY_SPACE)){
             if(!singlePlayer.getSpaceShip().isShipShot()){
                 getAudioplayer().shot();
             }
-            singlePlayer.execCommand(Commands.SHOT, delta);
+            singlePlayer.execCommand(CommandType.SHOT, delta);
         }
         if (input.isKeyDown(Input.KEY_ESCAPE)){
-            singlePlayer.execCommand(Commands.EXIT, delta);
+            singlePlayer.execCommand(CommandType.EXIT, delta);
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         singlePlayer.update(delta);

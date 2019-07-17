@@ -79,7 +79,7 @@ public class Server implements Runnable {
                 if(info[0].equals("Hello")) {
                     addConnection(packet);
                 }else {
-                    clients.get(Integer.parseInt(info[0])).setCommands(info);
+                    clients.get(Integer.parseInt(info[0])).setClientCommands(info);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

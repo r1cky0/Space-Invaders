@@ -17,6 +17,12 @@ import java.util.ArrayList;
  */
 class LocalMultiMessageHandler {
 
+    private int life;
+
+    LocalMultiMessageHandler(){
+        life = 3;
+    }
+
     /**
      * Metodo che crea arraylist di invader.
      *
@@ -87,14 +93,14 @@ class LocalMultiMessageHandler {
      * @param data info ship
      * @return arraylist ship
      */
-    ArrayList<SpaceShip> shipCreator(String data, int ID, ShipManager shipManager) {
+    ArrayList<SpaceShip> shipCreator(String data, int ID) {
         ArrayList<SpaceShip> spaceShips = new ArrayList<>();
         boolean isLive = false;
         for (String strings : data.split("\\t")) {
             if (!strings.isEmpty()) {
                 if (ID == Integer.parseInt(strings.split("_")[3])) {
-                    spaceShips.add(shipManager.getSpaceShip());
-                    shipManager.getSpaceShip().setLife(Integer.parseInt(strings.split("_")[2]));
+                    spaceShips.add(new SpaceShip(converter(strings)));
+                    life = Integer.parseInt(strings.split("_")[2]);
                     isLive = true;
                 } else {
                     SpaceShip partnerShip = new SpaceShip(converter(strings));
@@ -104,7 +110,7 @@ class LocalMultiMessageHandler {
             }
         }
         if(!isLive){
-            shipManager.getSpaceShip().setLife(0);
+            life = 0;
         }
         return spaceShips;
     }
@@ -142,6 +148,10 @@ class LocalMultiMessageHandler {
 
     int getScore(String data){
         return Integer.parseInt(data);
+    }
+
+    int getLife(){
+        return life;
     }
 
 }
