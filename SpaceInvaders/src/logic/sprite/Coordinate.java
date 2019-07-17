@@ -1,5 +1,8 @@
 package logic.sprite;
 
+/**
+ * Classe che rappresenta la posizione di ogni elemento del gioco.
+ */
 public class Coordinate {
 
     private float x, y;

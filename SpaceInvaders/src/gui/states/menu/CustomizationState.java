@@ -19,6 +19,9 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.ArrayList;
 
+/**
+ * Stato che rappresenta la personalizzazione della ship del giocatore.
+ */
 public class CustomizationState extends BasicState implements ComponentListener {
     private Customization customization;
     private Shape cornice;

@@ -2,6 +2,10 @@ package network.data;
 
 import java.net.InetAddress;
 
+/**
+ * Classe che gestisce info connessione.
+ * Contiene indirizzo IP e porta del destinatario.
+ */
 public class Connection {
 
     private InetAddress destAddress;

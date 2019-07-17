@@ -10,6 +10,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+/**
+ * Stato che rappresenta la partita in modalità multiplayer.
+ */
 public class MultiplayerState extends BasicState {
     private LocalMultiManger localMultiManger;
     private LocalMultiRender localMultiRender;

@@ -17,7 +17,13 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.ResourceLoader;
 import java.awt.Font;
 
-
+/**
+ * Classe che estende la classe base della libreria di slick2d.
+ * Tutti gli stati di gioco estendono questa classe che inizializza gli oggetti comuni come il background,
+ * il game container e lo state based game.
+ * Inoltre contiene gli oggetti di audio player per la riproduzione della musice e di readXmlFile per la lettura
+ * delle risorse.
+ */
 public abstract class BasicState extends BasicGameState implements ComponentListener {
     private GameContainer gameContainer;
     private StateBasedGame stateBasedGame;
@@ -37,6 +43,10 @@ public abstract class BasicState extends BasicGameState implements ComponentList
         }
     }
 
+    /**
+     * Funzione richiamata durante l'inizializzazione degli stati.
+     *
+     */
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.gameContainer = gameContainer;
@@ -49,11 +59,19 @@ public abstract class BasicState extends BasicGameState implements ComponentList
         homeButton = new Button(gameContainer, homeImage, posHome, IDStates.MENU_STATE, this);
     }
 
+    /**
+     * Funzione per la renderizzazione negli stati.
+     *
+     */
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         background.draw(0, 0);
     }
 
+    /**
+     * Funzione per l'aggiornamento degli stati e il controllo di input.
+     *
+     */
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
         Input input = gameContainer.getInput();
@@ -63,9 +81,21 @@ public abstract class BasicState extends BasicGameState implements ComponentList
     }
 
     /**
-     * Metodo che esegue le operazioni di creazione font comuni a tutti gli stati
+     * Listener attivo sui bottoni.
      *
-     * @param size Dimensioni da apportare al font (ricordare di inserirle dinamiche alla finestra)
+     * @param source bottone premuto
+     */
+    @Override
+    public void componentActivated(AbstractComponent source) {
+        if (source == homeButton.getMouseOverArea()) {
+            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
+        }
+    }
+
+    /**
+     * Metodo che esegue le operazioni di creazione font.
+     *
+     * @param size Dimensioni da apportare al font
      */
     private UnicodeFont build(float size) {
         try {
@@ -79,14 +109,7 @@ public abstract class BasicState extends BasicGameState implements ComponentList
         } catch (Exception e) {
             e.printStackTrace();
         }
-       return null;
-    }
-
-    @Override
-    public void componentActivated(AbstractComponent source) {
-        if (source == homeButton.getMouseOverArea()) {
-            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
-        }
+        return null;
     }
 
     public Button getHomeButton(){

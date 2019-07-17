@@ -7,6 +7,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.MouseOverArea;
 
+/**
+ * Classe che rappresenta il bottone degli stati di gioco.
+ */
 public class Button {
     private Image image;
     private Coordinate position;
@@ -27,15 +30,27 @@ public class Button {
         mouseOverArea = new MouseOverArea(gameContainer,image,(int)position.getX(),(int)position.getY(),image.getWidth(),image.getHeight(), listener);
     }
 
+    /**
+     * Funzione per disegnare il bottone.
+     *
+     */
     public void render(Graphics graphics){
         mouseOverArea.render(gameContainer, graphics);
     }
 
+    /**
+     * Funzione per l'aggiunta del gameContainer.
+     *
+     */
     public void addGameContainer(GameContainer gameContainer){
         this.gameContainer = gameContainer;
         mouseOverArea = new MouseOverArea(gameContainer,image,(int)position.getX(),(int)position.getY(),image.getWidth(),image.getHeight());
     }
 
+    /**
+     * Funzione per l'aggiunta del listener sul buttone.
+     * @param listener
+     */
     public void addListener(ComponentListener listener){
         mouseOverArea.addListener(listener);
     }
@@ -55,4 +70,5 @@ public class Button {
     public MouseOverArea getMouseOverArea() {
         return mouseOverArea;
     }
+
 }

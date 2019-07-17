@@ -25,9 +25,7 @@ public class ServerThread implements Runnable{
     private PacketHandler handler;
     private MessageBuilder messageBuilder;
     private DatagramSocket socket;
-
     private CopyOnWriteArrayList<String[]> commands;
-
     private AtomicBoolean running;
 
     public ServerThread(Player player, Multiplayer multiplayer, Connection connection, DatagramSocket socket,
@@ -43,26 +41,42 @@ public class ServerThread implements Runnable{
         start();
     }
 
+    /**
+     * Metodo utilizzato per l'invio dei messaggi al client.
+     *
+     * @param mex contenuto messaggio
+     */
     public void send(String mex) {
         try {
-            //INVIO AL CLIENT IL SUO ID = POSIZIONE NELL'ARRAYLIST DI THREAD
-            //E POI L'INIZIO DEL COUNTDOWN
             socket.send(handler.build(String.valueOf(mex), connection));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void start() {
+    /**
+     * Attivazione thread listener.
+     */
+    private void start() {
         Thread listener = new Thread(this);
         listener.start();
     }
 
+    /**
+     * Metodo sincronizzato usato dal server per inserire nel buffer dei comandi il nuovo comando ricevuto.
+     * Quando viene inserito un comando viene notificato al listener thread che si risveglia e lo esegue.
+     *
+     * @param data comando
+     */
     public synchronized void setCommands(String[] data){
         commands.add(data);
         notifyAll();
     }
 
+    /**
+     * Thread listener: rimane in attesa fino a che non viene inserito un comando nel buffer, a quel punto lo legge
+     * e lo esegue e lo rimuove dal buffer.
+     */
     public synchronized void run() {
         String[] data;
         running.set(true);
@@ -80,6 +94,11 @@ public class ServerThread implements Runnable{
         }
     }
 
+    /**
+     * Metodo di esecuzione del comando sul multiplayer.
+     *
+     * @param data comando da eseguire
+     */
     private void exe(String[] data){
         switch (Commands.valueOf(data[1])) {
             case MOVE_LEFT:
@@ -98,33 +117,29 @@ public class ServerThread implements Runnable{
     }
 
     /**
-     * Invio dati al client.
-     * Il server invia a tutti i client le informazioni sullo stato del gioco e sulla posizione degli
+     * Thread di invio dati al client.
+     * Il server invia periodicamente a tutti i client le informazioni sullo stato del gioco e sulla posizione degli
      * elementi per permettere ai client di renderizzarli.
      */
     public void sender() {
         Thread sender = new Thread(() -> {
-            String info;
             running.set(true);
             while (running.get()) {
                 try {
-                    info = messageBuilder.getInfo();
-                    socket.send(handler.build(info, connection));
+                    send(messageBuilder.getInfo());
                     Thread.sleep(10);
-                } catch (IOException | InterruptedException e) {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         sender.start();
     }
 
-    public void stop() {
+    /**
+     * Metodo che stoppa i thread del server thread quando partita è finita o un giocatore la abbandona.
+     */
+    private void stop() {
         running.set(false);
     }
 

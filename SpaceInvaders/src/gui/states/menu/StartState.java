@@ -17,6 +17,9 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import java.awt.Font;
 
+/**
+ * Stato iniziale per il login o l'add account.
+ */
 public class StartState extends BasicState implements ComponentListener {
     private Menu menu;
 
@@ -106,6 +109,9 @@ public class StartState extends BasicState implements ComponentListener {
         }
     }
 
+    /**
+     * Funzione che crea i campi di testo per inserire i dati.
+     */
     private void createTextField(){
         Font font = new Font("Verdana", Font.BOLD,3*getGameContainer().getWidth()/100);
         TrueTypeFont ttf = new TrueTypeFont(font,true);
@@ -119,6 +125,9 @@ public class StartState extends BasicState implements ComponentListener {
         passwordField.setTextColor(Color.black);
     }
 
+    /**
+     * Funzione che crea i bottoni dello stato.
+     */
     private void createButton() throws SlickException {
         int width = 25*getGameContainer().getWidth()/100;
         int height = 10*getGameContainer().getHeight()/100;

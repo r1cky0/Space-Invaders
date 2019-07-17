@@ -14,6 +14,10 @@ import org.newdawn.slick.SlickException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Classe che si occupa di disegnare gli sprite.
+ * Contiene una mappa con Target e immagine associata.
+ */
 public class SpriteDrawer {
     private ReadXmlFile readerXmlFile;
     private HashMap<Target, Image> images;
@@ -35,10 +39,20 @@ public class SpriteDrawer {
         }
     }
 
+    /**
+     * Funzione per l'aggiunta dell'immagine personalizzata della ship del giocatore.
+     *
+     * @param shipType tag ship
+     */
     public void addShipImage(String shipType) throws SlickException {
         images.replace(Target.SHIP, new Image(readerXmlFile.read(shipType)));
     }
 
+    /**
+     * Funzione di renderizzazione che in base allo sprite disegna l'immagine associata.
+     *
+     * @param sprite sprite da renderizzare
+     */
     public void render(Sprite sprite){
         float x = sprite.getX() * SpaceInvaders.SCALE_X;
         float y = sprite.getY() * SpaceInvaders.SCALE_Y;

@@ -10,6 +10,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+/**
+ * Stato di attesa connessione e inizio partita multiplayer.
+ */
 public class WaitingState extends BasicState {
     private LocalMultiManger localMultiManger;
     private Animation movingAnimation;

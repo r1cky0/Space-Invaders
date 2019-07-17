@@ -5,17 +5,26 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Timer di countdown di 3 secondi prima dell'inizio del gioco in modalità multiplayer.
+ * Crea l'azione da eseguire una volta terminato il timer.
+ *
+ */
 class CountdownTimer {
     private StateBasedGame stateBasedGame;
     private Timer timer;
     private TimerTask timerTask;
-    private final int delayTime = 3000; //millis oltre il quale esco da waiting state multiplayer
+    private final int delayTime = 3000; //countdown di 3 sec
     private boolean timerStarted;
 
     CountdownTimer(StateBasedGame stateBasedGame){
         this.stateBasedGame = stateBasedGame;
     }
 
+    /**
+     * Metodo che avvia il timer.
+     * Quando scade entra nello stato della partita multiplayer.
+     */
     void startTimer(){
         if(!timerStarted) {
             timerTask = new TimerTask() {

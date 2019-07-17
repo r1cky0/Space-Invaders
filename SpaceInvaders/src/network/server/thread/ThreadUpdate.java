@@ -1,4 +1,4 @@
-package logic.thread;
+package network.server.thread;
 
 import logic.manager.field.FieldManager;
 import logic.manager.game.States;
@@ -9,6 +9,11 @@ import network.data.MessageBuilder;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Thread che controlla movimento degli sprite, le collisioni tra bullet e lo stato di gioco.
+ * Contiene secondo thread che si occupa della creazione periodica del messaggio che il server invia al client
+ * per la renderizzazione.
+ */
 public class ThreadUpdate implements Runnable{
     private MessageBuilder messageBuilder;
     private Multiplayer multiplayer;
@@ -24,6 +29,9 @@ public class ThreadUpdate implements Runnable{
         running = new AtomicBoolean(false);
     }
 
+    /**
+     * Avvio thread update e di creazione messaggio.
+     */
     public void start() {
         Thread thread = new Thread(this);
         thread.start();
@@ -31,9 +39,7 @@ public class ThreadUpdate implements Runnable{
     }
 
     /**
-     * La funzione di run del thread genera il messaggio che verrá inviato ai client per la renderizzazione
-     * degli elementi di gioco.
-     * Inoltre gestisce l'aggiornamento dello stato e degli elementi di gioco
+     * Thread che gestisce l'aggiornamento dello stato e degli elementi di gioco.
      */
     public void run() {
         running.set(true);
@@ -45,9 +51,7 @@ public class ThreadUpdate implements Runnable{
                     !(fieldManager.getBonusInvader().getX() + Dimensions.BONUSINVADER_WIDTH < Dimensions.MIN_WIDTH)){
                 fieldManager.getBonusInvader().moveLeft(delta);
             }
-            for (int ID : multiplayer.getPlayers().keySet()) {
-                checkCollision(ID);
-            }
+            checkCollision();
             checkGameState();
             try {
                 Thread.sleep(delta);
@@ -57,19 +61,27 @@ public class ThreadUpdate implements Runnable{
         }
     }
 
-    private void checkCollision(int ID){
-        if (multiplayer.getSpaceShip(ID).isShipShot()) {
-            multiplayer.getSpaceShipBullet(ID).move(delta);
-            if(fieldManager.checkSpaceShipShotCollision(multiplayer.getSpaceShip(ID))){
-                multiplayer.getTeam().calculateTeamCurrentScore();
+    /**
+     * Metodo per il controllo delle collisioni.
+     */
+    private void checkCollision(){
+        for (int ID : multiplayer.getPlayers().keySet()) {
+            if (multiplayer.getSpaceShip(ID).isShipShot()) {
+                multiplayer.getSpaceShipBullet(ID).move(delta);
+                if (fieldManager.checkSpaceShipShotCollision(multiplayer.getSpaceShip(ID))) {
+                    multiplayer.getTeam().calculateTeamCurrentScore();
+                }
             }
-        }
-        fieldManager.checkInvaderShotCollision(multiplayer.getSpaceShip(ID));
-        if(multiplayer.getSpaceShip(ID).getLife() == 0){
-            multiplayer.getTeam().removePlayer(ID);
+            fieldManager.checkInvaderShotCollision(multiplayer.getSpaceShip(ID));
+            if (multiplayer.getSpaceShip(ID).getLife() == 0) {
+                multiplayer.getTeam().removePlayer(ID);
+            }
         }
     }
 
+    /**
+     * Metodo per il controllo dello stato di gioco.
+     */
     private void checkGameState(){
         if(multiplayer.getPlayers().isEmpty() || fieldManager.isEndReached()){
             multiplayer.setGameState(States.GAMEOVER);
@@ -82,6 +94,9 @@ public class ThreadUpdate implements Runnable{
         }
     }
 
+    /**
+     * Thread che periodicamente crea il messaggio da inviare ai client.
+     */
     private void createInfo(){
         Thread threadMessageCreator = new Thread(() -> {
             running.set(true);
@@ -96,6 +111,9 @@ public class ThreadUpdate implements Runnable{
         threadMessageCreator.start();
     }
 
+    /**
+     * Metodo che termina l'esecuzione dei thread.
+     */
     public void stop() {
         running.set(false);
     }

@@ -2,11 +2,14 @@ package logic.manager.file;
 
 import java.io.*;
 
+/**
+ * Classe che si occupa della sovrascittura del file degli account.
+ * Si utilizza per aggionrare l'highscore e per salvare quale sia lo spirte scelto per la spaceship.
+ */
 public class FileModifier {
 
     /**
-     * Funzione per la sovrascittura del file degli account. Si utilizza per aggionrare l'highscore
-     * e per salvare quale sia lo spirte scelto per la spaceship
+     * Legge il file e modifica la riga del giocatore che sta giocando.
      *
      * @param name nome utente
      * @param highScore punteggio record

@@ -5,18 +5,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Classe che rappresenta la classifica del single player dei migliori 10 giocatori.
+ */
 public class Ranking {
-
     private HashMap<String,Integer> rank;
 
     Ranking(){
         rank = new HashMap<>();
     }
 
-    public HashMap getRank() {
-        return rank;
-    }
-
+    /**
+     * Creazione della classifica da lettura del file contenente gli highscore di tutti i giocatori salvati.
+     */
     public void createRanking() {
         try {
             BufferedReader in = new BufferedReader(new FileReader("res/players.txt"));
@@ -34,7 +35,7 @@ public class Ranking {
     }
 
     /**
-     * Creazione della classifica ordinata dal punteggio piú alto a quello piú basso per i primi 10 classificati
+     * Ordinamento classifica dal punteggio piú alto a quello piú basso per i primi 10 classificati
      */
     private void sortRanking() {
         Comparator<Map.Entry<String,Integer>> comp = Comparator.comparingInt(Map.Entry::getValue);
@@ -48,5 +49,9 @@ public class Ranking {
             temp.put(map.getKey(), map.getValue());
         }
         rank = temp;
+    }
+
+    public HashMap getRank() {
+        return rank;
     }
 }

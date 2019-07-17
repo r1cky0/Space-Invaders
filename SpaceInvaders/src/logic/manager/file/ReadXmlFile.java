@@ -6,8 +6,16 @@ import org.w3c.dom.Document;
 
 import java.io.File;
 
+/**
+ * Classe che si occupa della lettura dei path delle risorse contenute nel file xml.
+ */
 public class ReadXmlFile {
 
+    /**
+     * Lettura path.
+     * @param tag chiave che identifica i path nel file xml
+     * @return restituisce il path della risorsa
+     */
     public String read(String tag) {
         try {
             File file = new File("res/paths.xml");

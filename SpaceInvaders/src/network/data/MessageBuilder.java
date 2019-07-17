@@ -15,7 +15,7 @@ import logic.sprite.unmovable.Bunker;
  * - BONUSINVADER (posX_posY)
  * - INVADER BULLET (posX_posY)
  * - BRICK (posX_posY_life)
- * - SHIP (posX_posY_life)
+ * - SHIP (posX_posY_life_ID)
  * - SHIP BULLET (posX_posY)
  * - TEAM SCORE
  *
@@ -28,6 +28,9 @@ public class MessageBuilder{
     private Multiplayer multiplayer;
     private String[] stringBuilders;
 
+    /**
+     * Inizializzazione string builder
+     */
     public MessageBuilder(){
         stringBuilders = new String[8];
         for(int i=0;i<8;i++){
@@ -36,13 +39,10 @@ public class MessageBuilder{
     }
 
     /**
-     * Primo componente del messaggio da inviare ai client é lo stato di gioco
+     * Metodo richiamato per la creazione completa del messaggio.
      *
+     * @param multiplayer oggetto da cui prendere le informazioni
      */
-    private void setGameStateInfo(){
-        stringBuilders[0] = multiplayer.getGameState().toString() + "\n";
-    }
-
     public void setInfo(Multiplayer multiplayer){
         this.multiplayer = multiplayer;
         setGameStateInfo();
@@ -56,7 +56,15 @@ public class MessageBuilder{
     }
 
     /**
-     * Otteniamo tutte le info sulla posizione degli invaders (classici e bonus)
+     * Metodo che inserisce stato di gioco.
+     *
+     */
+    private void setGameStateInfo(){
+        stringBuilders[0] = multiplayer.getGameState().toString() + "\n";
+    }
+
+    /**
+     * Metodo che inserisce info invaders.
      *
      */
     private void setInvaderInfo(){
@@ -68,6 +76,9 @@ public class MessageBuilder{
         stringBuilders[1] = invaderInfo;
     }
 
+    /**
+     * Metodo che inserisce info bonus invader.
+     */
     private void setInvaderBonusInfo(){
         String invaderBonusInfo = "";
         if(multiplayer.getFieldManager().isBonusInvader()){
@@ -79,7 +90,7 @@ public class MessageBuilder{
     }
 
     /**
-     * Otteniamo le informazioni sui bullet sparati dagli invaders
+     * Metodo che inserisce info invader bullet.
      *
      */
     private void setInvaderBulletInfo(){
@@ -92,7 +103,7 @@ public class MessageBuilder{
     }
 
     /**
-     * Otteniamo le informazioni sui bunker e i rispettivi brick
+     * Metodo che inserisce info bunkers e relativi bricks.
      *
      **/
     private void setBunkerInfo(){
@@ -107,8 +118,7 @@ public class MessageBuilder{
     }
 
     /**
-     * Otteniamo informazioni riguardo la posizione delle space ship, la loro vita e, eventualmente, il bullet
-     * sparato
+     * Metodo che inserisce info sulle ship.
      *
      */
     private void setShipInfo(){
@@ -121,6 +131,9 @@ public class MessageBuilder{
         stringBuilders[5] = shipInfo;
     }
 
+    /**
+     * Metodo che inserisce info ship bullets.
+     */
     private void setShipBulletInfo(){
         String shipBulletInfo = "";
         for(Integer ID : multiplayer.getPlayers().keySet()) {
@@ -133,8 +146,24 @@ public class MessageBuilder{
         stringBuilders[6] = shipBulletInfo;
     }
 
+    /**
+     * Metodo che inserisce info team score.
+     */
     private void setTeamCurrentScore(){
         stringBuilders[7] = Integer.toString(multiplayer.getTeam().getTeamCurrentScore());
+    }
+
+    /**
+     * Costruzione del messaggio completo da inviare.
+     *
+     * @return stringa con le informazioni
+     */
+    public String getInfo(){
+        String infos = "";
+        for(int i=0;i<8;i++){
+            infos += stringBuilders[i];
+        }
+        return infos;
     }
 
     private SpaceShip getSpaceShip(int ID){
@@ -143,18 +172,6 @@ public class MessageBuilder{
 
     private Bullet getSpaceShipBullet(int ID){
         return getSpaceShip(ID).getShipBullet();
-    }
-
-    /**
-     * Costruzione del messaggio completo da inviare
-     * @return messaggio con le info necessarie
-     */
-    public String getInfo(){
-        String infos = "";
-        for(int i=0;i<8;i++){
-            infos += stringBuilders[i];
-        }
-        return infos;
     }
 
     private FieldManager getFieldManager(Multiplayer multiplayer){

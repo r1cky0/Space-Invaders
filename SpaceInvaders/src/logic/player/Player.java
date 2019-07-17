@@ -4,6 +4,10 @@ import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.SpaceShipBullet;
 
+/**
+ * Classe che rappresenta un giocatore.
+ * Contiene nome, l'highscore e la ship.
+ */
 public class Player {
     private String name;
     private int highScore;
@@ -41,10 +45,6 @@ public class Player {
 
     public SpaceShip getSpaceShip() {
         return spaceShip;
-    }
-
-    public Bullet getSpaceShipBullet(){
-        return spaceShip.getShipBullet();
     }
 
 }

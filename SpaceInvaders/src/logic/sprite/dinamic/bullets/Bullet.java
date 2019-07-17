@@ -5,7 +5,9 @@ import logic.sprite.Sprite;
 import logic.sprite.Target;
 import main.Dimensions;
 
-
+/**
+ * Classe che rappresenta il generico bullet.
+ */
 public abstract class Bullet extends Sprite{
 
     static float VERTICAL_OFFSET = 0.07f;

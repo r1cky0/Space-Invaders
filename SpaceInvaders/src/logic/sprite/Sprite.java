@@ -3,6 +3,11 @@ package logic.sprite;
 import logic.service.Facade;
 import org.newdawn.slick.geom.Shape;
 
+/**
+ * Classe generica che rappresenta gli sprite.
+ * Tutti gli sprite sono classi derivate.
+ * Contiene le dimensioni, la posizione e il target.
+ */
 public class Sprite {
     private Coordinate coordinate;
     private Facade facade;
@@ -18,6 +23,10 @@ public class Sprite {
         this.target = target;
     }
 
+    /**
+     * Metodo che utilizza la facade per determinare la collisione tra due shape.
+     *
+     */
     public boolean collides(Sprite sprite) {
         return facade.collides(sprite.getShape());
     }
@@ -37,16 +46,12 @@ public class Sprite {
         facade.setCoordinate(coordinate);
     }
 
-    public void setTarget(Target target){
+    protected void setTarget(Target target){
         this.target = target;
     }
 
     public Target getTarget(){
         return target;
-    }
-
-    public Facade getFacade(){
-        return facade;
     }
 
     public Shape getShape(){

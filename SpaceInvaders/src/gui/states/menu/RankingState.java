@@ -11,6 +11,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.*;
 
+/**
+ * Stato della classifica locale.
+ */
 public class RankingState extends BasicState implements ComponentListener {
     private Ranking ranking;
 
@@ -45,6 +48,9 @@ public class RankingState extends BasicState implements ComponentListener {
         rankingRender();
     }
 
+    /**
+     * Funzione che disegna la classifica.
+     */
     private void rankingRender(){
         int offset = 0;
         int numPlayer = 0;

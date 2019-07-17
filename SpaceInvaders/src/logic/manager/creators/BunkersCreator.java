@@ -5,6 +5,9 @@ import main.Dimensions;
 
 import java.util.ArrayList;
 
+/**
+ * Classe che si occupa della creazione dei bunker e dei suoi brick.
+ */
 public class BunkersCreator implements Creator{
 
     private ArrayList<Bunker> bunkers;

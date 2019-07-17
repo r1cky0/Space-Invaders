@@ -10,6 +10,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+/**
+ * Stato del tutorial.
+ */
 public class TutorialState extends BasicState implements ComponentListener {
     private Image leftImage;
     private Image rightImage;

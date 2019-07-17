@@ -7,6 +7,9 @@ import main.Dimensions;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Classe che si occupa della creazione degli invader.
+ */
 public class InvadersCreator implements Creator{
 
     private List<Invader> invaders;

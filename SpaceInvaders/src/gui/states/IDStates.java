@@ -1,5 +1,8 @@
 package gui.states;
 
+/**
+ * Classe che rappresenta gli ID dei vari stati del gioco.
+ */
 public class IDStates {
 
     public static final int START_STATE = 0;

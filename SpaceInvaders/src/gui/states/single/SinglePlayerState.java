@@ -19,6 +19,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+/**
+ * Stato che rappresenta la partita del giocatore singolo.
+ */
 public class SinglePlayerState extends BasicState {
     private SpriteDrawer spriteDrawer;
     private Menu menu;
@@ -100,6 +103,9 @@ public class SinglePlayerState extends BasicState {
         }
     }
 
+    /**
+     * Renderizzazione di tutti gli sprite del gioco.
+     */
     private void spriteRender(){
         spriteDrawer.render(singlePlayer.getSpaceShip());
         if (singlePlayer.isBonusInvader()) {

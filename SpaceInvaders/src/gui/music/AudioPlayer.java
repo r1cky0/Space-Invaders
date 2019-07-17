@@ -5,6 +5,9 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SlickException;
 
+/**
+ * Classe che si occupa di caricare gli audio e i suoni del gioco dalle risorse.
+ */
 public class AudioPlayer {
     private Music gameMusic;
     private Music gameOverMusic;
@@ -30,24 +33,36 @@ public class AudioPlayer {
     }
 
     /**
-     * Riproduzione dei file audio in modo ripetuto (metodo loop) o singolo (metodo play)
+     * Riproduzione del file audio della partita in modo ripetuto.
      */
     public void game(){
         gameMusic.loop(pitch, volume);
     }
 
+    /**
+     * Riproduzione del file audio del game over in modo ripetuto.
+     */
     public void gameOver(){
         gameOverMusic.loop(pitch, volume);
     }
 
+    /**
+     * Riproduzione del file audio dell menu in modo ripetuto.
+     */
     public void menu(){
         menuMusic.loop(pitch, volume);
     }
 
+    /**
+     * Riproduzione del suono di esplosione quando la ship viene colpita.
+     */
     public void explosion(){
         explosionEffect.play(pitch, volume);
     }
 
+    /**
+     * Riproduzione del suono di sparo della ship.
+     */
     public void shot(){
         shotEffect.play(pitch, volume);
     }

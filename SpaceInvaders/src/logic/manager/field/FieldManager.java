@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Classe che rappresenta il campo di gioco.
+ * Gestisce tutti gli elemanti del gioco.
+ */
 public class FieldManager {
     private InvadersCreator invadersCreator;
     private BunkersCreator bunkersCreator;
@@ -54,14 +58,16 @@ public class FieldManager {
         initComponents();
     }
 
+    /**
+     * Inizializzazione degli elementi all'inizio del gioco.
+     */
     private void initComponents(){
-        //inizializzazione di tutti gli elementi all'inizio del gioco
         invaders = invadersCreator.create();
         bunkers = bunkersCreator.create();
     }
 
     /**
-     * Reinizializzazione degli invaders e incremento life ship al nuovo livello.
+     * Reinizializzazione degli invaders al nuovo livello.
      *
      */
     private void nextLevel(){
@@ -72,6 +78,13 @@ public class FieldManager {
         bonusInLevel = false;
     }
 
+    /**
+     * Metodo per il movimento della ship.
+     * Controlla che non superi le dimensioni del campo di gioco.
+     *
+     * @param md direzione
+     * @param delta velocità
+     */
     public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
 
         if(((spaceShip.getX() + Dimensions.SHIP_WIDTH) < Dimensions.MAX_WIDTH) && (md == MovingDirections.RIGHT)){
@@ -101,8 +114,7 @@ public class FieldManager {
     /**
      * Funzione per controllare la collisione dei proittili sparati dagli invaders: prima rispetto ai bunker
      * (e i loro brick) e poi rispetto alla ship.
-     * Eliminazione del bullet nel caso in cui non collida con
-     * niente e giunga a fine schermata(y maggiore)
+     * Eliminazione del bullet nel caso in cui non collida con niente e giunga a fine schermata(y maggiore)
      *
      * @param spaceShip: ship con cui controllare collisione.
      */
@@ -130,8 +142,7 @@ public class FieldManager {
     /**
      * Funzione per controllare la collisione dei proittili sparati dal giocatore: prima rispetto ai bunker
      * (e i loro brick) e poi rispetto agli invaders.
-     * Eliminazione del bullet nel caso in cui non collida
-     * con niente e giunga a fine schermata(y minore)
+     * Eliminazione del bullet nel caso in cui non collida con niente e giunga a fine schermata(y minore)
      *
      * @param spaceShip: ship che effettua lo sparo.
      */
@@ -169,9 +180,9 @@ public class FieldManager {
 
     /**
      * Gestione del movimento degli invaders.
-     * Se viene raggiunto il limite laterale rispetto alla direzione di
-     * movimento tutti gli invaders shiftano verso il basso e la direzione laterale di movimento viene invertita
-     * settando il corrispondendo Enum 'MovingDirections'
+     * Se viene raggiunto il limite laterale rispetto alla direzione di movimento tutti gli invaders shiftano
+     * verso il basso e la direzione laterale di movimento viene invertita settando il corrispondente
+     * Enum 'MovingDirections'
      */
     public MovingDirections checkInvaderDirection() {
         double maxX = 0;
@@ -310,4 +321,5 @@ public class FieldManager {
     public void setBonusInvader(boolean value){
         bonus = value;
     }
+
 }

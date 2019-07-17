@@ -15,7 +15,11 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
 
-
+/**
+ * Classe avvio SpaceInvaders.
+ * Aggiunge gli stati di gioco alla lista degli stati e crea il gameContainer con le dimensioni proporzionali
+ * allo schermo del pc.
+ */
 public class SpaceInvaders extends StateBasedGame {
     private Menu menu;
     public static float SCALE_X;
@@ -26,6 +30,9 @@ public class SpaceInvaders extends StateBasedGame {
         this.menu = menu;
     }
 
+    /**
+     * Aggiunta stati di gioco.
+     */
     public void initStatesList(GameContainer gameContainer) {
         addState(new StartState(menu));
         addState(new MenuState(menu));

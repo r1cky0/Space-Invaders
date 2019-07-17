@@ -19,6 +19,9 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.ArrayList;
 
+/**
+ * Stato che rappresenta il menu di gioco.
+ */
 public class MenuState extends BasicState implements ComponentListener {
     private ArrayList<Button> buttons;
     private Menu menu;
@@ -68,6 +71,9 @@ public class MenuState extends BasicState implements ComponentListener {
         }
     }
 
+    /**
+     * Funzione che crea i bottoni dello stato.
+     */
     private void createButton() throws SlickException{
         Image single = new Image(getReaderXmlFile().read("buttonSinglePlayer")).getScaledCopy(30*getGameContainer().getWidth()/100, 10*getGameContainer().getHeight()/100);
         Coordinate posSingle = new Coordinate((getGameContainer().getWidth() - single.getWidth())/2,26*getGameContainer().getHeight()/100);

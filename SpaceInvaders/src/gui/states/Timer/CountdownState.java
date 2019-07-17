@@ -5,6 +5,10 @@ import gui.states.IDStates;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * Stato del countdown prima dell'inizio della partita in modalità multiplayer.
+ * Contiene l'animazione di attesa con il countdown.
+ */
 public class CountdownState extends BasicState {
     private Animation animation;
     private Image[] moving;

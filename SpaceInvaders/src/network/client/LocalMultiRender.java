@@ -9,6 +9,11 @@ import logic.sprite.dinamic.invaders.BonusInvader;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.unmovable.Brick;
 
+/**
+ * Classe che gestisce la renderizzazione degli elementi in locale durante il multiplayer.
+ * Utilizza il LocalMultiMesssageHandler per la conversione delle informazioni nel messaggio ottenuto e la creazione
+ * degli sprite.
+ */
 public class LocalMultiRender {
     private LocalMultiMessageHandler localMultiMessageHandler;
     private SpriteDrawer spriteDrawer;
@@ -22,6 +27,12 @@ public class LocalMultiRender {
         spriteDrawer = new SpriteDrawer();
     }
 
+    /**
+     * Metodo che disegna tutti gli elementi di gioco.
+     *
+     * @param rcvdata dati
+     * @param ID id client locale
+     */
     public void draw(String[] rcvdata, int ID){
         setGameState(rcvdata[0]);
         invaderDrawer(rcvdata[1]);
@@ -33,6 +44,11 @@ public class LocalMultiRender {
         setScore(rcvdata[7]);
     }
 
+    /**
+     * Medoto che disegna gli inveder
+     *
+     * @param data info invader
+     */
     private void invaderDrawer(String data) {
         if(!data.equals(" ")) {
             for (Invader invader : localMultiMessageHandler.invaderCreator(data)) {
@@ -41,6 +57,11 @@ public class LocalMultiRender {
         }
     }
 
+    /**
+     * Medoto che disegna il bonus inveder
+     *
+     * @param data info bonus invader
+     */
     private void bonusInvaderDrawer(String data) {
         if(!data.equals(" ")) {
             BonusInvader bonusInvader = localMultiMessageHandler.bonusInvaderCreator(data);
@@ -50,6 +71,11 @@ public class LocalMultiRender {
         }
     }
 
+    /**
+     * Medoto che disegna gli inveder bullet
+     *
+     * @param data info invader bullet
+     */
     private void invaderBulletDrawer(String data) {
         if(!data.equals(" ")) {
             for (InvaderBullet invaderBullet : localMultiMessageHandler.invaderBulletCreator(data)) {
@@ -58,6 +84,11 @@ public class LocalMultiRender {
         }
     }
 
+    /**
+     * Medoto che disegna i bunker
+     *
+     * @param data info bunker
+     */
     private void bunkerDrawer(String data) {
         if(!data.equals(" ")) {
             for (Brick brick : localMultiMessageHandler.bunkerCreator(data)) {
@@ -66,6 +97,11 @@ public class LocalMultiRender {
         }
     }
 
+    /**
+     * Medoto che disegna le ship
+     *
+     * @param data info ship
+     */
     private void shipDrawer(String data, int ID) {
         if(!data.equals(" ")) {
             for (SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, ID, shipManager)) {
@@ -74,6 +110,11 @@ public class LocalMultiRender {
         }
     }
 
+    /**
+     * Medoto che disegna gli ship bullet
+     *
+     * @param data info ship bullet
+     */
     private void shipBulletDrawer(String data) {
         if(!data.equals(" ")) {
             for (SpaceShipBullet spaceShipBullet : localMultiMessageHandler.shipBulletCreator(data)) {
@@ -82,12 +123,22 @@ public class LocalMultiRender {
         }
     }
 
+    /**
+     * Medoto che setta lo score
+     *
+     * @param data info score
+     */
     private void setScore(String data){
         if(!data.equals(" ")) {
             score = localMultiMessageHandler.getScore(data);
         }
     }
 
+    /**
+     * Medoto che setta stato gioco
+     *
+     * @param data info stato gioco
+     */
     private void setGameState(String data){
         if(!data.equals(" ")) {
             gameState = localMultiMessageHandler.getGameState(data);

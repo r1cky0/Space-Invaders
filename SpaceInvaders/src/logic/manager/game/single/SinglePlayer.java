@@ -15,6 +15,12 @@ import main.Dimensions;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che rappresenta la modalità di gioco singola.
+ * Si occupa di eseguire i comandi del giocatore e contollare movimento degli sprite,
+ * le collisioni tra bullet e lo stato di gioco.
+ *
+ */
 public class SinglePlayer extends Game {
     private Player player;
     private SpaceShip spaceShip;
@@ -24,11 +30,20 @@ public class SinglePlayer extends Game {
         spaceShip = getSpaceShip();
     }
 
+    /**
+     * Richiama start della superclasse che attiva thread invader e inizializza la ship.
+     */
     public void startGame(){
         super.startGame();
         spaceShip.init();
     }
 
+    /**
+     * Metodo che si occupa dell'esecuzione dei comandi dell'utente in base al tasto premuto.
+     *
+     * @param commands comando da eseguire
+     * @param delta velocità
+     */
     public void execCommand(Commands commands, int delta){
         switch (commands){
             case MOVE_LEFT:
@@ -46,6 +61,11 @@ public class SinglePlayer extends Game {
         }
     }
 
+    /**
+     * Thread che gestisce l'aggiornamento dello stato e degli elementi di gioco.
+     *
+     * @param delta velocità
+     */
     public void update(int delta) {
         for (Bullet bullet : getFieldManager().getInvaderBullets()) {
             bullet.move(delta);
@@ -66,15 +86,12 @@ public class SinglePlayer extends Game {
                 setGameState(States.GAMEOVER);
             }
         }
-        if(getFieldManager().isNewLevel()){
-            super.stopThreadInvader();
-            super.startThreadInvader();
-            getFieldManager().setNewLevel(false);
-            spaceShip.incrementLife();
-        }
         checkGameState();
     }
 
+    /**
+     * Metodo che controlla lo stato di gioco.
+     */
     private void checkGameState(){
         if (getGameState() == States.GAMEOVER || getFieldManager().isEndReached()) {
             super.stopThreadInvader();
@@ -83,6 +100,12 @@ public class SinglePlayer extends Game {
             }else {
                 setGameState(States.GAMEOVER);
             }
+        }
+        if(getFieldManager().isNewLevel()){
+            super.stopThreadInvader();
+            super.startThreadInvader();
+            getFieldManager().setNewLevel(false);
+            spaceShip.incrementLife();
         }
     }
 

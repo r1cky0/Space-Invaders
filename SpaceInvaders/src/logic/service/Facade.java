@@ -5,6 +5,10 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+/**
+ * Classe che utilizza funzione di slick per rilevare collisioni tra shape diverse.
+ * Si interfaccia con la logica del gioco e la libreria grafica.
+ */
 public class Facade {
     private Shape shape;
 
@@ -13,7 +17,7 @@ public class Facade {
     }
 
     /**
-     * Sfrutta la funzione di slick collides per rilevare collisioni tra shape diverse
+     * Utilizza la funzione collides di slick per rilevare collisioni tra shape.
      *
      * @param shape La forma con cui fare il check della collisione
      * @return Ritorna un booleano settato a true se collisione avvenuta

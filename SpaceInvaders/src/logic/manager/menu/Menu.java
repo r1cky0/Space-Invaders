@@ -9,7 +9,10 @@ import logic.player.Player;
 import logic.sprite.dinamic.SpaceShip;
 import main.Dimensions;
 
-
+/**
+ * Classe che rappresenta il menu di gioco.
+ *
+ */
 public class Menu {
     private FileModifier fileModifier;
     private SinglePlayer singlePlayer;
@@ -26,14 +29,13 @@ public class Menu {
         addAccount = new AddAccount();
         login = new Login();
         fileModifier = new FileModifier();
-        Coordinate coordinate = new Coordinate((Dimensions.MAX_WIDTH/2 - Dimensions.SHIP_WIDTH /2),
-                (Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH));
+        Coordinate coordinate = new Coordinate(0,0);
         defaultShip = new SpaceShip(coordinate);
+        defaultShip.init();
     }
 
     /**
-     * Funzione di creazione di un nuovo account attuata la quale viene inizializzato il fieldManager e il nuovo utente
-     * effettua automaticamente l' accesso
+     * Funzione di creazione di un nuovo account con creazione di nuovo utente.
      *
      * @param name Nickname del giocatore
      * @param password Password del giocatore
@@ -48,6 +50,14 @@ public class Menu {
         return false;
     }
 
+    /**
+     * Funzione per il login.
+     * Se il login va a buon fine setta highscore e currentship da lettura file.
+     *
+     * @param name Nickname del giocatore
+     * @param password Password del giocatore
+     * @return Segnala se login é andato a buon fine
+     */
     public boolean logIn(String name, String password){
         String [] components = login.tryLogin(name, password);
         if(components != null){
@@ -62,6 +72,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Funzione che salva le modifiche sul file.
+     */
     public void saveToFile(){
         fileModifier.modifyFile(player.getName(), player.getHighScore(), customization.getCurrentShip());
     }

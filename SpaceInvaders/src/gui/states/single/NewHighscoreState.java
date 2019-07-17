@@ -15,6 +15,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+/**
+ * Stato di nuovo highscore.
+ */
 public class NewHighscoreState extends BasicState implements ComponentListener {
     private Menu menu;
     private Image cupImage;

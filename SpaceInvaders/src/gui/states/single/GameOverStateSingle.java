@@ -16,6 +16,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+/**
+ * Stato di game over in single player.
+ */
 public class GameOverStateSingle extends GameOverState implements ComponentListener {
     private SinglePlayer singlePlayer;
     private Menu menu;

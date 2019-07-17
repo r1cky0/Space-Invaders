@@ -8,6 +8,11 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Timer di countdown di 30 secondi per la connessione al server.
+ * Crea l'azione da eseguire una volta terminato il timer.
+ *
+ */
 public class ConnectionTimer {
     private StateBasedGame stateBasedGame;
     private LocalMultiManger localMultiManger;
@@ -21,6 +26,11 @@ public class ConnectionTimer {
         this.localMultiManger = localMultiManger;
     }
 
+    /**
+     * Metodo che avvia il timer.
+     * Se il timer scade e quindi il client non è riuscito a connettersi al server, chiude la connessione e rientra
+     * nel stato del menu.
+     */
     public void startTimer(){
         if(!timerStarted) {
             timerTask = new TimerTask() {
@@ -36,6 +46,9 @@ public class ConnectionTimer {
         }
     }
 
+    /**
+     * Metodo per fermare il timer se il client è riuscito a connettersi al server.
+     */
     public void stopTimer(){
         timer.cancel();
         timerStarted = false;

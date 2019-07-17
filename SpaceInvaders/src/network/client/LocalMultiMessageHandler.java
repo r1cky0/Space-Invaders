@@ -11,16 +11,17 @@ import logic.sprite.unmovable.Brick;
 
 import java.util.ArrayList;
 
+/**
+ * Classe che si occupa di creare gli sprite dalle informazioni ricevuto nel messaggio inviato dal server.
+ */
 class LocalMultiMessageHandler {
 
-    States getGameState(String data){
-        return States.valueOf(data);
-    }
-
-    int getScore(String data){
-        return Integer.parseInt(data);
-    }
-
+    /**
+     * Metodo che crea arraylist di invader.
+     *
+     * @param data info invader
+     * @return arraylist invader
+     */
     ArrayList<Invader> invaderCreator(String data) {
         ArrayList<Invader> invaders = new ArrayList<>();
         for (String strings : data.split("\\t")) {
@@ -31,6 +32,12 @@ class LocalMultiMessageHandler {
         return invaders;
     }
 
+    /**
+     * Metodo che crea bonus invader.
+     *
+     * @param data info bonus invader
+     * @return bonus invader
+     */
     BonusInvader bonusInvaderCreator(String data){
         if(!data.isEmpty()) {
             return new BonusInvader(converter(data));
@@ -38,6 +45,12 @@ class LocalMultiMessageHandler {
         return null;
     }
 
+    /**
+     * Metodo che crea arraylist di invader bullet.
+     *
+     * @param data info invader bullet
+     * @return arraylist invader bullet
+     */
     ArrayList<InvaderBullet> invaderBulletCreator(String data) {
         ArrayList<InvaderBullet> invaderBullets = new ArrayList<>();
         for (String strings : data.split("\\t")) {
@@ -48,6 +61,12 @@ class LocalMultiMessageHandler {
         return invaderBullets;
     }
 
+    /**
+     * Metodo che crea arraylist di brick.
+     *
+     * @param data info brick
+     * @return arraylist brick
+     */
     ArrayList<Brick> bunkerCreator(String data) {
         ArrayList<Brick> bricks = new ArrayList<>();
         for (String strings : data.split("\\t")) {
@@ -60,6 +79,13 @@ class LocalMultiMessageHandler {
         return bricks;
     }
 
+    /**
+     * Metodo che crea arraylist di ship.
+     * Se la ship è quella del client locale, utilizzo informazioni in locale dello shipManager.
+     *
+     * @param data info ship
+     * @return arraylist ship
+     */
     ArrayList<SpaceShip> shipCreator(String data, int ID, ShipManager shipManager) {
         ArrayList<SpaceShip> spaceShips = new ArrayList<>();
         for (String strings : data.split("\\t")) {
@@ -75,6 +101,12 @@ class LocalMultiMessageHandler {
         return spaceShips;
     }
 
+    /**
+     * Metodo che crea arraylist di ship bullet.
+     *
+     * @param data info ship bullet
+     * @return arraylist ship bullet
+     */
     ArrayList<SpaceShipBullet> shipBulletCreator(String data){
         ArrayList<SpaceShipBullet> spaceShipBullets = new ArrayList<>();
         for (String strings : data.split("\\t")) {
@@ -85,9 +117,23 @@ class LocalMultiMessageHandler {
         return spaceShipBullets;
     }
 
+    /**
+     * Metodo che converte le informazioni della posizione da stringa a coordinata.
+     *
+     * @param data info posizione
+     * @return coordinata
+     */
     private Coordinate converter(String data){
         return new Coordinate(Float.parseFloat(data.split("_")[0]),
                 Float.parseFloat(data.split("_")[1]));
+    }
+
+    States getGameState(String data){
+        return States.valueOf(data);
+    }
+
+    int getScore(String data){
+        return Integer.parseInt(data);
     }
 
 }

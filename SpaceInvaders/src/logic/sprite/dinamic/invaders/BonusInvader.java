@@ -5,6 +5,10 @@ import logic.sprite.Sprite;
 import logic.sprite.Target;
 import main.Dimensions;
 
+/**
+ * Classe che rappresenta l'alieno bonus.
+ * Contiene il valore che si somma allo score quando viene colpito.
+ */
 public class BonusInvader extends Sprite {
 
     private final int value = 100;
@@ -15,7 +19,8 @@ public class BonusInvader extends Sprite {
 
     /**
      * A differenza degli altri invaders, quello bonus si sposta solo verso sinistra
-     * @param delta tempo di aggionramento della grafica
+     *
+     * @param delta velocità
      */
     public void moveLeft(int delta){
         float HORIZONTAL_OFFSET = 0.02f;

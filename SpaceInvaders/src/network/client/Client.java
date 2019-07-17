@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Classe client UDP.
+ *
+ */
 public class Client implements Runnable {
     private Connection connection;
     private DatagramSocket socket;
@@ -16,13 +20,18 @@ public class Client implements Runnable {
     private boolean gameStarted;
     private String[] rcvdata;
 
-    public Client(String destAddress, int destPort) {
+    /**
+     * Inizializzazione client con aggiunta di una nuova connessione e settaggio ID = -1.
+     *
+     * @param destAddress indirizzo IP server
+     * @param destPort porta server
+     */
+    Client(String destAddress, int destPort) {
         running = new AtomicBoolean(false);
         handler = new PacketHandler();
         gameStarted = false;
         ID = -1; //fintanto che il server non comunica un id al listener è settato a -1
         try {
-            //aggiunta connessione verso il server
             connection = new Connection(InetAddress.getByName(destAddress), destPort);
             init();
         } catch (IOException e) {
@@ -30,13 +39,21 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     * Inizializzazione socket con porta di ascolto del client e avvio del thread listener.
+     */
     private void init() throws SocketException {
         socket = new DatagramSocket(8888); //porta ascolto del client
         Thread listener = new Thread(this);
         listener.start();
     }
 
-    public void send(DatagramPacket packet) {
+    /**
+     * Metodo che si occupa di inviare pacchetti al server.
+     *
+     * @param packet pacchetto da inviare
+     */
+    void send(DatagramPacket packet) {
         try {
             socket.send(packet);
         } catch (IOException e) {
@@ -45,9 +62,11 @@ public class Client implements Runnable {
     }
 
     /**
-     * Ricezione dati dal server.
-     * Il server invia ai listener le informazioni sullo stato del gioco e sulla posizione degli
-     * elementi per permettere ai listener di renderizzare il tutto.
+     * Thread in ascolto di ricezione dati dal server.
+     * Se l'ID = -1 è il primo pacchetto che invia il server contenente il nuovo ID.
+     * Se il messaggio contiene lo stato di countdown, inizia la partita.
+     * Le informazioni successive vengono inserite in un buffer che verrà letto dalle classi che si
+     * occupano della renderizzazione in locale.
      */
     @Override
     public void run() {
@@ -72,6 +91,10 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     * Chiusura connessione.
+     * Chiusura socket e terminazione thread listener.
+     */
     public void close() {
         running.set(false);
         socket.close();

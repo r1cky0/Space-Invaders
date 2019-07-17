@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Classe server UDP che riceve fino a massimo 4 client, gestisce aggiunta di nuovi giocatori in un hashmap contenente
  * ID del giocatore e thread corrispondente.
- * Al raggiungimento del maxPlayer o dopo un timer di 30s fa partire la partita con i giocatori connessi.
+ * Al raggiungimento del maxPlayer o dopo un timer di 15 secondi fa partire la partita con i giocatori connessi.
  * A partita iniziata riceve messaggi con i comandi dei client e li smista ai vari server Thread corrispondenti.
  *
  */
@@ -34,6 +34,10 @@ public class Server implements Runnable {
     private int port;
     private final int maxPlayers = 4;
 
+    /**
+     * Inizializzazione server.
+     * @param port porta sulla quale si attiva il thread di ascolto
+     */
     Server(int port) {
         this.port = port;
         clients = new ConcurrentHashMap<>();
@@ -45,7 +49,10 @@ public class Server implements Runnable {
         init();
     }
 
-    public void init() {
+    /**
+     * Inizializzazione del server, apertura socket UDP e start del listener thread.
+     */
+    private void init() {
         try {
             this.socket = new DatagramSocket(port);
             Thread server = new Thread(this);
@@ -56,8 +63,9 @@ public class Server implements Runnable {
     }
 
     /**
-     * Thread server invia pacchetti ai client contententi info sullo stato di gioco e resta in ascolto
-     * per la ricezione di nuovi pacchetti
+     * Thread server che rimane in ascolto sulla porta di nuovi pacchetti da parte dei client.
+     * Se il pacchetto è quello di nuovo client ("Hello"), richiama metodo addConnection, altrimenti invia al server
+     * thread di gestione del client il comando ricevuto.
      */
     public void run() {
         runningServer.set(true);
@@ -80,10 +88,12 @@ public class Server implements Runnable {
     }
 
     /**
-     * Il server attende la connessione del numero di client necessari (e impostati a mano tra gli attributi) per
-     * l' inizio di una partita multiplayer. Istanzia per ognuno una nuova connessione
+     * Metodo che aggiunge alla mappa dei clients ID e server thread del nuovo client, se il gioco non è già iniziato.
+     * Dopo l'aggiunta viene inviato al client il suo ID = posizione nella mappa.
+     * Se la lista è vuota viene fatto partire il timer di attessa di altre connessioni.
+     * Se si è raggiunto il numero massimo di player, parte il gioco.
      *
-     * @param packet datagramPacket
+     * @param packet pacchetto 'Hello' nuovo client
      */
     private void addConnection(DatagramPacket packet) {
         if (clients.size() <= maxPlayers && !multiplayer.getGameState().equals(States.START)) {

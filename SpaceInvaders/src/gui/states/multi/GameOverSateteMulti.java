@@ -6,6 +6,9 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * Stato di game over in multiplayer.
+ */
 public class GameOverSateteMulti extends GameOverState implements ComponentListener {
     private int score;
 

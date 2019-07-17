@@ -5,6 +5,10 @@ import logic.sprite.Sprite;
 import logic.sprite.Target;
 import main.Dimensions;
 
+/**
+ * Classe che rappresenta un 'mattoncino' di cui sono costituiti i bunker.
+ * Ogni mattoncino ha una vita che si decrementa tutte le volte che viene colpito.
+ */
 public class Brick extends Sprite {
     private int life;
 
@@ -18,20 +22,26 @@ public class Brick extends Sprite {
         updateTarget();
     }
 
-    public int getLife() {
-        return life;
-    }
-
+    /**
+     * Decremento vita del brick.
+     */
     void decreaseLife() {
         life -= 1;
         updateTarget();
     }
 
+    /**
+     * Set del nuovo target del brick dopo decremento vita.
+     */
     private void updateTarget(){
         if(life>0) {
             String target = "BRICK" + (4 - life);
             super.setTarget(Target.valueOf(target));
         }
+    }
+
+    public int getLife() {
+        return life;
     }
 
 }

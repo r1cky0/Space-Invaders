@@ -18,6 +18,9 @@ public class ThreadInvader implements Runnable {
         running = new AtomicBoolean(false);
     }
 
+    /**
+     * Avvio thread.
+     */
     public void start() {
         thread = new Thread(this);
         thread.start();
@@ -46,6 +49,9 @@ public class ThreadInvader implements Runnable {
         }
     }
 
+    /**
+     * Metodo che termina l'esecuzione del thread.
+     */
     public void stop() {
         running.set(false);
     }

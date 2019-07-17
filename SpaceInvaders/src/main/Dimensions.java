@@ -1,5 +1,8 @@
 package main;
 
+/**
+ * Classe delle costanti delle dimensioni logiche del gioco.
+ */
 public class Dimensions {
 
     public static float MAX_WIDTH = 100;
