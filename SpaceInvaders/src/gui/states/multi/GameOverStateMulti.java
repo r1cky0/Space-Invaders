@@ -9,10 +9,10 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Stato di game over in multiplayer.
  */
-public class GameOverSateteMulti extends GameOverState implements ComponentListener {
+public class GameOverStateMulti extends GameOverState implements ComponentListener {
     private int score;
 
-    GameOverSateteMulti(int score){this.score = score;}
+    GameOverStateMulti(int score){this.score = score;}
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {

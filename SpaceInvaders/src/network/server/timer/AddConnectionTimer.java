@@ -7,6 +7,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Timer di countdown di 15 secondi sul server per l'inizio della partita.
+ * Crea l'azione da eseguire una volta terminato il timer.
+ *
+ */
 public class AddConnectionTimer {
     private Server server;
     private Timer timer;
@@ -18,6 +23,10 @@ public class AddConnectionTimer {
         this.server = server;
     }
 
+    /**
+     * Metodo che avvia il timer.
+     * Se il timer scade la partita inizia con il numero di giocatori connessi in quel momento.
+     */
     public void startTimer(){
         if(!timerStarted) {
             timerTask = new TimerTask() {
@@ -32,6 +41,9 @@ public class AddConnectionTimer {
         }
     }
 
+    /**
+     * Metodo per fermare il timer se il client è riuscito a connettersi al server.
+     */
     public void stopTimer(){
         timer.cancel();
         timerStarted = false;

@@ -17,7 +17,7 @@ class CountdownTimer {
     private final int delayTime = 3000; //countdown di 3 sec
     private boolean timerStarted;
 
-    CountdownTimer(StateBasedGame stateBasedGame){
+    public CountdownTimer(StateBasedGame stateBasedGame){
         this.stateBasedGame = stateBasedGame;
     }
 
@@ -25,7 +25,7 @@ class CountdownTimer {
      * Metodo che avvia il timer.
      * Quando scade entra nello stato della partita multiplayer.
      */
-    void startTimer(){
+    public void startTimer(){
         if(!timerStarted) {
             timerTask = new TimerTask() {
                 @Override
@@ -38,4 +38,5 @@ class CountdownTimer {
             timerStarted = true;
         }
     }
+
 }

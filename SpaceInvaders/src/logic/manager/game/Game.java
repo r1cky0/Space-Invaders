@@ -14,7 +14,7 @@ public abstract class Game {
     private ThreadInvader threadInvader;
     private boolean threadRunning;
 
-    protected Game(){
+    public Game(){
         threadRunning = false;
     }
 

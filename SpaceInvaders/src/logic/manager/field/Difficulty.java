@@ -6,23 +6,22 @@ package logic.manager.field;
  * più è basso il valore piu gli invader si muovono e sparano velocemente e quindi aumenta la difficoltà.
  */
 class Difficulty {
-
     private int difficulty;
 
-    Difficulty(){
+    public Difficulty(){
         this.difficulty = 900;
     }
 
     /**
      * Metodo richiamato ogni volta che si completa un livello.
      */
-    void incrementDifficulty(){
+    public void incrementDifficulty(){
         if(difficulty >= 500){
             difficulty -= 100;
         }
     }
 
-    int getDifficulty() {
+    public int getDifficulty() {
         return difficulty;
     }
 }

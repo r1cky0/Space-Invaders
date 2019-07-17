@@ -100,12 +100,13 @@ public class ThreadUpdate implements Runnable{
     private void createInfo(){
         Thread threadMessageCreator = new Thread(() -> {
             running.set(true);
-            while (running.get())
-            messageBuilder.setInfo(multiplayer);
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while (running.get()) {
+                messageBuilder.setInfo(multiplayer);
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         threadMessageCreator.start();

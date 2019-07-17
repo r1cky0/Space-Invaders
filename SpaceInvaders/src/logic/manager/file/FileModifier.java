@@ -32,10 +32,10 @@ public class FileModifier {
                 oldContent.append(line).append(System.lineSeparator());
                 line = in.readLine();
             }
-            String[] componenti = oldLine.split("\\t");
-            componenti[2] = Integer.toString(highScore);
-            componenti[3] = shipType;
-            String newLine = componenti[0] + "\t" + componenti[1] + "\t" + componenti[2] + "\t" + componenti[3];
+            String[] components = oldLine.split("\\t");
+            components[2] = Integer.toString(highScore);
+            components[3] = shipType;
+            String newLine = components[0] + "\t" + components[1] + "\t" + components[2] + "\t" + components[3];
             String newContent = oldContent.toString().replaceAll(oldLine, newLine);
             FileWriter out = new FileWriter(fileToBeModified);
             out.write(newContent);

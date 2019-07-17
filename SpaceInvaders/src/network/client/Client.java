@@ -53,7 +53,7 @@ public class Client implements Runnable {
      *
      * @param packet pacchetto da inviare
      */
-    void send(DatagramPacket packet) {
+    public void send(DatagramPacket packet) {
         try {
             socket.send(packet);
         } catch (IOException e) {

@@ -139,7 +139,7 @@ public class Server implements Runnable {
     /**
      * Rimozione dei client che sono usciti. Conclusione del gioco se la lista dei client é vuota
      */
-    void checkEndClients() {
+    public void checkEndClients() {
         for (int ID : clients.keySet()) {
             if (!clients.get(ID).isRunning().get()) {
                 clients.remove(ID);

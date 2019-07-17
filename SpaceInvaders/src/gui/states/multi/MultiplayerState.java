@@ -18,7 +18,7 @@ public class MultiplayerState extends BasicState {
     private LocalMultiRender localMultiRender;
     private int life;
 
-    MultiplayerState(LocalMultiManger localMultiManger) {
+    public MultiplayerState(LocalMultiManger localMultiManger) {
         this.localMultiManger = localMultiManger;
         life = 3;
     }
@@ -58,7 +58,7 @@ public class MultiplayerState extends BasicState {
         if(localMultiRender.getGameState() == States.GAMEOVER){
             localMultiManger.exit();
             try {
-                stateBasedGame.addState(new GameOverSateteMulti(localMultiRender.getScore()));
+                stateBasedGame.addState(new GameOverStateMulti(localMultiRender.getScore()));
                 stateBasedGame.getState(IDStates.GAMEOVERMULTI_STATE).init(gameContainer,stateBasedGame);
                 stateBasedGame.enterState(IDStates.GAMEOVERMULTI_STATE,new FadeOutTransition(),new FadeInTransition());
             } catch (SlickException e) {

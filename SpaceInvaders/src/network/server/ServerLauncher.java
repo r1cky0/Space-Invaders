@@ -1,5 +1,7 @@
 package network.server;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class ServerLauncher {
 
     /**
@@ -8,7 +10,8 @@ public class ServerLauncher {
      */
     public static void main(String[] args){
         Server server = new Server(9999);
-        while (true){
+        AtomicBoolean running = new AtomicBoolean(true);
+        while (running.get()){
             server.checkEndClients();
             try {
                 Thread.sleep(1000);

@@ -10,7 +10,6 @@ import main.Dimensions;
  * Contiene il valore che si somma allo score quando viene colpito.
  */
 public class BonusInvader extends Sprite {
-
     private final int value = 100;
 
     public BonusInvader(Coordinate coordinate){

@@ -25,7 +25,7 @@ public class Brick extends Sprite {
     /**
      * Decremento vita del brick.
      */
-    void decreaseLife() {
+    public void decreaseLife() {
         life -= 1;
         updateTarget();
     }

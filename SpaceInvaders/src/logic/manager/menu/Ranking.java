@@ -11,7 +11,7 @@ import java.util.*;
 public class Ranking {
     private HashMap<String,Integer> rank;
 
-    Ranking(){
+    public Ranking(){
         rank = new HashMap<>();
     }
 

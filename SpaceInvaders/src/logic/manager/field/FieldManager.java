@@ -23,38 +23,34 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class FieldManager {
     private InvadersCreator invadersCreator;
     private BunkersCreator bunkersCreator;
-
     //STATE
     private boolean endReached;
     private boolean newLevel;
     private boolean bonus;
     private boolean bonusInLevel;
-
+    private Difficulty difficulty;
+    //SPRITE
     private List<Invader> invaders;
     private BonusInvader bonusInvader;
     private ArrayList<Bunker> bunkers;
     private List<Bullet> invaderBullets;
     private MovingDirections md;
     private boolean goDown;
-    private Difficulty difficulty;
+
 
     public FieldManager(){
         invadersCreator = new InvadersCreator();
         bunkersCreator = new BunkersCreator();
-
         bunkers = new ArrayList<>();
         invaderBullets = new CopyOnWriteArrayList<>();
         invaders = new CopyOnWriteArrayList<>();
         md = MovingDirections.RIGHT;
         goDown = false;
-
         difficulty = new Difficulty(); //millisecondi pausa sparo/movimento alieni
-
         bonus = false;
         bonusInLevel = false;
         endReached = false;
         newLevel = false;
-
         initComponents();
     }
 
@@ -86,15 +82,12 @@ public class FieldManager {
      * @param delta velocità
      */
     public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
-
         if(((spaceShip.getX() + Dimensions.SHIP_WIDTH) < Dimensions.MAX_WIDTH) && (md == MovingDirections.RIGHT)){
             spaceShip.moveRight(delta);
         }
-
         if((spaceShip.getX() > Dimensions.MIN_WIDTH) && (md == MovingDirections.LEFT)){
             spaceShip.moveLeft(delta);
         }
-
     }
 
     /**
@@ -199,7 +192,6 @@ public class FieldManager {
         if(((maxX + Dimensions.INVADER_WIDTH + Invader.HORIZONTAL_OFFSET) > Dimensions.MAX_WIDTH) && !goDown){
             goDown = true;
             return MovingDirections.DOWN;
-
         } else if((minX - Invader.HORIZONTAL_OFFSET < Dimensions.MIN_WIDTH) && !goDown) {
             goDown = true;
             return MovingDirections.DOWN;

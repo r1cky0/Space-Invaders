@@ -7,7 +7,6 @@ import java.net.InetAddress;
  * Contiene indirizzo IP e porta del destinatario.
  */
 public class Connection {
-
     private InetAddress destAddress;
     private int destPort;
 

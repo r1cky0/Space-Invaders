@@ -10,7 +10,6 @@ import main.Dimensions;
  * Contiene il valore che si somma allo score quando viene colpito.
  */
 public class Invader extends Sprite {
-
     private final int value = 10;
     public static float HORIZONTAL_OFFSET = 2;
 

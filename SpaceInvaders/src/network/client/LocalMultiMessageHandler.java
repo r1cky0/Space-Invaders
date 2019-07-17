@@ -19,7 +19,7 @@ class LocalMultiMessageHandler {
 
     private int life;
 
-    LocalMultiMessageHandler(){
+    public LocalMultiMessageHandler(){
         life = 3;
     }
 
@@ -29,7 +29,7 @@ class LocalMultiMessageHandler {
      * @param data info invader
      * @return arraylist invader
      */
-    ArrayList<Invader> invaderCreator(String data) {
+    public ArrayList<Invader> invaderCreator(String data) {
         ArrayList<Invader> invaders = new ArrayList<>();
         for (String strings : data.split("\\t")) {
             if(!strings.isEmpty()) {
@@ -45,7 +45,7 @@ class LocalMultiMessageHandler {
      * @param data info bonus invader
      * @return bonus invader
      */
-    BonusInvader bonusInvaderCreator(String data){
+    public BonusInvader bonusInvaderCreator(String data){
         if(!data.isEmpty()) {
             return new BonusInvader(converter(data));
         }
@@ -58,7 +58,7 @@ class LocalMultiMessageHandler {
      * @param data info invader bullet
      * @return arraylist invader bullet
      */
-    ArrayList<InvaderBullet> invaderBulletCreator(String data) {
+    public ArrayList<InvaderBullet> invaderBulletCreator(String data) {
         ArrayList<InvaderBullet> invaderBullets = new ArrayList<>();
         for (String strings : data.split("\\t")) {
             if(!strings.isEmpty()) {
@@ -74,7 +74,7 @@ class LocalMultiMessageHandler {
      * @param data info brick
      * @return arraylist brick
      */
-    ArrayList<Brick> bunkerCreator(String data) {
+    public ArrayList<Brick> bunkerCreator(String data) {
         ArrayList<Brick> bricks = new ArrayList<>();
         for (String strings : data.split("\\t")) {
             if(!strings.isEmpty()) {
@@ -93,7 +93,7 @@ class LocalMultiMessageHandler {
      * @param data info ship
      * @return arraylist ship
      */
-    ArrayList<SpaceShip> shipCreator(String data, int ID) {
+    public ArrayList<SpaceShip> shipCreator(String data, int ID) {
         ArrayList<SpaceShip> spaceShips = new ArrayList<>();
         boolean isLive = false;
         for (String strings : data.split("\\t")) {
@@ -121,7 +121,7 @@ class LocalMultiMessageHandler {
      * @param data info ship bullet
      * @return arraylist ship bullet
      */
-    ArrayList<SpaceShipBullet> shipBulletCreator(String data){
+    public ArrayList<SpaceShipBullet> shipBulletCreator(String data){
         ArrayList<SpaceShipBullet> spaceShipBullets = new ArrayList<>();
         for (String strings : data.split("\\t")) {
             if(!strings.isEmpty()) {
@@ -142,15 +142,15 @@ class LocalMultiMessageHandler {
                 Float.parseFloat(data.split("_")[1]));
     }
 
-    States getGameState(String data){
+    public States getGameState(String data){
         return States.valueOf(data);
     }
 
-    int getScore(String data){
+    public int getScore(String data){
         return Integer.parseInt(data);
     }
 
-    int getLife(){
+    public int getLife(){
         return life;
     }
 

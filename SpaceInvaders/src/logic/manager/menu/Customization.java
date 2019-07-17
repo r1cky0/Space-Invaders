@@ -10,7 +10,7 @@ public class Customization {
     private String currentShip;
     private ArrayList<String> spaceShips;
 
-    Customization() {
+    public Customization() {
         spaceShips = new ArrayList<>();
         currentShip = "ship0";
         initShips();

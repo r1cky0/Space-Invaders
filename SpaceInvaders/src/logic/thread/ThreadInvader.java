@@ -6,6 +6,10 @@ import java.awt.font.TextHitInfo;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Il thread gestisce il movimento e lo sparo(randomico) degli invaders.
+ * Inoltre, puó determinare la generazione di un invader "bonus" per punti extra
+ */
 public class ThreadInvader implements Runnable {
     private FieldManager fieldManager;
     private Thread thread;
@@ -27,8 +31,7 @@ public class ThreadInvader implements Runnable {
     }
 
     /**
-     * Il thread gestisce il movimento e lo sparo(randomico) degli invaders.
-     * Inoltre, puó determinare la generazione di un invader "bonus" per punti extra
+     * Thread che esegue il controllo degli alieni.
      */
     public void run() {
         running.set(true);

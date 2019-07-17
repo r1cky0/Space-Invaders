@@ -49,7 +49,7 @@ public class Button {
 
     /**
      * Funzione per l'aggiunta del listener sul buttone.
-     * @param listener
+     * @param listener listener
      */
     public void addListener(ComponentListener listener){
         mouseOverArea.addListener(listener);

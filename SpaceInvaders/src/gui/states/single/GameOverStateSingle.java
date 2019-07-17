@@ -66,4 +66,5 @@ public class GameOverStateSingle extends GameOverState implements ComponentListe
     public int getID() {
         return IDStates.GAMEOVERSINGLE_STATE;
     }
+
 }
