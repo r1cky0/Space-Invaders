@@ -76,27 +76,27 @@ public class MenuState extends BasicState implements ComponentListener {
      */
     private void createButton() throws SlickException{
         Image single = new Image(getReaderXmlFile().read("buttonSinglePlayer")).getScaledCopy(30*getGameContainer().getWidth()/100, 10*getGameContainer().getHeight()/100);
-        Coordinate posSingle = new Coordinate((getGameContainer().getWidth() - single.getWidth())/2,26*getGameContainer().getHeight()/100);
+        Coordinate posSingle = new Coordinate((getGameContainer().getWidth() - single.getWidth())/2f,26*getGameContainer().getHeight()/100f);
         buttons.add(new Button(single, posSingle, IDStates.SINGLEPLAYER_STATE));
 
         Image multi = new Image(getReaderXmlFile().read("buttonMultiplayer")).getScaledCopy(30*getGameContainer().getWidth()/100,10*getGameContainer().getHeight()/100);
-        Coordinate posMulti = new Coordinate((getGameContainer().getWidth() - multi.getWidth())/2,45*getGameContainer().getHeight()/100);
+        Coordinate posMulti = new Coordinate((getGameContainer().getWidth() - multi.getWidth())/2f,45*getGameContainer().getHeight()/100f);
         buttons.add(new Button(multi, posMulti, IDStates.WAITING_STATE));
 
         Image custom = new Image(getReaderXmlFile().read("buttonSettings")).getScaledCopy(8*getGameContainer().getWidth()/100,10*getGameContainer().getHeight()/100);
-        Coordinate posCustom = new Coordinate(35*getGameContainer().getWidth()/100,63*getGameContainer().getHeight()/100);
+        Coordinate posCustom = new Coordinate(35*getGameContainer().getWidth()/100f,63*getGameContainer().getHeight()/100f);
         buttons.add(new Button(custom, posCustom, IDStates.CUSTOMIZATION_STATE));
 
         Image ranking = new Image(getReaderXmlFile().read("buttonRanking")).getScaledCopy(12*getGameContainer().getWidth()/100,12*getGameContainer().getHeight()/100);
-        Coordinate posRanking = new Coordinate(55*getGameContainer().getWidth()/100,63*getGameContainer().getHeight()/100);
+        Coordinate posRanking = new Coordinate(55*getGameContainer().getWidth()/100f,63*getGameContainer().getHeight()/100f);
         buttons.add(new Button(ranking, posRanking, IDStates.RANKING_STATE));
 
-        Image help = new Image(getReaderXmlFile().read("buttonHelp")).getScaledCopy(12*getGameContainer().getWidth()/100,12*getGameContainer().getHeight()/100);
-        Coordinate posHelp = new Coordinate(85*getGameContainer().getWidth()/100,4*getGameContainer().getHeight()/100);
+        Image help = new Image(getReaderXmlFile().read("buttonHelp")).getScaledCopy(12*getGameContainer().getWidth()/100,13*getGameContainer().getHeight()/100);
+        Coordinate posHelp = new Coordinate(85*getGameContainer().getWidth()/100f,4*getGameContainer().getHeight()/100f);
         buttons.add(new Button(help, posHelp, IDStates.TUTORIAL_STATE));
 
         Image exit = new Image(getReaderXmlFile().read("buttonExit")).getScaledCopy(15*getGameContainer().getWidth()/100,10*getGameContainer().getHeight()/100);
-        Coordinate posExit = new Coordinate((getGameContainer().getWidth() - exit.getWidth())/2,80*getGameContainer().getHeight()/100);
+        Coordinate posExit = new Coordinate((getGameContainer().getWidth() - exit.getWidth())/2f,80*getGameContainer().getHeight()/100f);
         buttons.add(new Button(exit, posExit, IDStates.START_STATE));
     }
 
