@@ -48,30 +48,22 @@ public class LocalMultiManger {
      * Metodo che gestisce l'uscita del giocatore dalla partita.
      * Invia al server il comando exit che elimina il giocatore dalla lista dei client e chiude la connessione.
      */
-    public void exit() {
-        message = client.getID() + "\n" + CommandType.EXIT.toString();
+    private void exit() {
         client.send(handler.build(message, client.getConnection()));
         client.close();
     }
 
     /**
-     * Metodo che gestisce l'esecuzione dei comandi del giocatore.
-     * In base al tasto premuto viene creata la stringa del comando da inviare al server.
+     * Metodo che gestisce l'invio del comando eseguito dal giocatore al server.
      *
-     * @param inputButton bottone premuto
+     * @param commandType comando eseguito
      */
-    public void execCommand(int inputButton) {
-        message = client.getID() + "\n";
-        if (inputButton == Input.KEY_RIGHT) {
-            message += CommandType.MOVE_RIGHT.toString();
-        }
-        if (inputButton == Input.KEY_LEFT) {
-            message += CommandType.MOVE_LEFT.toString();
-        }
-        if (inputButton == Input.KEY_SPACE) {
-            message += CommandType.SHOT.toString();
-        }
+    public void sendCommand(CommandType commandType) {
+        message = client.getID() + "\n" + commandType.toString();
         client.send(handler.build(message, client.getConnection()));
+        if(commandType.equals(CommandType.EXIT)){
+            exit();
+        }
     }
 
     public String[] getRcvdata() {

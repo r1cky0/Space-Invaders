@@ -1,10 +1,9 @@
 package gui.states.single;
 
 import gui.drawer.SpriteDrawer;
-import gui.states.BasicState;
+import gui.states.GameState;
 import gui.states.IDStates;
 import logic.manager.game.single.SinglePlayer;
-import logic.manager.game.commands.CommandType;
 import logic.manager.game.States;
 import logic.manager.menu.Menu;
 import logic.sprite.dinamic.bullets.Bullet;
@@ -21,11 +20,10 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 /**
  * Stato che rappresenta la partita del giocatore singolo.
  */
-public class SinglePlayerState extends BasicState {
+public class SinglePlayerState extends GameState {
     private SpriteDrawer spriteDrawer;
     private Menu menu;
     private SinglePlayer singlePlayer;
-    private int life;
 
     public SinglePlayerState(Menu menu) {
         this.menu = menu;
@@ -39,11 +37,10 @@ public class SinglePlayerState extends BasicState {
 
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        getAudioplayer().game();
+        super.enter(gameContainer, stateBasedGame);
         singlePlayer = menu.getSinglePlayer();
         singlePlayer.startGame();
         spriteDrawer.addShipImage(menu.getCustomization().getCurrentShip());
-        life = 3;
     }
 
     @Override
@@ -59,47 +56,32 @@ public class SinglePlayerState extends BasicState {
             highscore = singlePlayer.getSpaceShip().getCurrentScore();
         }
         String textScore = "Score: " + singlePlayer.getSpaceShip().getCurrentScore();
-        String textLives = "Lives: " + life;
         String textHighscore = "Highscore: " + highscore;
-        getDataFont().drawString(85*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f, textLives, Color.red);
         getDataFont().drawString((gameContainer.getWidth() - getDataFont().getWidth(textScore))/2f,2*gameContainer.getHeight()/100f, textScore, color);
         getDataFont().drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f, textHighscore, Color.green);
-
         spriteRender();
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+        super.update(gameContainer, stateBasedGame, delta);
         Input input = gameContainer.getInput();
-
-        if(input.isKeyDown(Input.KEY_RIGHT)){
-            singlePlayer.execCommand(CommandType.MOVE_RIGHT, delta);
-        }
-        if(input.isKeyDown(Input.KEY_LEFT)){
-            singlePlayer.execCommand(CommandType.MOVE_LEFT, delta);
-        }
-        if(input.isKeyPressed(Input.KEY_SPACE)){
-            if(!singlePlayer.getSpaceShip().isShipShot()){
-                getAudioplayer().shot();
-            }
-            singlePlayer.execCommand(CommandType.SHOT, delta);
-        }
-        if (input.isKeyDown(Input.KEY_ESCAPE)){
-            singlePlayer.execCommand(CommandType.EXIT, delta);
-            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
-        }
-        singlePlayer.update(delta);
-        if(life > singlePlayer.getSpaceShip().getLife()){
-            getAudioplayer().explosion();
-        }
-        life = singlePlayer.getSpaceShip().getLife();
-
         //STATO GIOCO
         if (singlePlayer.getGameState() == States.GAMEOVER) {
             stateBasedGame.enterState(IDStates.GAMEOVERSINGLE_STATE, new FadeOutTransition(), new FadeInTransition());
         }else if(singlePlayer.getGameState() == States.NEWHIGHSCORE) {
             stateBasedGame.enterState(IDStates.NEWHIGHSCORE_STATE, new FadeOutTransition(), new FadeInTransition());
         }
+        if(getLife() > singlePlayer.getSpaceShip().getLife()){
+            getAudioplayer().explosion();
+        }
+        //COMANDI
+        for(Integer key : getKeyboardKeys().keySet()){
+            if(input.isKeyDown(key)){
+                singlePlayer.execCommand(getKeyboardKeys().get(key), delta);
+            }
+        }
+        singlePlayer.update(delta);
     }
 
     /**
@@ -124,7 +106,7 @@ public class SinglePlayerState extends BasicState {
                 spriteDrawer.render(brick);
             }
         }
-        life = singlePlayer.getSpaceShip().getLife();
+        setLife(singlePlayer.getSpaceShip().getLife());
     }
 
      @Override

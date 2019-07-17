@@ -3,6 +3,8 @@ package gui.states.multi;
 import gui.states.Timer.ConnectionTimer;
 import gui.states.BasicState;
 import gui.states.IDStates;
+import logic.manager.game.commands.Command;
+import logic.manager.game.commands.CommandType;
 import network.client.LocalMultiManger;
 import logic.manager.game.States;
 import org.newdawn.slick.*;
@@ -57,7 +59,7 @@ public class WaitingState extends BasicState {
         Input input = gameContainer.getInput();
         localMultiManger.checkConnection();
         if (input.isKeyDown(Input.KEY_ESCAPE)) {
-            localMultiManger.exit();
+            localMultiManger.sendCommand(CommandType.EXIT);
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
         if (localMultiManger.getConnectionState().equals(States.COUNTDOWN)) {

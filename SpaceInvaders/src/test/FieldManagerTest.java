@@ -38,12 +38,12 @@ class FieldManagerTest {
         //Necessario per spostare la ship in corrispondenza dell' invaderBullet
         if(spaceShip.getX() < invaderBullets.get(0).getX()){
             while(spaceShip.getX() < invaderBullets.get(0).getX()){
-                fieldManager.shipMovement(spaceShip,MovingDirections.RIGHT,1);
+                fieldManager.shipMovement(spaceShip,MovingDirections.RIGHT,4);
             }
         }
         else{
             while(spaceShip.getX() > invaderBullets.get(0).getX()){
-                fieldManager.shipMovement(spaceShip,MovingDirections.LEFT,1);
+                fieldManager.shipMovement(spaceShip,MovingDirections.LEFT,4);
             }
         }
 
@@ -80,8 +80,8 @@ class FieldManagerTest {
         SpaceShip spaceShip = new SpaceShip(coordinate);
 
         //Includiamo nel test anche la funzione di movimento della ship per verificarne il funzionamento
-        //Il valore del delta, impostato manualmente a 1, é verosimile e verificato attraverso diverse prove
-        fieldManager.shipMovement(spaceShip,MovingDirections.RIGHT,1);
+        //Il valore del delta, impostato manualmente a 4, é verosimile e verificato attraverso diverse prove
+        fieldManager.shipMovement(spaceShip,MovingDirections.RIGHT,4);
 
         fieldManager.shipShot(spaceShip);
         spaceShip.getShipBullet().setY(Dimensions.MAX_HEIGHT/10 + Dimensions.MAX_HEIGHT/100);
@@ -100,7 +100,7 @@ class FieldManagerTest {
         Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH/32,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
         SpaceShip spaceShip = new SpaceShip(coordinate);
         while(spaceShip.getX() < Dimensions.MAX_WIDTH - Dimensions.SHIP_WIDTH) {
-            fieldManager.shipMovement(spaceShip, MovingDirections.RIGHT, 1);
+            fieldManager.shipMovement(spaceShip, MovingDirections.RIGHT, 4);
         }
 
         fieldManager.shipShot(spaceShip);

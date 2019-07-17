@@ -1,6 +1,7 @@
 package gui.states.Timer;
 
 import gui.states.IDStates;
+import logic.manager.game.commands.CommandType;
 import network.client.LocalMultiManger;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -36,7 +37,7 @@ public class ConnectionTimer {
             timerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    localMultiManger.exit();
+                    localMultiManger.sendCommand(CommandType.EXIT);
                     stateBasedGame.enterState(IDStates.MENU_STATE,new FadeOutTransition(),new FadeInTransition());
                 }
             };

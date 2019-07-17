@@ -20,7 +20,7 @@ public class Multiplayer extends Game {
     private States gameState;
     private ThreadUpdate threadUpdate;
     private MessageBuilder messageBuilder;
-    public static int DELTA = 1; //tempo aggiornamento update
+    public static int DELTA = 4; //tempo aggiornamento update
 
     public Multiplayer(MessageBuilder messageBuilder){
         this.messageBuilder = messageBuilder;

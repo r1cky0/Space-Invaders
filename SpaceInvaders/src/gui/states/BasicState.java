@@ -73,7 +73,7 @@ public abstract class BasicState extends BasicGameState implements ComponentList
      *
      */
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException{
         Input input = gameContainer.getInput();
         if(input.isKeyPressed(Input.KEY_ESCAPE)){
             componentActivated(homeButton.getMouseOverArea());

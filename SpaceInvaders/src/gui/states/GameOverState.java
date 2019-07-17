@@ -8,6 +8,10 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+/**
+ * Classe che rappresenta l'astrazione del gameOverState.
+ * Viene estesa dal GameOver del single e del multi player.
+ */
 public abstract class GameOverState extends BasicState implements ComponentListener {
 
     private Image gameOver;
