@@ -16,12 +16,11 @@ import java.awt.*;
 
 
 public class SpaceInvaders extends StateBasedGame {
-
     private Menu menu;
     public static float SCALE_X;
     public static float SCALE_Y;
 
-    public SpaceInvaders(Menu menu) {
+    private SpaceInvaders(Menu menu) {
         super("Space Invaders");
         this.menu = menu;
     }

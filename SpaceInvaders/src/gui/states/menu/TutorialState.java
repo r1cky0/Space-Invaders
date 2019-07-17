@@ -11,86 +11,48 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class TutorialState extends BasicState implements ComponentListener {
-    private StateBasedGame stateBasedGame;
-    private String title;
-    private String leftString;
-    private String rightString;
-    private String shotString;
-
-    private UnicodeFont uniFontData;
-    private UnicodeFont uniFontTitle;
-
     private Image leftImage;
     private Image rightImage;
     private Image shotImage;
-    private Image background;
-
-    private MouseOverArea homeButton;
-
-    public TutorialState(){}
-
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.stateBasedGame = stateBasedGame;
-
-        background = new Image(readerXmlFile.read("defaultBackground"));
-
-        leftImage = new Image(readerXmlFile.read("left")).getScaledCopy(18*gameContainer.getWidth()/100,
-                18*gameContainer.getWidth()/100);
-
-        rightImage = new Image(readerXmlFile.read("right")).getScaledCopy(18*gameContainer.getWidth()/100,
-                18*gameContainer.getWidth()/100);
-
-        shotImage = new Image(readerXmlFile.read("spacebar")).getScaledCopy(24*gameContainer.getWidth()/100,
-                6*gameContainer.getWidth()/100);
-
-        Image homeImage = new Image(readerXmlFile.read("buttonHome")).getScaledCopy(6 * gameContainer.getWidth() / 100,
-                6 * gameContainer.getWidth() / 100);
-        homeButton = new MouseOverArea(gameContainer, homeImage,5*gameContainer.getWidth()/100,
-                7*gameContainer.getHeight()/100,6*gameContainer.getWidth()/100,6*gameContainer.getHeight()/100,
-                this);
-
-        title = "TUTORIAL";
-        leftString = "Keep pressed to move left";
-        rightString = "Keep pressed to move right";
-        shotString = "Press to shot";
-
-        uniFontTitle = build(8*gameContainer.getWidth()/100f);
-        uniFontData = build(3*gameContainer.getWidth()/100f);
+        super.init(gameContainer, stateBasedGame);
+        leftImage = new Image(getReaderXmlFile().read("left")).getScaledCopy(24*gameContainer.getWidth()/100,18*gameContainer.getWidth()/100);
+        rightImage = new Image(getReaderXmlFile().read("right")).getScaledCopy(24*gameContainer.getWidth()/100,18*gameContainer.getWidth()/100);
+        shotImage = new Image(getReaderXmlFile().read("space")).getScaledCopy(24*gameContainer.getWidth()/100,6*gameContainer.getWidth()/100);
     }
 
     @Override
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        graphics.drawImage(background, 0, 0);
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+        super.render(gameContainer, stateBasedGame, graphics);
+        String title = "TUTORIAL";
+        String leftString = "Keep pressed to move left";
+        String rightString = "Keep pressed to move right";
+        String shotString = "Press to shot";
 
-        homeButton.render(gameContainer,graphics);
+        getTitleFont().drawString((gameContainer.getWidth() - getTitleFont().getWidth(title))/2f,7*gameContainer.getHeight()/100f, title, Color.white);
+        getDataFont().drawString((gameContainer.getWidth())/2f,37*gameContainer.getHeight()/100f, leftString, Color.green);
+        getDataFont().drawString((gameContainer.getWidth())/2f,60*gameContainer.getHeight()/100f, rightString, Color.green);
+        getDataFont().drawString((gameContainer.getWidth())/2f,85*gameContainer.getHeight()/100f, shotString, Color.green);
 
-        uniFontTitle.drawString((gameContainer.getWidth() - uniFontTitle.getWidth(title))/2f,
-                7*gameContainer.getHeight()/100f, title,Color.white);
-        leftImage.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f);
-        rightImage.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + gameContainer.getHeight()/4f);
-        shotImage.draw(10*gameContainer.getWidth()/100f,26*gameContainer.getHeight()/100f + gameContainer.getHeight()/2f);
-
-        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(rightString))/1.25f,
-                37*gameContainer.getHeight()/100f + gameContainer.getHeight()/4f, rightString, Color.green);
-
-        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(leftString))/1.27f,
-                37*gameContainer.getHeight()/100f, leftString, Color.green);
-
-        uniFontData.drawString((gameContainer.getWidth() - uniFontData.getWidth(shotString))/1.5f,
-                37*gameContainer.getHeight()/100f + gameContainer.getHeight()/2.4f, shotString, Color.green);
+        float baseX = 11*gameContainer.getWidth()/100f;
+        float baseY = 26*gameContainer.getHeight()/100f;
+        float offset = gameContainer.getHeight()/4f;
+        leftImage.draw(baseX, baseY);
+        rightImage.draw(baseX,baseY + offset);
+        shotImage.draw(10*gameContainer.getWidth()/100f,baseY + 2*offset + 60);
+        getHomeButton().render(graphics);
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+        super.update(gameContainer, stateBasedGame, delta);
     }
 
     @Override
     public void componentActivated(AbstractComponent source) {
-        if (source == homeButton) {
-            stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
-        }
+        super.componentActivated(source);
     }
 
     @Override
