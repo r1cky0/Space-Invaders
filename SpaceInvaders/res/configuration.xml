@@ -57,6 +57,7 @@
             <medalSilver>res/images/MedalSilver.png</medalSilver>
             <medalBronze>res/images/MedalBronze.png</medalBronze>
         </medal>
+
         <Keyboard>
             <right>res/images/KeyboardRight.png</right>
             <left>res/images/KeyboardLeft.png</left>
@@ -69,16 +70,16 @@
         <gameMusic>res/sounds/game.ogg</gameMusic>
         <gameOverMusic>res/sounds/gameover.ogg</gameOverMusic>
         <explosionEffect>res/sounds/explosion.ogg</explosionEffect>
-        <shotEffect>res/sounds/shot.ogg</shotEffect>
     </music>
 
     <font>
         <title>res/font/invaders_font.ttf</title>
     </font>
 
-    <filePlayers>res/players.txt</filePlayers>
-
-    <fileBunkers>res/bunker.txt</fileBunkers>
+    <files>
+        <filePlayers>res/players.txt</filePlayers>
+        <fileBunkers>res/bunker.txt</fileBunkers>
+    </files>
 
     <server>
         <ip>localhost</ip>

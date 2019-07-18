@@ -75,6 +75,7 @@ public class SinglePlayerState extends GameState {
         if(getLife() > singlePlayer.getSpaceShip().getLife()){
             getAudioplayer().explosion();
         }
+        setLife(singlePlayer.getSpaceShip().getLife());
         //COMANDI
         for(Integer key : getKeyboardKeys().keySet()){
             if(input.isKeyDown(key)){
@@ -106,7 +107,6 @@ public class SinglePlayerState extends GameState {
                 spriteDrawer.render(brick);
             }
         }
-        setLife(singlePlayer.getSpaceShip().getLife());
     }
 
      @Override

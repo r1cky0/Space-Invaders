@@ -12,7 +12,6 @@ public class AudioPlayer {
     private Music gameMusic;
     private Music gameOverMusic;
     private Music menuMusic;
-    private Sound shotEffect;
     private Sound explosionEffect;
     private float pitch;
     private float volume;
@@ -23,7 +22,6 @@ public class AudioPlayer {
             gameMusic = new Music(readXmlFile.read("gameMusic"));
             gameOverMusic = new Music(readXmlFile.read("gameOverMusic"));
             menuMusic = new Music(readXmlFile.read("menuMusic"));
-            shotEffect = new Sound(readXmlFile.read("shotEffect"));
             explosionEffect = new Sound(readXmlFile.read("explosionEffect"));
         } catch (SlickException e) {
             e.printStackTrace();
@@ -60,10 +58,4 @@ public class AudioPlayer {
         explosionEffect.play(pitch, volume);
     }
 
-    /**
-     * Riproduzione del suono di sparo della ship.
-     */
-    public void shot(){
-        shotEffect.play(pitch, volume);
-    }
 }
