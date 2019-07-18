@@ -103,7 +103,7 @@ public class ThreadUpdate implements Runnable{
             while (running.get()) {
                 messageBuilder.setInfo(multiplayer);
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

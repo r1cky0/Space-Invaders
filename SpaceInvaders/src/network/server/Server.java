@@ -110,9 +110,6 @@ public class Server implements Runnable {
             Player player = multiplayer.init(ID);
             clients.put(ID, new ServerThread(player, multiplayer, connection, socket, messageBuilder));
             clients.get(ID).send(String.valueOf(ID));
-            if(clients.size() == maxPlayers){
-                startGame();
-            }
         }
     }
 

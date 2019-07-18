@@ -66,7 +66,7 @@ public class WaitingState extends BasicState {
             connectionTimer.stopTimer();
             stateBasedGame.enterState(IDStates.COUNTDOWN_STATE);
         } else if (localMultiManger.getConnectionState().equals(States.WAITING)) {
-            title = " WAITING FOR\nOTHER PLAYERS...";
+            title = " LOADING...";
         }
     }
 

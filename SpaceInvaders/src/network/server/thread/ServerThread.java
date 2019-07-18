@@ -136,7 +136,7 @@ public class ServerThread implements Runnable{
             while (running.get()) {
                 try {
                     send(messageBuilder.getInfo());
-                    Thread.sleep(10);
+                    Thread.sleep(30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

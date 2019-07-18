@@ -16,7 +16,7 @@ class Difficulty {
      * Metodo richiamato ogni volta che si completa un livello.
      */
     public void incrementDifficulty(){
-        if(difficulty >= 500){
+        if(difficulty >= 400){
             difficulty -= 100;
         }
     }
