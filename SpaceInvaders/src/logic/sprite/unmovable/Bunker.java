@@ -1,5 +1,6 @@
 package logic.sprite.unmovable;
 
+import logic.manager.file.ReadXmlFile;
 import logic.sprite.Coordinate;
 import logic.sprite.Sprite;
 import main.Dimensions;
@@ -11,8 +12,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Bunker {
     private CopyOnWriteArrayList<Brick> bricks;
+    private ReadXmlFile readXmlFile;
 
     public Bunker(float indexX, float indexY) {
+        readXmlFile = new ReadXmlFile();
         createBunker(indexX, indexY);
     }
 
@@ -28,7 +31,8 @@ public class Bunker {
         float indX = indexX;
         float indY = indexY;
         try {
-            BufferedReader in = new BufferedReader(new FileReader("res/bunker.txt"));
+            String file = readXmlFile.read("fileBunkers");
+            BufferedReader in = new BufferedReader(new FileReader(file));
             String riga = in.readLine();
             while (riga != null) {
                 for (int i = 0; i < riga.length(); i++) {
