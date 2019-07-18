@@ -1,16 +1,22 @@
 **ISTRUZIONI UTILIZZO SPACE INVADERS. PROGETTO C-19 UNIPV**
 
+1- Clonare il progetto C19 da GitHub a IntelliJ
+
 1- Aprire la cartella "SpaceInvaders" da Intellij
-2- File --> Project Structure --> Libraries --> Click su + --> Selezionare "java" nel menu a tendina --> selezionare slick2d
-3- Run --> Edit configuration --> Aggiungere Main di SpaceInvaders --> In VM Options scrivere: 
+
+2- File --> Project Structure --> Libraries --> Click su + --> Selezionare "java" --> selezionare slick2d --> ok
+
+3- All' interno di src, nel package "main" fare click destro sulla classe "SpaceInvaders" --> selezionare "create SpaceInvaders.main()..."
+Nella finestra incollare nella riga "VM OPTIONS" la stringa seguente:
+
+Per Ubuntu:
+-Djava.library.path=natives_linux
 	
-	Per Ubuntu:
-	-Djava.library.path=natives_linux
-
-	Per Windows:
-	-Djava.library.path=natives_windows
+Per Windows:
+-Djava.library.path=natives_windows
+	
 4- Per multiplayer: 
-Run --> Edit configuration --> Aggiungere Main ServerLauncher
+All' interno di src, nel package "network.server" fare click destro sulla classe "ServerLauncher" --> selezionare "create ServerLauncher.main()..." --> ok
 
-5- Il server È settato per giocare solo in locale.
-Nel file di configurazione "configuration.xml", l'indirizzo IP del server puÛ essere cambiato nei pc client per poter giocare in modalit· multiplayer, inserendo l'ip del server.
+5- Il server √© settato per giocare in locale.
+Nel file di configurazione "res/configuration.xml", pu√≥ essere cambiato nei pc client l'indirizzo IP del server per poter giocare con pi√π giocatori.
