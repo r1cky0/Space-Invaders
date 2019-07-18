@@ -1,5 +1,6 @@
 package network.client;
 
+import logic.manager.file.ReadXmlFile;
 import logic.manager.game.commands.CommandType;
 import logic.manager.game.States;
 import network.data.PacketHandler;
@@ -14,18 +15,23 @@ public class LocalMultiManger {
     private String message;
     private PacketHandler handler;
     private States connectionState;
+    private ReadXmlFile readXmlFile;
 
     public LocalMultiManger() {
         handler = new PacketHandler();
         connectionState = States.INITIALIZATION;
+        readXmlFile = new ReadXmlFile();
     }
 
     /**
      * Inizializzazione client con invio al server del messaggio nuovo client ("Hello").
+     * L' indirizzo Ip é letto dal file di configurazione "configuration.xml"
      *
      */
     public void init() {
-        client = new Client("localhost", 9999);
+        String ip = readXmlFile.read("ip");
+        int port = Integer.parseInt(readXmlFile.read("port"));
+        client = new Client(ip, port);
         client.send(handler.build("Hello", client.getConnection()));
         connectionState = States.INITIALIZATION;
     }

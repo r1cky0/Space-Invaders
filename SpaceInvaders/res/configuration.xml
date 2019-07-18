@@ -78,4 +78,9 @@
     </font>
 
     <filePlayers>res/players.txt</filePlayers>
+
+    <server>
+        <ip>localhost</ip>
+        <port>9999</port>
+    </server>
 </SpaceInvaders>

@@ -18,7 +18,7 @@ public class ReadXmlFile {
      */
     public String read(String tag) {
         try {
-            File file = new File("res/paths.xml");
+            File file = new File("res/configuration.xml");
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(file);
