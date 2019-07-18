@@ -6,7 +6,7 @@ import logic.sprite.dinamic.SpaceShip;
 /**
  * Classe che rappresenta il comando di sparo.
  */
-public class Shot extends Command {
+public class Shot implements Command {
 
     /**
      * Metodo che esegue lo sparo della ship.

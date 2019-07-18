@@ -7,7 +7,7 @@ import logic.sprite.dinamic.SpaceShip;
 /**
  * Classe che rappresenta il comando di movimento a sinistra.
  */
-public class MoveLeft extends Command {
+public class MoveLeft implements Command {
 
     /**
      * Metodo che esegue lo spostamento a sinistra della ship.

@@ -4,9 +4,9 @@ import logic.manager.field.FieldManager;
 import logic.sprite.dinamic.SpaceShip;
 
 /**
- * Classe generica dei comandi del giocatore.
+ * Interfaccia generica dei comandi del giocatore.
  */
-public abstract class Command {
+public interface Command {
 
     public abstract void exe(FieldManager fieldManager, SpaceShip spaceShip, int delta);
 

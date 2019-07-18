@@ -2,7 +2,6 @@ package logic.thread;
 
 import logic.manager.field.FieldManager;
 
-import java.awt.font.TextHitInfo;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -42,12 +41,13 @@ public class ThreadInvader implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            fieldManager.invaderMovement(fieldManager.checkInvaderDirection());
+            fieldManager.checkInvadersEndReached();
+            fieldManager.moveInvaders();
             if(rand.nextInt(10) > 4){
                 fieldManager.invaderShot();
             }
             if(rand.nextInt(100) > 95){
-                fieldManager.createBonusInvader();
+                fieldManager.bonusInvader();
             }
         }
     }

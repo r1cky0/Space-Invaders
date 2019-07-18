@@ -1,54 +1,38 @@
 package logic.manager.field;
 
 import logic.manager.creators.BunkersCreator;
-import logic.manager.creators.InvadersCreator;
+import logic.manager.field.invader.InvadersManager;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.invaders.BonusInvader;
 import logic.sprite.dinamic.bullets.Bullet;
-import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.unmovable.Bunker;
 import main.Dimensions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Classe che rappresenta il campo di gioco.
  * Gestisce tutti gli elemanti del gioco.
  */
 public class FieldManager {
-    private InvadersCreator invadersCreator;
     private BunkersCreator bunkersCreator;
+    private InvadersManager invadersManager;
     //STATE
     private boolean endReached;
     private boolean newLevel;
-    private boolean bonus;
-    private boolean bonusInLevel;
     private Difficulty difficulty;
     //SPRITE
-    private List<Invader> invaders;
-    private BonusInvader bonusInvader;
     private ArrayList<Bunker> bunkers;
-    private List<Bullet> invaderBullets;
-    private MovingDirections md;
-    private boolean goDown;
 
 
     public FieldManager(){
-        invadersCreator = new InvadersCreator();
         bunkersCreator = new BunkersCreator();
+        invadersManager = new InvadersManager();
         bunkers = new ArrayList<>();
-        invaderBullets = new CopyOnWriteArrayList<>();
-        invaders = new CopyOnWriteArrayList<>();
-        md = MovingDirections.RIGHT;
-        goDown = false;
         difficulty = new Difficulty(); //millisecondi pausa sparo/movimento alieni
-        bonus = false;
-        bonusInLevel = false;
         endReached = false;
         newLevel = false;
         initComponents();
@@ -58,7 +42,7 @@ public class FieldManager {
      * Inizializzazione degli elementi all'inizio del gioco.
      */
     private void initComponents(){
-        invaders = invadersCreator.create();
+        invadersManager.init();
         bunkers = bunkersCreator.create();
     }
 
@@ -68,10 +52,8 @@ public class FieldManager {
      */
     private void nextLevel(){
         difficulty.incrementDifficulty();
-        md = MovingDirections.RIGHT;
-        invaders = invadersCreator.create();
+        invadersManager.init();
         newLevel = true;
-        bonusInLevel = false;
     }
 
     /**
@@ -112,20 +94,20 @@ public class FieldManager {
      * @param spaceShip: ship con cui controllare collisione.
      */
     public boolean checkInvaderShotCollision(SpaceShip spaceShip) {
-        for(Bullet bullet : invaderBullets){
+        for(Bullet bullet : invadersManager.getInvaderBullets()){
             for (Bunker bunker : bunkers) {
                 if (bunker.checkBrickCollision(bullet)) {
-                    invaderBullets.remove(bullet);
+                    invadersManager.removeBullet(bullet);
                     return false;
                 }
             }
             if (spaceShip.collides(bullet)) {
                 spaceShip.decreaseLife();
-                invaderBullets.remove(bullet);
+                invadersManager.removeBullet(bullet);
                 return true;
             }
             if (bullet.getY() >= Dimensions.MAX_HEIGHT) {
-                invaderBullets.remove(bullet);
+                invadersManager.removeBullet(bullet);
                 return false;
             }
         }
@@ -140,33 +122,34 @@ public class FieldManager {
      * @param spaceShip: ship che effettua lo sparo.
      */
     public boolean checkSpaceShipShotCollision(SpaceShip spaceShip) {
+        if (spaceShip.getShipBullet().getY() <= 0) {
+            spaceShip.setShipShot(false);
+        }
+
         for (Bunker bunker : bunkers) {
             if (bunker.checkBrickCollision(spaceShip.getShipBullet())) {
                 spaceShip.setShipShot(false);
                 return true;
             }
         }
-        for(Invader invader : invaders){
+        for(Invader invader : invadersManager.getInvaders()){
             if (invader.collides(spaceShip.getShipBullet())) {
                 spaceShip.incrementCurrentScore(invader.getValue());
-                invaders.remove(invader);
+                invadersManager.removeInvader(invader);
                 spaceShip.setShipShot(false);
-                if (invaders.isEmpty()) {
+                if (invadersManager.getInvaders().isEmpty()) {
                     nextLevel();
                 }
                 return true;
             }
         }
-        if(bonus){
-            if (bonusInvader.collides(spaceShip.getShipBullet())) {
-                spaceShip.incrementCurrentScore(bonusInvader.getValue());
+        if(invadersManager.isBonus()){
+            if (invadersManager.getBonusInvader().collides(spaceShip.getShipBullet())) {
+                spaceShip.incrementCurrentScore(invadersManager.getBonusInvader().getValue());
                 spaceShip.setShipShot(false);
-                bonus = false;
+                invadersManager.setBonus(false);
                 return true;
             }
-        }
-        if (spaceShip.getShipBullet().getY() <= 0) {
-            spaceShip.setShipShot(false);
         }
         return false;
     }
@@ -177,62 +160,16 @@ public class FieldManager {
      * verso il basso e la direzione laterale di movimento viene invertita settando il corrispondente
      * Enum 'MovingDirections'
      */
-    public MovingDirections checkInvaderDirection() {
-        double maxX = 0;
-        double minX = Invader.HORIZONTAL_OFFSET;
-        for (Invader invader : invaders) {
-            if (maxX < invader.getX()) {
-                maxX = invader.getX();
-            }
-            if (minX > invader.getX()) {
-                minX = invader.getX();
-            }
-        }
-        checkEndReached();
-        if(((maxX + Dimensions.INVADER_WIDTH + Invader.HORIZONTAL_OFFSET) > Dimensions.MAX_WIDTH) && !goDown){
-            goDown = true;
-            return MovingDirections.DOWN;
-        } else if((minX - Invader.HORIZONTAL_OFFSET < Dimensions.MIN_WIDTH) && !goDown) {
-            goDown = true;
-            return MovingDirections.DOWN;
-        }
-        if(goDown && md == MovingDirections.RIGHT) {
-            md = MovingDirections.LEFT;
-            goDown = false;
-        }else if(goDown && md == MovingDirections.LEFT) {
-            md = MovingDirections.RIGHT;
-            goDown = false;
-        }
-        return md;
-    }
-
-    /**
-     * Funzione di movimento degli invaders. La direzione é inidicata dalla MovingDirections passata come parametro
-     *
-     * @param md Enum che indica la direzione di movimento
-     */
-    public void invaderMovement(MovingDirections md){
-        for(Invader invader:invaders) {
-            switch (md) {
-                case RIGHT:
-                    invader.moveRight();
-                    break;
-                case LEFT:
-                    invader.moveLeft();
-                    break;
-                case DOWN:
-                    invader.moveDown();
-                    break;
-            }
-        }
+    public void moveInvaders() {
+        invadersManager.checkInvaderDirection();
     }
 
     /**
      * Funzione di controllo di raggiungimento del livello dei bunker da parte degli alieni che implica il gameOver
      */
-    private void checkEndReached(){
+    public void checkInvadersEndReached(){
         double maxY = 0;
-        for (Invader invader : invaders) {
+        for (Invader invader : invadersManager.getInvaders()) {
             if (maxY < invader.getY()) {
                 maxY = invader.getY();
             }
@@ -243,35 +180,17 @@ public class FieldManager {
     }
 
     /**
-     * Funzione di creazione di una navicella invader "Bonus" che passa orizontalmente durante un livello e, se colpito,
-     * fornisce punti extra al giocatore
+     * Metodo per richiamare la creazione dell' invader bonus nell' InvadersManager
      */
-    public void createBonusInvader(){
-        double minY = Dimensions.MAX_HEIGHT;
-        for (Invader invader : invaders) {
-            if (minY > invader.getY()) {
-                minY = invader.getY();
-            }
-        }
-        if((minY >= Dimensions.MAX_HEIGHT/4) && (!bonusInLevel)){
-            bonusInvader = new BonusInvader(new Coordinate(Dimensions.MAX_WIDTH, Dimensions.MAX_HEIGHT/10));
-            bonus = true;
-            bonusInLevel = true;
-        }
+    public void bonusInvader(){
+        invadersManager.createBonusInvader();
     }
 
     /**
-     * Funzione di sparo degli invaders. Lo sparo non é ordindato, ma viene scelto randomicamente quale alieno
-     * debba sparare
+     * Funzione di sparo degli invaders gestita in InvadersManager
      */
     public void invaderShot() {
-        Random rand = new Random();
-        int random = rand.nextInt(invaders.size());
-        Coordinate coordinate = new Coordinate(invaders.get(random).getX() +
-                Dimensions.INVADER_WIDTH / 2 - Dimensions.BULLET_WIDTH /2,
-                invaders.get(random).getY() + Dimensions.INVADER_HEIGHT /2);
-
-        invaderBullets.add(new InvaderBullet(coordinate));
+        invadersManager.createInvaderBullet();
     }
 
     public void setNewLevel(boolean value){
@@ -279,11 +198,11 @@ public class FieldManager {
     }
 
     public List<Invader> getInvaders() {
-        return invaders;
+        return invadersManager.getInvaders();
     }
 
     public BonusInvader getBonusInvader(){
-        return bonusInvader;
+        return invadersManager.getBonusInvader();
     }
 
     public ArrayList<Bunker> getBunkers() {
@@ -291,7 +210,7 @@ public class FieldManager {
     }
 
     public List<Bullet> getInvaderBullets(){
-        return invaderBullets;
+        return invadersManager.getInvaderBullets();
     }
 
     public boolean isEndReached(){
@@ -307,11 +226,11 @@ public class FieldManager {
     }
 
     public boolean isBonusInvader(){
-        return bonus;
+        return invadersManager.isBonus();
     }
 
     public void setBonusInvader(boolean value){
-        bonus = value;
+        invadersManager.setBonus(value);
     }
 
 }
