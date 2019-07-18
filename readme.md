@@ -20,4 +20,4 @@ All' interno di src, nel package "network.server" fare click destro sulla classe
 Nella finestra nella riga "Working directory" al termine del path già inserito aggiungere "/SpaceInvaders" per Ubuntu e "\SpaceInvaders" per windows
 
 5 Il server é settato per giocare in locale.
-Nel file di configurazione "res/configuration.xml", puó essere cambiato nei pc client l'indirizzo IP del server per poter giocare con più giocatori.
+Nel file di configurazione "res/configuration.xml" puó essere cambiato nei pc client l'indirizzo IP del server per poter giocare con più giocatori.
