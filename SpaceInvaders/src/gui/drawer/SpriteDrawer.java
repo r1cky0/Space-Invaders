@@ -18,7 +18,7 @@ import java.util.HashMap;
  * Classe che si occupa di disegnare gli sprite.
  * Contiene una mappa con Target e immagine associata.
  */
-public class SpriteDrawer {
+public class SpriteDrawer implements Drawable{
     private ReadXmlFile readerXmlFile;
     private HashMap<Target, Image> images;
 

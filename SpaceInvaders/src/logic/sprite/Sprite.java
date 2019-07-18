@@ -8,7 +8,7 @@ import org.newdawn.slick.geom.Shape;
  * Tutti gli sprite sono classi derivate.
  * Contiene le dimensioni, la posizione e il target.
  */
-public class Sprite {
+public abstract class Sprite {
     private Coordinate coordinate;
     private Facade facade;
     private float width;

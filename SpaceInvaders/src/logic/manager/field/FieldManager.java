@@ -1,10 +1,8 @@
 package logic.manager.field;
 
-import logic.manager.creators.BunkersCreator;
-import logic.manager.field.controllers.bunkers.BunkerManager;
+import logic.manager.field.controllers.bunkers.BunkersManager;
 import logic.manager.field.controllers.invaders.InvadersManager;
 import logic.manager.field.controllers.ship.ShipManager;
-import logic.sprite.Coordinate;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.invaders.BonusInvader;
@@ -12,7 +10,6 @@ import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.unmovable.Bunker;
 import main.Dimensions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,14 +19,14 @@ import java.util.List;
 public class FieldManager {
     private InvadersManager invadersManager;
     private ShipManager shipManager;
-    private BunkerManager bunkerManager;
+    private BunkersManager bunkersManager;
     //STATE
     private boolean endReached;
     private boolean newLevel;
     private Difficulty difficulty;
 
     public FieldManager(){
-        bunkerManager = new BunkerManager();
+        bunkersManager = new BunkersManager();
         invadersManager = new InvadersManager();
         shipManager = new ShipManager();
         difficulty = new Difficulty(); //millisecondi pausa sparo/movimento alieni
@@ -43,7 +40,7 @@ public class FieldManager {
      */
     private void initComponents(){
         invadersManager.init();
-        bunkerManager.init();
+        bunkersManager.init();
     }
 
     /**
@@ -84,7 +81,7 @@ public class FieldManager {
      */
     public boolean checkInvaderShotCollision(SpaceShip spaceShip) {
         for(Bullet bullet : invadersManager.getInvaderBullets()){
-            for (Bunker bunker : bunkerManager.getBunkers()) {
+            for (Bunker bunker : bunkersManager.getBunkers()) {
                 if (bunker.checkBrickCollision(bullet)) {
                     invadersManager.removeBullet(bullet);
                     return false;
@@ -115,7 +112,7 @@ public class FieldManager {
             spaceShip.setShipShot(false);
         }
 
-        for (Bunker bunker : bunkerManager.getBunkers()) {
+        for (Bunker bunker : bunkersManager.getBunkers()) {
             if (bunker.checkBrickCollision(spaceShip.getShipBullet())) {
                 spaceShip.setShipShot(false);
                 return true;
@@ -193,7 +190,7 @@ public class FieldManager {
     }
 
     public List<Bunker> getBunkers() {
-        return bunkerManager.getBunkers();
+        return bunkersManager.getBunkers();
     }
 
     public List<Bullet> getInvaderBullets(){

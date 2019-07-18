@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AddConnectionTimer {
     private Server server;
     private Timer timer;
-    private TimerTask timerTask;
     private final int delayTime = 15000; //millis oltre il quale inizia la partita con il num di giocatori connessi
     private boolean timerStarted;
 
@@ -29,7 +28,7 @@ public class AddConnectionTimer {
      */
     public void startTimer(){
         if(!timerStarted) {
-            timerTask = new TimerTask() {
+            TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
                     server.startGame();

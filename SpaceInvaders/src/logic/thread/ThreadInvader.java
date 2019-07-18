@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class ThreadInvader implements Runnable {
     private FieldManager fieldManager;
-    private Thread thread;
     private AtomicBoolean running;
     private int sleepInterval;
 
@@ -25,7 +24,7 @@ public class ThreadInvader implements Runnable {
      * Avvio thread.
      */
     public void start() {
-        thread = new Thread(this);
+        Thread thread = new Thread(this);
         thread.start();
     }
 

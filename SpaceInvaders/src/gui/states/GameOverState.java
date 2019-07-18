@@ -13,7 +13,6 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  * Viene estesa dal GameOver del single e del multi player.
  */
 public abstract class GameOverState extends BasicState implements ComponentListener {
-
     private Image gameOver;
 
     @Override

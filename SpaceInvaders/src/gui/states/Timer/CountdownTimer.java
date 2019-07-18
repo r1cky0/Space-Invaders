@@ -13,7 +13,6 @@ import java.util.TimerTask;
 class CountdownTimer {
     private StateBasedGame stateBasedGame;
     private Timer timer;
-    private TimerTask timerTask;
     private final int delayTime = 3000; //countdown di 3 sec
     private boolean timerStarted;
 
@@ -27,7 +26,7 @@ class CountdownTimer {
      */
     public void startTimer(){
         if(!timerStarted) {
-            timerTask = new TimerTask() {
+            TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
                     stateBasedGame.enterState(IDStates.MULTIPLAYER_STATE);

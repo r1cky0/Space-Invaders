@@ -3,7 +3,7 @@ package gui.states.multi;
 import gui.states.GameState;
 import gui.states.IDStates;
 import logic.manager.game.commands.CommandType;
-import network.client.LocalMultiManger;
+import network.client.LocalMultiManager;
 import logic.manager.game.States;
 import network.client.LocalMultiRender;
 import org.newdawn.slick.*;
@@ -15,11 +15,11 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  * Stato che rappresenta la partita in modalità multiplayer.
  */
 public class MultiplayerState extends GameState {
-    private LocalMultiManger localMultiManger;
+    private LocalMultiManager localMultiManager;
     private LocalMultiRender localMultiRender;
 
-    public MultiplayerState(LocalMultiManger localMultiManger) {
-        this.localMultiManger = localMultiManger;
+    public MultiplayerState(LocalMultiManager localMultiManager) {
+        this.localMultiManager = localMultiManager;
     }
 
     @Override
@@ -32,8 +32,8 @@ public class MultiplayerState extends GameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         super.render(gameContainer, stateBasedGame, graphics);
         getDataFont().drawString(2*gameContainer.getWidth()/100f,2*gameContainer.getHeight()/100f,"Score: " + localMultiRender.getScore(), Color.white);
-        if(localMultiManger.getRcvdata() != null) {
-            localMultiRender.draw(localMultiManger.getRcvdata(), localMultiManger.getID());
+        if(localMultiManager.getRcvdata() != null) {
+            localMultiRender.draw(localMultiManager.getRcvdata(), localMultiManager.getID());
         }
     }
 
@@ -43,7 +43,7 @@ public class MultiplayerState extends GameState {
         Input input = gameContainer.getInput();
         //STATO DI GIOCO
         if(localMultiRender.getGameState() == States.GAMEOVER) {
-            localMultiManger.sendCommand(CommandType.EXIT);
+            localMultiManager.sendCommand(CommandType.EXIT);
             stateBasedGame.addState(new GameOverStateMulti(localMultiRender.getScore()));
             stateBasedGame.getState(IDStates.GAMEOVERMULTI_STATE).init(gameContainer, stateBasedGame);
             stateBasedGame.enterState(IDStates.GAMEOVERMULTI_STATE, new FadeOutTransition(), new FadeInTransition());
@@ -55,7 +55,7 @@ public class MultiplayerState extends GameState {
         //COMANDI
         for(Integer key : getKeyboardKeys().keySet()){
             if(input.isKeyDown(key)){
-                localMultiManger.sendCommand(getKeyboardKeys().get(key));
+                localMultiManager.sendCommand(getKeyboardKeys().get(key));
             }
         }
     }

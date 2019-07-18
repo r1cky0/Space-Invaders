@@ -3,9 +3,8 @@ package gui.states.multi;
 import gui.states.Timer.ConnectionTimer;
 import gui.states.BasicState;
 import gui.states.IDStates;
-import logic.manager.game.commands.Command;
 import logic.manager.game.commands.CommandType;
-import network.client.LocalMultiManger;
+import network.client.LocalMultiManager;
 import logic.manager.game.States;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,19 +15,19 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  * Stato di attesa connessione e inizio partita multiplayer.
  */
 public class WaitingState extends BasicState {
-    private LocalMultiManger localMultiManger;
+    private LocalMultiManager localMultiManager;
     private Animation movingAnimation;
     private ConnectionTimer connectionTimer;
     private String title;
 
     public WaitingState(){
-        localMultiManger = new LocalMultiManger();
+        localMultiManager = new LocalMultiManager();
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         super.init(gameContainer, stateBasedGame);
-        connectionTimer = new ConnectionTimer(stateBasedGame, localMultiManger);
+        connectionTimer = new ConnectionTimer(stateBasedGame, localMultiManager);
         int[] duration = {500,500};
         int invaderSide = 20*gameContainer.getHeight()/100;
         Image[] moving = new Image[2];
@@ -41,8 +40,8 @@ public class WaitingState extends BasicState {
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         title = "CONNECTION...";
-        localMultiManger.init();
-        stateBasedGame.addState(new MultiplayerState(localMultiManger));
+        localMultiManager.init();
+        stateBasedGame.addState(new MultiplayerState(localMultiManager));
         stateBasedGame.getState(IDStates.MULTIPLAYER_STATE).init(gameContainer, stateBasedGame);
         connectionTimer.startTimer();
     }
@@ -57,15 +56,15 @@ public class WaitingState extends BasicState {
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
         Input input = gameContainer.getInput();
-        localMultiManger.checkConnection();
+        localMultiManager.checkConnection();
         if (input.isKeyDown(Input.KEY_ESCAPE)) {
-            localMultiManger.sendCommand(CommandType.EXIT);
+            localMultiManager.sendCommand(CommandType.EXIT);
             stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
         }
-        if (localMultiManger.getConnectionState().equals(States.COUNTDOWN)) {
+        if (localMultiManager.getConnectionState().equals(States.COUNTDOWN)) {
             connectionTimer.stopTimer();
             stateBasedGame.enterState(IDStates.COUNTDOWN_STATE);
-        } else if (localMultiManger.getConnectionState().equals(States.WAITING)) {
+        } else if (localMultiManager.getConnectionState().equals(States.WAITING)) {
             title = " LOADING...";
         }
     }

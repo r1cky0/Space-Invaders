@@ -2,7 +2,7 @@ package gui.states.Timer;
 
 import gui.states.IDStates;
 import logic.manager.game.commands.CommandType;
-import network.client.LocalMultiManger;
+import network.client.LocalMultiManager;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -16,15 +16,14 @@ import java.util.TimerTask;
  */
 public class ConnectionTimer {
     private StateBasedGame stateBasedGame;
-    private LocalMultiManger localMultiManger;
+    private LocalMultiManager localMultiManager;
     private Timer timer;
-    private TimerTask timerTask;
     private final int delayTime = 30000; //millis oltre il quale esco da waiting state multiplayer
     private boolean timerStarted;
 
-    public ConnectionTimer(StateBasedGame stateBasedGame, LocalMultiManger localMultiManger){
+    public ConnectionTimer(StateBasedGame stateBasedGame, LocalMultiManager localMultiManager){
         this.stateBasedGame = stateBasedGame;
-        this.localMultiManger = localMultiManger;
+        this.localMultiManager = localMultiManager;
     }
 
     /**
@@ -34,11 +33,11 @@ public class ConnectionTimer {
      */
     public void startTimer(){
         if(!timerStarted) {
-            timerTask = new TimerTask() {
+            TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    localMultiManger.sendCommand(CommandType.EXIT);
-                    stateBasedGame.enterState(IDStates.MENU_STATE,new FadeOutTransition(),new FadeInTransition());
+                    localMultiManager.sendCommand(CommandType.EXIT);
+                    stateBasedGame.enterState(IDStates.MENU_STATE, new FadeOutTransition(), new FadeInTransition());
                 }
             };
             timer = new Timer();

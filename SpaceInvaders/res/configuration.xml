@@ -79,7 +79,7 @@
     <filePlayers>res/players.txt</filePlayers>
 
     <server>
-        <ip>192.168.43.89</ip>
+        <ip>localhost</ip>
         <port>9999</port>
     </server>
 </SpaceInvaders>

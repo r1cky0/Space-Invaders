@@ -8,11 +8,11 @@ import java.util.List;
 /**
  * Classe per la gestione dei bunker.
  */
-public class BunkerManager {
+public class BunkersManager {
     private BunkersCreator bunkersCreator;
     private ArrayList<Bunker> bunkers;
 
-    public BunkerManager(){
+    public BunkersManager(){
         bunkersCreator = new BunkersCreator();
     }
 

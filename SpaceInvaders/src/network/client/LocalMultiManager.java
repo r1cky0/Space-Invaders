@@ -10,14 +10,14 @@ import org.newdawn.slick.Input;
  * Classe che si occupa di gestire il client locale.
  * Apre la connessione ed invia i comandi eseguiti dal giocatore al server
  */
-public class LocalMultiManger {
+public class LocalMultiManager {
     private Client client;
     private String message;
     private PacketHandler handler;
     private States connectionState;
     private ReadXmlFile readXmlFile;
 
-    public LocalMultiManger() {
+    public LocalMultiManager() {
         handler = new PacketHandler();
         connectionState = States.INITIALIZATION;
         readXmlFile = new ReadXmlFile();
