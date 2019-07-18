@@ -5,18 +5,28 @@ import logic.manager.field.MovingDirections;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.SpaceShip;
 import logic.sprite.dinamic.bullets.Bullet;
-import logic.sprite.dinamic.bullets.InvaderBullet;
-import logic.sprite.unmovable.Brick;
-import logic.sprite.unmovable.Bunker;
 import main.Dimensions;
 import org.junit.jupiter.api.Test;
-import org.lwjgl.Sys;
-
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Classe di test sul metodo che controlla le collisioni del FieldManager.
+ *
+ */
 class FieldManagerTest {
 
+    private FieldManager fieldManager;
+    private SpaceShip spaceShip;
+    private List<Bullet> invaderBullets;
+
+    public FieldManagerTest(){
+        fieldManager = new FieldManager();
+        Coordinate coordinate = new Coordinate(0, 0);
+        spaceShip = new SpaceShip(coordinate);
+        spaceShip.init();
+
+    }
     //CTRL + SHIFT + F10 Per fare il test: se click in un metodo viene testato solo quel metodo,
     //altrimenti tutta la classe di test
 
@@ -29,25 +39,16 @@ class FieldManagerTest {
      */
     @Test
     void checkTrueInvaderShotCollision() {
-        FieldManager fieldManager = new FieldManager();
-        Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH/32,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
-        SpaceShip spaceShip = new SpaceShip(coordinate);
         fieldManager.invaderShot();
-        List<Bullet> invaderBullets = fieldManager.getInvaderBullets();
-
+        invaderBullets = fieldManager.getInvaderBullets();
         //Necessario per spostare la ship in corrispondenza dell' invaderBullet
-        if(spaceShip.getX() < invaderBullets.get(0).getX()){
-            while(spaceShip.getX() < invaderBullets.get(0).getX()){
-                fieldManager.shipMovement(spaceShip,MovingDirections.RIGHT,4);
-            }
+        while (spaceShip.getX() < invaderBullets.get(0).getX()) {
+            fieldManager.shipMovement(spaceShip, MovingDirections.RIGHT, 4);
         }
-        else{
-            while(spaceShip.getX() > invaderBullets.get(0).getX()){
-                fieldManager.shipMovement(spaceShip,MovingDirections.LEFT,4);
-            }
+        while (spaceShip.getX() > invaderBullets.get(0).getX()) {
+            fieldManager.shipMovement(spaceShip, MovingDirections.LEFT, 4);
         }
-
-        invaderBullets.get(0).setY(Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH/2);
+        invaderBullets.get(0).setY(Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH / 2);
         assertTrue(fieldManager.checkInvaderShotCollision(spaceShip));
     }
 
@@ -58,11 +59,9 @@ class FieldManagerTest {
      */
     @Test
     void checkFalseInvaderShotCollision(){
-        FieldManager fieldManager = new FieldManager();
-        Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH - Dimensions.SHIP_WIDTH,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
-        SpaceShip spaceShip = new SpaceShip(coordinate);
+        spaceShip.setX(Dimensions.MAX_WIDTH - Dimensions.SHIP_WIDTH);
         fieldManager.invaderShot();
-        List<Bullet> invaderBullets = fieldManager.getInvaderBullets();
+        invaderBullets = fieldManager.getInvaderBullets();
         invaderBullets.get(0).setY(Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH/2);
         assertFalse(fieldManager.checkInvaderShotCollision(spaceShip));
     }
@@ -75,17 +74,11 @@ class FieldManagerTest {
      */
     @Test
     void checkTrueSpaceShipShotCollision() {
-        FieldManager fieldManager = new FieldManager();
-        Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH/32,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
-        SpaceShip spaceShip = new SpaceShip(coordinate);
-
         //Includiamo nel test anche la funzione di movimento della ship per verificarne il funzionamento
-        //Il valore del delta, impostato manualmente a 4, é verosimile e verificato attraverso diverse prove
-        fieldManager.shipMovement(spaceShip,MovingDirections.RIGHT,4);
-
+        //Il valore del delta rappresenta la velocità
+        fieldManager.shipMovement(spaceShip, MovingDirections.RIGHT,4);
         fieldManager.shipShot(spaceShip);
         spaceShip.getShipBullet().setY(Dimensions.MAX_HEIGHT/10 + Dimensions.MAX_HEIGHT/100);
-
         assertTrue(fieldManager.checkSpaceShipShotCollision(spaceShip));
     }
 
@@ -96,16 +89,11 @@ class FieldManagerTest {
      */
     @Test
     void checkFalseSpaceShipShotCollision(){
-        FieldManager fieldManager = new FieldManager();
-        Coordinate coordinate = new Coordinate(Dimensions.MAX_WIDTH/32,Dimensions.MAX_HEIGHT - Dimensions.SHIP_WIDTH);
-        SpaceShip spaceShip = new SpaceShip(coordinate);
         while(spaceShip.getX() < Dimensions.MAX_WIDTH - Dimensions.SHIP_WIDTH) {
             fieldManager.shipMovement(spaceShip, MovingDirections.RIGHT, 4);
         }
-
         fieldManager.shipShot(spaceShip);
         spaceShip.getShipBullet().setY(Dimensions.MAX_HEIGHT/10 + Dimensions.MAX_HEIGHT/100);
-
         assertFalse(fieldManager.checkSpaceShipShotCollision(spaceShip));
     }
 }
