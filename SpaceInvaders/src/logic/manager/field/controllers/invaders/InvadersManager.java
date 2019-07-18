@@ -1,23 +1,21 @@
-package logic.manager.field.invader;
+package logic.manager.field.controllers.invaders;
 
 import logic.manager.creators.InvadersCreator;
 import logic.manager.field.MovingDirections;
-import logic.manager.field.invader.controllers.Controller;
-import logic.manager.field.invader.controllers.InvaderMoveDown;
-import logic.manager.field.invader.controllers.InvaderMoveLeft;
-import logic.manager.field.invader.controllers.InvaderMoveRight;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.bullets.Bullet;
 import logic.sprite.dinamic.bullets.InvaderBullet;
 import logic.sprite.dinamic.invaders.BonusInvader;
 import logic.sprite.dinamic.invaders.Invader;
 import main.Dimensions;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Classe che gestisce gli invaders, il bonus invaders, il loro movimento e lo sparo.
+ */
 public class InvadersManager {
     private InvadersCreator invadersCreator;
     private List<Invader> invaders;
@@ -41,6 +39,9 @@ public class InvadersManager {
         bonusInLevel = false; //Per far apparire solo una volta a livello il bonus
     }
 
+    /**
+     * Creazione lista di invader e inizializzazione direzione.
+     */
     public void init(){
         invaders = invadersCreator.create();
         comingFrom = MovingDirections.LEFT;
@@ -49,10 +50,11 @@ public class InvadersManager {
     }
 
     /**
-     * Gestione del movimento degli invaders.
+     * Scelta direzione degli invader
      * Se viene raggiunto il limite laterale rispetto alla direzione di movimento tutti gli invaders shiftano
      * verso il basso e la direzione laterale di movimento viene invertita settando il corrispondente
-     * Enum 'MovingDirections'
+     * Enum md per direzione da prendere
+     * Enum comingFrom per direzione di provenienza
      */
     public void checkInvaderDirection() {
         double maxX = 0;
@@ -65,9 +67,11 @@ public class InvadersManager {
                 minX = invader.getX();
             }
         }
-        if(((maxX + Dimensions.INVADER_WIDTH + Invader.HORIZONTAL_OFFSET) > Dimensions.MAX_WIDTH) && !(md == MovingDirections.DOWN) && (comingFrom == MovingDirections.LEFT)){
+        if(((maxX + Dimensions.INVADER_WIDTH + Invader.HORIZONTAL_OFFSET) > Dimensions.MAX_WIDTH)
+                && !(md == MovingDirections.DOWN) && (comingFrom == MovingDirections.LEFT)){
             md = MovingDirections.DOWN;
-        } else if((minX - Invader.HORIZONTAL_OFFSET < Dimensions.MIN_WIDTH) && !(md == MovingDirections.DOWN) && (comingFrom == MovingDirections.RIGHT)) {
+        } else if((minX - Invader.HORIZONTAL_OFFSET < Dimensions.MIN_WIDTH)
+                && !(md == MovingDirections.DOWN) && (comingFrom == MovingDirections.RIGHT)) {
             md = MovingDirections.DOWN;
         }
         moveInvaders();
@@ -80,10 +84,16 @@ public class InvadersManager {
         }
     }
 
+    /**
+     * Movimento di tutti gli invader nella direzione impostata.
+     */
     private void moveInvaders(){
          controllers.get(md).move(invaders);
     }
 
+    /**
+     * Inizializzazione mappa dei controller di movimento.
+     */
     private void initMoveController(){
         controllers = new HashMap<>();
         controllers.put(MovingDirections.LEFT, new InvaderMoveLeft());
@@ -92,7 +102,7 @@ public class InvadersManager {
     }
 
     /**
-     * Funzione di creazione di una navicella invader "Bonus" che passa orizontalmente durante un livello e, se colpito,
+     * Funzione di creazione di una navicella invaders "Bonus" che passa orizontalmente durante un livello e, se colpito,
      * fornisce punti extra al giocatore
      */
     public void createBonusInvader(){
@@ -127,7 +137,9 @@ public class InvadersManager {
         invaderBullets.remove(bullet);
     }
 
-    public void removeInvader(Invader invader){invaders.remove(invader);}
+    public void removeInvader(Invader invader){
+        invaders.remove(invader);
+    }
 
     public List<Invader> getInvaders() {
         return invaders;
@@ -141,7 +153,11 @@ public class InvadersManager {
         return invaderBullets;
     }
 
-    public boolean isBonus(){return bonus;}
+    public boolean isBonus(){
+        return bonus;
+    }
 
-    public void setBonus(boolean value){this.bonus = value;}
+    public void setBonus(boolean value){
+        this.bonus = value;
+    }
 }

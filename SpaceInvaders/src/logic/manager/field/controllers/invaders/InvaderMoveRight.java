@@ -1,4 +1,4 @@
-package logic.manager.field.invader.controllers;
+package logic.manager.field.controllers.invaders;
 
 import logic.sprite.dinamic.invaders.Invader;
 import java.util.List;

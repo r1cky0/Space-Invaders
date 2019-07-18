@@ -1,7 +1,9 @@
 package logic.manager.field;
 
 import logic.manager.creators.BunkersCreator;
-import logic.manager.field.invader.InvadersManager;
+import logic.manager.field.controllers.bunkers.BunkerManager;
+import logic.manager.field.controllers.invaders.InvadersManager;
+import logic.manager.field.controllers.ship.ShipManager;
 import logic.sprite.Coordinate;
 import logic.sprite.dinamic.invaders.Invader;
 import logic.sprite.dinamic.SpaceShip;
@@ -18,20 +20,18 @@ import java.util.List;
  * Gestisce tutti gli elemanti del gioco.
  */
 public class FieldManager {
-    private BunkersCreator bunkersCreator;
     private InvadersManager invadersManager;
+    private ShipManager shipManager;
+    private BunkerManager bunkerManager;
     //STATE
     private boolean endReached;
     private boolean newLevel;
     private Difficulty difficulty;
-    //SPRITE
-    private ArrayList<Bunker> bunkers;
-
 
     public FieldManager(){
-        bunkersCreator = new BunkersCreator();
+        bunkerManager = new BunkerManager();
         invadersManager = new InvadersManager();
-        bunkers = new ArrayList<>();
+        shipManager = new ShipManager();
         difficulty = new Difficulty(); //millisecondi pausa sparo/movimento alieni
         endReached = false;
         newLevel = false;
@@ -43,7 +43,7 @@ public class FieldManager {
      */
     private void initComponents(){
         invadersManager.init();
-        bunkers = bunkersCreator.create();
+        bunkerManager.init();
     }
 
     /**
@@ -57,33 +57,22 @@ public class FieldManager {
     }
 
     /**
-     * Metodo per il movimento della ship.
-     * Controlla che non superi le dimensioni del campo di gioco.
+     * Metodo per il movimento della ship che richiama ship manager.
      *
      * @param md direzione
      * @param delta velocità
      */
     public void shipMovement(SpaceShip spaceShip, MovingDirections md, int delta){
-        if(((spaceShip.getX() + Dimensions.SHIP_WIDTH) < Dimensions.MAX_WIDTH) && (md == MovingDirections.RIGHT)){
-            spaceShip.moveRight(delta);
-        }
-        if((spaceShip.getX() > Dimensions.MIN_WIDTH) && (md == MovingDirections.LEFT)){
-            spaceShip.moveLeft(delta);
-        }
+        shipManager.move(spaceShip, md, delta);
     }
 
     /**
-     * Metodo di sparo della space ship
+     * Metodo di sparo della ship che richiama ship manager.
      *
      * @param spaceShip: ship che effettua lo sparo.
      */
     public void shipShot(SpaceShip spaceShip){
-        if(!spaceShip.isShipShot()) {
-            Coordinate coordinate = new Coordinate(spaceShip.getShape().getCenterX() - Dimensions.BULLET_WIDTH /2,
-                    spaceShip.getY());
-            spaceShip.setShipBullet(coordinate);
-            spaceShip.setShipShot(true);
-        }
+        shipManager.shot(spaceShip);
     }
 
     /**
@@ -95,7 +84,7 @@ public class FieldManager {
      */
     public boolean checkInvaderShotCollision(SpaceShip spaceShip) {
         for(Bullet bullet : invadersManager.getInvaderBullets()){
-            for (Bunker bunker : bunkers) {
+            for (Bunker bunker : bunkerManager.getBunkers()) {
                 if (bunker.checkBrickCollision(bullet)) {
                     invadersManager.removeBullet(bullet);
                     return false;
@@ -126,7 +115,7 @@ public class FieldManager {
             spaceShip.setShipShot(false);
         }
 
-        for (Bunker bunker : bunkers) {
+        for (Bunker bunker : bunkerManager.getBunkers()) {
             if (bunker.checkBrickCollision(spaceShip.getShipBullet())) {
                 spaceShip.setShipShot(false);
                 return true;
@@ -155,10 +144,8 @@ public class FieldManager {
     }
 
     /**
-     * Gestione del movimento degli invaders.
-     * Se viene raggiunto il limite laterale rispetto alla direzione di movimento tutti gli invaders shiftano
-     * verso il basso e la direzione laterale di movimento viene invertita settando il corrispondente
-     * Enum 'MovingDirections'
+     * Gestione del movimento degli invaders che richiama il metodo dell'Invader manager.
+     *
      */
     public void moveInvaders() {
         invadersManager.checkInvaderDirection();
@@ -180,7 +167,7 @@ public class FieldManager {
     }
 
     /**
-     * Metodo per richiamare la creazione dell' invader bonus nell' InvadersManager
+     * Metodo per richiamare la creazione dell' invaders bonus nell' InvadersManager
      */
     public void bonusInvader(){
         invadersManager.createBonusInvader();
@@ -205,8 +192,8 @@ public class FieldManager {
         return invadersManager.getBonusInvader();
     }
 
-    public ArrayList<Bunker> getBunkers() {
-        return bunkers;
+    public List<Bunker> getBunkers() {
+        return bunkerManager.getBunkers();
     }
 
     public List<Bullet> getInvaderBullets(){

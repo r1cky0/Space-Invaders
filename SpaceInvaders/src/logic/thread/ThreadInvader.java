@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Il thread gestisce il movimento e lo sparo(randomico) degli invaders.
- * Inoltre, puó determinare la generazione di un invader "bonus" per punti extra
+ * Inoltre, puó determinare la generazione di un invaders "bonus" per punti extra
  */
 public class ThreadInvader implements Runnable {
     private FieldManager fieldManager;

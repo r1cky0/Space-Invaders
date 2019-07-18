@@ -5,7 +5,7 @@ import logic.thread.ThreadInvader;
 
 /**
  * Classe astratta che rappresenta il gioco.
- * Contiene campo di gioco e thread gestione invader.
+ * Contiene campo di gioco e thread gestione invaders.
  * E estesa dal singleplayer e multiplayer.
  */
 public abstract class Game {
@@ -19,7 +19,7 @@ public abstract class Game {
     }
 
     /**
-     * Inizializzazione campo di gioco e avvio thread invader.
+     * Inizializzazione campo di gioco e avvio thread invaders.
      */
     public void startGame(){
         fieldManager = new FieldManager();
@@ -28,7 +28,7 @@ public abstract class Game {
     }
 
     /**
-     * Metodo che termina l'esecuzione del thread invader.
+     * Metodo che termina l'esecuzione del thread invaders.
      */
     public void stopThreadInvader() {
         if(threadRunning) {
@@ -37,7 +37,7 @@ public abstract class Game {
     }
 
     /**
-     * Avvio thread invader.
+     * Avvio thread invaders.
      */
     public void startThreadInvader(){
         threadInvader = new ThreadInvader(fieldManager.getDifficulty(), fieldManager);

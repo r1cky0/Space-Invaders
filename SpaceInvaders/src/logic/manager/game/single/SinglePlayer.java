@@ -46,7 +46,7 @@ public class SinglePlayer extends Game {
     }
 
     /**
-     * Richiama start della superclasse che attiva thread invader e inizializza la ship.
+     * Richiama start della superclasse che attiva thread invaders e inizializza la ship.
      */
     public void startGame(){
         super.startGame();
@@ -131,7 +131,7 @@ public class SinglePlayer extends Game {
         return getFieldManager().getInvaderBullets();
     }
 
-    public ArrayList<Bunker> getBunkers(){
+    public List<Bunker> getBunkers(){
         return getFieldManager().getBunkers();
     }
 

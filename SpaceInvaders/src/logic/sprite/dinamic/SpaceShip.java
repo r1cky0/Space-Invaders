@@ -79,10 +79,6 @@ public class SpaceShip extends Sprite {
         currentScore += value;
     }
 
-    public void setLife(int life){
-        this.life = life;
-    }
-
     public void setShipBullet(Coordinate coordinate) {
         shipBullet = new SpaceShipBullet(coordinate);
     }

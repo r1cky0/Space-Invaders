@@ -45,7 +45,7 @@ public class Multiplayer extends Game {
     }
 
     /**
-     * Metodo che richiama lo start game della superclasse per inizializzare il thread invader.
+     * Metodo che richiama lo start game della superclasse per inizializzare il thread invaders.
      * Setta game state e richiama update per inizializzare thread update.
      */
     public void startGame(){
@@ -55,7 +55,7 @@ public class Multiplayer extends Game {
     }
 
     /**
-     * Metodo che richiama stop game della superclasse che ferma thread invader.
+     * Metodo che richiama stop game della superclasse che ferma thread invaders.
      * Ferma thread update e svuota il team.
      */
     public void stopGame() {

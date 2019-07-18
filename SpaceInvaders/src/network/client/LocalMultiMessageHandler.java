@@ -24,10 +24,10 @@ class LocalMultiMessageHandler {
     }
 
     /**
-     * Metodo che crea arraylist di invader.
+     * Metodo che crea arraylist di invaders.
      *
-     * @param data info invader
-     * @return arraylist invader
+     * @param data info invaders
+     * @return arraylist invaders
      */
     public ArrayList<Invader> invaderCreator(String data) {
         ArrayList<Invader> invaders = new ArrayList<>();
@@ -40,10 +40,10 @@ class LocalMultiMessageHandler {
     }
 
     /**
-     * Metodo che crea bonus invader.
+     * Metodo che crea bonus invaders.
      *
-     * @param data info bonus invader
-     * @return bonus invader
+     * @param data info bonus invaders
+     * @return bonus invaders
      */
     public BonusInvader bonusInvaderCreator(String data){
         if(!data.isEmpty()) {
@@ -53,10 +53,10 @@ class LocalMultiMessageHandler {
     }
 
     /**
-     * Metodo che crea arraylist di invader bullet.
+     * Metodo che crea arraylist di invaders bullet.
      *
-     * @param data info invader bullet
-     * @return arraylist invader bullet
+     * @param data info invaders bullet
+     * @return arraylist invaders bullet
      */
     public ArrayList<InvaderBullet> invaderBulletCreator(String data) {
         ArrayList<InvaderBullet> invaderBullets = new ArrayList<>();

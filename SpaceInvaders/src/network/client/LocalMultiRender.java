@@ -45,7 +45,7 @@ public class LocalMultiRender {
     /**
      * Medoto che disegna gli inveder
      *
-     * @param data info invader
+     * @param data info invaders
      */
     private void invaderDrawer(String data) {
         if(!data.equals(" ")) {
@@ -58,7 +58,7 @@ public class LocalMultiRender {
     /**
      * Medoto che disegna il bonus inveder
      *
-     * @param data info bonus invader
+     * @param data info bonus invaders
      */
     private void bonusInvaderDrawer(String data) {
         if(!data.equals(" ")) {
@@ -72,7 +72,7 @@ public class LocalMultiRender {
     /**
      * Medoto che disegna gli inveder bullet
      *
-     * @param data info invader bullet
+     * @param data info invaders bullet
      */
     private void invaderBulletDrawer(String data) {
         if(!data.equals(" ")) {

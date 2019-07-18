@@ -77,7 +77,7 @@ public class MessageBuilder{
     }
 
     /**
-     * Metodo che inserisce info bonus invader.
+     * Metodo che inserisce info bonus invaders.
      */
     private void setInvaderBonusInfo(){
         String invaderBonusInfo = "";
@@ -90,7 +90,7 @@ public class MessageBuilder{
     }
 
     /**
-     * Metodo che inserisce info invader bullet.
+     * Metodo che inserisce info invaders bullet.
      *
      */
     private void setInvaderBulletInfo(){

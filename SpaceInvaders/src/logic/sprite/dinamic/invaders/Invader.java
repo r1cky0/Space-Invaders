@@ -6,7 +6,7 @@ import logic.sprite.Target;
 import main.Dimensions;
 
 /**
- * Classe che rappresenta gli invader.
+ * Classe che rappresenta gli invaders.
  * Contiene il valore che si somma allo score quando viene colpito.
  */
 public class Invader extends Sprite {

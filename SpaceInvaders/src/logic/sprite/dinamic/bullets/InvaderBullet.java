@@ -3,7 +3,7 @@ package logic.sprite.dinamic.bullets;
 import logic.sprite.Coordinate;
 
 /**
- * Classe che rappresenta il proiettile sparato dagli invader.
+ * Classe che rappresenta il proiettile sparato dagli invaders.
  */
 public class InvaderBullet extends Bullet{
 

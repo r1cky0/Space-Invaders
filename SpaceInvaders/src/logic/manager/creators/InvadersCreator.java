@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Classe che si occupa della creazione degli invader.
+ * Classe che si occupa della creazione degli invaders.
  */
 public class InvadersCreator implements Creator{
 

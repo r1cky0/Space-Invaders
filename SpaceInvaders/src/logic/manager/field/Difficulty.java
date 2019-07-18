@@ -2,8 +2,8 @@ package logic.manager.field;
 
 /**
  * Classe che rappresenta la difficoltà di gioco.
- * La difficoltà è espressa come millisecondi di sleep del thread degli invader:
- * più è basso il valore piu gli invader si muovono e sparano velocemente e quindi aumenta la difficoltà.
+ * La difficoltà è espressa come millisecondi di sleep del thread degli invaders:
+ * più è basso il valore piu gli invaders si muovono e sparano velocemente e quindi aumenta la difficoltà.
  */
 class Difficulty {
     private int difficulty;

@@ -21,7 +21,7 @@ class FieldManagerTest {
     //altrimenti tutta la classe di test
 
     /**
-     * Testiamo sparo di un invader e collisione con la spaceShip.
+     * Testiamo sparo di un invaders e collisione con la spaceShip.
      * Il field manager fa sparare randomicamente uno degli invaders. La spaceShip viene spostata al di sotto
      * del bullet attraverso la funzione di shipMovement.
      * Fatto ció il bullet viene spostato verticalmente fino ad entrare in collisone con la nave(é fatto in modo
