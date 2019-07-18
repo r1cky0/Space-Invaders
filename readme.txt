@@ -2,7 +2,7 @@
 
 1- Clonare il progetto C19 da GitHub a IntelliJ
 
-2- File --> Open... --> Selezionare cartella SpaceInvaders in Progetto-C19 --> This Windows
+2- File --> Open... --> Selezionare cartella SpaceInvaders in Progetto-C19 --> ok --> This Windows
 
 3- Per aggiungere libreria slick2d: 
 File --> Project Structure --> Libraries --> Click su + --> Selezionare "java" --> selezionare slick2d --> ok
