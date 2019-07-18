@@ -57,7 +57,6 @@
             <medalSilver>res/images/MedalSilver.png</medalSilver>
             <medalBronze>res/images/MedalBronze.png</medalBronze>
         </medal>
-
         <Keyboard>
             <right>res/images/KeyboardRight.png</right>
             <left>res/images/KeyboardLeft.png</left>
@@ -80,7 +79,7 @@
     <filePlayers>res/players.txt</filePlayers>
 
     <server>
-        <ip>localhost</ip>
+        <ip>192.168.43.89</ip>
         <port>9999</port>
     </server>
 </SpaceInvaders>
