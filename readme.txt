@@ -15,9 +15,11 @@ Per Ubuntu:
 	
 Per Windows:
 -Djava.library.path=natives_windows
+
+5- Eseguire il programma.
 	
-5- Per multiplayer: 
+6- Per multiplayer: 
 All' interno di src, nel package "network.server" fare click destro sulla classe "ServerLauncher" --> selezionare "create ServerLauncher.main()..." --> ok
 
-6- Il server é settato per giocare in locale.
+7- Il server é settato per giocare in locale.
 Nel file di configurazione "res/configuration.xml", puó essere cambiato nei pc client l'indirizzo IP del server per poter giocare con più giocatori.
