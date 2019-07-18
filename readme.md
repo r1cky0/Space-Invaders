@@ -16,6 +16,8 @@ Per Ubuntu:
 Per Windows:
 -Djava.library.path=natives_windows
 
+Sempre nella stessa finestra nella riga "Working directory" al termine del path già inserito aggiungere "/SpaceInvaders"
+
 5- Eseguire il programma.
 	
 6- Per multiplayer: 
