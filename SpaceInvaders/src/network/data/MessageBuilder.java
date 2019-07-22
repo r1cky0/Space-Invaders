@@ -53,7 +53,6 @@ public class MessageBuilder{
         setShipInfo();
         setShipBulletInfo();
         setTeamCurrentScore();
-        notifyAll();
     }
 
     /**
@@ -159,15 +158,14 @@ public class MessageBuilder{
      *
      * @return stringa con le informazioni
      */
-    public synchronized String getInfo() throws InterruptedException {
+    public String getInfo() {
         String info = "";
         for (String stringBuilder : stringBuilders) {
             if (stringBuilder.isEmpty()) {
-                wait();
+                return "";
+            }else{
+                info += stringBuilder;
             }
-        }
-        for (String stringBuilder : stringBuilders) {
-            info += stringBuilder;
         }
         return info;
     }
