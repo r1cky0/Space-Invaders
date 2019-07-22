@@ -48,10 +48,8 @@ public class LocalMultiRender {
      * @param data info invaders
      */
     private void invaderDrawer(String data) {
-        if(!data.equals(" ")) {
-            for (Invader invader : localMultiMessageHandler.invaderCreator(data)) {
-                spriteDrawer.render(invader);
-            }
+        for (Invader invader : localMultiMessageHandler.invaderCreator(data)) {
+            spriteDrawer.render(invader);
         }
     }
 
@@ -61,11 +59,9 @@ public class LocalMultiRender {
      * @param data info bonus invaders
      */
     private void bonusInvaderDrawer(String data) {
-        if(!data.equals(" ")) {
-            BonusInvader bonusInvader = localMultiMessageHandler.bonusInvaderCreator(data);
-            if (bonusInvader != null) {
-                spriteDrawer.render(bonusInvader);
-            }
+        BonusInvader bonusInvader = localMultiMessageHandler.bonusInvaderCreator(data);
+        if (bonusInvader != null) {
+            spriteDrawer.render(bonusInvader);
         }
     }
 
@@ -75,10 +71,8 @@ public class LocalMultiRender {
      * @param data info invaders bullet
      */
     private void invaderBulletDrawer(String data) {
-        if(!data.equals(" ")) {
-            for (InvaderBullet invaderBullet : localMultiMessageHandler.invaderBulletCreator(data)) {
-                spriteDrawer.render(invaderBullet);
-            }
+        for (InvaderBullet invaderBullet : localMultiMessageHandler.invaderBulletCreator(data)) {
+            spriteDrawer.render(invaderBullet);
         }
     }
 
@@ -88,10 +82,8 @@ public class LocalMultiRender {
      * @param data info bunker
      */
     private void bunkerDrawer(String data) {
-        if(!data.equals(" ")) {
-            for (Brick brick : localMultiMessageHandler.bunkerCreator(data)) {
-                spriteDrawer.render(brick);
-            }
+        for (Brick brick : localMultiMessageHandler.bunkerCreator(data)) {
+            spriteDrawer.render(brick);
         }
     }
 
@@ -101,10 +93,8 @@ public class LocalMultiRender {
      * @param data info ship
      */
     private void shipDrawer(String data, int ID) {
-        if(!data.equals(" ")) {
-            for (SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, ID)) {
-                spriteDrawer.render(spaceShip);
-            }
+        for (SpaceShip spaceShip : localMultiMessageHandler.shipCreator(data, ID)) {
+            spriteDrawer.render(spaceShip);
         }
     }
 
@@ -114,10 +104,8 @@ public class LocalMultiRender {
      * @param data info ship bullet
      */
     private void shipBulletDrawer(String data) {
-        if(!data.equals(" ")) {
-            for (SpaceShipBullet spaceShipBullet : localMultiMessageHandler.shipBulletCreator(data)) {
-                spriteDrawer.render(spaceShipBullet);
-            }
+        for (SpaceShipBullet spaceShipBullet : localMultiMessageHandler.shipBulletCreator(data)) {
+            spriteDrawer.render(spaceShipBullet);
         }
     }
 
@@ -126,10 +114,8 @@ public class LocalMultiRender {
      *
      * @param data info score
      */
-    private void setScore(String data){
-        if(!data.equals(" ")) {
-            score = localMultiMessageHandler.getScore(data);
-        }
+    private void setScore(String data) {
+        score = localMultiMessageHandler.getScore(data);
     }
 
     /**
@@ -137,10 +123,8 @@ public class LocalMultiRender {
      *
      * @param data info stato gioco
      */
-    private void setGameState(String data){
-        if(!data.equals(" ")) {
-            gameState = localMultiMessageHandler.getGameState(data);
-        }
+    private void setGameState(String data) {
+        gameState = localMultiMessageHandler.getGameState(data);
     }
 
     public States getGameState(){return gameState;}

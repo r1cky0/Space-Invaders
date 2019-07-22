@@ -33,8 +33,8 @@ public class MessageBuilder{
      */
     public MessageBuilder(){
         stringBuilders = new String[8];
-        for(int i=0;i<8;i++){
-            stringBuilders[i] = " \n";
+        for(int i = 0; i<stringBuilders.length; i++){
+            stringBuilders[i] = "";
         }
     }
 
@@ -43,7 +43,7 @@ public class MessageBuilder{
      *
      * @param multiplayer oggetto da cui prendere le informazioni
      */
-    public void setInfo(Multiplayer multiplayer){
+    public synchronized void setInfo(Multiplayer multiplayer){
         this.multiplayer = multiplayer;
         setGameStateInfo();
         setInvaderInfo();
@@ -53,6 +53,7 @@ public class MessageBuilder{
         setShipInfo();
         setShipBulletInfo();
         setTeamCurrentScore();
+        notifyAll();
     }
 
     /**
@@ -158,12 +159,17 @@ public class MessageBuilder{
      *
      * @return stringa con le informazioni
      */
-    public String getInfo(){
-        String infos = "";
-        for(int i=0;i<8;i++){
-            infos += stringBuilders[i];
+    public synchronized String getInfo() throws InterruptedException {
+        String info = "";
+        for (String stringBuilder : stringBuilders) {
+            if (stringBuilder.isEmpty()) {
+                wait();
+            }
         }
-        return infos;
+        for (String stringBuilder : stringBuilders) {
+            info += stringBuilder;
+        }
+        return info;
     }
 
     private SpaceShip getSpaceShip(int ID){
