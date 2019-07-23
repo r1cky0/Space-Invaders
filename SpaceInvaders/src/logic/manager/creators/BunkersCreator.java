@@ -10,16 +10,11 @@ import java.util.ArrayList;
  */
 public class BunkersCreator implements Creator{
 
-    private ArrayList<Bunker> bunkers;
-
-    public BunkersCreator(){
-        bunkers = new ArrayList<>();
-    }
-
     /**
      * Inizializzazione della lista di bunker.
      */
     public ArrayList<Bunker> create(){
+        ArrayList<Bunker> bunkers = new ArrayList<>();
         float baseX = (Dimensions.MAX_WIDTH - 35* Dimensions.BRICK_WIDTH)/2;
         float baseY = (Dimensions.MAX_HEIGHT - 5* Dimensions.BRICK_HEIGHT);
         float x = baseX;

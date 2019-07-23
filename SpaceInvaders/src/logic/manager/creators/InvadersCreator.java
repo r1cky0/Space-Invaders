@@ -12,17 +12,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class InvadersCreator implements Creator{
 
-    private List<Invader> invaders;
-
-    public InvadersCreator(){
-        invaders = new CopyOnWriteArrayList<>();
-    }
-
     /**
      * Inizializzazione della lista degli invaders.
      *
      */
     public List<Invader> create(){
+        List<Invader> invaders = new CopyOnWriteArrayList<>();
         final float HORIZONTAL_OFFSET = Dimensions.MAX_WIDTH/32;
         final float VERTICAL_OFFSET = Dimensions.MAX_HEIGHT/100;
         float baseY = Dimensions.MAX_HEIGHT/10;
