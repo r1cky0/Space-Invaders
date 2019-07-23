@@ -32,7 +32,7 @@ public class TutorialState extends BasicState implements ComponentListener {
         String title = "TUTORIAL";
         String leftString = "Keep pressed to move left";
         String rightString = "Keep pressed to move right";
-        String shotString = "Press to shot";
+        String shotString = "Press to shoot";
 
         getTitleFont().drawString((gameContainer.getWidth() - getTitleFont().getWidth(title))/2f,7*gameContainer.getHeight()/100f, title, Color.white);
         getDataFont().drawString((gameContainer.getWidth())/2f,37*gameContainer.getHeight()/100f, leftString, Color.green);
