@@ -12,10 +12,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Bunker {
     private CopyOnWriteArrayList<Brick> bricks;
-    private ReadXmlFile readXmlFile;
 
     public Bunker(float indexX, float indexY) {
-        readXmlFile = new ReadXmlFile();
         createBunker(indexX, indexY);
     }
 
@@ -27,6 +25,7 @@ public class Bunker {
      * @param indexY: indice di partenza coordinata x
      */
     private void createBunker(float indexX, float indexY) {
+        ReadXmlFile readXmlFile = new ReadXmlFile();
         bricks = new CopyOnWriteArrayList<>(  );
         float indX = indexX;
         float indY = indexY;
