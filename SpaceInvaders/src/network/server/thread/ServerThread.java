@@ -137,7 +137,7 @@ public class ServerThread implements Runnable{
                 try {
                     String info = messageBuilder.getInfo();
                     if(!info.isEmpty()) {
-                        send(messageBuilder.getInfo());
+                        send(info);
                     }
                     Thread.sleep(30);
                 } catch (InterruptedException e) {
