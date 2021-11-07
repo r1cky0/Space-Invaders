@@ -1,7 +1,7 @@
 # Space Invaders Game
 
 *Software Engineering course project at University of Pavia  
-Developed in collaboration with: @simoneghiazzi, @riccardocrescenti, @chiarabertocchi, @r1cky0 and @DarioGV*
+Developed in collaboration with: @simoneghiazzi, @riccardocrescenti, @chiarabertocchi, @lucacolombo97 and @DarioGV*
 
 ![Space1](https://user-images.githubusercontent.com/48442855/139663489-8d8d087f-c956-443c-be48-bc13fbcdf41e.png)
 
